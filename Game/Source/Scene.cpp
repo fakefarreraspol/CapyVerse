@@ -5,6 +5,7 @@
 #include "Render.h"
 #include "Window.h"
 #include "Scene.h"
+#include "EntityManager.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -32,6 +33,8 @@ bool Scene::Start()
 {
 	img = app->tex->Load("Assets/Textures/test.png");
 	app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
+	Entity* entity = app->entMan->CreateEntity(EntityType::CAPYBARA, 10, { 0, 0, 0, 0 });
+	entity->name.Create("Chinabara");
 	return true;
 }
 

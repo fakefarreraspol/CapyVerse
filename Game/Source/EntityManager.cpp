@@ -4,6 +4,8 @@
 #include "Defs.h"
 #include "Log.h"
 
+#include "Capybara.h"
+
 EntityManager::EntityManager() : Module()
 {
 	name.Create("entitymanager");
@@ -53,6 +55,7 @@ Entity* EntityManager::CreateEntity(EntityType type, int id, SDL_Rect bounds)
 	case EntityType::PLAYER:
 		break;
 	case EntityType::CAPYBARA:
+		entity = new Capybara(CapybaraType::TANK);
 		break;
 	case EntityType::ITEM:
 		break;
@@ -61,10 +64,10 @@ Entity* EntityManager::CreateEntity(EntityType type, int id, SDL_Rect bounds)
 	default:
 	{
 		LOG("ERROR: Entity with no type couldn't be created");
-		delete entity;
-		return nullptr;
 	}break;
 	}
+	if (entity != nullptr)
+		AddEntity(entity);
 
 	return entity;
 }
@@ -165,6 +168,7 @@ bool EntityManager::Draw() {
 
 		if (pEntity->active == false) continue;
 		ret = item->data->Draw(app->render);
+		
 	}
 
 	return ret;
