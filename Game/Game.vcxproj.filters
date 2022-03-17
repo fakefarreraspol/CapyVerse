@@ -37,6 +37,9 @@
     <ClCompile Include="Source\Capybara.cpp">
       <Filter>Modules\Gameplay\EntityManager\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Item.cpp">
+      <Filter>Modules\Gameplay\EntityManager\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -97,6 +100,9 @@
       <Filter>Modules\Gameplay\EntityManager</Filter>
     </ClInclude>
     <ClInclude Include="Source\Capybara.h">
+      <Filter>Modules\Gameplay\EntityManager\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Item.h">
       <Filter>Modules\Gameplay\EntityManager\Entities</Filter>
     </ClInclude>
   </ItemGroup>

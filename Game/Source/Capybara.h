@@ -40,19 +40,23 @@ public:
 	CapybaraStats GetStats();
 
 	//Combat functions
-	void Damage(int damage);
-	void Heal(int heal);
+	void Damage(int value);
+	void Heal(int value);
 	void UseAbility();
 	void Attack(Capybara* target);
 
+	//XP functions
 	void LevelUp();
+	void AddXp(int value);
 private:
 	//Update the stats by the lvl
 	void UpdateStats();
+	//Initialize all the stats and update them
+	void InitStats();
 private:
 	//Capybara stats
 	CapybaraStats capybaraStats;
-	
+
 	//Health variables
 	int health;
 	int maxHealth;
@@ -66,8 +70,8 @@ private:
 	int maxMana;
 	int manaXLvl;	//The amount of mana that every mp lvl gives
 
-	int xp;			//Current capy xp points
-	int lvl;		//Capy lvl
+	int xp = 0;		//Current capy xp points
+	int lvl;	//Capy lvl
 	int xpNext;		//Xp points for the next level
 
 	bool isCombat = false;

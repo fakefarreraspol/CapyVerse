@@ -5,6 +5,8 @@
 
 struct SDL_Texture;
 
+class Entity;
+
 class Scene : public Module
 {
 public:
@@ -34,6 +36,7 @@ public:
 
 private:
 	SDL_Texture* img;
+	Entity* entity = nullptr;
 };
 
 #endif // __SCENE_H__
