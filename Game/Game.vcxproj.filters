@@ -31,6 +31,21 @@
     <ClCompile Include="Source\Scene.cpp">
       <Filter>Modules\Gameplay\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GuiManager.cpp">
+      <Filter>Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiControl.cpp">
+      <Filter>Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiButton.cpp">
+      <Filter>Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiSlider.cpp">
+      <Filter>Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiCheckBox.cpp">
+      <Filter>Modules\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -84,6 +99,21 @@
     <ClInclude Include="Source\Scene.h">
       <Filter>Modules\Gameplay\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="Source\GuiManager.h">
+      <Filter>Modules\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiControl.h">
+      <Filter>Modules\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiButton.h">
+      <Filter>Modules\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiSlider.h">
+      <Filter>Modules\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiCheckBox.h">
+      <Filter>Modules\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -112,6 +142,9 @@
     </Filter>
     <Filter Include="Modules\Gameplay\Entities">
       <UniqueIdentifier>{8408e582-99ce-4c05-a4eb-291dba18fdb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\UI">
+      <UniqueIdentifier>{d4dc3788-23c5-4215-a306-48614c193e55}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

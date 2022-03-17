@@ -6,6 +6,10 @@
 #include "Window.h"
 #include "Scene.h"
 
+#include "GuiManager.h"
+#include "GuiButton.h"
+#include "GuiSlider.h"
+
 #include "Defs.h"
 #include "Log.h"
 
@@ -32,6 +36,17 @@ bool Scene::Start()
 {
 	img = app->tex->Load("Assets/Textures/test.png");
 	app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
+
+	
+	btn1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Test1", { 0, 0, 500, 100 }, this);
+	slider1 = (GuiSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 1, "dadf", { 0,0,50,50 }, this);
+	slider1->SetBar({200,200,500,30});
+	slider1->SetValues(100, 0, 0);
+	slider1->state = GuiControlState::NORMAL;
+
+	box1 = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "", { 100,100,100,100 }, this);
+
+
 	return true;
 }
 
@@ -57,6 +72,8 @@ bool Scene::Update(float dt)
 		app->render->camera.x += 1;
 
 	app->render->DrawTexture(img, 380, 100);
+
+	app->guiManager->Draw();
 
 	return true;
 }
