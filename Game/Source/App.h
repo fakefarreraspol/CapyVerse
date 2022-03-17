@@ -13,6 +13,7 @@ class Render;
 class Textures;
 class Audio;
 class Scene;
+class EntityManager;
 
 class App
 {
@@ -74,7 +75,7 @@ public:
 	Textures* tex;
 	Audio* audio;
 	Scene* scene;
-
+	EntityManager* entMan;
 private:
 
 	int argc;
