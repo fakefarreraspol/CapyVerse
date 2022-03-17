@@ -25,7 +25,7 @@ class Capybara : public Entity
 {
 public:
 	//Contructor and destructor
-	Capybara(CapybaraType capybaraType);
+	Capybara(CapybaraType capybaraType, iPoint position);
 	~Capybara();
 
 	//Base functions

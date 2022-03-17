@@ -55,7 +55,7 @@ Entity* EntityManager::CreateEntity(EntityType type, int id, SDL_Rect bounds)
 	case EntityType::PLAYER:
 		break;
 	case EntityType::CAPYBARA:
-		entity = new Capybara(CapybaraType::TANK);
+		entity = new Capybara(CapybaraType::TANK, { bounds.x, bounds.y});
 		break;
 	case EntityType::ITEM:
 		break;
@@ -99,6 +99,8 @@ bool EntityManager::Update(float dt)
 		accumulatedTime = 0.0f;
 		doLogic = false;
 	}
+
+	Draw();
 
 	return true;
 }

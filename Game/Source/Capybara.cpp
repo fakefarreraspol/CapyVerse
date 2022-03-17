@@ -1,8 +1,9 @@
 #include "Capybara.h"
 
-Capybara::Capybara(CapybaraType capyType) : Entity(EntityType::CAPYBARA), capybaraType(capyType)
+Capybara::Capybara(CapybaraType capyType, iPoint pos) : Entity(EntityType::CAPYBARA), capybaraType(capyType)
 {
-
+	position.x = pos.x;
+	position.y = pos.y;
 }
 
 Capybara::~Capybara()
@@ -19,6 +20,8 @@ bool Capybara::Update(float dt)
 bool Capybara::Draw(Render* render)
 {
 	bool ret = true;
+
+	render->DrawRectangle({position.x, position.y, 10, 10}, 255, 0, 0);
 	return ret;
 }
 
