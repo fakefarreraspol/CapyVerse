@@ -9,7 +9,7 @@
 #include "Defs.h"
 #include "Log.h"
 
-Scene::Scene() : Module()
+Scene::Scene(bool startEnabled) : Module(startEnabled)
 {
 	name.Create("scene");
 }
@@ -31,7 +31,10 @@ bool Scene::Awake()
 bool Scene::Start()
 {
 	img = app->tex->Load("Assets/Textures/test.png");
-	app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
+	//app->audio->PlayMusic("Assets/Audio/Music/backgroundForest.ogg");
+	entity = app->entMan->CreateEntity(EntityType::CAPYBARA, 10, { 0, 0, 0, 0 });
+	entity->name.Create("Chinabara");
+
 	return true;
 }
 
@@ -57,6 +60,8 @@ bool Scene::Update(float dt)
 		app->render->camera.x += 1;
 
 	app->render->DrawTexture(img, 380, 100);
+
+	
 
 	return true;
 }

@@ -1,13 +1,14 @@
 #include "App.h"
 #include "Window.h"
 #include "Render.h"
+#include "Input.h"
 
 #include "Defs.h"
 #include "Log.h"
 
 #define VSYNC true
 
-Render::Render() : Module()
+Render::Render(bool startEnabled) : Module(startEnabled)
 {
 	name.Create("renderer");
 	background.r = 0;
@@ -28,7 +29,7 @@ bool Render::Awake(pugi::xml_node& config)
 
 	Uint32 flags = SDL_RENDERER_ACCELERATED;
 
-	if(config.child("vsync").attribute("value").as_bool(true) == true)
+	if(vsync = config.child("vsync").attribute("value").as_bool(true) == true)
 	{
 		flags |= SDL_RENDERER_PRESENTVSYNC;
 		LOG("Using vsync");
@@ -70,6 +71,10 @@ bool Render::PreUpdate()
 
 bool Render::Update(float dt)
 {
+	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+		app->SetDebug(!app->GetDebug());
+	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
+		app->fpsCap = !app->fpsCap;
 	return true;
 }
 
@@ -87,7 +92,24 @@ bool Render::CleanUp()
 	SDL_DestroyRenderer(renderer);
 	return true;
 }
+bool Render::LoadState(pugi::xml_node& data)
+{
+	camera.x = data.child("camera").attribute("x").as_int();
+	camera.y = data.child("camera").attribute("y").as_int();
 
+	return true;
+}
+
+// L02: TODO 8: Create a method to save the state of the renderer
+// Save Game State
+bool Render::SaveState(pugi::xml_node& data) const
+{
+	pugi::xml_node cam = data.append_child("camera");
+	cam.append_attribute("x").set_value(camera.x);
+	cam.append_attribute("y").set_value(camera.y);
+
+	return true;
+}
 void Render::SetBackgroundColor(SDL_Color color)
 {
 	background = color;

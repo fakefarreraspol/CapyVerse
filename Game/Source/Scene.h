@@ -5,11 +5,13 @@
 
 struct SDL_Texture;
 
+class Entity;
+
 class Scene : public Module
 {
 public:
 
-	Scene();
+	Scene(bool startEnabled);
 
 	// Destructor
 	virtual ~Scene();
@@ -34,6 +36,7 @@ public:
 
 private:
 	SDL_Texture* img;
+	Entity* entity = nullptr;
 };
 
 #endif // __SCENE_H__
