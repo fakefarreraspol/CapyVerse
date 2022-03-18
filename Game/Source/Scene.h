@@ -2,16 +2,17 @@
 #define __SCENE_H__
 
 #include "Module.h"
+#include "GuiButton.h"
+#include "GuiSlider.h"
+#include "GuiCheckBox.h"
 
 struct SDL_Texture;
-
-class Entity;
 
 class Scene : public Module
 {
 public:
 
-	Scene(bool startEnabled);
+	Scene();
 
 	// Destructor
 	virtual ~Scene();
@@ -36,7 +37,10 @@ public:
 
 private:
 	SDL_Texture* img;
-	Entity* entity = nullptr;
+
+	GuiButton* btn1 = nullptr;
+	GuiSlider* slider1 = nullptr;
+	GuiCheckBox* box1 = nullptr;
 };
 
 #endif // __SCENE_H__
