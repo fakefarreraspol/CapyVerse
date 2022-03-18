@@ -1,10 +1,17 @@
 #ifndef __APP_H__
 #define __APP_H__
 
-#include "Module.h"
+#include "PerfTimer.h"
 #include "List.h"
+#include "Timer.h"
+
+#include "Module.h"
 
 #include "PugiXml/src/pugixml.hpp"
+
+#define CONFIG_FILENAME		"config.xml"
+#define SAVE_STATE_FILENAME "save_game.xml"
+
 
 // Modules
 class Window;
@@ -13,6 +20,7 @@ class Render;
 class Textures;
 class Audio;
 class Scene;
+class EntityManager;
 class GuiManager;
 
 class App
@@ -46,10 +54,18 @@ public:
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
 
+	bool GetDebug();
+	void SetDebug(bool value);
+
+	void LoadGameRequest();
+	void SaveGameRequest() const;
+
 private:
 
 	// Load config file
-	bool LoadConfig();
+	// NOTE: It receives config document
+	pugi::xml_node LoadConfig(pugi::xml_document&) const;
+
 
 	// Call modules before each loop iteration
 	void PrepareUpdate();
@@ -66,8 +82,13 @@ private:
 	// Call modules after each loop iteration
 	bool PostUpdate();
 
-public:
+	// Load / Save
+	bool LoadGame();
+	bool SaveGame() const;
 
+public:
+	// Settings
+	bool pause = false;
 	// Modules
 	Window* win;
 	Input* input;
@@ -75,26 +96,52 @@ public:
 	Textures* tex;
 	Audio* audio;
 	Scene* scene;
+	EntityManager* entMan;
 	GuiManager* guiManager;
 
+	bool fpsCap = false;
+	float dt = 0.0f;
+	uint32 framesPerSecond = 0;
 private:
+	bool debug = false;
 
 	int argc;
 	char** args;
 	SString title;
 	SString organization;
 
-	List<Module *> modules;
+	List<Module*> modules;
 
-	// TODO 2: Create new variables from pugui namespace:
-	// a xml_document to store the config file and
-	// two xml_node to read specific branches of the xml
+	// L01: DONE 2: Create new variables from pugui namespace
+	// NOTE: Redesigned LoadConfig() to avoid storing this variables
 	pugi::xml_document configFile;
+	pugi::xml_document gameStateFile;
 	pugi::xml_node config;
 	pugi::xml_node configApp;
 
 	uint frames;
-	float dt;
+
+	// L02: DONE 1: Create variables to control when to execute the request load / save
+	mutable bool saveGameRequested;
+	bool loadGameRequested;
+
+
+
+	PerfTimer* ptimer;
+	PerfTimer* frameDuration;
+
+	Timer startupTime;
+	Timer frameTime;
+	Timer lastSecFrameTime;
+
+	uint64 frameCount = 0;
+
+	uint32 lastSecFrameCount = 0;
+
+	float averageFps = 0.0f;
+
+
+	uint32 maxFrameRate = 0;
 };
 
 extern App* app;

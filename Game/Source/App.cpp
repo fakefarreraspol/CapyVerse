@@ -1,3 +1,9 @@
+#include <iostream>
+#include <sstream>
+
+#include "Defs.h"
+#include "Log.h"
+
 #include "App.h"
 #include "Window.h"
 #include "Input.h"
@@ -5,13 +11,8 @@
 #include "Textures.h"
 #include "Audio.h"
 #include "Scene.h"
+#include "EntityManager.h"
 #include "GuiManager.h"
-
-#include "Defs.h"
-#include "Log.h"
-
-#include <iostream>
-#include <sstream>
 
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
@@ -24,8 +25,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new Audio(true);
 	scene = new Scene(true);
 	entMan = new EntityManager(true);
-
-	guiManager = new GuiManager();
+	guiManager = new GuiManager(true);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -33,8 +33,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(tex);
 	AddModule(audio);
+	AddModule(entMan);
 	AddModule(scene);
-	AddModule(guiManager);
 
 	// Render last to swap buffer
 	AddModule(render);
