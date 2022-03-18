@@ -17,13 +17,13 @@
 App::App(int argc, char* args[]) : argc(argc), args(args)
 {
 
-	win = new Window();
-	input = new Input();
-	render = new Render();
-	tex = new Textures();
-	audio = new Audio();
-	scene = new Scene();
-	entMan = new EntityManager();
+	win = new Window(true);
+	input = new Input(true);
+	render = new Render(true);
+	tex = new Textures(true);
+	audio = new Audio(true);
+	scene = new Scene(true);
+	entMan = new EntityManager(true);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
