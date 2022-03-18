@@ -31,6 +31,12 @@
     <ClCompile Include="Source\Scene.cpp">
       <Filter>Modules\Gameplay\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Source\EntityManager.cpp">
+      <Filter>Modules\Gameplay\EntityManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Capybara.cpp">
+      <Filter>Modules\Gameplay\EntityManager\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -84,6 +90,15 @@
     <ClInclude Include="Source\Scene.h">
       <Filter>Modules\Gameplay\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Entity.h">
+      <Filter>Modules\Gameplay\EntityManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EntityManager.h">
+      <Filter>Modules\Gameplay\EntityManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Capybara.h">
+      <Filter>Modules\Gameplay\EntityManager\Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -110,8 +125,11 @@
     <Filter Include="Modules\Gameplay\Scenes">
       <UniqueIdentifier>{7a0e0dc8-81ca-4f0e-a3a0-b1cf09e53e09}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Modules\Gameplay\Entities">
+    <Filter Include="Modules\Gameplay\EntityManager">
       <UniqueIdentifier>{8408e582-99ce-4c05-a4eb-291dba18fdb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Gameplay\EntityManager\Entities">
+      <UniqueIdentifier>{7b3514d3-9919-45aa-a0ab-0fdea90e87bb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
