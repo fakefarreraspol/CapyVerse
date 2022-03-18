@@ -20,7 +20,6 @@ class Render;
 class Textures;
 class Audio;
 class Scene;
-class EntityManager;
 
 class App
 {
@@ -100,6 +99,7 @@ public:
 	bool fpsCap = false;
 	float dt = 0.0f;
 	uint32 framesPerSecond = 0;
+
 private:
 	bool debug = false;
 
