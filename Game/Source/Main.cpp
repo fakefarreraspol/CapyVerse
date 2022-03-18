@@ -1,7 +1,4 @@
-#include "App.h"
-
-#include "Defs.h"
-#include "Log.h"
+#include <stdlib.h>
 
 // NOTE: SDL redefines main function
 #include "SDL/include/SDL.h"
@@ -10,7 +7,19 @@
 //#pragma comment(lib, "../Game/Source/External/SDL/libx86/SDL2.lib")
 //#pragma comment(lib, "../Game/Source/External/SDL/libx86/SDL2main.lib")
 
-#include <stdlib.h>
+#ifdef DEBUG
+#pragma comment(lib, "../Game/Source/External/Optick/lib/_debug/OptickCore.lib")
+#else
+#pragma comment(lib, "../Game/Source/External/Optick/lib/release/OptickCore.lib")
+
+#endif // DEBUG
+
+#include "App.h"
+
+#include "Defs.h"
+#include "Log.h"
+
+
 
 enum MainState
 {
