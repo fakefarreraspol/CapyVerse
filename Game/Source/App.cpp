@@ -1,3 +1,9 @@
+#include <iostream>
+#include <sstream>
+
+#include "Defs.h"
+#include "Log.h"
+
 #include "App.h"
 #include "Window.h"
 #include "Input.h"
@@ -5,12 +11,7 @@
 #include "Textures.h"
 #include "Audio.h"
 #include "Scene.h"
-
-#include "Defs.h"
-#include "Log.h"
-
-#include <iostream>
-#include <sstream>
+#include "EntityManager.h"
 
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
@@ -30,6 +31,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(tex);
 	AddModule(audio);
+	AddModule(entMan);
 	AddModule(scene);
 
 	// Render last to swap buffer

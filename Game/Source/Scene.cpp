@@ -5,6 +5,7 @@
 #include "Render.h"
 #include "Window.h"
 #include "Scene.h"
+#include "EntityManager.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -34,7 +35,6 @@ bool Scene::Start()
 	//app->audio->PlayMusic("Assets/Audio/Music/backgroundForest.ogg");
 	entity = app->entMan->CreateEntity(EntityType::CAPYBARA, 10, { 0, 0, 0, 0 });
 	entity->name.Create("Chinabara");
-
 	return true;
 }
 
