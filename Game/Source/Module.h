@@ -1,18 +1,18 @@
 #ifndef __MODULE_H__
 #define __MODULE_H__
 
-#include "PugiXml/src/pugixml.hpp"
-#include "Optick/include/optick.h"
-
 #include "SString.h"
 
+#include "PugiXml/src/pugixml.hpp"
+
 class App;
+class GuiControl;
 
 class Module
 {
 public:
 
-	Module(bool startEnabled) : active(false), isEnabled(startEnabled)
+	Module() : active(false)
 	{}
 
 	void Init()
@@ -56,41 +56,18 @@ public:
 	{
 		return true;
 	}
-	virtual bool LoadState(pugi::xml_node&)
+
+	// Called on GuiEvent
+	virtual bool OnGuiMouseClickEvent(GuiControl* control)
 	{
 		return true;
 	}
 
-	virtual bool SaveState(pugi::xml_node&) const
-	{
-		return true;
-	}
-	virtual void Enable()
-	{
-		if (!isEnabled)
-		{
-			isEnabled = true;
-			Start();
-		}
-	}
-
-	virtual void Disable()
-	{
-		if (isEnabled)
-		{
-			isEnabled = false;
-			CleanUp();
-		}
-	}
-	bool IsEnabled() const
-	{
-		return isEnabled;
-	}
 public:
 
 	SString name;
 	bool active;
-	bool isEnabled = true;
+
 };
 
 #endif // __MODULE_H__
