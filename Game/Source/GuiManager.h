@@ -9,7 +9,7 @@ class GuiManager : public Module
 {
 public:
 
-	GuiManager();				// Constructor
+	GuiManager(bool startEnabled);				// Constructor
 	virtual ~GuiManager();		// Destructor
 
 	bool Start();

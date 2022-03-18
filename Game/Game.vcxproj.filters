@@ -46,6 +46,21 @@
     <ClCompile Include="Source\GuiCheckBox.cpp">
       <Filter>Modules\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Source\EntityManager.cpp">
+      <Filter>Modules\Gameplay\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Capybara.cpp">
+      <Filter>Modules\Gameplay\Entities\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Item.cpp">
+      <Filter>Modules\Gameplay\Entities\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PerfTimer.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Timer.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -114,6 +129,24 @@
     <ClInclude Include="Source\GuiCheckBox.h">
       <Filter>Modules\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Entity.h">
+      <Filter>Modules\Gameplay\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EntityManager.h">
+      <Filter>Modules\Gameplay\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Capybara.h">
+      <Filter>Modules\Gameplay\Entities\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Item.h">
+      <Filter>Modules\Gameplay\Entities\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PerfTimer.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Timer.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -145,6 +178,12 @@
     </Filter>
     <Filter Include="Modules\UI">
       <UniqueIdentifier>{d4dc3788-23c5-4215-a306-48614c193e55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Gameplay\Entities\Characters">
+      <UniqueIdentifier>{fedcd5d5-2a40-4b63-b3d3-61939febc969}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Gameplay\Entities\Items">
+      <UniqueIdentifier>{3c67718e-0680-4180-a3cc-b89a9291d3f9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

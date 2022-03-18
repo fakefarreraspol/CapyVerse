@@ -21,6 +21,7 @@ class Textures;
 class Audio;
 class Scene;
 class EntityManager;
+class GuiManager;
 
 class App
 {
@@ -96,6 +97,7 @@ public:
 	Audio* audio;
 	Scene* scene;
 	EntityManager* entMan;
+	GuiManager* guiManager;
 
 	bool fpsCap = false;
 	float dt = 0.0f;

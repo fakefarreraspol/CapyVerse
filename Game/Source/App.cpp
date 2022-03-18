@@ -12,6 +12,7 @@
 #include "Audio.h"
 #include "Scene.h"
 #include "EntityManager.h"
+#include "GuiManager.h"
 
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
@@ -24,6 +25,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new Audio(true);
 	scene = new Scene(true);
 	entMan = new EntityManager(true);
+	guiManager = new GuiManager(true);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
