@@ -1,5 +1,5 @@
 #include <stdlib.h>
-
+#include <time.h>
 // NOTE: SDL redefines main function
 #include "SDL/include/SDL.h"
 
@@ -37,6 +37,8 @@ App* app = NULL;
 int main(int argc, char* args[])
 {
 	LOG("Engine starting ...");
+
+	srand(time(NULL));
 
 	MainState state = CREATE;
 	int result = EXIT_FAILURE;

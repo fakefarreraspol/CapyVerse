@@ -1,13 +1,15 @@
+#include <stdlib.h>
+
 #include "Log.h"
 
 #include "Capybara.h"
 #include "Input.h"
 #include "App.h"
 
-Capybara::Capybara(CapybaraType capyType, iPoint pos) : Entity(EntityType::CAPYBARA), capybaraType(capyType)
+
+
+Capybara::Capybara(CapybaraType capyType, uint32 id, iPoint position, const char* name) : Entity(EntityType::CAPYBARA, id, name, position), capybaraType(capyType)
 {
-	position.x = pos.x;
-	position.y = pos.y;
 	lvl = 1;
 
 	//Change this values in order to balance the game progression
@@ -15,6 +17,7 @@ Capybara::Capybara(CapybaraType capyType, iPoint pos) : Entity(EntityType::CAPYB
 	healthXLvl = 10;
 	manaXLvl = 7;
 	damageXLvl = 4;
+	armorXLvl = 3;
 
 	InitStats();
 }
@@ -43,7 +46,7 @@ bool Capybara::Draw(Render* render)
 {
 	bool ret = true;
 
-	render->DrawRectangle({position.x, position.y, 10, 10}, 255, 0, 0);
+	render->DrawRectangle({position.x, position.y, 20, 20}, 255, 0, 0);
 
 	return ret;
 }
@@ -53,9 +56,29 @@ int Capybara::GetHealth()
 	return health;
 }
 
+int Capybara::GetMaxHealth()
+{
+	return maxHealth;
+}
+
 int Capybara::GetMana()
 {
 	return mana;
+}
+
+int Capybara::GetMaxMana()
+{
+	return maxMana;
+}
+
+int Capybara::GetDamage()
+{
+	return damage;
+}
+
+int Capybara::GetArmor()
+{
+	return armor;
 }
 
 CapybaraType Capybara::GetType()
@@ -70,7 +93,19 @@ CapybaraStats Capybara::GetStats()
 
 void Capybara::Damage(int value)
 {
+	//Formula DMG = D * (D + 100) * 0.08 / (A + 8)
+	//D -- Attack value
+	//A -- Character armor 
+	int finalDamage = value * (value + 100) * 0.08 / (armor + 8);
+	if (health - finalDamage > 0)
+	{
+		health -= finalDamage;
+		return;
+	}
+	
+	health = 0;
 
+	return;
 }
 
 void Capybara::Heal(int value)
@@ -85,15 +120,15 @@ void Capybara::Heal(int value)
 
 	return;
 }
-
+//TODO: Think about all the abilities
 void Capybara::UseAbility()
 {
-
+	return;
 }
 
 void Capybara::Attack(Capybara* target)
 {
-	
+	target->Damage(this->damage);
 }
 
 void Capybara::LevelUp()
@@ -172,11 +207,22 @@ void Capybara::AddXp(int value)
 	return;
 }
 
+bool Capybara::LoadState(pugi::xml_node&)
+{
+	return false;
+}
+
+bool Capybara::SaveState(pugi::xml_node&)
+{
+	return false;
+}
+
 void Capybara::UpdateStats()
 {
 	maxHealth = capybaraStats.hp * healthXLvl;
 	maxMana = capybaraStats.mp * manaXLvl;
 	damage = capybaraStats.strenght * damageXLvl;
+	armor = capybaraStats.armor * armorXLvl;
 }
 
 void Capybara::InitStats()

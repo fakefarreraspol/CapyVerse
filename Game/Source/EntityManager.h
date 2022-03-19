@@ -6,6 +6,8 @@
 
 #include "List.h"
 
+#include "Capybara.h"
+
 class Textures;
 class Audio;
 class Collisions;
@@ -32,7 +34,8 @@ public:
 	bool CleanUp();
 
 	// Additional methods
-	Entity* CreateEntity(EntityType type, int id, SDL_Rect bounds);
+	Entity* CreateEntity(EntityType entityType, int id, iPoint position, const char* name);
+	Capybara* CreateEntity(CapybaraType capybaraType, int id, iPoint position, const char* name);
 
 	void DestroyEntity(Entity* entity);
 
@@ -41,7 +44,6 @@ public:
 	bool UpdateAll(float dt, bool doLogic);
 
 	bool LoadState(pugi::xml_node& data);
-
 	bool SaveState(pugi::xml_node& data);
 
 public:

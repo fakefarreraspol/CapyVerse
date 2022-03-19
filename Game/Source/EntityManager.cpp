@@ -4,7 +4,8 @@
 #include "Defs.h"
 #include "Log.h"
 
-#include "Capybara.h"
+#include "Player.h"
+
 
 EntityManager::EntityManager(bool startEnabled) : Module(startEnabled)
 {
@@ -44,7 +45,7 @@ bool EntityManager::CleanUp()
 	return ret;
 }
 
-Entity* EntityManager::CreateEntity(EntityType type, int id, SDL_Rect bounds)
+Entity* EntityManager::CreateEntity(EntityType type, int id, iPoint position, const char* name)
 {
 	Entity* entity = nullptr;
 
@@ -53,9 +54,7 @@ Entity* EntityManager::CreateEntity(EntityType type, int id, SDL_Rect bounds)
 	case EntityType::NONE:
 		break;
 	case EntityType::PLAYER:
-		break;
-	case EntityType::CAPYBARA:
-		entity = new Capybara(CapybaraType::TANK, { bounds.x, bounds.y});
+		entity = new Player(position, id, name);
 		break;
 	case EntityType::ITEM:
 		break;
@@ -66,6 +65,16 @@ Entity* EntityManager::CreateEntity(EntityType type, int id, SDL_Rect bounds)
 		LOG("ERROR: Entity with no type couldn't be created");
 	}break;
 	}
+	if (entity != nullptr)
+		AddEntity(entity);
+
+	return entity;
+}
+
+Capybara* EntityManager::CreateEntity(CapybaraType capybaraType, int id, iPoint position, const char* name)
+{
+	Capybara* entity = new Capybara(capybaraType, id, position, name);
+	
 	if (entity != nullptr)
 		AddEntity(entity);
 

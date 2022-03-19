@@ -61,6 +61,9 @@
     <ClCompile Include="Source\Timer.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Player.cpp">
+      <Filter>Modules\Gameplay\Entities\Characters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -147,6 +150,9 @@
     <ClInclude Include="Source\Timer.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Player.h">
+      <Filter>Modules\Gameplay\Entities\Characters</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -185,5 +191,16 @@
     <Filter Include="Modules\Gameplay\Entities\Items">
       <UniqueIdentifier>{3c67718e-0680-4180-a3cc-b89a9291d3f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Config">
+      <UniqueIdentifier>{5c977823-501a-4845-b549-5ff7405e3e0c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Output\config.xml">
+      <Filter>Config</Filter>
+    </Xml>
+    <Xml Include="..\Output\save_game.xml">
+      <Filter>Config</Filter>
+    </Xml>
   </ItemGroup>
 </Project>
