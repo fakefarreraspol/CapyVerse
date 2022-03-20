@@ -6,7 +6,7 @@
 #include "Timer.h"
 
 #include "Module.h"
-
+#include "Globals.h"
 #include "PugiXml/src/pugixml.hpp"
 
 #define CONFIG_FILENAME		"config.xml"

@@ -5,7 +5,7 @@
 #include "Optick/include/optick.h"
 
 #include "SString.h"
-
+#include "Globals.h"
 class App;
 class GuiControl;
 
@@ -65,6 +65,7 @@ public:
 	{
 		return true;
 	}
+	
 	virtual bool OnGuiMouseClickEvent(GuiControl* control)
 	{
 		return true;
