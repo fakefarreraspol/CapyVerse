@@ -35,6 +35,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(entMan);
 	AddModule(scene);
+	AddModule(guiManager);
 
 	// Render last to swap buffer
 	AddModule(render);
