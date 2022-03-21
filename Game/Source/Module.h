@@ -8,6 +8,7 @@
 #include "Globals.h"
 class App;
 class GuiControl;
+class Collider;
 
 class Module
 {
@@ -65,7 +66,10 @@ public:
 	{
 		return true;
 	}
-	
+	virtual void OnCollision(Collider* c1, Collider* c2)
+	{
+		return;
+	}
 	virtual bool OnGuiMouseClickEvent(GuiControl* control)
 	{
 		return true;
