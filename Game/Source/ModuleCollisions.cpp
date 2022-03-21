@@ -1,7 +1,7 @@
 #include "ModuleCollisions.h"
 
 #include "App.h"
-
+#include "Log.h"
 #include "Render.h"
 #include "Input.h"
 #include "SDL/include/SDL_Scancode.h"

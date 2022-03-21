@@ -16,7 +16,7 @@ Player::~Player()
 bool Player::Update(float dt)
 {
 	bool ret = true;
-
+	
 	UpdateInput();
 
 	return ret;

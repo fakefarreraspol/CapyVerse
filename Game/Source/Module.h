@@ -5,7 +5,7 @@
 #include "Optick/include/optick.h"
 
 #include "SString.h"
-#include "Globals.h"
+
 class App;
 class GuiControl;
 class Collider;

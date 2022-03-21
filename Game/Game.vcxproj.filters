@@ -64,6 +64,8 @@
     <ClCompile Include="Source\Player.cpp">
       <Filter>Modules\Gameplay\Entities\Characters</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Collider.cpp" />
+    <ClCompile Include="Source\ModuleCollisions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -153,6 +155,8 @@
     <ClInclude Include="Source\Player.h">
       <Filter>Modules\Gameplay\Entities\Characters</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Collider.h" />
+    <ClInclude Include="Source\ModuleCollisions.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
