@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #include "App.h"
 #include "Input.h"
 #include "Textures.h"
@@ -5,6 +7,7 @@
 #include "Render.h"
 #include "Window.h"
 #include "Scene.h"
+#include "EntityManager.h"
 
 #include "GuiManager.h"
 #include "GuiButton.h"
@@ -35,9 +38,12 @@ bool Scene::Awake()
 bool Scene::Start()
 {
 	img = app->tex->Load("Assets/Textures/test.png");
-	app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
-
+	//app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
 	
+	ent = app->entMan->CreateEntity(CapybaraType::DPS, 1, {20, 20}, "Emobara");
+	ent1 = app->entMan->CreateEntity(CapybaraType::TANK , 1, { 40, 40 }, "Chinabara");
+	ent2 = app->entMan->CreateEntity(CapybaraType::SUPP, 1, { 60, 60 }, "Punkibara");
+
 	btn1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Test1", { 0, 0, 500, 100 }, this);
 	slider1 = (GuiSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 1, "dadf", { 0,0,50,50 }, this);
 	slider1->SetBar({200,200,500,30});
@@ -72,6 +78,17 @@ bool Scene::Update(float dt)
 		app->render->camera.x += 1;
 
 	app->render->DrawTexture(img, 380, 100);
+
+	if (app->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+	{
+		ent->Attack(ent1);
+		printf("%s DMG: %i %s HP: %i of %i\n", ent->name.GetString(), ent->GetDamage(), ent1->name.GetString(), ent1->GetHealth(), ent1->GetMaxHealth());
+	}
+	if (app->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+	{
+		ent->Attack(ent2);
+		printf("%s DMG: %i %s HP: %i of %i\n", ent->name.GetString(), ent->GetDamage(), ent2->name.GetString(), ent2->GetHealth(), ent2->GetMaxHealth());
+	}
 
 	app->guiManager->Draw();
 

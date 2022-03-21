@@ -21,7 +21,10 @@ class Entity
 {
 public:
 
-	Entity(EntityType type) : type(type), active(true) {}
+	Entity(EntityType type, uint32 id, const char* name, iPoint position) : type(type), active(true), id(id), position(position)
+	{
+		this->name.Create(name);
+	}
 
 	virtual bool Start()
 	{
@@ -84,7 +87,7 @@ public:
 
 	iPoint position;
 	bool renderable = false;
-	SDL_Texture* texture;
+	SDL_Texture* texture = nullptr;
 };
 
 #endif // __ENTITY_H__

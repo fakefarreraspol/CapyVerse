@@ -25,17 +25,20 @@ class Capybara : public Entity
 {
 public:
 	//Contructor and destructor
-	Capybara(CapybaraType capybaraType, iPoint position);
+	Capybara(CapybaraType capybaraType, uint32 id, iPoint position, const char* name);
 	~Capybara();
 
 	//Base functions
 	bool Update(float dt);
 	bool Draw(Render* render);
 
-
 	//Setters and getters
 	int GetHealth();
+	int GetMaxHealth();
 	int GetMana();
+	int GetMaxMana();
+	int GetDamage();
+	int GetArmor();
 	CapybaraType GetType();
 	CapybaraStats GetStats();
 
@@ -48,6 +51,9 @@ public:
 	//XP functions
 	void LevelUp();
 	void AddXp(int value);
+
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&);
 private:
 	//Update the stats by the lvl
 	void UpdateStats();
@@ -58,20 +64,26 @@ private:
 	CapybaraStats capybaraStats;
 
 	//Health variables
-	int health;
-	int maxHealth;
+	int health;		//The current health
+	int maxHealth;	//The maximun health 
 	int healthXLvl;	//The amount of health that every hp lvl gives
 
+	//Damage variables
 	int damage;		//The amount of damage by the strenght stat 
 	int damageXLvl; //The amount of damage that every strength lvl gives
 
+	//Armor variables
+	int armor;		//The amount of armor by the armor stat
+	int armorXLvl;	//The amount of armor that every armor lvl gives
+
 	//Mana variables
-	int mana;
-	int maxMana;
+	int mana;		//The current mana
+	int maxMana;	//The maximun mana
 	int manaXLvl;	//The amount of mana that every mp lvl gives
 
+	//XP variables
 	int xp = 0;		//Current capy xp points
-	int lvl;	//Capy lvl
+	int lvl;		//Capybara lvl
 	int xpNext;		//Xp points for the next level
 
 	bool isCombat = false;
