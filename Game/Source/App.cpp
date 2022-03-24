@@ -14,6 +14,7 @@
 #include "EntityManager.h"
 #include "GuiManager.h"
 #include "FadeToBlack.h"
+#include "BattleSceneTest.h"
 
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
@@ -26,6 +27,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new Audio(true);
 	fadeToBlack = new FadeToBlack(true);
 	scene = new Scene(true);
+	battleSceneTest = new BattleSceneTest(false);
 	entMan = new EntityManager(true);
 	guiManager = new GuiManager(true);
 
@@ -38,6 +40,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(fadeToBlack);
 	AddModule(entMan);
 	AddModule(scene);
+	AddModule(battleSceneTest);
 	AddModule(guiManager);
 
 	// Render last to swap buffer

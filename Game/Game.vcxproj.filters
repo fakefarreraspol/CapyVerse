@@ -67,7 +67,7 @@
     <ClCompile Include="Source\Chinabara.cpp">
       <Filter>Modules\Gameplay\Entities\Characters\Capybaras</Filter>
     </ClCompile>
-    <ClCompile Include="Source\BattleScene.cpp">
+    <ClCompile Include="Source\BattleSceneTest.cpp">
       <Filter>Modules\Gameplay\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Source\FadeToBlack.cpp">
@@ -165,7 +165,7 @@
     <ClInclude Include="Source\Chinabara.h">
       <Filter>Modules\Gameplay\Entities\Characters\Capybaras</Filter>
     </ClInclude>
-    <ClInclude Include="Source\BattleScene.h">
+    <ClInclude Include="Source\BattleSceneTest.h">
       <Filter>Modules\Gameplay\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Source\FadeToBlack.h">

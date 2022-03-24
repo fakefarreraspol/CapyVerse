@@ -14,17 +14,19 @@ enum class Turn
 
 class Capybara;
 
-class BattleScene : public Module
+class BattleSceneTest : public Module
 {
 public:
-	BattleScene(bool startEnabled);
-	virtual ~BattleScene();
+	BattleSceneTest(bool startEnabled);
+	virtual ~BattleSceneTest();
+
+	bool Awake(pugi::xml_node&);
 
 	bool Start();
 
 	bool PreUpdate();
 
-	virtual bool Update(float dt);
+	bool Update(float dt);
 
 	bool PostUpdate();
 

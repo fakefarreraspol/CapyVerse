@@ -1,34 +1,39 @@
-#include "BattleScene.h"
+#include "BattleSceneTest.h"
 
-BattleScene::BattleScene(bool startEnabled) : Module(startEnabled)
+BattleSceneTest::BattleSceneTest(bool startEnabled) : Module(startEnabled)
 {
 }
 
-BattleScene::~BattleScene()
+BattleSceneTest::~BattleSceneTest()
 {
 }
 
-bool BattleScene::Start()
-{
-	return false;
-}
-
-bool BattleScene::PreUpdate()
+bool BattleSceneTest::Awake(pugi::xml_node&)
 {
 	return false;
 }
 
-bool BattleScene::Update(float dt)
+bool BattleSceneTest::Start()
 {
 	return false;
 }
 
-bool BattleScene::PostUpdate()
+bool BattleSceneTest::PreUpdate()
 {
 	return false;
 }
 
-bool BattleScene::CleanUp()
+bool BattleSceneTest::Update(float dt)
+{
+	return false;
+}
+
+bool BattleSceneTest::PostUpdate()
+{
+	return false;
+}
+
+bool BattleSceneTest::CleanUp()
 {
 	bool ret = true;
 	return true;
