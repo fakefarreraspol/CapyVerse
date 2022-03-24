@@ -5,6 +5,7 @@
 #include "SDL\include\SDL_pixels.h"
 #include <SDL_ttf.h>
 
+
 #define MAX_FONTS 10
 #define MAX_FONT_CHARS 256
 
