@@ -10,27 +10,32 @@ BattleSceneTest::~BattleSceneTest()
 
 bool BattleSceneTest::Awake(pugi::xml_node&)
 {
-	return false;
+	bool ret = true;
+	return true;
 }
 
 bool BattleSceneTest::Start()
 {
-	return false;
+	bool ret = true;
+	return true;
 }
 
 bool BattleSceneTest::PreUpdate()
 {
-	return false;
+	bool ret = true;
+	return true;
 }
 
 bool BattleSceneTest::Update(float dt)
 {
-	return false;
+	bool ret = true;
+	return true;
 }
 
 bool BattleSceneTest::PostUpdate()
 {
-	return false;
+	bool ret = true;
+	return true;
 }
 
 bool BattleSceneTest::CleanUp()

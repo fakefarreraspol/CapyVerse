@@ -8,6 +8,7 @@
 #include "Window.h"
 #include "Scene.h"
 #include "EntityManager.h"
+#include "FadeToBlack.h"
 
 #include "GuiManager.h"
 #include "GuiButton.h"
@@ -26,7 +27,7 @@ Scene::~Scene()
 {}
 
 // Called before render is available
-bool Scene::Awake()
+bool Scene::Awake(pugi::xml_node& node)
 {
 	LOG("Loading Scene");
 	bool ret = true;
@@ -89,6 +90,9 @@ bool Scene::Update(float dt)
 		ent->Attack(ent2);
 		printf("%s DMG: %i %s HP: %i of %i\n", ent->name.GetString(), ent->GetDamage(), ent2->name.GetString(), ent2->GetHealth(), ent2->GetMaxHealth());
 	}
+
+	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+		app->fadeToBlack->MFadeToBlack(this, (Module*)app->battleSceneTest, 30);
 
 	app->guiManager->Draw();
 
