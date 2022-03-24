@@ -64,6 +64,15 @@
     <ClCompile Include="Source\Player.cpp">
       <Filter>Modules\Gameplay\Entities\Characters</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Chinabara.cpp">
+      <Filter>Modules\Gameplay\Entities\Characters\Capybaras</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BattleScene.cpp">
+      <Filter>Modules\Gameplay\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FadeToBlack.cpp">
+      <Filter>Modules\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -153,6 +162,15 @@
     <ClInclude Include="Source\Player.h">
       <Filter>Modules\Gameplay\Entities\Characters</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Chinabara.h">
+      <Filter>Modules\Gameplay\Entities\Characters\Capybaras</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BattleScene.h">
+      <Filter>Modules\Gameplay\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FadeToBlack.h">
+      <Filter>Modules\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -193,6 +211,9 @@
     </Filter>
     <Filter Include="Config">
       <UniqueIdentifier>{5c977823-501a-4845-b549-5ff7405e3e0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Gameplay\Entities\Characters\Capybaras">
+      <UniqueIdentifier>{51ca929c-cc01-41cc-a06e-905b84919066}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

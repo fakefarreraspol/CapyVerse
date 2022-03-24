@@ -34,8 +34,8 @@ public:
 	bool CleanUp();
 
 	// Additional methods
-	Entity* CreateEntity(EntityType entityType, int id, iPoint position, const char* name);
-	Capybara* CreateEntity(CapybaraType capybaraType, int id, iPoint position, const char* name);
+	Entity* CreateEntity(EntityType entityType, uint32 id, iPoint position, const char* name);
+	Capybara* CreateEntity(CapybaraType capybaraType, uint32 id, iPoint position, const char* name);
 
 	void DestroyEntity(Entity* entity);
 

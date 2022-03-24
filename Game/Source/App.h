@@ -22,6 +22,7 @@ class Audio;
 class Scene;
 class EntityManager;
 class GuiManager;
+class FadeToBlack;
 
 class App
 {
@@ -98,6 +99,7 @@ public:
 	Scene* scene;
 	EntityManager* entMan;
 	GuiManager* guiManager;
+	FadeToBlack* fadeToBlack;
 
 	bool fpsCap = false;
 	float dt = 0.0f;

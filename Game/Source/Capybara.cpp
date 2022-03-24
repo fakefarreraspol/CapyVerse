@@ -19,7 +19,7 @@ Capybara::Capybara(CapybaraType capyType, uint32 id, iPoint position, const char
 	damageXLvl = 4;
 	armorXLvl = 3;
 
-	InitStats();
+	
 }
 
 Capybara::~Capybara()
@@ -46,7 +46,7 @@ bool Capybara::Draw(Render* render)
 {
 	bool ret = true;
 
-	render->DrawRectangle({position.x, position.y, 20, 20}, 255, 0, 0);
+	render->DrawRectangle({position.x, position.y, 254, 254}, 255, 0, 0);
 
 	return ret;
 }
@@ -121,13 +121,15 @@ void Capybara::Heal(int value)
 	return;
 }
 //TODO: Think about all the abilities
-void Capybara::UseAbility()
+void Capybara::UseAbility(Capybara* target)
 {
 	return;
 }
 
 void Capybara::Attack(Capybara* target)
 {
+	if (target == nullptr)
+		return;
 	target->Damage(this->damage);
 }
 

@@ -13,6 +13,7 @@
 #include "Scene.h"
 #include "EntityManager.h"
 #include "GuiManager.h"
+#include "FadeToBlack.h"
 
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
@@ -23,6 +24,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	render = new Render(true);
 	tex = new Textures(true);
 	audio = new Audio(true);
+	fadeToBlack = new FadeToBlack(true);
 	scene = new Scene(true);
 	entMan = new EntityManager(true);
 	guiManager = new GuiManager(true);
@@ -33,6 +35,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(tex);
 	AddModule(audio);
+	AddModule(fadeToBlack);
 	AddModule(entMan);
 	AddModule(scene);
 	AddModule(guiManager);

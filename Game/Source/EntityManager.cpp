@@ -5,7 +5,7 @@
 #include "Log.h"
 
 #include "Player.h"
-
+#include "Chinabara.h"
 
 EntityManager::EntityManager(bool startEnabled) : Module(startEnabled)
 {
@@ -45,7 +45,7 @@ bool EntityManager::CleanUp()
 	return ret;
 }
 
-Entity* EntityManager::CreateEntity(EntityType type, int id, iPoint position, const char* name)
+Entity* EntityManager::CreateEntity(EntityType type, uint32 id, iPoint position, const char* name)
 {
 	Entity* entity = nullptr;
 
@@ -65,15 +65,20 @@ Entity* EntityManager::CreateEntity(EntityType type, int id, iPoint position, co
 		LOG("ERROR: Entity with no type couldn't be created");
 	}break;
 	}
+
 	if (entity != nullptr)
 		AddEntity(entity);
 
 	return entity;
 }
 
-Capybara* EntityManager::CreateEntity(CapybaraType capybaraType, int id, iPoint position, const char* name)
+Capybara* EntityManager::CreateEntity(CapybaraType capybaraType, uint32 id, iPoint position, const char* name)
 {
-	Capybara* entity = new Capybara(capybaraType, id, position, name);
+	Capybara* entity = nullptr;
+
+	if(name == "Chinabara")
+		entity = new Chinabrara(id, position);
+
 	
 	if (entity != nullptr)
 		AddEntity(entity);

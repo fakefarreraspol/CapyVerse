@@ -45,7 +45,7 @@ public:
 	//Combat functions
 	void Damage(int value);
 	void Heal(int value);
-	void UseAbility();
+	virtual void UseAbility(Capybara* target);
 	void Attack(Capybara* target);
 
 	//XP functions
@@ -54,12 +54,12 @@ public:
 
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&);
-private:
+protected:
 	//Update the stats by the lvl
 	void UpdateStats();
 	//Initialize all the stats and update them
 	void InitStats();
-private:
+protected:
 	//Capybara stats
 	CapybaraStats capybaraStats;
 
