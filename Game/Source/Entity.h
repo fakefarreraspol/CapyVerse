@@ -25,6 +25,13 @@ public:
 	{
 		this->name.Create(name);
 	}
+	
+	iPoint GetPosition() const
+	{
+		iPoint ret = position;
+		return ret;
+	}
+
 
 	virtual bool Start()
 	{

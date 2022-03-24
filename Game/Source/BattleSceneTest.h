@@ -12,6 +12,8 @@ enum class Turn
 	ENEMY
 };
 
+class Player;
+class GuiButton;
 class Capybara;
 
 class BattleSceneTest : public Module
@@ -28,12 +30,39 @@ public:
 
 	bool Update(float dt);
 
+	void ShowAttackMenu();
+
+	void ShowAbilityMenu();
+
+	void UpdateInput();
+
 	bool PostUpdate();
 
 	bool CleanUp();
 
+	void SetPlayer(Player* player);
+
+	void SetEnemy();
+
 private:
 	List<Capybara*> enemies;
+
+	Player* player;
+
+
+	ListItem<Capybara*>* currentCapybara;	//The capybara that the turn is on
+	ListItem<Capybara*>* selectedCapybara;	//The capybara wich the action may take effect
+	
+	GuiButton* attackBtn = nullptr;
+	GuiButton* abilityBtn = nullptr;
+	GuiButton* inventoryBtn = nullptr;
+	GuiButton* runBtn = nullptr;
+
+	bool updateInput = true;
+
+	bool showAttackMenu = false;
+	bool showAbilityMenu = false;
+
 
 	Turn turn = Turn::NONE;
 };

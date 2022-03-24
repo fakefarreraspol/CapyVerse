@@ -19,7 +19,7 @@ public:
 	//Adds a capybara to the player team 
 	void AddCapybara(Capybara* capybara);
 	//Adds a capybara to the player battle team
-	void AddCapybaraToBatlle(Capybara* capybara);
+	void AddCapybaraToBatle(Capybara* capybara);
 
 	//TODO: Update the player input and move the player
 	void UpdateInput();

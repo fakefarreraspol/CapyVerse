@@ -9,6 +9,7 @@
 struct SDL_Texture;
 
 class Capybara;
+class Player;
 
 class Scene : public Module
 {
@@ -44,10 +45,7 @@ private:
 	GuiSlider* slider1 = nullptr;
 	GuiCheckBox* box1 = nullptr;
 
-	Capybara* ent = nullptr;
-	Capybara* ent1 = nullptr;
-	Capybara* ent2 = nullptr;
-
+	Player* player = nullptr;
 };
 
 #endif // __SCENE_H__

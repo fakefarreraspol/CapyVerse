@@ -48,7 +48,7 @@ bool EntityManager::CleanUp()
 Entity* EntityManager::CreateEntity(EntityType type, uint32 id, iPoint position, const char* name)
 {
 	Entity* entity = nullptr;
-
+	
 	switch (type)
 	{
 	case EntityType::NONE:

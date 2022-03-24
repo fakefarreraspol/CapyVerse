@@ -51,6 +51,11 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char
 	return control;
 }
 
+void GuiManager::DestroyGuiControl(GuiControl* entity)
+{
+	RELEASE(entity);
+}
+
 bool GuiManager::Update(float dt)
 {
 	accumulatedTime += dt;

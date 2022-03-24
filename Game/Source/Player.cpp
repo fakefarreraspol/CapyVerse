@@ -33,7 +33,7 @@ void Player::AddCapybara(Capybara* capybara)
 	team.Add(capybara);
 }
 
-void Player::AddCapybaraToBatlle(Capybara* capybara)
+void Player::AddCapybaraToBatle(Capybara* capybara)
 {
 	battleTeam.Add(capybara);
 }

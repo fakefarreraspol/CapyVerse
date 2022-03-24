@@ -9,10 +9,12 @@
 #include "Scene.h"
 #include "EntityManager.h"
 #include "FadeToBlack.h"
+#include "BattleSceneTest.h"
 
 #include "GuiManager.h"
 #include "GuiButton.h"
 #include "GuiSlider.h"
+#include "Player.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -40,10 +42,6 @@ bool Scene::Start()
 {
 	img = app->tex->Load("Assets/Textures/test.png");
 	//app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
-	
-	ent = app->entMan->CreateEntity(CapybaraType::DPS, 1, {20, 20}, "Emobara");
-	ent1 = app->entMan->CreateEntity(CapybaraType::TANK , 1, { 40, 40 }, "Chinabara");
-	ent2 = app->entMan->CreateEntity(CapybaraType::SUPP, 1, { 60, 60 }, "Punkibara");
 
 	btn1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Test1", { 0, 0, 500, 100 }, this);
 	slider1 = (GuiSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 1, "dadf", { 0,0,50,50 }, this);
@@ -53,6 +51,13 @@ bool Scene::Start()
 
 	box1 = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "", { 100,100,100,100 }, this);
 
+	player = (Player*)app->entMan->CreateEntity(EntityType::PLAYER, 1, { 0, 0 }, "Player");
+
+	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 2, { 100, 150 }, "Chinabara"));
+	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 3, { 100, 250 }, "Chinabara"));
+	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 4, { 100, 350 }, "Chinabara"));
+
+	app->battleSceneTest->SetPlayer(player);
 
 	return true;
 }
@@ -80,17 +85,6 @@ bool Scene::Update(float dt)
 
 	app->render->DrawTexture(img, 380, 100);
 
-	if (app->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-	{
-		ent->Attack(ent1);
-		printf("%s DMG: %i %s HP: %i of %i\n", ent->name.GetString(), ent->GetDamage(), ent1->name.GetString(), ent1->GetHealth(), ent1->GetMaxHealth());
-	}
-	if (app->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
-	{
-		ent->Attack(ent2);
-		printf("%s DMG: %i %s HP: %i of %i\n", ent->name.GetString(), ent->GetDamage(), ent2->name.GetString(), ent2->GetHealth(), ent2->GetMaxHealth());
-	}
-
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		app->fadeToBlack->MFadeToBlack(this, (Module*)app->battleSceneTest, 30);
 
@@ -114,6 +108,9 @@ bool Scene::PostUpdate()
 bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
+
+	app->guiManager->CleanUp();
+	
 
 	return true;
 }
