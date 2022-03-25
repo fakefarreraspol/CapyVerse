@@ -1,7 +1,7 @@
 #include "App.h"
 #include "EntityManager.h"
 #include "Input.h"
-
+#include "Log.h"
 #include "Player.h"
 
 
@@ -18,7 +18,8 @@ bool Player::Update(float dt)
 	bool ret = true;
 	
 	UpdateInput();
-
+	LOG("player pos X: %i", position.x);
+	LOG("player pos Y: %i", position.y);
 	return ret;
 }
 

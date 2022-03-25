@@ -86,9 +86,21 @@ public:
 	// Get mouse / axis position
 	void GetMousePosition(int &x, int &y);
 	void GetMouseMotion(int& x, int& y);
-
+	
+	//CONTROLLERS
+	
+	
 	bool ShakeController(int id, int duration, float strength = 0.5f);
 	GamePad pads[MAX_PADS];
+	const char* GetControllerName(int id) const;
+	// Called at PreUpdate
+	// Iterates through all active gamepads and update all input data
+	void UpdateGamepadsInput();
+	// Activates SDL device funcionallity when a gamepad has been connected
+	void HandleDeviceConnection(int index);
+
+	// Deactivates SDL device funcionallity when a gamepad has been disconnected
+	void HandleDeviceRemoval(int index);
 private:
 	bool windowEvents[WE_COUNT];
 	KeyState*	keyboard;

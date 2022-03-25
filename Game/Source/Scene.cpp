@@ -51,8 +51,8 @@ bool Scene::Start()
 	slider1->state = GuiControlState::NORMAL;
 
 	box1 = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "", { 100,100,100,100 }, this);
-
-
+	iPoint sexo = { 0,0 };
+	app->entMan->CreateEntity(EntityType::PLAYER, 1, sexo, "sexo");
 	return true;
 }
 
@@ -65,6 +65,7 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	
 	if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		app->render->camera.y -= 1;
 
