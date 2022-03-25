@@ -46,6 +46,7 @@ public:
 
 private:
 	List<Capybara*> enemies;
+	List<Capybara*> playerTeam;
 
 	Player* player;
 

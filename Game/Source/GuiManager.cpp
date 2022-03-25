@@ -123,16 +123,10 @@ const GuiControl* GuiManager::GetActiveControll()
 
 bool GuiManager::CleanUp()
 {
-	ListItem<GuiControl*>* control = controls.start;
+	controls.Clear();
 
-	while (control != nullptr)
-	{
-		RELEASE(control);
-	}
 
 	return true;
-
-	return false;
 }
 
 

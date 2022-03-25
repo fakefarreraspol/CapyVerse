@@ -86,7 +86,7 @@ bool Scene::Update(float dt)
 	app->render->DrawTexture(img, 380, 100);
 
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-		app->fadeToBlack->MFadeToBlack(this, (Module*)app->battleSceneTest, 30);
+		app->fadeToBlack->MFadeToBlack(this, (Module*)app->battleSceneTest);
 
 	app->guiManager->Draw();
 
@@ -109,8 +109,7 @@ bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
 
-	app->guiManager->CleanUp();
-	
+	app->guiManager->Disable();
 
 	return true;
 }

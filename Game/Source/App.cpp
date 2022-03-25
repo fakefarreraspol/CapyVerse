@@ -38,11 +38,11 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(tex);
 	AddModule(audio);
 	AddModule(fadeToBlack);
-	AddModule(entMan);
 	AddModule(scene);
 	AddModule(battleSceneTest);
-	AddModule(guiManager);
 
+	AddModule(guiManager);
+	AddModule(entMan);
 	// Render last to swap buffer
 	AddModule(render);
 	ptimer = new PerfTimer();
