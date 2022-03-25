@@ -92,14 +92,10 @@ CapybaraStats Capybara::GetStats()
 }
 
 void Capybara::Damage(int value)
-{
-	//Formula DMG = D * (D + 100) * 0.08 / (A + 8)
-	//D -- Attack value
-	//A -- Character armor 
-	int finalDamage = value * (value + 100) * 0.08 / (armor + 8);
-	if (health - finalDamage > 0)
+{ 	
+	if (health - value > 0)
 	{
-		health -= finalDamage;
+		health -= value;
 		return;
 	}
 	
@@ -128,9 +124,15 @@ void Capybara::UseAbility(Capybara* target)
 
 void Capybara::Attack(Capybara* target)
 {
+	//Formula DMG = D * (D + 100) * 0.08 / (A + 8)
+	//D -- Attack value
+	//A -- Character armor
 	if (target == nullptr)
 		return;
-	target->Damage(this->damage);
+	int finalDamage = this->damage* (this->damage + 100) * 0.08 / (target->armor + 8);
+	target->Damage(finalDamage);
+
+	printf("%s id: %i DMG: %i to %s id: %i", this->name.GetString(), this->id, finalDamage, target->name.GetString(), target->id);
 }
 
 void Capybara::LevelUp()

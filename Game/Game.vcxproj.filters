@@ -34,9 +34,6 @@
     <ClCompile Include="Source\GuiManager.cpp">
       <Filter>Modules\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GuiControl.cpp">
-      <Filter>Modules\UI</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GuiButton.cpp">
       <Filter>Modules\UI</Filter>
     </ClCompile>

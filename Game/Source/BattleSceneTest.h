@@ -30,6 +30,8 @@ public:
 
 	bool Update(float dt);
 
+	void CreateAttackMenu();
+
 	void ShowAttackMenu();
 
 	void ShowAbilityMenu();
@@ -43,6 +45,8 @@ public:
 	void SetPlayer(Player* player);
 
 	void SetEnemy();
+
+	bool OnGuiMouseClickEvent(GuiControl* control);
 
 private:
 	List<Capybara*> enemies;
@@ -63,7 +67,7 @@ private:
 
 	bool showAttackMenu = false;
 	bool showAbilityMenu = false;
-
+	bool createAttackMenu = false;
 
 	Turn turn = Turn::NONE;
 };

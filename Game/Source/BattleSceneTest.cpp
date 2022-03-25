@@ -37,7 +37,7 @@ bool BattleSceneTest::Start()
 
 
 
-	attackBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 0, "Attack", { 135, 585, 70, 21 }, this);
+	attackBtn =	(GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 0, "Attack", { 135, 585, 70, 21 }, this);
 	abilityBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Ability", { 135, 615, 70, 21 }, this);
 	inventoryBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Inventory", { 135, 645, 70, 21 }, this);
 	runBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "Run", { 135, 675, 70, 21 }, this);
@@ -56,7 +56,12 @@ bool BattleSceneTest::Start()
 bool BattleSceneTest::PreUpdate()
 {
 	bool ret = true;
+	
 	UpdateInput();
+
+	if (createAttackMenu)
+		CreateAttackMenu();
+
 	return ret;
 }
 
@@ -70,7 +75,18 @@ bool BattleSceneTest::Update(float dt)
 	int posY = currentCapybara->data->GetPosition().y + SELECT_OFFSET;
 	app->render->DrawCircle(posX, posY, 10, 0, 255, 0);
 
+
+
 	return ret;
+}
+
+void BattleSceneTest::CreateAttackMenu()
+{
+	for (int i = 0; i < enemies.Count(); i++)
+	{
+		GuiButton* enemyBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, i + 4, enemies.At(i)->data->name.GetString(), { 250, i * 30 + 585, 70, 21 }, this);
+	}
+	createAttackMenu = false;
 }
 
 void BattleSceneTest::ShowAttackMenu()
@@ -115,4 +131,47 @@ bool BattleSceneTest::CleanUp()
 void BattleSceneTest::SetPlayer(Player* player)
 {
 	this->player = player;
+}
+
+bool BattleSceneTest::OnGuiMouseClickEvent(GuiControl* control)
+{
+	bool ret = true;
+	switch (control->type)
+	{
+	case GuiControlType::BUTTON:
+	{
+		if (control->id == 0)
+		{
+			printf("AttackBtn");
+			showAttackMenu = !showAttackMenu;
+			createAttackMenu = true;
+		}
+		if (control->id == 1)
+		{
+
+		}
+		if (control->id == 2)
+		{
+
+		}
+		if (control->id == 3)
+		{
+
+		}
+		if (control->id == 4)
+		{
+			currentCapybara->data->Attack(enemies.At(0)->data);
+		}
+		if (control->id == 5)
+		{
+			currentCapybara->data->Attack(enemies.At(1)->data);
+		}
+		if (control->id == 6)
+		{
+			currentCapybara->data->Attack(enemies.At(2)->data);
+		}
+	}break;
+
+	}
+	return ret;
 }
