@@ -5,7 +5,7 @@
 #include "Log.h"
 #include<string.h>
 
-ModuleFonts::ModuleFonts(bool startEnabled) : Module(startEnabled)
+ModuleFonts::ModuleFonts() : Module()
 {
 
 

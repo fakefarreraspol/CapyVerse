@@ -15,7 +15,6 @@
 #include "GuiManager.h"
 #include "FadeToBlack.h"
 #include "BattleSceneTest.h"
-#include "ModuleFonts.h"
 
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
@@ -26,7 +25,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	render = new Render(true);
 	tex = new Textures(true);
 	audio = new Audio(true);
-	fonts = new ModuleFonts(true);
 	fadeToBlack = new FadeToBlack(true);
 	scene = new Scene(true);
 	battleSceneTest = new BattleSceneTest(false);
@@ -39,7 +37,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(tex);
 	AddModule(audio);
-	AddModule(fonts);
 	AddModule(fadeToBlack);
 	AddModule(scene);
 	AddModule(battleSceneTest);
