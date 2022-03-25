@@ -64,8 +64,12 @@
     <ClCompile Include="Source\Player.cpp">
       <Filter>Modules\Gameplay\Entities\Characters</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Collider.cpp" />
-    <ClCompile Include="Source\ModuleCollisions.cpp" />
+    <ClCompile Include="Source\ModuleCollisions.cpp">
+      <Filter>Modules\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Collider.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -155,8 +159,12 @@
     <ClInclude Include="Source\Player.h">
       <Filter>Modules\Gameplay\Entities\Characters</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Collider.h" />
-    <ClInclude Include="Source\ModuleCollisions.h" />
+    <ClInclude Include="Source\ModuleCollisions.h">
+      <Filter>Modules\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Collider.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
