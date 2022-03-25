@@ -12,6 +12,10 @@ public:
 	Player(iPoint position, uint32 id, const char* name);
 	~Player();
 
+	iPoint lastPos;
+	int lastKeyPressed = 0;
+	bool isStuck = false;
+	int speed = 1;
 	//Base functions
 	bool Update(float dt);
 	bool Draw(Render* render);

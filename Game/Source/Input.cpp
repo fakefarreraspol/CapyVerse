@@ -158,3 +158,36 @@ void Input::GetMouseMotion(int& x, int& y)
 	x = mouseMotionX;
 	y = mouseMotionY;
 }
+
+bool Input::ShakeController(int id, int duration, float strength)
+{
+	bool ret = false;
+
+	// Check if the given id is valid within the array bounds
+	if (id < 0 || id >= MAX_PADS) return ret;
+
+	// Check if the gamepad is active and allows rumble
+	GamePad& pad = pads[id];
+	if (!pad.enabled || pad.haptic == nullptr || SDL_HapticRumbleSupported(pad.haptic) != SDL_TRUE) return ret;
+
+	// If the pad is already in rumble state and the new strength is below the current value, ignore this call
+	if (duration < pad.rumble_countdown && strength < pad.rumble_strength)
+		return ret;
+
+	if (SDL_HapticRumbleInit(pad.haptic) == -1)
+	{
+		LOG("Cannot init rumble for controller number %d", id);
+	}
+	else
+	{
+		SDL_HapticRumbleStop(pad.haptic);
+		SDL_HapticRumblePlay(pad.haptic, strength, duration / 60 * 1000); //Conversion from frames to ms at 60FPS
+
+		pad.rumble_countdown = duration;
+		pad.rumble_strength = strength;
+
+		ret = true;
+	}
+
+	return ret;
+}
