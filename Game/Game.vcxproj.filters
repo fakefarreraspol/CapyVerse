@@ -60,6 +60,8 @@
     </ClCompile>
     <ClCompile Include="Source\Timer.cpp">
       <Filter>Utils</Filter>
+    <ClCompile Include="Source\ModuleFonts.cpp">
+      <Filter>Modules\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +148,8 @@
     </ClInclude>
     <ClInclude Include="Source\Timer.h">
       <Filter>Utils</Filter>
+    <ClInclude Include="Source\ModuleFonts.h">
+      <Filter>Modules\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -61,7 +61,7 @@ void App::AddModule(Module* module)
 {
 	module->Init();
 	modules.Add(module);
-}
+}                                         
 
 // Called before render is available
 bool App::Awake()
