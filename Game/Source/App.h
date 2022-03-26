@@ -24,6 +24,7 @@ class EntityManager;
 class BattleSceneTest;
 class GuiManager;
 class FadeToBlack;
+class Fonts;
 
 class App
 {
@@ -99,6 +100,7 @@ public:
 	Audio* audio;
 	Scene* scene;
 	EntityManager* entMan;
+	Fonts* fonts;
 	GuiManager* guiManager;
 	FadeToBlack* fadeToBlack;
 	BattleSceneTest* battleSceneTest;

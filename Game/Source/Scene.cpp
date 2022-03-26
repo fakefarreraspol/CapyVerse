@@ -10,6 +10,7 @@
 #include "EntityManager.h"
 #include "FadeToBlack.h"
 #include "BattleSceneTest.h"
+#include "Fonts.h"
 
 #include "GuiManager.h"
 #include "GuiButton.h"
@@ -40,9 +41,9 @@ bool Scene::Awake(pugi::xml_node& node)
 // Called before the first frame
 bool Scene::Start()
 {
-	img = app->tex->Load("Assets/Textures/test.png");
-	//app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
-
+	
+	SDL_Rect rect = { 500, 500, 200, 200 };
+	img = app->fonts->LoadRenderedText(rect, app->fonts->globalFont, "This is a test", {0, 255, 0});
 	btn1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Test1", { 0, 0, 500, 100 }, this);
 	slider1 = (GuiSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 1, "dadf", { 0,0,50,50 }, this);
 	slider1->SetBar({200,200,500,30});

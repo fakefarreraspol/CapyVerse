@@ -15,6 +15,7 @@
 #include "GuiManager.h"
 #include "FadeToBlack.h"
 #include "BattleSceneTest.h"
+#include "Fonts.h"
 
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
@@ -29,6 +30,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new Scene(true);
 	battleSceneTest = new BattleSceneTest(false);
 	entMan = new EntityManager(true);
+	fonts = new Fonts(true);
 	guiManager = new GuiManager(true);
 
 	// Ordered for awake / Start / Update
@@ -36,6 +38,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(win);
 	AddModule(input);
 	AddModule(tex);
+	AddModule(fonts);
 	AddModule(audio);
 	AddModule(fadeToBlack);
 	AddModule(scene);
