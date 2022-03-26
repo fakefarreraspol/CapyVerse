@@ -20,15 +20,15 @@ struct Text
 
 };
 
-class ModuleFonts : public Module
+class Fonts : public Module
 {
 public:
 
 	// Constructor
-	ModuleFonts();
+	Fonts(bool startEnabled);
 
 	// Destructor
-	virtual ~ModuleFonts();
+	virtual ~Fonts();
 
 	bool Start();
 	bool CleanUp();

@@ -1,23 +1,23 @@
-#include "ModuleFonts.h"
+#include "Fonts.h"
 #include "App.h"
 #include "Textures.h"
 #include "Render.h"
 #include "Log.h"
 #include<string.h>
 
-ModuleFonts::ModuleFonts() : Module()
+Fonts::Fonts(bool startEnabled) : Module(startEnabled)
 {
 
 
 
 }
 
-ModuleFonts::~ModuleFonts()
+Fonts::~Fonts()
 {
 
 }
 
-bool ModuleFonts::Start()
+bool Fonts::Start()
 {
 
 	LOG("start fonts ");
@@ -44,15 +44,15 @@ bool ModuleFonts::Start()
 		fonts[i] = nullptr;
 
 	//This takes in the path to the font file and the point size we want to render at.
-	globalFont = LoadTIFF("./Assets/GUI/Fonts/RobotoMedium.ttf", 24);
-	titles = LoadTIFF("./Assets/GUI/Fonts/VT323-Regular.ttf",48);
+	globalFont = LoadTIFF("Assets/GUI/Fonts/RobotoMedium.ttf", 24);
+	titles = LoadTIFF("Assets/GUI/Fonts/VT323-Regular.ttf",48);
 
-	menuButtonFont = LoadTIFF("./Assets/GUI/Fonts/VT323-Regular.ttf", 60);
+	menuButtonFont = LoadTIFF("Assets/GUI/Fonts/VT323-Regular.ttf", 60);
 
 	return true;
 }
 
-bool ModuleFonts::CleanUp()
+bool Fonts::CleanUp()
 {
 	if(textTex1 != NULL)
 	  SDL_DestroyTexture(textTex1);
@@ -65,13 +65,13 @@ bool ModuleFonts::CleanUp()
 	return true;
 }
 
-bool ModuleFonts::Update(float dt)
+bool Fonts::Update(float dt)
 {
 
 	return true;
 }
 
-int ModuleFonts::LoadTIFF(const char* fontPath,int fontSize)
+int Fonts::LoadTIFF(const char* fontPath,int fontSize)
 {
 	int id = -1;
 	if(fontPath == NULL || fontSize == NULL)
@@ -109,7 +109,7 @@ int ModuleFonts::LoadTIFF(const char* fontPath,int fontSize)
 	return id;
 }
 
-void ModuleFonts::UnloadTIFF(int font_id)
+void Fonts::UnloadTIFF(int font_id)
 {
 	if (font_id >= 0 && font_id < MAX_FONTS && fonts[font_id] != nullptr)
 	{
@@ -119,7 +119,7 @@ void ModuleFonts::UnloadTIFF(int font_id)
 	}
 }
 
-void ModuleFonts::UnloadAllTIFF()
+void Fonts::UnloadAllTIFF()
 {
 	for (int i = 0; i < MAX_FONTS; i++)
 	{
@@ -132,7 +132,7 @@ void ModuleFonts::UnloadAllTIFF()
 	}
 }
 
-SDL_Texture* ModuleFonts::LoadRenderedText(SDL_Rect &rect, int font_id, const char* text, SDL_Color color)
+SDL_Texture* Fonts::LoadRenderedText(SDL_Rect &rect, int font_id, const char* text, SDL_Color color)
 {
 
 	if (fonts[font_id] == NULL)
@@ -168,7 +168,7 @@ SDL_Texture* ModuleFonts::LoadRenderedText(SDL_Rect &rect, int font_id, const ch
 	return tex;
 }
 
-SDL_Texture* ModuleFonts::LoadRenderedParagraph(SDL_Rect& rect, int font_id, const char* text, SDL_Color color, uint32 wrapedLength)
+SDL_Texture* Fonts::LoadRenderedParagraph(SDL_Rect& rect, int font_id, const char* text, SDL_Color color, uint32 wrapedLength)
 {
 	if (fonts[font_id] == NULL)
 	{

@@ -22,6 +22,7 @@ class Audio;
 class Scene;
 class EntityManager;
 class GuiManager;
+class Fonts;
 
 class App
 {
@@ -97,6 +98,7 @@ public:
 	Audio* audio;
 	Scene* scene;
 	EntityManager* entMan;
+	Fonts* fonts;
 	GuiManager* guiManager;
 
 	bool fpsCap = false;

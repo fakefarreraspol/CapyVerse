@@ -13,6 +13,7 @@
 #include "Scene.h"
 #include "EntityManager.h"
 #include "GuiManager.h"
+#include "Fonts.h"
 
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
@@ -25,6 +26,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new Audio(true);
 	scene = new Scene(true);
 	entMan = new EntityManager(true);
+	fonts = new Fonts(true);
 	guiManager = new GuiManager(true);
 
 	// Ordered for awake / Start / Update
@@ -32,6 +34,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(win);
 	AddModule(input);
 	AddModule(tex);
+	AddModule(fonts);
 	AddModule(audio);
 	AddModule(entMan);
 	AddModule(scene);
