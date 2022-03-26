@@ -70,6 +70,7 @@
     <ClCompile Include="Source\FadeToBlack.cpp">
       <Filter>Modules\Core</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Fonts.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -168,6 +169,7 @@
     <ClInclude Include="Source\FadeToBlack.h">
       <Filter>Modules\Core</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Fonts.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
