@@ -16,6 +16,17 @@ FadeToBlack::~FadeToBlack()
 
 }
 
+bool FadeToBlack::Awake(pugi::xml_node&)
+{
+	uint winWidth, winHeight;
+
+	app->win->GetWindowSize(winWidth, winHeight);
+
+	screenRect = { 0, 0,  (int)winWidth * (int)app->win->GetScale(), (int)winHeight * (int)app->win->GetScale() };
+
+	return true;
+}
+
 bool FadeToBlack::Start()
 {
 	//LOG("Preparing Fade Screen");

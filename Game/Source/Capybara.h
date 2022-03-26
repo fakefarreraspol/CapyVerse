@@ -33,14 +33,14 @@ public:
 	bool Draw(Render* render);
 
 	//Setters and getters
-	int GetHealth();
-	int GetMaxHealth();
-	int GetMana();
-	int GetMaxMana();
-	int GetDamage();
-	int GetArmor();
-	CapybaraType GetType();
-	CapybaraStats GetStats();
+	int& GetHealth();
+	int& GetMaxHealth();
+	int& GetMana();
+	int& GetMaxMana();
+	int& GetDamage();
+	int& GetArmor();
+	CapybaraType& GetType();
+	CapybaraStats& GetStats();
 
 	//Combat functions
 	void Damage(int value);

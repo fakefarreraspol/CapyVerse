@@ -8,6 +8,7 @@
 #include "GuiButton.h"
 #include "GuiSlider.h"
 #include "GuiCheckBox.h"
+#include "GuiText.h"
 
 #include "Audio.h"
 
@@ -23,7 +24,7 @@ bool GuiManager::Start()
 	return true;
 }
 
-GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char* text, SDL_Rect bounds, Module* observer, SDL_Rect sliderBounds)
+GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char* text, SDL_Rect bounds, Module* observer, SDL_Rect sliderBounds, SDL_Color textColor)
 {
 	// L14: TODO1: Create a GUI control and add it to the list of controls
 
@@ -35,6 +36,7 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char
 	case GuiControlType::BUTTON:	control = new GuiButton(id, bounds, text);		break;
 	case GuiControlType::SLIDER:	control = new GuiSlider(id, bounds, text);		break;
 	case GuiControlType::CHECKBOX:	control = new GuiCheckBox(id, bounds, text);	break;
+	case GuiControlType::TEXT:		control = new GuiText(id, bounds, text, textColor);		break;
 		// More Gui Controls can go here
 
 	default:
@@ -53,7 +55,14 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char
 
 void GuiManager::DestroyGuiControl(GuiControl* entity)
 {
-	RELEASE(entity);
+	ListItem<GuiControl*>* item;
+
+	for (item = controls.start; item != NULL; item = item->next)
+	{
+		if (item->data == entity) controls.Del(item);
+	}
+
+	return;
 }
 
 bool GuiManager::Update(float dt)
@@ -124,7 +133,6 @@ const GuiControl* GuiManager::GetActiveControll()
 bool GuiManager::CleanUp()
 {
 	controls.Clear();
-
 
 	return true;
 }

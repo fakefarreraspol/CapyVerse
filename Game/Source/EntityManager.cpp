@@ -6,6 +6,8 @@
 
 #include "Player.h"
 #include "Chinabara.h"
+#include "Punkibara.h"
+#include "Rainbowbara.h"
 
 EntityManager::EntityManager(bool startEnabled) : Module(startEnabled)
 {
@@ -77,7 +79,11 @@ Capybara* EntityManager::CreateEntity(CapybaraType capybaraType, uint32 id, iPoi
 	Capybara* entity = nullptr;
 
 	if(name == "Chinabara")
-		entity = new Chinabrara(id, position);
+		entity = new Chinabara(id, position);
+	if (name == "Punkibara")
+		entity = new Punkibara(id, position);
+	if (name == "Rainbowbara")
+		entity = new Rainbowbara(id, position);
 
 	
 	if (entity != nullptr)

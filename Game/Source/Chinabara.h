@@ -3,11 +3,11 @@
 
 #include "Capybara.h"
 
-class Chinabrara : public Capybara
+class Chinabara : public Capybara
 {
 public:
-	Chinabrara(uint32 id, iPoint position);
-	~Chinabrara();
+	Chinabara(uint32 id, iPoint position);
+	~Chinabara();
 
 	bool Update(float dt);
 

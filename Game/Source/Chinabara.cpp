@@ -1,26 +1,26 @@
 #include "Chinabara.h"
 
-Chinabrara::Chinabrara(uint32 id, iPoint position) : Capybara(CapybaraType::TANK, id, position, "Chinabara")
+Chinabara::Chinabara(uint32 id, iPoint position) : Capybara(CapybaraType::TANK, id, position, "Chinabara")
 {
-	this->capybaraStats.hp = 6;
-	this->capybaraStats.mp = 3;
-	this->capybaraStats.strenght = 5;
-	this->capybaraStats.speed = 4;
-	this->capybaraStats.intelligence = 2;
+	this->capybaraStats.hp				= 6;
+	this->capybaraStats.mp				= 3;
+	this->capybaraStats.strenght		= 5;
+	this->capybaraStats.speed			= 4;
+	this->capybaraStats.intelligence	= 2;
 
 	InitStats();
 }
 
-Chinabrara::~Chinabrara()
+Chinabara::~Chinabara()
 {
 }
 
-bool Chinabrara::Update(float dt)
+bool Chinabara::Update(float dt)
 {
 
 	return true;
 }
 
-void Chinabrara::UseAbility(Capybara* target)
+void Chinabara::UseAbility(Capybara* target)
 {
 }

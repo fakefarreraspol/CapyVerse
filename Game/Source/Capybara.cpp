@@ -51,42 +51,42 @@ bool Capybara::Draw(Render* render)
 	return ret;
 }
 
-int Capybara::GetHealth()
+int& Capybara::GetHealth()
 {
 	return health;
 }
 
-int Capybara::GetMaxHealth()
+int& Capybara::GetMaxHealth()
 {
 	return maxHealth;
 }
 
-int Capybara::GetMana()
+int& Capybara::GetMana()
 {
 	return mana;
 }
 
-int Capybara::GetMaxMana()
+int& Capybara::GetMaxMana()
 {
 	return maxMana;
 }
 
-int Capybara::GetDamage()
+int& Capybara::GetDamage()
 {
 	return damage;
 }
 
-int Capybara::GetArmor()
+int& Capybara::GetArmor()
 {
 	return armor;
 }
 
-CapybaraType Capybara::GetType()
+CapybaraType& Capybara::GetType()
 {
 	return capybaraType;
 }
 
-CapybaraStats Capybara::GetStats()
+CapybaraStats& Capybara::GetStats()
 {
 	return capybaraStats;
 }

@@ -44,19 +44,12 @@ bool Scene::Start()
 	
 	SDL_Rect rect = { 500, 500, 200, 200 };
 	img = app->fonts->LoadRenderedText(rect, app->fonts->globalFont, "This is a test", {0, 255, 0});
-	btn1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Test1", { 0, 0, 500, 100 }, this);
-	slider1 = (GuiSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 1, "dadf", { 0,0,50,50 }, this);
-	slider1->SetBar({200,200,500,30});
-	slider1->SetValues(100, 0, 0);
-	slider1->state = GuiControlState::NORMAL;
-
-	box1 = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "", { 100,100,100,100 }, this);
 
 	player = (Player*)app->entMan->CreateEntity(EntityType::PLAYER, 1, { 0, 0 }, "Player");
 
 	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 2, { 100, 150 }, "Chinabara"));
-	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 3, { 100, 250 }, "Chinabara"));
-	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 4, { 100, 350 }, "Chinabara"));
+	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 3, { 100, 250 }, "Punkibara"));
+	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 4, { 100, 350 }, "Rainbowbara"));
 
 	app->battleSceneTest->SetPlayer(player);
 
@@ -87,7 +80,7 @@ bool Scene::Update(float dt)
 	app->render->DrawTexture(img, 380, 100);
 
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-		app->fadeToBlack->MFadeToBlack(this, (Module*)app->battleSceneTest);
+		app->fadeToBlack->MFadeToBlack(this, (Module*)app->battleSceneTest, 120);
 
 	app->guiManager->Draw();
 

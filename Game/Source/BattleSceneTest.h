@@ -3,6 +3,7 @@
 
 #include "List.h"
 
+#include "Render.h"
 #include "Module.h"
 
 enum class Turn
@@ -15,6 +16,7 @@ enum class Turn
 class Player;
 class GuiButton;
 class Capybara;
+class GuiText;
 
 class BattleSceneTest : public Module
 {
@@ -46,6 +48,8 @@ public:
 
 	void SetEnemy();
 
+	void CreateTexts();
+
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
 private:
@@ -55,19 +59,27 @@ private:
 	Player* player;
 
 
-	ListItem<Capybara*>* currentCapybara;	//The capybara that the turn is on
-	ListItem<Capybara*>* selectedCapybara;	//The capybara wich the action may take effect
+	ListItem<Capybara*>* currentCapybara = nullptr;	//The capybara that the turn is on
+	ListItem<Capybara*>* selectedCapybara = nullptr;	//The capybara wich the action may take effect
 	
 	GuiButton* attackBtn = nullptr;
 	GuiButton* abilityBtn = nullptr;
 	GuiButton* inventoryBtn = nullptr;
 	GuiButton* runBtn = nullptr;
 
+	List<GuiButton*> attackBtns;
+	List<GuiText*>	 enemyInfo;
+
+	List<GuiText*> playerNames;
+	GuiText* currentName = nullptr;
+
 	bool updateInput = true;
 
 	bool showAttackMenu = false;
 	bool showAbilityMenu = false;
 	bool createAttackMenu = false;
+	bool createTexts = false;
+	bool updateCurrentName = false;
 
 	Turn turn = Turn::NONE;
 };

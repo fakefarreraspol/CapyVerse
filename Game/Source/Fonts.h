@@ -1,5 +1,5 @@
-#ifndef __MODULE_FONTS_H__
-#define __MODULE_FONTS_H__
+#ifndef __FONTS_H__
+#define __FONTS_H__
 
 #include "Module.h"
 #include "SDL\include\SDL_pixels.h"
@@ -68,12 +68,10 @@ private:
 
 	// To display text
 	SDL_Rect dpsRect;// to store the text texture dimensions
-	SDL_Texture* textTex1;// to store the actual texture to display
 	int mWidth;//Image dimensions
 	int mHeight;
 
 	SDL_Rect  dpsParagraph;
-	SDL_Texture* textTex2;
 
 
 };

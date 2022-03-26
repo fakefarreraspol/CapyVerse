@@ -26,10 +26,9 @@ public:
 		this->name.Create(name);
 	}
 	
-	iPoint GetPosition() const
+	iPoint& GetPosition() 
 	{
-		iPoint ret = position;
-		return ret;
+		return position;
 	}
 
 

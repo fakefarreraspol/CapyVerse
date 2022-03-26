@@ -42,12 +42,12 @@ void Player::UpdateInput()
 {
 }
 
-List<Capybara*> Player::GetBattleTeam()
+List<Capybara*>& Player::GetBattleTeam()
 {
 	return battleTeam;
 }
 
-List<Capybara*> Player::GetTeam()
+List<Capybara*>& Player::GetTeam()
 {
 	return team;
 }

@@ -39,7 +39,7 @@ public:
 	bool CleanUp();
 
 private:
-	SDL_Texture* img;
+	SDL_Texture* img = nullptr;
 
 	GuiButton* btn1 = nullptr;
 	GuiSlider* slider1 = nullptr;

@@ -20,7 +20,7 @@ Fonts::~Fonts()
 bool Fonts::Start()
 {
 
-	LOG("start fonts ");
+	LOG("Start fonts...");
 
 	SDL_version compiled;
 	SDL_version linked;
@@ -44,7 +44,7 @@ bool Fonts::Start()
 		fonts[i] = nullptr;
 
 	//This takes in the path to the font file and the point size we want to render at.
-	globalFont = LoadTIFF("Assets/GUI/Fonts/RobotoMedium.ttf", 24);
+	globalFont = LoadTIFF("Assets/GUI/Fonts/RobotoMedium.ttf", 18);
 	titles = LoadTIFF("Assets/GUI/Fonts/VT323-Regular.ttf",48);
 
 	menuButtonFont = LoadTIFF("Assets/GUI/Fonts/VT323-Regular.ttf", 60);
@@ -53,12 +53,7 @@ bool Fonts::Start()
 }
 
 bool Fonts::CleanUp()
-{
-	if(textTex1 != NULL)
-	  SDL_DestroyTexture(textTex1);
-	if (textTex2 != NULL)
-	  SDL_DestroyTexture(textTex2);
-	
+{	
 	UnloadAllTIFF();
 
 	TTF_Quit();

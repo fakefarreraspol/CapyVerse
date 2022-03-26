@@ -70,7 +70,18 @@
     <ClCompile Include="Source\FadeToBlack.cpp">
       <Filter>Modules\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Fonts.cpp" />
+    <ClCompile Include="Source\Fonts.cpp">
+      <Filter>Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Rainbowbara.cpp">
+      <Filter>Modules\Gameplay\Entities\Characters\Capybaras</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Punkibara.cpp">
+      <Filter>Modules\Gameplay\Entities\Characters\Capybaras</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiText.cpp">
+      <Filter>Modules\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -169,7 +180,18 @@
     <ClInclude Include="Source\FadeToBlack.h">
       <Filter>Modules\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Fonts.h" />
+    <ClInclude Include="Source\Fonts.h">
+      <Filter>Modules\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Rainbowbara.h">
+      <Filter>Modules\Gameplay\Entities\Characters\Capybaras</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Punkibara.h">
+      <Filter>Modules\Gameplay\Entities\Characters\Capybaras</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiText.h">
+      <Filter>Modules\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

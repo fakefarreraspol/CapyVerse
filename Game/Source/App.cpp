@@ -37,17 +37,18 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	// Reverse order of CleanUp
 	AddModule(win);
 	AddModule(input);
+	AddModule(fadeToBlack);
+	AddModule(entMan);
 	AddModule(tex);
 	AddModule(fonts);
 	AddModule(audio);
-	AddModule(fadeToBlack);
 	AddModule(scene);
 	AddModule(battleSceneTest);
-
 	AddModule(guiManager);
-	AddModule(entMan);
+
 	// Render last to swap buffer
 	AddModule(render);
+
 	ptimer = new PerfTimer();
 	frameDuration = new PerfTimer();
 }

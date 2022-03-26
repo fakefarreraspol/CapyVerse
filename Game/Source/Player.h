@@ -25,8 +25,8 @@ public:
 	void UpdateInput();
 
 	//Getters for the teams
-	List<Capybara*> GetBattleTeam();
-	List<Capybara*> GetTeam();
+	List<Capybara*>& GetBattleTeam();
+	List<Capybara*>& GetTeam();
 
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&);
