@@ -15,7 +15,8 @@ GuiSlider::GuiSlider(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(
 
 GuiSlider::~GuiSlider()
 {
-
+	RELEASE(textTex);
+	RELEASE(texture);
 }
 
 bool GuiSlider::SetBar(SDL_Rect bar)

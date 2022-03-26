@@ -14,6 +14,7 @@ public:
 	virtual ~GuiText();
 
 	bool Update(float dt);
+	bool SetText(const char* text);
 	bool Draw(Render* render);
 
 	const char* GetText();

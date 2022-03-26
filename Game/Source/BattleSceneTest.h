@@ -17,6 +17,7 @@ class Player;
 class GuiButton;
 class Capybara;
 class GuiText;
+class GuiBar;
 
 class BattleSceneTest : public Module
 {
@@ -68,9 +69,12 @@ private:
 	GuiButton* runBtn = nullptr;
 
 	List<GuiButton*> attackBtns;
-	List<GuiText*>	 enemyInfo;
+	List<GuiText*> enemyInfo;
+	List<GuiBar*> enemyBars;
 
 	List<GuiText*> playerNames;
+	List<GuiBar*>  playerBars;
+	List<GuiText*> playerHeathText;
 	GuiText* currentName = nullptr;
 
 	bool updateInput = true;

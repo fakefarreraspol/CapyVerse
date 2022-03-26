@@ -1,5 +1,7 @@
 #define SELECT_OFFSET 0
 
+#include <string.h>
+
 #include "BattleSceneTest.h"
 
 #include "GuiButton.h"
@@ -8,6 +10,7 @@
 #include "GuiManager.h"
 #include "EntityManager.h"
 #include "GuiText.h"
+#include "GuiBar.h"
 
 
 #include "Capybara.h"
@@ -59,7 +62,7 @@ bool BattleSceneTest::Start()
 
 	CreateTexts();
 
-	currentName = (GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 10, currentCapybara->data->name.GetString(), { 115, 545, 155, 20 }, this, {0, 0, 0, 0}, {255, 255, 255, 1});
+
 
 	return ret;
 }
@@ -80,8 +83,23 @@ bool BattleSceneTest::PreUpdate()
 		{
 			app->guiManager->DestroyGuiControl(attackBtns.At(i)->data);
 			app->guiManager->DestroyGuiControl(enemyInfo.At(i)->data);
+			app->guiManager->DestroyGuiControl(enemyBars.At(i)->data);
 		}
+		enemyBars.Clear();
+		enemyInfo.Clear();
+		attackBtns.Clear();
 	}
+
+	for (int i = 0; i < playerHeathText.Count(); i++)
+	{
+		SString hp("%i/%iHP", playerTeam.At(i)->data->GetHealth(), playerTeam.At(i)->data->GetMaxHealth());
+		if (strcmp(playerHeathText.At(i)->data->GetText(), hp.GetString()))
+		{
+			playerHeathText.At(i)->data->SetText(hp.GetString());
+		}
+
+	}
+
 
 	return ret;
 }
@@ -100,13 +118,32 @@ bool BattleSceneTest::Update(float dt)
 
 	if (showAttackMenu)
 		ShowAttackMenu();
+	if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	{
+		enemies.At(2)->data->Attack(playerTeam.At(0)->data);
+	}
+	if (app->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+	{
+		enemies.At(2)->data->Attack(playerTeam.At(1)->data);
+	}
+	if (app->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+	{
+		enemies.At(2)->data->Attack(playerTeam.At(2)->data);
+	}
 
+	//Updates the character name changes
 	if (updateCurrentName)
 	{
 		app->guiManager->DestroyGuiControl(currentName);
-		currentName = (GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 10, currentCapybara->data->name.GetString(), { 115, 545, 155, 20 }, this, { 0, 0, 0, 0 }, { 255, 255, 255, 1 });
+		currentName = (GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 10, currentCapybara->data->name.GetString(), { 115, 545, 155, 20 }, this, { 255, 255, 255, 1 });
 		updateCurrentName = false;
 	}
+	//Updating the capybaras info
+	for (int i = 0; i < playerBars.Count(); i++)
+	{
+		playerBars.At(i)->data->UpdateValues(playerTeam.At(i)->data->GetHealth(), playerTeam.At(i)->data->GetMaxHealth());
+	}
+
 
 	return ret;
 }
@@ -117,8 +154,15 @@ void BattleSceneTest::CreateAttackMenu()
 	{
 		attackBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, i + 4, enemies.At(i)->data->name.GetString(), { 250, i * 50 + 550, 155, 20 }, this));
 		SString enemyHealth("%i/%i HP", enemies.At(i)->data->GetHealth(), enemies.At(i)->data->GetMaxHealth());
-		enemyInfo.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, i + 4, enemyHealth.GetString(), { 250, i * 50 + 575, 155, 20 }, this, {0, 0, 0, 0}, {255, 255, 255, 1}));
+		enemyBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, i + 4, "EnemyBar", { 250, i * 50 + 575, 155, 20 }, this));
+		enemyInfo.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, i + 4, enemyHealth.GetString(), { 250, i * 50 + 575, 155, 20 }, this,  {255, 255, 255, 1}));
+
 	}
+	for (int i = 0; i < enemyBars.Count(); i++)
+	{
+		enemyBars.At(i)->data->UpdateValues(enemies.At(i)->data->GetHealth(), enemies.At(i)->data->GetMaxHealth());
+	}
+
 	createAttackMenu = false;
 
 	return;
@@ -188,11 +232,16 @@ void BattleSceneTest::SetPlayer(Player* player)
 
 void BattleSceneTest::CreateTexts()
 {
+	currentName = (GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 10, currentCapybara->data->name.GetString(), { 115, 545, 155, 20 }, this, { 255, 255, 255, 1 });
 
 	for (int i = 0; i < playerTeam.Count(); i++)
 	{
-		app->guiManager->CreateGuiControl(GuiControlType::TEXT, 20 + i, playerTeam.At(i)->data->name.GetString(), {i * 450 + 15, 60, 155, 20}, this, {0, 0, 0, 0}, {255, 255, 255, 1});
+		app->guiManager->CreateGuiControl(GuiControlType::TEXT, 20 + i, playerTeam.At(i)->data->name.GetString(), {i * 450 + 15, 60, 155, 20}, this, {255, 255, 255, 1});
+		playerBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, 20 + i, "PlayerBars", { i * 450 + 15, 100, 155, 20 }, this ));
+		SString hp("%i/%iHP", playerTeam.At(i)->data->GetHealth(), playerTeam.At(i)->data->GetMaxHealth());
+		playerHeathText.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 20 + i, hp.GetString(), {i * 450 + 15, 100, 155, 20}, this, {255, 255, 255, 1}));
 	}
+	
 
 	createTexts = false;
 

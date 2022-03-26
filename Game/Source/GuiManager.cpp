@@ -9,6 +9,7 @@
 #include "GuiSlider.h"
 #include "GuiCheckBox.h"
 #include "GuiText.h"
+#include "GuiBar.h"
 
 #include "Audio.h"
 
@@ -24,7 +25,7 @@ bool GuiManager::Start()
 	return true;
 }
 
-GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char* text, SDL_Rect bounds, Module* observer, SDL_Rect sliderBounds, SDL_Color textColor)
+GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char* text, SDL_Rect bounds, Module* observer, SDL_Color textColor)
 {
 	// L14: TODO1: Create a GUI control and add it to the list of controls
 
@@ -37,6 +38,7 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char
 	case GuiControlType::SLIDER:	control = new GuiSlider(id, bounds, text);		break;
 	case GuiControlType::CHECKBOX:	control = new GuiCheckBox(id, bounds, text);	break;
 	case GuiControlType::TEXT:		control = new GuiText(id, bounds, text, textColor);		break;
+	case GuiControlType::SLIDERBAR:		control = new GuiBar(id, bounds, text);		break;
 		// More Gui Controls can go here
 
 	default:

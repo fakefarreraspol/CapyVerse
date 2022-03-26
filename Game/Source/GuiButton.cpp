@@ -18,7 +18,8 @@ GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(
 
 GuiButton::~GuiButton()
 {
-
+	RELEASE(textTex);
+	RELEASE(texture);
 }
 
 bool GuiButton::Update(float dt)
