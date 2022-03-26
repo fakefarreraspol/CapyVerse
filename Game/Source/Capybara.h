@@ -39,6 +39,8 @@ public:
 	int& GetMaxMana();
 	int& GetDamage();
 	int& GetArmor();
+	int& GetXP();
+	int& GetNextXP();
 	CapybaraType& GetType();
 	CapybaraStats& GetStats();
 

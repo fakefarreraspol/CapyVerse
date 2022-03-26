@@ -30,6 +30,7 @@ bool GuiText::Update(float dt)
 bool GuiText::SetText(const char* text)
 {
 	SDL_Rect tmpBounds = bounds;
+	this->text = text;
 	textTex = app->fonts->LoadRenderedText(tmpBounds, app->fonts->globalFont, text, color);
 	return true;
 }

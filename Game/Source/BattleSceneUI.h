@@ -19,11 +19,11 @@ class Capybara;
 class GuiText;
 class GuiBar;
 
-class BattleSceneTest : public Module
+class BattleSceneUI : public Module
 {
 public:
-	BattleSceneTest(bool startEnabled);
-	virtual ~BattleSceneTest();
+	BattleSceneUI(bool startEnabled);
+	virtual ~BattleSceneUI();
 
 	bool Awake(pugi::xml_node&);
 
@@ -57,7 +57,7 @@ private:
 	List<Capybara*> enemies;
 	List<Capybara*> playerTeam;
 
-	Player* player;
+	Player* player = nullptr;
 
 
 	ListItem<Capybara*>* currentCapybara = nullptr;	//The capybara that the turn is on
@@ -73,8 +73,13 @@ private:
 	List<GuiBar*> enemyBars;
 
 	List<GuiText*> playerNames;
-	List<GuiBar*>  playerBars;
+	List<GuiBar*>  playerHealthBars;
+	List<GuiBar*>  playerManaBars;
+	
 	List<GuiText*> playerHeathText;
+	List<GuiText*> playerManaText;
+
+
 	GuiText* currentName = nullptr;
 
 	bool updateInput = true;

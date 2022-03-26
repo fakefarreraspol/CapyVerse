@@ -96,7 +96,8 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source\BattleSceneTest.cpp" />
+    <ClCompile Include="Source\BattleScene1.cpp" />
+    <ClCompile Include="Source\BattleSceneUI.cpp" />
     <ClCompile Include="Source\Capybara.cpp" />
     <ClCompile Include="Source\Chinabara.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
@@ -122,7 +123,8 @@
     <ClCompile Include="Source\Textures.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\Window.cpp" />
-    <ClInclude Include="Source\BattleSceneTest.h" />
+    <ClInclude Include="Source\BattleScene1.h" />
+    <ClInclude Include="Source\BattleSceneUI.h" />
     <ClInclude Include="Source\Capybara.h" />
     <ClInclude Include="Source\Chinabara.h" />
     <ClInclude Include="Source\Entity.h" />

@@ -9,7 +9,7 @@
 #include "Scene.h"
 #include "EntityManager.h"
 #include "FadeToBlack.h"
-#include "BattleSceneTest.h"
+#include "BattleSceneUI.h"
 #include "Fonts.h"
 
 #include "GuiManager.h"

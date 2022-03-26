@@ -81,6 +81,16 @@ int& Capybara::GetArmor()
 	return armor;
 }
 
+int& Capybara::GetXP()
+{
+	return xp;
+}
+
+int& Capybara::GetNextXP()
+{
+	return xpNext;
+}
+
 CapybaraType& Capybara::GetType()
 {
 	return capybaraType;

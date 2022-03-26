@@ -14,7 +14,7 @@
 #include "EntityManager.h"
 #include "GuiManager.h"
 #include "FadeToBlack.h"
-#include "BattleSceneTest.h"
+#include "BattleSceneUI.h"
 #include "Fonts.h"
 
 // Constructor
@@ -28,7 +28,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new Audio(true);
 	fadeToBlack = new FadeToBlack(true);
 	scene = new Scene(true);
-	battleSceneTest = new BattleSceneTest(false);
+	battleSceneTest = new BattleSceneUI(false);
 	entMan = new EntityManager(true);
 	fonts = new Fonts(true);
 	guiManager = new GuiManager(true);
