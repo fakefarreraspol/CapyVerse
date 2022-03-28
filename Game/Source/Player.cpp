@@ -26,6 +26,7 @@ bool Player::Update(float dt)
 bool Player::Draw(Render* render)
 {
 	bool ret = true;
+	render->DrawRectangle({ position.x, position.y,  20 , 20 }, 0, 255, 0);
 	return ret;
 }
 

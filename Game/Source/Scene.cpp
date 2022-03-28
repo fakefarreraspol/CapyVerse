@@ -44,11 +44,11 @@ bool Scene::Start()
 	ent1 = app->entMan->CreateEntity(CapybaraType::TANK , 1, { 40, 40 }, "Chinabara");
 	ent2 = app->entMan->CreateEntity(CapybaraType::SUPP, 1, { 60, 60 }, "Punkibara");
 
-	btn1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Test1", { 0, 0, 500, 100 }, this);
+	/*btn1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Test1", { 0, 0, 500, 100 }, this);
 	slider1 = (GuiSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 1, "dadf", { 0,0,50,50 }, this);
 	slider1->SetBar({200,200,500,30});
 	slider1->SetValues(100, 0, 0);
-	slider1->state = GuiControlState::NORMAL;
+	slider1->state = GuiControlState::NORMAL;*/
 
 	box1 = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "", { 100,100,100,100 }, this);
 	iPoint sexo = { 0,0 };

@@ -5,6 +5,7 @@
 
 #include "Module.h"
 #include "Collider.h"
+#include "List.h"
 
 class ModuleCollisions : public Module
 {
@@ -52,7 +53,7 @@ public:
 
 private:
 	// All existing colliders in the scene
-	Collider* colliders[MAX_COLLIDERS] = { nullptr };
+	List<Collider*> colliders;
 
 	// The collision matrix. Defines the interaction for two collider types
 	// If set to false, collider 1 will ignore collider 2
