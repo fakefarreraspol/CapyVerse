@@ -62,3 +62,11 @@ bool Player::SaveState(pugi::xml_node&)
 	return false;
 }
 
+void Player::SetCombat(bool value)
+{
+	for (ListItem<Capybara*>* member = battleTeam.start; member != nullptr; member = member->next)
+	{
+		member->data->SetCombat(value);
+	}
+}
+

@@ -97,9 +97,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\BattleScene1.cpp" />
-    <ClCompile Include="Source\BattleSceneUI.cpp" />
+    <ClCompile Include="Source\BattleManager.cpp" />
     <ClCompile Include="Source\Capybara.cpp" />
     <ClCompile Include="Source\Chinabara.cpp" />
+    <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
     <ClCompile Include="Source\FadeToBlack.cpp" />
     <ClCompile Include="Source\GuiBar.cpp" />
@@ -124,9 +125,10 @@
     <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\Window.cpp" />
     <ClInclude Include="Source\BattleScene1.h" />
-    <ClInclude Include="Source\BattleSceneUI.h" />
+    <ClInclude Include="Source\BattleManager.h" />
     <ClInclude Include="Source\Capybara.h" />
     <ClInclude Include="Source\Chinabara.h" />
+    <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\Entity.h" />
     <ClInclude Include="Source\EntityManager.h" />
     <ClInclude Include="Source\FadeToBlack.h" />

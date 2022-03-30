@@ -64,7 +64,7 @@
     <ClCompile Include="Source\Chinabara.cpp">
       <Filter>Modules\Gameplay\Entities\Characters\Capybaras</Filter>
     </ClCompile>
-    <ClCompile Include="Source\BattleSceneUI.cpp">
+    <ClCompile Include="Source\BattleManager.cpp">
       <Filter>Modules\Gameplay\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Source\FadeToBlack.cpp">
@@ -87,6 +87,9 @@
     </ClCompile>
     <ClCompile Include="Source\BattleScene1.cpp">
       <Filter>Modules\Gameplay\Scenes\Battle</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy.cpp">
+      <Filter>Modules\Gameplay\Entities\Characters</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -180,7 +183,7 @@
     <ClInclude Include="Source\Chinabara.h">
       <Filter>Modules\Gameplay\Entities\Characters\Capybaras</Filter>
     </ClInclude>
-    <ClInclude Include="Source\BattleSceneUI.h">
+    <ClInclude Include="Source\BattleManager.h">
       <Filter>Modules\Gameplay\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Source\FadeToBlack.h">
@@ -203,6 +206,9 @@
     </ClInclude>
     <ClInclude Include="Source\BattleScene1.h">
       <Filter>Modules\Gameplay\Scenes\Battle</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy.h">
+      <Filter>Modules\Gameplay\Entities\Characters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

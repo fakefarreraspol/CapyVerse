@@ -19,11 +19,11 @@ class Capybara;
 class GuiText;
 class GuiBar;
 
-class BattleSceneUI : public Module
+class BattleManager : public Module
 {
 public:
-	BattleSceneUI(bool startEnabled);
-	virtual ~BattleSceneUI();
+	BattleManager(bool startEnabled);
+	virtual ~BattleManager();
 
 	bool Awake(pugi::xml_node&);
 
@@ -48,6 +48,7 @@ public:
 	void SetPlayer(Player* player);
 
 	void SetEnemy();
+	void SetTurn(Turn turn);
 
 	void CreateTexts();
 

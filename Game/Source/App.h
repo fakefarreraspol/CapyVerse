@@ -21,10 +21,11 @@ class Textures;
 class Audio;
 class Scene;
 class EntityManager;
-class BattleSceneUI;
+class BattleManager;
 class GuiManager;
 class FadeToBlack;
 class Fonts;
+class BattleScene1;
 
 class App
 {
@@ -103,7 +104,8 @@ public:
 	Fonts* fonts;
 	GuiManager* guiManager;
 	FadeToBlack* fadeToBlack;
-	BattleSceneUI* battleSceneTest;
+	BattleManager* battleManager;
+	BattleScene1* battleScene1;
 
 	bool fpsCap = false;
 	float dt = 0.0f;

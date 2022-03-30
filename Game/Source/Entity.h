@@ -14,7 +14,9 @@ enum class EntityType
 	PLAYER,
 	CAPYBARA,
 	ITEM,
-	EQUIPMENT
+	EQUIPMENT,
+	ENEMY,
+	NPC
 };
 
 class Entity

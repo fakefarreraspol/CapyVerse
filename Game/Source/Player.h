@@ -31,6 +31,8 @@ public:
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&);
 
+	void SetCombat(bool value);
+
 private:
 	int money;
 	

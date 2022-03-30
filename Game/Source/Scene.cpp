@@ -9,7 +9,7 @@
 #include "Scene.h"
 #include "EntityManager.h"
 #include "FadeToBlack.h"
-#include "BattleSceneUI.h"
+#include "BattleManager.h"
 #include "Fonts.h"
 
 #include "GuiManager.h"
@@ -51,7 +51,7 @@ bool Scene::Start()
 	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 3, { 100, 250 }, "Punkibara"));
 	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 4, { 100, 350 }, "Rainbowbara"));
 
-	app->battleSceneTest->SetPlayer(player);
+	app->battleManager->SetPlayer(player);
 
 	return true;
 }
@@ -80,7 +80,7 @@ bool Scene::Update(float dt)
 	app->render->DrawTexture(img, 380, 100);
 
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-		app->fadeToBlack->MFadeToBlack(this, (Module*)app->battleSceneTest, 120);
+		app->fadeToBlack->MFadeToBlack(this, (Module*)app->battleScene1, 120);
 
 	app->guiManager->Draw();
 

@@ -23,4 +23,5 @@ bool Chinabara::Update(float dt)
 
 void Chinabara::UseAbility(Capybara* target)
 {
+
 }

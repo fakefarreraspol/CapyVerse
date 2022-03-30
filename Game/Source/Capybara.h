@@ -21,6 +21,20 @@ enum class CapybaraType
 	SUPP
 };
 
+enum class CapybaraStatus
+{
+	NONE = -1,
+	POISONED,
+	SLEEP,
+	BLEED,
+	BLOATED,
+	STUNED,
+	TAUNTED,
+	DEFENSIVE,
+	RAGE,
+	CLEVER
+};
+
 class Capybara : public Entity
 {
 public:
@@ -43,12 +57,14 @@ public:
 	int& GetNextXP();
 	CapybaraType& GetType();
 	CapybaraStats& GetStats();
+	CapybaraStatus& GetStatus();
 
 	//Combat functions
 	void Damage(int value);
 	void Heal(int value);
 	virtual void UseAbility(Capybara* target);
 	void Attack(Capybara* target);
+	void SetStatus(CapybaraStatus status);
 
 	//XP functions
 	void LevelUp();
@@ -56,6 +72,9 @@ public:
 
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&);
+
+	void SetCombat(bool value);
+
 protected:
 	//Update the stats by the lvl
 	void UpdateStats();
@@ -91,6 +110,7 @@ protected:
 	bool isCombat = false;
 
 	CapybaraType capybaraType = CapybaraType::NONE;
+	CapybaraStatus capybaraStatus = CapybaraStatus::NONE;
 };
 
-#endif // !__CAPYBARA_H__
+#endif // __CAPYBARA_H__

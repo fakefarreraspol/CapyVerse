@@ -45,8 +45,10 @@ bool Capybara::Update(float dt)
 bool Capybara::Draw(Render* render)
 {
 	bool ret = true;
-
-	render->DrawRectangle({position.x, position.y, 64, 64}, 255, 0, 0);
+	if (isCombat)
+	{
+		render->DrawRectangle({position.x, position.y, 64, 64}, 255, 0, 0);
+	}
 
 	return ret;
 }
@@ -101,6 +103,11 @@ CapybaraStats& Capybara::GetStats()
 	return capybaraStats;
 }
 
+CapybaraStatus& Capybara::GetStatus()
+{
+	return capybaraStatus;
+}
+
 void Capybara::Damage(int value)
 { 	
 	if (health - value > 0)
@@ -143,6 +150,11 @@ void Capybara::Attack(Capybara* target)
 	target->Damage(finalDamage);
 
 	printf("%s id: %i DMG: %i to %s id: %i", this->name.GetString(), this->id, finalDamage, target->name.GetString(), target->id);
+}
+
+void Capybara::SetStatus(CapybaraStatus status)
+{
+	this->capybaraStatus = status;
 }
 
 void Capybara::LevelUp()
@@ -229,6 +241,11 @@ bool Capybara::LoadState(pugi::xml_node&)
 bool Capybara::SaveState(pugi::xml_node&)
 {
 	return false;
+}
+
+void Capybara::SetCombat(bool value)
+{
+	isCombat = value;
 }
 
 void Capybara::UpdateStats()

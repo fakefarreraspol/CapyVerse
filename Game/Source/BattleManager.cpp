@@ -2,7 +2,7 @@
 
 #include <string.h>
 
-#include "BattleSceneUI.h"
+#include "BattleManager.h"
 
 #include "GuiButton.h"
 
@@ -16,26 +16,24 @@
 #include "Capybara.h"
 #include "Player.h"
 
-BattleSceneUI::BattleSceneUI(bool startEnabled) : Module(startEnabled)
+BattleManager::BattleManager(bool startEnabled) : Module(startEnabled)
 {
 }
 
-BattleSceneUI::~BattleSceneUI()
+BattleManager::~BattleManager()
 {
 }
 
-bool BattleSceneUI::Awake(pugi::xml_node&)
+bool BattleManager::Awake(pugi::xml_node&)
 {
 	bool ret = true;
 
-	enemies.Add(app->entMan->CreateEntity(CapybaraType::TANK, 4, { 1100, 150 }, "Chinabara"));
-	enemies.Add(app->entMan->CreateEntity(CapybaraType::TANK, 5, { 1100, 250 }, "Rainbowbara"));
-	enemies.Add(app->entMan->CreateEntity(CapybaraType::TANK, 6, { 1100, 350 }, "Punkibara"));
+	
 
 	return ret;
 }
 
-bool BattleSceneUI::Start()
+bool BattleManager::Start()
 {
 	bool ret = true;
 
@@ -53,6 +51,9 @@ bool BattleSceneUI::Start()
 		printf("Player is nullptr\n");
 		ret = false;
 	}
+
+	player->SetCombat(true);
+
 	for (int i = 0; i < player->GetBattleTeam().Count(); i++)
 	{
 		playerTeam.Add(player->GetBattleTeam().At(i)->data);
@@ -67,7 +68,7 @@ bool BattleSceneUI::Start()
 	return ret;
 }
 
-bool BattleSceneUI::PreUpdate()
+bool BattleManager::PreUpdate()
 {
 	bool ret = true;
 	
@@ -112,7 +113,7 @@ bool BattleSceneUI::PreUpdate()
 	return ret;
 }
 
-bool BattleSceneUI::Update(float dt)
+bool BattleManager::Update(float dt)
 {
 	bool ret = true;
 	
@@ -161,7 +162,7 @@ bool BattleSceneUI::Update(float dt)
 	return ret;
 }
 
-void BattleSceneUI::CreateAttackMenu()
+void BattleManager::CreateAttackMenu()
 {
 	for (int i = 0; i < enemies.Count(); i++)
 	{
@@ -181,15 +182,15 @@ void BattleSceneUI::CreateAttackMenu()
 	return;
 }
 
-void BattleSceneUI::ShowAttackMenu()
+void BattleManager::ShowAttackMenu()
 {
 }
 
-void BattleSceneUI::ShowAbilityMenu()
+void BattleManager::ShowAbilityMenu()
 {
 }
 
-void BattleSceneUI::UpdateInput()
+void BattleManager::UpdateInput()
 {
 
 	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
@@ -213,7 +214,7 @@ void BattleSceneUI::UpdateInput()
 	}
 }
 
-bool BattleSceneUI::PostUpdate()
+bool BattleManager::PostUpdate()
 {
 	bool ret = true;
 
@@ -229,7 +230,7 @@ bool BattleSceneUI::PostUpdate()
 	return ret;
 }
 
-bool BattleSceneUI::CleanUp()
+bool BattleManager::CleanUp()
 {
 	bool ret = true;
 
@@ -238,12 +239,21 @@ bool BattleSceneUI::CleanUp()
 	return ret;
 }
 
-void BattleSceneUI::SetPlayer(Player* player)
+void BattleManager::SetPlayer(Player* player)
 {
 	this->player = player;
 }
 
-void BattleSceneUI::CreateTexts()
+void BattleManager::SetEnemy()
+{
+}
+
+void BattleManager::SetTurn(Turn turn)
+{
+	this->turn = turn;
+}
+
+void BattleManager::CreateTexts()
 {
 	currentName = (GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 10, currentCapybara->data->name.GetString(), { 115, 545, 155, 20 }, this, { 255, 255, 255, 1 });
 
@@ -271,7 +281,7 @@ void BattleSceneUI::CreateTexts()
 	return;
 }
 
-bool BattleSceneUI::OnGuiMouseClickEvent(GuiControl* control)
+bool BattleManager::OnGuiMouseClickEvent(GuiControl* control)
 {
 	bool ret = true;
 	switch (control->type)
@@ -293,22 +303,25 @@ bool BattleSceneUI::OnGuiMouseClickEvent(GuiControl* control)
 		}
 		if (control->id == 3)
 		{
-
+			
 		}
 		if (control->id == 4)
 		{
 			currentCapybara->data->Attack(enemies.At(0)->data);
 			showAttackMenu = false;
+			turn = Turn::ENEMY;
 		}
 		if (control->id == 5)
 		{
 			currentCapybara->data->Attack(enemies.At(1)->data);
 			showAttackMenu = false;
+			turn = Turn::ENEMY;
 		}
 		if (control->id == 6)
 		{
 			currentCapybara->data->Attack(enemies.At(2)->data);
 			showAttackMenu = false;
+			turn = Turn::ENEMY;
 		}
 	}break;
 
