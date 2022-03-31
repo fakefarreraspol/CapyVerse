@@ -3,6 +3,7 @@
 
 #include "Module.h"
 
+class Enemy;
 
 class BattleScene1 : public Module
 {
@@ -19,6 +20,8 @@ public:
 	bool Update(float dt);
 
 	bool CleanUp();
+private:
+	Enemy* enemy;
 };
 
 

@@ -18,6 +18,7 @@ class GuiButton;
 class Capybara;
 class GuiText;
 class GuiBar;
+class Enemy;
 
 class BattleManager : public Module
 {
@@ -47,7 +48,7 @@ public:
 
 	void SetPlayer(Player* player);
 
-	void SetEnemy();
+	void SetEnemy(Enemy* enemy);
 	void SetTurn(Turn turn);
 
 	void CreateTexts();
@@ -59,6 +60,7 @@ private:
 	List<Capybara*> playerTeam;
 
 	Player* player = nullptr;
+	Enemy* enemy = nullptr;
 
 
 	ListItem<Capybara*>* currentCapybara = nullptr;	//The capybara that the turn is on

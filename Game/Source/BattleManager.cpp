@@ -12,7 +12,7 @@
 #include "GuiText.h"
 #include "GuiBar.h"
 
-
+#include "Enemy.h"
 #include "Capybara.h"
 #include "Player.h"
 
@@ -60,6 +60,8 @@ bool BattleManager::Start()
 	}
 
 	currentCapybara = playerTeam.start;
+
+	enemies = enemy->GetBattleTeam();
 
 	CreateTexts();
 
@@ -244,8 +246,9 @@ void BattleManager::SetPlayer(Player* player)
 	this->player = player;
 }
 
-void BattleManager::SetEnemy()
+void BattleManager::SetEnemy(Enemy* enemy)
 {
+	this->enemy = enemy;
 }
 
 void BattleManager::SetTurn(Turn turn)

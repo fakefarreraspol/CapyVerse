@@ -5,6 +5,7 @@
 #include "Log.h"
 
 #include "Player.h"
+#include "Enemy.h"
 #include "Chinabara.h"
 #include "Punkibara.h"
 #include "Rainbowbara.h"
@@ -61,6 +62,9 @@ Entity* EntityManager::CreateEntity(EntityType type, uint32 id, iPoint position,
 	case EntityType::ITEM:
 		break;
 	case EntityType::EQUIPMENT:
+		break;
+	case EntityType::ENEMY:
+		entity = new Enemy(position, id, name);
 		break;
 	default:
 	{
