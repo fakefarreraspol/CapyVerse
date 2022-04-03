@@ -50,7 +50,6 @@ private:
 
 	void UpdateCurrentName();
 	void Draw();
-	void UpdateTexts();
 	void UpdatePlayerInfo();
 	void DeleteAttackMenu();
 	void CreateAttackMenu();

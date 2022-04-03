@@ -18,8 +18,6 @@ Capybara::Capybara(CapybaraType capyType, uint32 id, iPoint position, const char
 	manaXLvl = 7;
 	damageXLvl = 4;
 	armorXLvl = 3;
-
-	
 }
 
 Capybara::~Capybara()
@@ -118,6 +116,11 @@ CapybaraStatus& Capybara::GetStatus()
 	return capybaraStatus;
 }
 
+CapybaraTarget& Capybara::GetTarget()
+{
+	return capybaraTarget;
+}
+
 void Capybara::Damage(int value)
 { 	
 	if (health - value > 0)
@@ -143,10 +146,22 @@ void Capybara::Heal(int value)
 
 	return;
 }
-//TODO: Think about all the abilities
-void Capybara::UseAbility(Capybara* target)
+void Capybara::RestoreMana(int value)
 {
+	if (value + mana < maxMana)
+	{
+		mana += value;
+		return;
+	}
+
+	mana = maxMana;
+
 	return;
+}
+//TODO: Think about all the abilities
+bool Capybara::UseAbility(Capybara* target)
+{
+	return true;
 }
 
 void Capybara::Attack(Capybara* target)
@@ -230,7 +245,7 @@ void Capybara::LevelUp()
 	
 	//Healing a proporitonal amount after lvlup
 	Heal(0.5 * maxHealth);
-	
+	RestoreMana(0.5 * maxMana);
 	//Updating all the stats 
 	UpdateStats();
 

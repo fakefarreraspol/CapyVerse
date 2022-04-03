@@ -84,8 +84,8 @@ bool BattleManager::PreUpdate()
 	bool ret = true;
 
 	DeleteAttackMenu();
-
-	UpdateTexts();
+	//Updating the capybaras info
+	UpdatePlayerInfo();
 
 	return ret;
 }
@@ -111,36 +111,7 @@ void BattleManager::DeleteAttackMenu()
 	}
 }
 
-void BattleManager::UpdateTexts()
-{
-	for (int i = 0; i < playerHeathText.Count() && i < playerTeam.Count(); i++)
-	{
-		SString hp("%i/%iHP", playerTeam.At(i)->data->GetHealth(), playerTeam.At(i)->data->GetMaxHealth());
-		if (strcmp(playerHeathText.At(i)->data->GetText(), hp.GetString()))
-		{
-			playerHeathText.At(i)->data->SetText(hp.GetString());
-			printf("Updating HP\n");
-		}
-	}
-	for (int i = 0; i < playerManaText.Count() && i < playerTeam.Count(); i++)
-	{
-		SString mp("%i/%iMP", playerTeam.At(i)->data->GetMana(), playerTeam.At(i)->data->GetMaxMana());
-		if (strcmp(playerManaText.At(i)->data->GetText(), mp.GetString()))
-		{
-			playerManaText.At(i)->data->SetText(mp.GetString());
-			printf("Updating Mana \n");
-		}
-	}
-	for (int i = 0; i < playerLevels.Count() && i < playerTeam.Count(); i++)
-	{
-		SString mp("LVL: %i", playerTeam.At(i)->data->GetLVL());
-		if (strcmp(playerLevels.At(i)->data->GetText(), mp.GetString()))
-		{
-			playerLevels.At(i)->data->SetText(mp.GetString());
-			printf("Updating Level \n");
-		}
-	}
-}
+
 
 bool BattleManager::Update(float dt)
 {
@@ -152,9 +123,6 @@ bool BattleManager::Update(float dt)
 	}
 
 	Draw();
-
-	//Updating the capybaras info
-	UpdatePlayerInfo();
 
 	return ret;
 }
@@ -187,6 +155,33 @@ void BattleManager::UpdatePlayerInfo()
 	for (int i = 0; i < playerManaBars.Count(); i++)
 	{
 		playerManaBars.At(i)->data->UpdateValues(playerTeam.At(i)->data->GetMana(), playerTeam.At(i)->data->GetMaxMana());
+	}
+	for (int i = 0; i < playerHeathText.Count() && i < playerTeam.Count(); i++)
+	{
+		SString hp("%i/%iHP", playerTeam.At(i)->data->GetHealth(), playerTeam.At(i)->data->GetMaxHealth());
+		if (strcmp(playerHeathText.At(i)->data->GetText(), hp.GetString()))
+		{
+			playerHeathText.At(i)->data->SetText(hp.GetString());
+			printf("Updating HP\n");
+		}
+	}
+	for (int i = 0; i < playerManaText.Count() && i < playerTeam.Count(); i++)
+	{
+		SString mp("%i/%iMP", playerTeam.At(i)->data->GetMana(), playerTeam.At(i)->data->GetMaxMana());
+		if (strcmp(playerManaText.At(i)->data->GetText(), mp.GetString()))
+		{
+			playerManaText.At(i)->data->SetText(mp.GetString());
+			printf("Updating Mana \n");
+		}
+	}
+	for (int i = 0; i < playerLevels.Count() && i < playerTeam.Count(); i++)
+	{
+		SString mp("LVL: %i", playerTeam.At(i)->data->GetLVL());
+		if (strcmp(playerLevels.At(i)->data->GetText(), mp.GetString()))
+		{
+			playerLevels.At(i)->data->SetText(mp.GetString());
+			printf("Updating Level \n");
+		}
 	}
 }
 

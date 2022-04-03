@@ -9,7 +9,7 @@ public:
 	Chinabara(uint32 id, iPoint position);
 	~Chinabara();
 
-	void UseAbility(Capybara* target);
+	bool UseAbility(Capybara* target);
 
 private:
 

@@ -15,6 +15,13 @@ Rainbowbara::~Rainbowbara()
 {
 }
 
-void Rainbowbara::UseAbility(Capybara* target)
+bool Rainbowbara::UseAbility(Capybara* target)
 {
+	if (this->mana < 10)
+		return false;
+
+	target->Heal(this->capybaraStats.intelligence * 2);
+	this->mana -= 10;
+
+	return true;
 }

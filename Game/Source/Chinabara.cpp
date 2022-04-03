@@ -15,7 +15,13 @@ Chinabara::~Chinabara()
 {
 }
 
-void Chinabara::UseAbility(Capybara* target)
+bool Chinabara::UseAbility(Capybara* target)
 {
+	if (this->mana < 10)
+		return false;
 
+	target->SetStatus(CapybaraStatus::TAUNTED);
+	this->mana -= 10;
+
+	return true;
 }

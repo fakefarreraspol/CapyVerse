@@ -13,6 +13,15 @@ struct CapybaraStats
 	int intelligence = 1;
 };
 
+enum class CapybaraTarget 
+{
+	NONE = -1,
+	HIMSELF,
+	ALLIES,
+	ENEMIES
+};
+
+
 enum class CapybaraType
 {
 	NONE = -1,
@@ -59,15 +68,18 @@ public:
 	CapybaraType& GetType();
 	CapybaraStats& GetStats();
 	CapybaraStatus& GetStatus();
+	CapybaraTarget& GetTarget();
 
 	//Combat functions
 	void Damage(int value);
 	void Heal(int value);
-	virtual void UseAbility(Capybara* target);
+	void RestoreMana(int value);
+	virtual bool UseAbility(Capybara* target);
 	void Attack(Capybara* target);
 	void SetStatus(CapybaraStatus status);
 	void SetAttack(); //Sets the capy canAttack to true
 	bool CanAttack();
+
 	//XP functions
 	void LevelUp();
 	void AddXp(int value);
@@ -109,11 +121,13 @@ protected:
 	int level;		//Capybara lvl
 	int xpNext;		//Xp points for the next level
 
+	//Combat variables
 	bool isCombat = false;
 	bool canAttack = true;
 
-	CapybaraType capybaraType = CapybaraType::NONE;
-	CapybaraStatus capybaraStatus = CapybaraStatus::NONE;
+	CapybaraType capybaraType = CapybaraType::NONE;			//The capybara type
+	CapybaraStatus capybaraStatus = CapybaraStatus::NONE;	//The current status of the capybara
+	CapybaraTarget capybaraTarget = CapybaraTarget::NONE;	//The type of target of the ability
 };
 
 #endif // __CAPYBARA_H__

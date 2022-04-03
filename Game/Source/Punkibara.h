@@ -11,7 +11,7 @@ public:
 
 
 
-	void UseAbility(Capybara* target);
+	bool UseAbility(Capybara* target);
 
 private:
 
