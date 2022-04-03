@@ -46,7 +46,7 @@ public:
 	bool Update(float dt);
 	bool Draw(Render* render);
 
-	//Setters and getters
+	//Getters
 	int& GetHealth();
 	int& GetMaxHealth();
 	int& GetMana();
@@ -65,7 +65,8 @@ public:
 	virtual void UseAbility(Capybara* target);
 	void Attack(Capybara* target);
 	void SetStatus(CapybaraStatus status);
-
+	void SetAttack(); //Sets the capy canAttack to true
+	bool CanAttack();
 	//XP functions
 	void LevelUp();
 	void AddXp(int value);
@@ -108,6 +109,7 @@ protected:
 	int xpNext;		//Xp points for the next level
 
 	bool isCombat = false;
+	bool canAttack = true;
 
 	CapybaraType capybaraType = CapybaraType::NONE;
 	CapybaraStatus capybaraStatus = CapybaraStatus::NONE;

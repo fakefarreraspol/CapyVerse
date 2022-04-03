@@ -44,6 +44,12 @@ bool BattleManager::Start()
 	abilityBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Ability", { 135, 615, 75, 21 }, this);
 	inventoryBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Inventory", { 135, 645, 75, 21 }, this);
 	runBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "Run", { 135, 675, 75, 21 }, this);
+	menuBtns.Add(attackBtn);
+	menuBtns.Add(abilityBtn);
+	//menuBtns.Add(inventoryBtn);
+	menuBtns.Add(runBtn);
+
+	inventoryBtn->state = GuiControlState::DISABLED;
 
 
 	if (player == nullptr)
@@ -60,6 +66,9 @@ bool BattleManager::Start()
 	}
 
 	currentCapybara = playerTeam.start;
+	currentButtons = menuBtns;
+	currentButton = currentButtons.start;
+
 
 	enemies = enemy->GetBattleTeam();
 
@@ -78,7 +87,7 @@ bool BattleManager::PreUpdate()
 		CreateTexts();
 
 
-	if (!showAttackMenu)
+	if (deleteAttackMenu)
 	{
 		for (int i = 0; i < attackBtns.Count(); i++)
 		{
@@ -89,6 +98,10 @@ bool BattleManager::PreUpdate()
 		enemyBars.Clear();
 		enemyInfo.Clear();
 		attackBtns.Clear();
+		currentButtons = menuBtns;
+		currentButton = currentButtons.start;
+
+		deleteAttackMenu = false;
 	}
 	if (createAttackMenu)
 		CreateAttackMenu();
@@ -123,26 +136,12 @@ bool BattleManager::Update(float dt)
 	{
 		UpdateInput();
 	}
-	app->guiManager->Draw();
 
-	int posX = currentCapybara->data->GetPosition().x;
-	int posY = currentCapybara->data->GetPosition().y + SELECT_OFFSET;
-	app->render->DrawCircle(posX, posY, 10, 0, 255, 0);
+	Draw();
+
 
 	if (showAttackMenu)
 		ShowAttackMenu();
-	if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-	{
-		enemies.At(2)->data->Attack(playerTeam.At(0)->data);
-	}
-	if (app->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-	{
-		enemies.At(2)->data->Attack(playerTeam.At(1)->data);
-	}
-	if (app->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
-	{
-		enemies.At(2)->data->Attack(playerTeam.At(2)->data);
-	}
 
 	//Updates the character name changes
 	if (updateCurrentName)
@@ -152,6 +151,26 @@ bool BattleManager::Update(float dt)
 		updateCurrentName = false;
 	}
 	//Updating the capybaras info
+	UpdateInfo();
+
+	return ret;
+}
+
+void BattleManager::Draw()
+{
+	app->guiManager->Draw();
+
+	int posX = currentCapybara->data->GetPosition().x;
+	int posY = currentCapybara->data->GetPosition().y + SELECT_OFFSET;
+	app->render->DrawCircle(posX, posY, 10, 0, 255, 0);
+
+	int btnX = currentButton->data->bounds.x;
+	int btnY = currentButton->data->bounds.y;
+	app->render->DrawCircle(btnX, btnY, 10, 0, 255, 0);
+}
+
+void BattleManager::UpdateInfo()
+{
 	for (int i = 0; i < playerHealthBars.Count(); i++)
 	{
 		playerHealthBars.At(i)->data->UpdateValues(playerTeam.At(i)->data->GetHealth(), playerTeam.At(i)->data->GetMaxHealth());
@@ -160,8 +179,6 @@ bool BattleManager::Update(float dt)
 	{
 		playerManaBars.At(i)->data->UpdateValues(playerTeam.At(i)->data->GetMana(), playerTeam.At(i)->data->GetMaxMana());
 	}
-
-	return ret;
 }
 
 void BattleManager::CreateAttackMenu()
@@ -180,12 +197,14 @@ void BattleManager::CreateAttackMenu()
 	}
 
 	createAttackMenu = false;
+	currentButton = attackBtns.start;
+	currentButtons = attackBtns;
 
 	return;
 }
 
 void BattleManager::ShowAttackMenu()
-{
+{	
 }
 
 void BattleManager::ShowAbilityMenu()
@@ -195,25 +214,55 @@ void BattleManager::ShowAbilityMenu()
 void BattleManager::UpdateInput()
 {
 
-	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
+	if (!showAbilityMenu && !showAttackMenu)
 	{
-		if (currentCapybara->next == nullptr)
-			currentCapybara = playerTeam.start;
-		else
-			currentCapybara = currentCapybara->next;
+		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
+		{
+			if (currentCapybara->next == nullptr || !currentCapybara->next->data->CanAttack())
+				currentCapybara = playerTeam.start;
+			else if (currentCapybara->next->data->CanAttack())
+				currentCapybara = currentCapybara->next;
 
-		updateCurrentName = true;
+			updateCurrentName = true;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
+		{
+			if (currentCapybara->prev == nullptr)
+				currentCapybara = playerTeam.end;
+			else
+				currentCapybara = currentCapybara->prev;
+
+			updateCurrentName = true;
+		}
+	}
+	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
+	{
+		if (currentButton->next == nullptr)
+		{
+			currentButton->data->state = GuiControlState::NORMAL;
+			currentButton = currentButtons.start;
+		}
+		else
+		{
+			currentButton->data->state = GuiControlState::NORMAL;
+			currentButton = currentButton->next;
+		}
 
 	}
-	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
-	{
-		if (currentCapybara->prev == nullptr)
-			currentCapybara = playerTeam.end;
+	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
+	{	
+		if (currentButton->prev == nullptr)
+		{
+			currentButton->data->state = GuiControlState::NORMAL;
+			currentButton = currentButtons.end;
+		}
 		else
-			currentCapybara = currentCapybara->prev;
-
-		updateCurrentName = true;
+		{
+			currentButton->data->state = GuiControlState::NORMAL;
+			currentButton = currentButton->prev;
+		}
 	}
+	currentButton->data->state = GuiControlState::FOCUSED;
 }
 
 bool BattleManager::PostUpdate()
@@ -256,6 +305,11 @@ void BattleManager::SetTurn(Turn turn)
 	this->turn = turn;
 }
 
+Turn BattleManager::GetTurn()
+{
+	return this->turn;
+}
+
 void BattleManager::CreateTexts()
 {
 	currentName = (GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 10, currentCapybara->data->name.GetString(), { 115, 545, 155, 20 }, this, { 255, 255, 255, 1 });
@@ -295,6 +349,7 @@ bool BattleManager::OnGuiMouseClickEvent(GuiControl* control)
 		{
 			showAttackMenu = !showAttackMenu;
 			createAttackMenu = true;
+
 		}
 		if (control->id == 1)
 		{
@@ -312,18 +367,21 @@ bool BattleManager::OnGuiMouseClickEvent(GuiControl* control)
 		{
 			currentCapybara->data->Attack(enemies.At(0)->data);
 			showAttackMenu = false;
+			deleteAttackMenu = true;
 			turn = Turn::ENEMY;
 		}
 		if (control->id == 5)
 		{
 			currentCapybara->data->Attack(enemies.At(1)->data);
 			showAttackMenu = false;
+			deleteAttackMenu = true;
 			turn = Turn::ENEMY;
 		}
 		if (control->id == 6)
 		{
 			currentCapybara->data->Attack(enemies.At(2)->data);
 			showAttackMenu = false;
+			deleteAttackMenu = true;
 			turn = Turn::ENEMY;
 		}
 	}break;

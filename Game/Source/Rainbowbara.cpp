@@ -15,11 +15,6 @@ Rainbowbara::~Rainbowbara()
 {
 }
 
-bool Rainbowbara::Update(float dt)
-{
-	return true;
-}
-
 void Rainbowbara::UseAbility(Capybara* target)
 {
 }

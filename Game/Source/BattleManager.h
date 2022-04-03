@@ -34,6 +34,10 @@ public:
 
 	bool Update(float dt);
 
+	void Draw();
+
+	void UpdateInfo();
+
 	void CreateAttackMenu();
 
 	void ShowAttackMenu();
@@ -50,6 +54,7 @@ public:
 
 	void SetEnemy(Enemy* enemy);
 	void SetTurn(Turn turn);
+	Turn GetTurn();
 
 	void CreateTexts();
 
@@ -70,6 +75,10 @@ private:
 	GuiButton* abilityBtn = nullptr;
 	GuiButton* inventoryBtn = nullptr;
 	GuiButton* runBtn = nullptr;
+	List<GuiButton*> menuBtns;
+
+	List<GuiButton*> currentButtons;
+	ListItem<GuiButton*>* currentButton = nullptr;
 
 	List<GuiButton*> attackBtns;
 	List<GuiText*> enemyInfo;
@@ -88,6 +97,7 @@ private:
 	bool updateInput = true;
 
 	bool showAttackMenu = false;
+	bool deleteAttackMenu = false;
 	bool showAbilityMenu = false;
 	bool createAttackMenu = false;
 	bool createTexts = false;

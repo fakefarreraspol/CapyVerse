@@ -15,12 +15,6 @@ Chinabara::~Chinabara()
 {
 }
 
-bool Chinabara::Update(float dt)
-{
-
-	return true;
-}
-
 void Chinabara::UseAbility(Capybara* target)
 {
 

@@ -9,8 +9,6 @@ public:
 	Chinabara(uint32 id, iPoint position);
 	~Chinabara();
 
-	bool Update(float dt);
-
 	void UseAbility(Capybara* target);
 
 private:

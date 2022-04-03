@@ -9,7 +9,7 @@ public:
 	Punkibara(uint32 id, iPoint position);
 	~Punkibara();
 
-	bool Update(float dt);
+
 
 	void UseAbility(Capybara* target);
 

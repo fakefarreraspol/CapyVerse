@@ -24,9 +24,7 @@ bool BattleScene1::Awake(pugi::xml_node&)
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::SUPP, 11, { 720, 250 }, "Rainbowbara"));
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::DPS, 11, { 720, 350 }, "Punkibara"));
 
-    enemy->SetCombat(true);
-
-    app->battleManager->SetEnemy(enemy);
+    
 
     
 
@@ -36,6 +34,10 @@ bool BattleScene1::Awake(pugi::xml_node&)
 bool BattleScene1::Start()
 {
     bool ret = true;
+
+    enemy->SetCombat(true);
+
+    app->battleManager->SetEnemy(enemy);
 
     app->battleManager->Enable();
 
@@ -51,6 +53,12 @@ bool BattleScene1::PreUpdate()
 bool BattleScene1::Update(float dt)
 {
     bool ret = true;
+
+    if (app->battleManager->GetTurn() == Turn::ENEMY)
+    {
+        app->battleManager->SetTurn(Turn::PLAYER);
+    }
+
     return ret;
 }
 

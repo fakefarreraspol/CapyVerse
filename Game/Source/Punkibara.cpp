@@ -15,10 +15,6 @@ Punkibara::~Punkibara()
 {
 }
 
-bool Punkibara::Update(float dt)
-{
-	return true;
-}
 
 void Punkibara::UseAbility(Capybara* target)
 {

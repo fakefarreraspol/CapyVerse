@@ -48,10 +48,19 @@ bool GuiButton::Update(float dt)
 				NotifyObserver();
 			}
 		}
+		else if (state == GuiControlState::FOCUSED)
+		{
+			if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+			{
+				state = GuiControlState::PRESSED;
+				NotifyObserver();
+			}
+		}
 		else state = GuiControlState::NORMAL;
 	}
 
-	return false;
+
+	return true;
 }
 
 bool GuiButton::Draw(Render* render)
@@ -73,5 +82,5 @@ bool GuiButton::Draw(Render* render)
 	}
 	render->DrawTexture(textTex, bounds.x, bounds.y);
 
-	return false;
+	return true;
 }

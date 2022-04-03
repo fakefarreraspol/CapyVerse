@@ -9,7 +9,6 @@ public:
 	Rainbowbara(uint32 id, iPoint position);
 	~Rainbowbara();
 
-	bool Update(float dt);
 
 	void UseAbility(Capybara* target);
 

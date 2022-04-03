@@ -39,6 +39,11 @@ bool Capybara::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 		AddXp(10);
 
+	if (this->health <= 0)
+	{
+		isCombat = false;
+	}
+
 	return ret;
 }
 
@@ -149,12 +154,23 @@ void Capybara::Attack(Capybara* target)
 	int finalDamage = this->damage* (this->damage + 100) * 0.08 / (target->armor + 8);
 	target->Damage(finalDamage);
 
+	canAttack = false;
 	printf("%s id: %i DMG: %i to %s id: %i", this->name.GetString(), this->id, finalDamage, target->name.GetString(), target->id);
 }
 
 void Capybara::SetStatus(CapybaraStatus status)
 {
 	this->capybaraStatus = status;
+}
+
+void Capybara::SetAttack()
+{
+	canAttack = true;
+}
+
+bool Capybara::CanAttack()
+{
+	return canAttack;
 }
 
 void Capybara::LevelUp()
