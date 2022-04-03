@@ -10,7 +10,7 @@
 
 Capybara::Capybara(CapybaraType capyType, uint32 id, iPoint position, const char* name) : Entity(EntityType::CAPYBARA, id, name, position), capybaraType(capyType)
 {
-	lvl = 1;
+	level = 1;
 
 	//Change this values in order to balance the game progression
 	xpNext = 50;
@@ -86,6 +86,11 @@ int& Capybara::GetDamage()
 int& Capybara::GetArmor()
 {
 	return armor;
+}
+
+int& Capybara::GetLVL()
+{
+	return level;
 }
 
 int& Capybara::GetXP()
@@ -175,7 +180,7 @@ bool Capybara::CanAttack()
 
 void Capybara::LevelUp()
 {
-	lvl++;
+	level++;
 	xpNext = xpNext + xpNext * 0.1f;
 	switch (capybaraType)
 	{
@@ -231,7 +236,7 @@ void Capybara::LevelUp()
 
 	//Debug log
 	LOG("");
-	LOG("%s stats LVL: %i", name.GetString(), lvl);
+	LOG("%s stats LVL: %i", name.GetString(), level);
 	LOG("HP: %i MXHP: %i HPLVL: %i", health, maxHealth, capybaraStats.hp);
 	LOG("MP: %i MXMP: %i MPLVL: %i", mana, maxMana, capybaraStats.mp);
 	LOG("DMG: %i STRLVL: %i", damage, capybaraStats.strenght);

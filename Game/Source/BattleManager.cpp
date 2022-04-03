@@ -82,11 +82,16 @@ bool BattleManager::Start()
 bool BattleManager::PreUpdate()
 {
 	bool ret = true;
-	
-	if (createTexts)
-		CreateTexts();
 
+	DeleteAttackMenu();
 
+	UpdateTexts();
+
+	return ret;
+}
+
+void BattleManager::DeleteAttackMenu()
+{
 	if (deleteAttackMenu)
 	{
 		for (int i = 0; i < attackBtns.Count(); i++)
@@ -101,11 +106,13 @@ bool BattleManager::PreUpdate()
 		currentButtons = menuBtns;
 		currentButton = currentButtons.start;
 
+
 		deleteAttackMenu = false;
 	}
-	if (createAttackMenu)
-		CreateAttackMenu();
+}
 
+void BattleManager::UpdateTexts()
+{
 	for (int i = 0; i < playerHeathText.Count() && i < playerTeam.Count(); i++)
 	{
 		SString hp("%i/%iHP", playerTeam.At(i)->data->GetHealth(), playerTeam.At(i)->data->GetMaxHealth());
@@ -124,8 +131,15 @@ bool BattleManager::PreUpdate()
 			printf("Updating Mana \n");
 		}
 	}
-
-	return ret;
+	for (int i = 0; i < playerLevels.Count() && i < playerTeam.Count(); i++)
+	{
+		SString mp("LVL: %i", playerTeam.At(i)->data->GetLVL());
+		if (strcmp(playerLevels.At(i)->data->GetText(), mp.GetString()))
+		{
+			playerLevels.At(i)->data->SetText(mp.GetString());
+			printf("Updating Level \n");
+		}
+	}
 }
 
 bool BattleManager::Update(float dt)
@@ -139,21 +153,16 @@ bool BattleManager::Update(float dt)
 
 	Draw();
 
-
-	if (showAttackMenu)
-		ShowAttackMenu();
-
-	//Updates the character name changes
-	if (updateCurrentName)
-	{
-		app->guiManager->DestroyGuiControl(currentName);
-		currentName = (GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 10, currentCapybara->data->name.GetString(), { 115, 545, 155, 20 }, this, { 255, 255, 255, 1 });
-		updateCurrentName = false;
-	}
 	//Updating the capybaras info
-	UpdateInfo();
+	UpdatePlayerInfo();
 
 	return ret;
+}
+
+void BattleManager::UpdateCurrentName()
+{
+	app->guiManager->DestroyGuiControl(currentName);
+	currentName = (GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 10, currentCapybara->data->name.GetString(), { 115, 545, 155, 20 }, this, { 255, 255, 255, 1 });
 }
 
 void BattleManager::Draw()
@@ -169,7 +178,7 @@ void BattleManager::Draw()
 	app->render->DrawCircle(btnX, btnY, 10, 0, 255, 0);
 }
 
-void BattleManager::UpdateInfo()
+void BattleManager::UpdatePlayerInfo()
 {
 	for (int i = 0; i < playerHealthBars.Count(); i++)
 	{
@@ -183,58 +192,33 @@ void BattleManager::UpdateInfo()
 
 void BattleManager::CreateAttackMenu()
 {
-	for (int i = 0; i < enemies.Count(); i++)
+	if (enemies.Count() != 0)
 	{
-		attackBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, i + 4, enemies.At(i)->data->name.GetString(), { 250, i * 50 + 550, 155, 20 }, this));
+		for (int i = 0; i < enemies.Count(); i++)
+		{
+			attackBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, i + 4, enemies.At(i)->data->name.GetString(), { 250, i * 50 + 550, 155, 20 }, this));
 
-		SString enemyHealth("%i/%i HP", enemies.At(i)->data->GetHealth(), enemies.At(i)->data->GetMaxHealth());
-		enemyBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, i + 4, "EnemyBar", { 250, i * 50 + 575, 155, 20 }, this));
-		enemyInfo.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, i + 4, enemyHealth.GetString(), { 250, i * 50 + 575, 155, 20 }, this,  {255, 255, 255, 1}));
+			SString enemyHealth("%i/%i HP", enemies.At(i)->data->GetHealth(), enemies.At(i)->data->GetMaxHealth());
+			enemyBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, i + 4, "EnemyBar", { 250, i * 50 + 575, 155, 20 }, this));
+			enemyInfo.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, i + 4, enemyHealth.GetString(), { 250, i * 50 + 575, 155, 20 }, this, { 255, 255, 255, 1 }));
+		}
+		for (int i = 0; i < enemyBars.Count(); i++)
+		{
+			enemyBars.At(i)->data->UpdateValues(enemies.At(i)->data->GetHealth(), enemies.At(i)->data->GetMaxHealth());
+		}
+		currentButton = attackBtns.start;
+		currentButtons = attackBtns;
 	}
-	for (int i = 0; i < enemyBars.Count(); i++)
-	{
-		enemyBars.At(i)->data->UpdateValues(enemies.At(i)->data->GetHealth(), enemies.At(i)->data->GetMaxHealth());
-	}
-
-	createAttackMenu = false;
-	currentButton = attackBtns.start;
-	currentButtons = attackBtns;
-
 	return;
 }
 
-void BattleManager::ShowAttackMenu()
-{	
-}
-
-void BattleManager::ShowAbilityMenu()
+void BattleManager::CreateAbilityMenu()
 {
+
 }
 
 void BattleManager::UpdateInput()
 {
-
-	if (!showAbilityMenu && !showAttackMenu)
-	{
-		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
-		{
-			if (currentCapybara->next == nullptr || !currentCapybara->next->data->CanAttack())
-				currentCapybara = playerTeam.start;
-			else if (currentCapybara->next->data->CanAttack())
-				currentCapybara = currentCapybara->next;
-
-			updateCurrentName = true;
-		}
-		if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
-		{
-			if (currentCapybara->prev == nullptr)
-				currentCapybara = playerTeam.end;
-			else
-				currentCapybara = currentCapybara->prev;
-
-			updateCurrentName = true;
-		}
-	}
 	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
 	{
 		if (currentButton->next == nullptr)
@@ -274,7 +258,6 @@ bool BattleManager::PostUpdate()
 		if(e->data->GetHealth() <= 0)
 		{
 			enemies.Del(e);
-			createAttackMenu = true;
 		}
 	}
 
@@ -293,6 +276,11 @@ bool BattleManager::CleanUp()
 void BattleManager::SetPlayer(Player* player)
 {
 	this->player = player;
+}
+
+Player* BattleManager::GetPlayer()
+{
+	return this->player;
 }
 
 void BattleManager::SetEnemy(Enemy* enemy)
@@ -319,6 +307,10 @@ void BattleManager::CreateTexts()
 		//Creating the character name text
 		app->guiManager->CreateGuiControl(GuiControlType::TEXT, 20 + i, playerTeam.At(i)->data->name.GetString(), {i * 450 + 15, 20, 155, 20}, this, {255, 255, 255, 1});
 
+		//Creating the character LVL text
+		SString lvl("LVL: %i", playerTeam.At(i)->data->GetLVL());
+		playerLevels.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 20 + i, lvl.GetString(), {i * 450 + 150, 20, 155, 20}, this, {255,255,255,1}));
+
 		//Creating the health bar
 		playerHealthBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, 20 + i, "HealthBar", { i * 450 + 15, 60, 155, 20 }, this ));
 		//Creating the health text
@@ -331,11 +323,6 @@ void BattleManager::CreateTexts()
 		SString mp("%i/%iMP", playerTeam.At(i)->data->GetMana(), playerTeam.At(i)->data->GetMaxMana());
 		playerManaText.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 20 + i, mp.GetString(), { i * 450 + 15, 85, 155, 20 }, this, { 255, 255, 255, 1 }));
 	}
-	
-
-	createTexts = false;
-
-	return;
 }
 
 bool BattleManager::OnGuiMouseClickEvent(GuiControl* control)
@@ -347,9 +334,7 @@ bool BattleManager::OnGuiMouseClickEvent(GuiControl* control)
 	{
 		if (control->id == 0)
 		{
-			showAttackMenu = !showAttackMenu;
-			createAttackMenu = true;
-
+			CreateAttackMenu();
 		}
 		if (control->id == 1)
 		{
@@ -366,24 +351,30 @@ bool BattleManager::OnGuiMouseClickEvent(GuiControl* control)
 		if (control->id == 4)
 		{
 			currentCapybara->data->Attack(enemies.At(0)->data);
-			showAttackMenu = false;
-			deleteAttackMenu = true;
-			turn = Turn::ENEMY;
 		}
 		if (control->id == 5)
 		{
 			currentCapybara->data->Attack(enemies.At(1)->data);
-			showAttackMenu = false;
-			deleteAttackMenu = true;
-			turn = Turn::ENEMY;
 		}
 		if (control->id == 6)
 		{
 			currentCapybara->data->Attack(enemies.At(2)->data);
-			showAttackMenu = false;
-			deleteAttackMenu = true;
-			turn = Turn::ENEMY;
 		}
+		if (control->id >= 4 && control->id <= 6)
+		{
+			deleteAttackMenu = true;
+
+			if (currentCapybara->next == nullptr)
+			{
+				currentCapybara = playerTeam.start;
+				turn = Turn::ENEMY;
+			}
+			else
+				currentCapybara = currentCapybara->next;
+
+			UpdateCurrentName();
+		}
+
 	}break;
 
 	}

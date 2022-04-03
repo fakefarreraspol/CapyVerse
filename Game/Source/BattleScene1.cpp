@@ -5,6 +5,7 @@
 #include "App.h"
 #include "BattleManager.h"
 #include "EntityManager.h"
+#include "Player.h"
 
 BattleScene1::BattleScene1(bool startEnabled) : Module(startEnabled)
 {
@@ -24,9 +25,6 @@ bool BattleScene1::Awake(pugi::xml_node&)
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::SUPP, 11, { 720, 250 }, "Rainbowbara"));
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::DPS, 11, { 720, 350 }, "Punkibara"));
 
-    
-
-    
 
     return true;
 }
@@ -56,6 +54,7 @@ bool BattleScene1::Update(float dt)
 
     if (app->battleManager->GetTurn() == Turn::ENEMY)
     {
+        enemy->GetBattleTeam().At(1)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(1)->data);
         app->battleManager->SetTurn(Turn::PLAYER);
     }
 

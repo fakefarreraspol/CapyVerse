@@ -53,6 +53,7 @@ public:
 	int& GetMaxMana();
 	int& GetDamage();
 	int& GetArmor();
+	int& GetLVL();
 	int& GetXP();
 	int& GetNextXP();
 	CapybaraType& GetType();
@@ -105,7 +106,7 @@ protected:
 
 	//XP variables
 	int xp = 0;		//Current capy xp points
-	int lvl;		//Capybara lvl
+	int level;		//Capybara lvl
 	int xpNext;		//Xp points for the next level
 
 	bool isCombat = false;

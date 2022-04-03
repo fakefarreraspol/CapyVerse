@@ -34,31 +34,29 @@ public:
 
 	bool Update(float dt);
 
-	void Draw();
-
-	void UpdateInfo();
-
-	void CreateAttackMenu();
-
-	void ShowAttackMenu();
-
-	void ShowAbilityMenu();
-
-	void UpdateInput();
-
 	bool PostUpdate();
 
+	bool OnGuiMouseClickEvent(GuiControl* control);
+
 	bool CleanUp();
-
+	
 	void SetPlayer(Player* player);
-
+	Player* GetPlayer();
 	void SetEnemy(Enemy* enemy);
 	void SetTurn(Turn turn);
 	Turn GetTurn();
 
-	void CreateTexts();
+private:
 
-	bool OnGuiMouseClickEvent(GuiControl* control);
+	void UpdateCurrentName();
+	void Draw();
+	void UpdateTexts();
+	void UpdatePlayerInfo();
+	void DeleteAttackMenu();
+	void CreateAttackMenu();
+	void CreateAbilityMenu();
+	void UpdateInput();
+	void CreateTexts();
 
 private:
 	List<Capybara*> enemies;
@@ -87,6 +85,7 @@ private:
 	List<GuiText*> playerNames;
 	List<GuiBar*>  playerHealthBars;
 	List<GuiBar*>  playerManaBars;
+	List<GuiText*> playerLevels;
 	
 	List<GuiText*> playerHeathText;
 	List<GuiText*> playerManaText;
@@ -96,13 +95,9 @@ private:
 
 	bool updateInput = true;
 
-	bool showAttackMenu = false;
 	bool deleteAttackMenu = false;
 	bool showAbilityMenu = false;
-	bool createAttackMenu = false;
-	bool createTexts = false;
-	bool updateCurrentName = false;
-
+	
 	Turn turn = Turn::NONE;
 };
 
