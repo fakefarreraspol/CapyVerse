@@ -22,6 +22,8 @@
     <ClCompile Include="Source\Window.cpp" />
     <ClCompile Include="Source\Log.cpp" />
     <ClCompile Include="Source\External\PugiXml\src\pugixml.cpp" />
+    <ClCompile Include="Source\Dialog.cpp" />
+    <ClCompile Include="Source\DialogNode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Capybara.h" />
@@ -53,5 +55,7 @@
     <ClInclude Include="Source\DynArray.h" />
     <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="Source\External\PugiXml\src\pugixml.hpp" />
+    <ClInclude Include="Source\Dialog.h" />
+    <ClInclude Include="Source\DialogNode.h" />
   </ItemGroup>
 </Project>
