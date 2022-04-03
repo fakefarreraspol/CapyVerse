@@ -101,6 +101,8 @@
     <ClCompile Include="Source\Capybara.cpp" />
     <ClCompile Include="Source\Chinabara.cpp" />
     <ClCompile Include="Source\Enemy.cpp" />
+    <ClCompile Include="Source\Dialog.cpp" />
+    <ClCompile Include="Source\DialogNode.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
     <ClCompile Include="Source\FadeToBlack.cpp" />
     <ClCompile Include="Source\GuiBar.cpp" />
@@ -129,6 +131,8 @@
     <ClInclude Include="Source\Capybara.h" />
     <ClInclude Include="Source\Chinabara.h" />
     <ClInclude Include="Source\Enemy.h" />
+    <ClInclude Include="Source\Dialog.h" />
+    <ClInclude Include="Source\DialogNode.h" />
     <ClInclude Include="Source\Entity.h" />
     <ClInclude Include="Source\EntityManager.h" />
     <ClInclude Include="Source\FadeToBlack.h" />
