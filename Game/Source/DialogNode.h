@@ -1,20 +1,22 @@
 #ifndef __DIALOG_NODE_H__
 #define __DIALOG_NODE_H__
 
-#pragma once
-#include <vector>
-#include <string>
+#include <vector>		// list
+#include <string>		// sstring
+
+#include "List.h"
+#include "SString.h"
 
 struct DialogNode
 {
 	// The dialog text
-	std::string text;
+	SString text;
 
 	// The dialog ID of next nodes
-	std::vector<size_t> nodes;
+	List<size_t> nodes;
 
 	// The dialog text for the options
-	std::vector<std::string> options;
+	List<SString> options;
 };
 
 #endif // !DIALOG_SYSTEM_H

@@ -91,6 +91,7 @@
     <ClCompile Include="Source\Enemy.cpp">
       <Filter>Modules\Gameplay\Entities\Characters</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Dialog.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -210,6 +211,8 @@
     <ClInclude Include="Source\Enemy.h">
       <Filter>Modules\Gameplay\Entities\Characters</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Dialog.h" />
+    <ClInclude Include="Source\DialogNode.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

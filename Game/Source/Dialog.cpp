@@ -16,8 +16,8 @@ size_t Dialog::AddNode(DialogNode& node)
 
 	activeNode = &nodes[id];
 
-	node.nodes.clear();
-	node.options.clear();
+	node.nodes.Clear();
+	node.options.Clear();
 
 	return id;
 }
@@ -27,12 +27,12 @@ void Dialog::Update()
 	if (!finished) {
 		if (activeNode) {
 			system("cls");
-			std::cout << activeNode->text << std::endl;
+			std::cout << activeNode->text.GetString() << std::endl;
 
-			size_t optionSize = activeNode->options.size();
+			size_t optionSize = activeNode->options.Count();
 
 			for (size_t i = 0; i < optionSize; i++) {
-				std::cout << (i + 1) << ". " << activeNode->options[i] << std::endl;
+				std::cout << (i + 1) << ". " << activeNode->options.At(i) << std::endl;
 			}
 
 			if (optionSize > 0) {
@@ -52,11 +52,11 @@ void Dialog::Update()
 				activeNode = &nodes[activeNode->nodes[option]];
 			}
 			else {
-				if (activeNode->nodes.size() > 0) {
+				if (activeNode->nodes.Count() > 0) {
 					system("pause");
 					activeNode = &nodes[activeNode->nodes[0]];
 				}
-				else {
+				else { 
 					finished = true;
 				}
 			}
