@@ -8,9 +8,9 @@
 
 ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 {
-	for(uint i = 0; i < MAX_COLLIDERS; ++i)
-		colliders[i] = nullptr;
-
+	/*for(uint i = 0; i < MAX_COLLIDERS; ++i)
+		colliders[i] = nullptr;*/
+	
 	matrix[Collider::Type::WALL][Collider::Type::WALL] = false;
 	matrix[Collider::Type::WALL][Collider::Type::PLAYER] = true;
 	matrix[Collider::Type::WALL][Collider::Type::ENEMY] = true;
@@ -57,20 +57,29 @@ ModuleCollisions::~ModuleCollisions()
 bool ModuleCollisions::PreUpdate()
 {
 	// Remove all colliders scheduled for deletion
-	for(uint i = 0; i < MAX_COLLIDERS; ++i)
+	/*for(uint i = 0; i < colliders.Count(); ++i)
 	{
+		
 		if(colliders[i] != nullptr)
 		{
 			if (colliders[i]->pendingToDelete == true) {
-				delete colliders[i];
-				colliders[i] = nullptr;
+				
 			}
 		}
 	}
+	for (ListItem<Collider*>* temp = colliders.start; temp != nullptr; temp = temp->next)
+	{
+		if (temp->data != nullptr)
+		{
+			if( )
+			colliders.Del(c);
+			return;
+		}
 
+	}*/
 	Collider* c1;
 	Collider* c2;
-
+	
 	for(uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
 		// skip empty colliders
@@ -123,75 +132,77 @@ bool ModuleCollisions::PostUpdate()
 void ModuleCollisions::DebugDraw()
 {
 	Uint8 alpha = 80;
-	for(uint i = 0; i < MAX_COLLIDERS; ++i)
+	for (ListItem<Collider*>* temp = colliders.start; temp != nullptr; temp = temp->next)
 	{
-		if(colliders[i] == nullptr)
-			continue;
-		
-		switch(colliders[i]->type)
+		if (temp->data == nullptr) continue;
+		switch (temp->data->type)
 		{
 			case Collider::Type::NONE: // white
-			app->render->DrawRectangle(colliders[i]->rect, 255, 255, 255, alpha);
+			app->render->DrawRectangle(temp->data->rect, 255, 255, 255, alpha);
 			break;
 			case Collider::Type::WALL: // blue
-			app->render->DrawRectangle(colliders[i]->rect, 0, 0, 255, alpha);
-			break;			
+			app->render->DrawRectangle(temp->data->rect, 0, 0, 255, alpha);
+			break;
 			case Collider::Type::ORB: // blue
-			app->render->DrawRectangle(colliders[i]->rect, 0, 255, 155, alpha);
+			app->render->DrawRectangle(temp->data->rect, 0, 255, 155, alpha);
 			break;
 			case Collider::Type::YELLOW_FLOWER: // yellow
-			app->render->DrawRectangle(colliders[i]->rect, 255, 255, 0, alpha);
+			app->render->DrawRectangle(temp->data->rect, 255, 255, 0, alpha);
 			break;
 			case Collider::Type::RED_FLOWER: // orange
-			app->render->DrawRectangle(colliders[i]->rect, 255, 122, 0, alpha);
+			app->render->DrawRectangle(temp->data->rect, 255, 122, 0, alpha);
 			break;
 			case Collider::Type::STRUCTURE: // purple
-			app->render->DrawRectangle(colliders[i]->rect, 122, 0, 255, alpha);
+			app->render->DrawRectangle(temp->data->rect, 122, 0, 255, alpha);
 			break;
 			case Collider::Type::PLAYER: // green
-			app->render->DrawRectangle(colliders[i]->rect, 0, 255, 0, alpha);
+			app->render->DrawRectangle(temp->data->rect, 0, 255, 0, alpha);
 			break;
 			case Collider::Type::BOMB: // red/white
-			app->render->DrawRectangle(colliders[i]->rect, 255, 102, 102, alpha);
+			app->render->DrawRectangle(temp->data->rect, 255, 102, 102, alpha);
 			break;
 			case Collider::Type::EXPLOSION: // red/white
-			app->render->DrawRectangle(colliders[i]->rect, 255, 255, 255, alpha);
+			app->render->DrawRectangle(temp->data->rect, 255, 255, 255, alpha);
 			break;
 			case Collider::Type::ENEMY: // red
-			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 0, alpha);
+			app->render->DrawRectangle(temp->data->rect, 255, 0, 0, alpha);
 			break;
 			case Collider::Type::PLAYER_SHOT: // yellow
-			app->render->DrawRectangle(colliders[i]->rect, 255, 255, 0, alpha);
+			app->render->DrawRectangle(temp->data->rect, 255, 255, 0, alpha);
 			break;
 			case Collider::Type::ENEMY_SHOT: // magenta
-			app->render->DrawRectangle(colliders[i]->rect, 0, 255, 255, alpha);
+			app->render->DrawRectangle(temp->data->rect, 0, 255, 255, alpha);
 			break;
 			case Collider::Type::WIN: // GREEN
-			app->render->DrawRectangle(colliders[i]->rect, 0, 255, 0, alpha);
+			app->render->DrawRectangle(temp->data->rect, 0, 255, 0, alpha);
 			break;
 			case Collider::Type::NEXT: // Pink
-			app->render->DrawRectangle(colliders[i]->rect, 255, 125, 0, alpha);
+			app->render->DrawRectangle(temp->data->rect, 255, 125, 0, alpha);
 			break;
 			case Collider::Type::BOUNDS: // Black
-			app->render->DrawRectangle(colliders[i]->rect, 0, 0, 0, alpha);
+			app->render->DrawRectangle(temp->data->rect, 0, 0, 0, alpha);
 			break;
+
 		}
+
 	}
+	
 }
 
 // Called before quitting
 bool ModuleCollisions::CleanUp()
 {
 	LOG("Freeing all colliders");
-
-	for(uint i = 0; i < MAX_COLLIDERS; ++i)
+	for (ListItem<Collider*>* temp = colliders.start; temp != nullptr; temp = temp->next)
 	{
-		if(colliders[i] != nullptr)
+		if (temp->data != nullptr)
 		{
-			delete colliders[i];
-			colliders[i] = nullptr;
+			RemoveCollider(temp->data);
+			
 		}
+
 	}
+	
 
 	return true;
 }
@@ -200,26 +211,29 @@ Collider* ModuleCollisions::AddCollider(SDL_Rect rect, Collider::Type type, Modu
 {
 	Collider* ret = nullptr;
 
-	for(uint i = 0; i < MAX_COLLIDERS; ++i)
+	/*for(uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
 		if(colliders[i] == nullptr)
 		{
 			ret = colliders[i] = new Collider(rect, type, listener);
 			break;
 		}
-	}
-
+	}*/
+	ret = new Collider(rect, type, listener);
+	colliders.Add(ret);
 	return ret;
 }
 
 void ModuleCollisions::RemoveCollider(Collider* collider)
 {
-	for (uint i = 0; i < MAX_COLLIDERS; ++i)
+	
+	for (ListItem<Collider*>* c = colliders.start; c != nullptr; c = c->next)
 	{
-		if (colliders[i] == collider)
+		if (c->data == collider)
 		{
-			delete colliders[i];
-			colliders[i] = nullptr;
+			colliders.Del(c);
+			return;
 		}
+
 	}
 }

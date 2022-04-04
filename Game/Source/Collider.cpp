@@ -2,7 +2,7 @@
 
 Collider::Collider(SDL_Rect rectangle, Type type, Module* listener): rect(rectangle), type(type)
 {
-	listeners[0] = listener;
+	listeners.Add(listener);
 }
 
 void Collider::SetPos(int x, int y)
@@ -21,16 +21,17 @@ bool Collider::Intersects(const SDL_Rect& r) const
 
 void Collider::AddListener(Module* listener)
 {
-	for (int i = 0; i < MAX_LISTENERS; ++i)
-	{
-		if (listeners[i] == nullptr)
-		{
-			listeners[i] = listener;
-			break;
-		}
+	listeners.Add(listener);
+	//for (int i = 0; i < MAX_LISTENERS; ++i)
+	//{
+	//	if (listeners[i] == nullptr)
+	//	{
+	//		listeners[i] = listener;
+	//		break;
+	//	}
 
-		//Simple security check to avoid adding the same listener twice
-		else if (listeners[i] == listener)
-			break;
-	}
+	//	//Simple security check to avoid adding the same listener twice
+	//	else if (listeners[i] == listener)
+	//		break;
+	//}
 }

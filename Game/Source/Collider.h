@@ -3,6 +3,7 @@
 
 #include "SDL/include/SDL_Rect.h"
 #include "Point.h"
+#include "List.h"
 #define MAX_LISTENERS 5
 
 class Module;
@@ -45,7 +46,8 @@ struct Collider
 	SDL_Rect rect;
 	bool pendingToDelete = false;
 	Type type;
-	Module* listeners[MAX_LISTENERS] = { nullptr };
+	
+	List<Module*> listeners;
 };
 
 
