@@ -86,6 +86,7 @@ public:
 	uint32 id;            
 
 	iPoint position;
+	iPoint speed;
 	bool renderable = false;
 	SDL_Texture* texture = nullptr;
 };

@@ -16,7 +16,7 @@ public:
 
 	Module(bool startEnabled) : active(false), isEnabled(startEnabled)
 	{}
-
+	
 	void Init()
 	{
 		active = true;

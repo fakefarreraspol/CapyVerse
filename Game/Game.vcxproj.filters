@@ -70,6 +70,9 @@
     <ClCompile Include="Source\Collider.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TaskQueue.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -164,6 +167,9 @@
     </ClInclude>
     <ClInclude Include="Source\Collider.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TaskQueue.h">
+      <Filter>Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
