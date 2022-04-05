@@ -58,48 +58,35 @@ ModuleCollisions::~ModuleCollisions()
 bool ModuleCollisions::PreUpdate()
 {
 	// Remove all colliders scheduled for deletion
-	/*for(uint i = 0; i < colliders.Count(); ++i)
+	for (ListItem<Collider*>* i = colliders.start; i !=nullptr;  i = i->next)
 	{
-		
-		if(colliders[i] != nullptr)
+		if (i->data != nullptr && i->data->pendingToDelete == true)
 		{
-			if (colliders[i]->pendingToDelete == true) {
-				
-			}
+			colliders.Del(i);
 		}
 	}
-	for (ListItem<Collider*>* temp = colliders.start; temp != nullptr; temp = temp->next)
-	{
-		if (temp->data != nullptr)
-		{
-			if( )
-			colliders.Del(c);
-			return;
-		}
 
-	}*/
 	Collider* c1;
 	Collider* c2;
-	for (ListItem<Collider*>* temp = colliders.start; temp != nullptr; temp = temp->next)
+
+	for (ListItem<Collider*>* i = colliders.start; i != nullptr; i = i->next)
 	{
-		if (temp->data == nullptr) continue;	
+		c1 = i->data;
 
-		c1 = temp->data;
-
-		for (ListItem<Collider*>* temp2 = temp->next; temp2 != nullptr; temp2 = temp2->next)
+		// avoid checking collisions already checked
+		for (ListItem<Collider*>* k = i->next; k != nullptr; k = k->next)
 		{
-			if (temp2->data == nullptr) continue;
-			
-			c2 = temp2->data;
-			
-			/*if (matrix[c1->type][c2->type] && c1->Intersects(c2->rect))
+
+			c2 = k->data;
+
+			if (matrix[c1->type][c2->type] && c1->Intersects(c2->rect))
 			{
-				for (List<Module*> del = li; del != NULL; del = 
-					if (c1->listeners != nullptr) c1->listeners->OnCollision(c1, c2);
-				
-				for (uint i = 0; i < MAX_LISTENERS; ++i)
-					if (c2->listeners[i] != nullptr) c2->listeners[i]->OnCollision(c2, c1);
-			}*/
+				for (ListItem<Module*>* m = c1->listeners.start; m != nullptr; m = m->next)
+					if (m->data != nullptr)m->data->OnCollision(c1, c2);
+
+				for (ListItem<Module*>* m = c2->listeners.start; m != nullptr; m = m->next)
+					if (m->data != nullptr)m->data->OnCollision(c2, c1);
+			}
 		}
 	}
 	
@@ -194,9 +181,7 @@ bool ModuleCollisions::CleanUp()
 		if (temp->data != nullptr)
 		{
 			RemoveCollider(temp->data);
-			
 		}
-
 	}
 	
 
@@ -230,6 +215,5 @@ void ModuleCollisions::RemoveCollider(Collider* collider)
 			colliders.Del(c);
 			return;
 		}
-
 	}
 }
