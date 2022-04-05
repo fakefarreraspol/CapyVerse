@@ -13,6 +13,7 @@
 #include "Scene.h"
 #include "EntityManager.h"
 #include "GuiManager.h"
+#include "ModuleCollisions.h"
 
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
@@ -26,7 +27,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new Scene(true);
 	entMan = new EntityManager(true);
 	guiManager = new GuiManager(true);
-
+	colManager = new ModuleCollisions(true);
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(win);
@@ -36,7 +37,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(entMan);
 	AddModule(scene);
 	AddModule(guiManager);
-
+	AddModule(colManager);
 	// Render last to swap buffer
 	AddModule(render);
 	ptimer = new PerfTimer();

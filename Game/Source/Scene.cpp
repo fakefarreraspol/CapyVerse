@@ -9,6 +9,7 @@
 #include "Scene.h"
 #include "EntityManager.h"
 
+#include "ModuleCollisions.h"
 #include "GuiManager.h"
 #include "GuiButton.h"
 #include "GuiSlider.h"
@@ -49,7 +50,7 @@ bool Scene::Start()
 	slider1->SetBar({200,200,500,30});
 	slider1->SetValues(100, 0, 0);
 	slider1->state = GuiControlState::NORMAL;*/
-
+	
 	box1 = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "", { 100,100,100,100 }, this);
 	iPoint sexo = { 0,0 };
 	app->entMan->CreateEntity(EntityType::PLAYER, 1, sexo, "sexo");

@@ -22,6 +22,7 @@ class Audio;
 class Scene;
 class EntityManager;
 class GuiManager;
+class ModuleCollisions;
 
 class App
 {
@@ -98,7 +99,8 @@ public:
 	Scene* scene;
 	EntityManager* entMan;
 	GuiManager* guiManager;
-
+	ModuleCollisions* colManager;
+	
 	bool fpsCap = false;
 	float dt = 0.0f;
 	uint32 framesPerSecond = 0;
