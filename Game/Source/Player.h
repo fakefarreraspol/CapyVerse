@@ -5,7 +5,7 @@
 
 #include "Entity.h"
 #include "Capybara.h"
-
+#include "Collider.h"
 class Player : public Entity
 {
 public:
@@ -35,6 +35,7 @@ public:
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&);
 
+	Collider* collider = nullptr;
 private:
 	int money;
 	

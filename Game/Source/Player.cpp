@@ -3,10 +3,11 @@
 #include "Input.h"
 #include "Log.h"
 #include "Player.h"
-
+#include "ModuleCollisions.h"
 
 Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType::PLAYER, id, name, position)
 {
+	collider = app->colManager->AddCollider({ position.x, position.y, 16, 16 }, Collider::Type::PLAYER);
 }
 
 Player::~Player()
@@ -16,7 +17,7 @@ Player::~Player()
 bool Player::Update(float dt)
 {
 	bool ret = true;
-	
+	collider->SetPos(position.x, position.y);
 	UpdateInput();
 	LOG("player pos X: %i", position.x);
 	LOG("player pos Y: %i", position.y);
