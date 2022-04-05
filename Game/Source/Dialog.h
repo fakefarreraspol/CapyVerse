@@ -7,14 +7,18 @@
 #include "DialogNode.h"
 #include "GuiButton.h"
 
+#include "GuiText.h"
+
 class Dialog
 {
 private:
 	// All nodes
-	std::vector<DialogNode> nodes;
+
+	List <DialogNode> nodes;
 
 	// Active node
-	DialogNode* activeNode;
+	DialogNode* activeNode = nullptr;
+	GuiText* text = nullptr;
 
 	// Whether the dialog has finished or not
 	bool finished;
@@ -25,8 +29,10 @@ public:
 	// Add a node and return its ID
 	size_t AddNode(DialogNode& node);
 
+	bool StartDialog();
+
 	// Set a node ID as active
-	void SetActiveNode(size_t id) { if (id >= 0 && id < nodes.size()) activeNode = &nodes[id]; }
+	void SetActiveNode(int option);
 
 	// Update dialog
 	void Update();

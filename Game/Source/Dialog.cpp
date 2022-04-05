@@ -2,19 +2,31 @@
 
 Dialog::Dialog() : finished(false), activeNode(NULL)
 {
+
 }
 
 Dialog::~Dialog()
 {
 }
 
+bool Dialog::StartDialog()
+{
+	activeNode = &nodes.start->data;
+	if (activeNode == nullptr)
+		finished = true;
+	else
+		finished = false;
+
+	return !finished;
+}
+
 size_t Dialog::AddNode(DialogNode& node)
 {
-	size_t id = nodes.size();
+	size_t id = nodes.Count();
 
-	nodes.push_back(node);
+	nodes.Add(node);
 
-	activeNode = &nodes[id];
+	activeNode = &nodes.end->data;
 
 	node.nodes.Clear();
 	node.options.Clear();
@@ -24,45 +36,80 @@ size_t Dialog::AddNode(DialogNode& node)
 
 void Dialog::Update()
 {
-	if (!finished) {
-		if (activeNode) {
-			system("cls");
-			std::cout << activeNode->text.GetString() << std::endl;
+	if (finished==false) {
+		if (activeNode!=nullptr) {
 
-			size_t optionSize = activeNode->options.Count();
+			this->text->text = activeNode->text;
 
-			for (size_t i = 0; i < optionSize; i++) {
-				std::cout << (i + 1) << ". " << activeNode->options.At(i) << std::endl;
+			if (activeNode->options.Count() == 0)
+			{
+				// esperar input
+				// active node= nodes.start
+			}
+			else
+			{
+				// selector de opciones
+				int choosenOption;
+
+				// hay que hacer un menu
+
+				SetActiveNode(choosenOption);
 			}
 
-			if (optionSize > 0) {
-				int option;
+			//// get option
 
-				do {
-					std::cout << "Choose an option: ";
-					std::cin >> option;
+			//system("cls");
+			//std::cout << activeNode->text.GetString() << std::endl;
 
-					if (option < 1 || option > optionSize) {
-						std::cout << "Choose an option from 1 to " << optionSize << std::endl;
-					}
-				} while (option < 1 || option > optionSize);
+			//size_t optionSize = activeNode->options.Count();
 
-				option -= 1;
+			//for (size_t i = 0; i < optionSize; i++) {
+			//	std::cout << (i + 1) << ". " << activeNode->options.At(i) << std::endl;
+			//}
 
-				activeNode = &nodes[activeNode->nodes[option]];
-			}
-			else {
-				if (activeNode->nodes.Count() > 0) {
-					system("pause");
-					activeNode = &nodes[activeNode->nodes[0]];
-				}
-				else { 
-					finished = true;
-				}
-			}
+			//if (optionSize > 0) {
+			//	int option;
+
+			//	do {
+			//		std::cout << "Choose an option: ";
+			//		std::cin >> option;
+
+			//		if (option < 1 || option > optionSize) {
+			//			std::cout << "Choose an option from 1 to " << optionSize << std::endl;
+			//		}
+			//	} while (option < 1 || option > optionSize);
+
+			//	option -= 1;
+
+
+			//	activeNode = &nodes[activeNode->nodes[option]];
+			//}
+			//else {
+			//	if (activeNode->nodes.Count() > 0) {
+			//		system("pause");
+			//		activeNode = &nodes[activeNode->nodes[0]];
+			//	}
+			//	else { 
+			//		finished = true;
+			//	}
+			//}
 		}
 		else {
+			// pues alguna animacion para cerrar dialogo
 			finished = true;
 		}
 	}
+}
+
+void Dialog::SetActiveNode(int option)
+{
+	int size = activeNode->options.Count();
+	if ( size > 0)
+	{
+		if (option >= 0 || option < size)
+		{
+			activeNode = &activeNode->nodes.At(option)->data;
+		}
+	}
+	
 }

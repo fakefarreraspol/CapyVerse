@@ -95,6 +95,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DialogManager.cpp" />
     <ClCompile Include="Source\BattleScene1.cpp" />
     <ClCompile Include="Source\BattleManager.cpp" />
     <ClCompile Include="Source\Capybara.cpp" />
@@ -128,6 +129,7 @@
     <ClInclude Include="Source\BattleManager.h" />
     <ClInclude Include="Source\Capybara.h" />
     <ClInclude Include="Source\Chinabara.h" />
+    <ClInclude Include="Source\DialogManager.h" />
     <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\Dialog.h" />
     <ClInclude Include="Source\DialogNode.h" />

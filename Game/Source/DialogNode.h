@@ -13,10 +13,28 @@ struct DialogNode
 	SString text;
 
 	// The dialog ID of next nodes
-	List<size_t> nodes;
+	List<DialogNode> nodes;
 
 	// The dialog text for the options
 	List<SString> options;
+
+	DialogNode(SString text)
+	{
+		this->text = text;
+	}
+
+
+	DialogNode* AddOption(SString *newOption, SString nextText)
+	{
+		DialogNode* n = new DialogNode(nextText);
+
+		if (newOption != nullptr)
+			this->options.Add(*newOption);
+
+		this->nodes.Add(*n);
+
+		return n;
+	}
 };
 
 #endif // !DIALOG_SYSTEM_H

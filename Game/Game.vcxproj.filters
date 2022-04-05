@@ -92,6 +92,7 @@
       <Filter>Modules\Gameplay\Entities\Characters</Filter>
     </ClCompile>
     <ClCompile Include="Source\Dialog.cpp" />
+    <ClCompile Include="DialogManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -213,6 +214,7 @@
     </ClInclude>
     <ClInclude Include="Source\Dialog.h" />
     <ClInclude Include="Source\DialogNode.h" />
+    <ClInclude Include="Source\DialogManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
