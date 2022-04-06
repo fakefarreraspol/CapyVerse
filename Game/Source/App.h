@@ -23,7 +23,7 @@ class Scene;
 class EntityManager;
 class GuiManager;
 class ModuleCollisions;
-
+class Task;
 class App
 {
 public:
@@ -100,7 +100,7 @@ public:
 	EntityManager* entMan;
 	GuiManager* guiManager;
 	ModuleCollisions* colManager;
-	
+	Task* taskManager;
 	bool fpsCap = false;
 	float dt = 0.0f;
 	uint32 framesPerSecond = 0;
