@@ -84,6 +84,7 @@ bool BattleManager::PreUpdate()
 	bool ret = true;
 
 	DeleteAttackMenu();
+	DeleteAbilityMenu();
 	//Updating the capybaras info
 	UpdatePlayerInfo();
 
@@ -204,11 +205,33 @@ void BattleManager::UpdatePlayerInfo()
 			printf("Updating Level \n");
 		}
 	}
+	for (int i = 0; i < playerStatus.Count() && i < playerTeam.Count(); i++)
+	{
+		SString status;
+		switch (playerTeam.At(i)->data->GetStatus())
+		{
+		case CapybaraStatus::NONE: status.Create("");				break;
+		case CapybaraStatus::BLEED: status.Create("Bleed");			break;
+		case CapybaraStatus::BLOATED: status.Create("Bloated");		break;
+		case CapybaraStatus::DEFENSIVE: status.Create("Defensive");	break;
+		case CapybaraStatus::POISONED: status.Create("Poisoned");	break;
+		case CapybaraStatus::RAGE: status.Create("Rage");			break;
+		case CapybaraStatus::SLEEP: status.Create("Sleep");			break;
+		case CapybaraStatus::STUNED: status.Create("Stuned");		break;
+		case CapybaraStatus::TAUNTED: status.Create("Taunted");		break;
+		}
+
+		if (strcmp(playerStatus.At(i)->data->GetText(), status.GetString()))
+		{
+			playerStatus.At(i)->data->SetText(status.GetString());
+			printf("Updating Status\n");
+		}
+	}
 }
 
 void BattleManager::CreateAttackMenu()
 {
-	if (enemies.Count() != 0)
+	if (enemies.Count() > 0)
 	{
 		for (int i = 0; i < enemies.Count(); i++)
 		{
@@ -230,7 +253,65 @@ void BattleManager::CreateAttackMenu()
 
 void BattleManager::CreateAbilityMenu()
 {
+	switch (currentCapybara->data->GetTarget())	
+	{
+	case CapybaraTarget::ALLIES :
+	{
+		
+		if (playerTeam.Count() > 0)
+		{
+			for (int i = 0; i < playerTeam.Count(); i++)
+			{
+				abilityBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, i + 7, playerTeam.At(i)->data->name.GetString(), { 250, i * 50 + 550, 155, 20 }, this));
 
+				SString allyHealth("%i/%i HP", playerTeam.At(i)->data->GetHealth(), playerTeam.At(i)->data->GetMaxHealth());
+				abilityBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, i + 7, "AllyBar", { 250, i * 50 + 575, 155, 20 }, this));
+				abilityInfo.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, i + 7, allyHealth.GetString(), { 250, i * 50 + 575, 155, 20 }, this, { 255, 255, 255, 1 }));
+			}
+			for (int i = 0; i < abilityBars.Count(); i++)
+			{
+				abilityBars.At(i)->data->UpdateValues(playerTeam.At(i)->data->GetHealth(), playerTeam.At(i)->data->GetMaxHealth());
+			}
+			currentButton = abilityBtns.start;
+			currentButtons = abilityBtns;
+			targets = playerTeam;
+		}
+	}break;
+	case CapybaraTarget::ENEMIES:
+	{
+		if (playerTeam.Count() > 0)
+		{
+			for (int i = 0; i < playerTeam.Count(); i++)
+			{
+				abilityBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, i + 7, playerTeam.At(i)->data->name.GetString(), { 250, i * 50 + 550, 155, 20 }, this));
+
+				SString allyHealth("%i/%i HP", playerTeam.At(i)->data->GetHealth(), playerTeam.At(i)->data->GetMaxHealth());
+				abilityBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, i + 7, "AllyBar", { 250, i * 50 + 575, 155, 20 }, this));
+				abilityInfo.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, i + 7, allyHealth.GetString(), { 250, i * 50 + 575, 155, 20 }, this, { 255, 255, 255, 1 }));
+			}
+			for (int i = 0; i < abilityBars.Count(); i++)
+			{
+				abilityBars.At(i)->data->UpdateValues(playerTeam.At(i)->data->GetHealth(), playerTeam.At(i)->data->GetMaxHealth());
+			}
+			currentButton = abilityBtns.start;
+			currentButtons = abilityBtns;
+			targets = enemies;
+		}
+	}break;
+
+	case CapybaraTarget::HIMSELF:
+	{
+		abilityBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 10, currentCapybara->data->name.GetString(), { 250, 50 + 550, 155, 20 }, this));
+
+		SString allyHealth("%i/%i HP", currentCapybara->data->GetHealth(), currentCapybara->data->GetMaxHealth());
+		abilityBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, 10, "AllyBar", { 250, 50 + 575, 155, 20 }, this));
+		abilityInfo.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 10, allyHealth.GetString(), { 250, 50 + 575, 155, 20 }, this, { 255, 255, 255, 1 }));
+		currentButton = abilityBtns.start;
+		currentButtons = abilityBtns;
+	}break;
+	default:
+		break;
+	}
 }
 
 void BattleManager::UpdateInput()
@@ -247,8 +328,8 @@ void BattleManager::UpdateInput()
 			currentButton->data->state = GuiControlState::NORMAL;
 			currentButton = currentButton->next;
 		}
-
 	}
+
 	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
 	{	
 		if (currentButton->prev == nullptr)
@@ -262,6 +343,7 @@ void BattleManager::UpdateInput()
 			currentButton = currentButton->prev;
 		}
 	}
+
 	currentButton->data->state = GuiControlState::FOCUSED;
 }
 
@@ -338,6 +420,22 @@ void BattleManager::CreateTexts()
 		//Creating the mana text
 		SString mp("%i/%iMP", playerTeam.At(i)->data->GetMana(), playerTeam.At(i)->data->GetMaxMana());
 		playerManaText.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 20 + i, mp.GetString(), { i * 450 + 15, 85, 155, 20 }, this, { 255, 255, 255, 1 }));
+		
+		//Creating the status text
+		SString status;
+		switch (playerTeam.At(i)->data->GetStatus())
+		{
+		case CapybaraStatus::NONE: status.Create("");				break;
+		case CapybaraStatus::BLEED: status.Create("Bleed");			break;
+		case CapybaraStatus::BLOATED: status.Create("Bloated");		break;
+		case CapybaraStatus::DEFENSIVE: status.Create("Defensive");	break;
+		case CapybaraStatus::POISONED: status.Create("Poisoned");	break;
+		case CapybaraStatus::RAGE: status.Create("Rage");			break;
+		case CapybaraStatus::SLEEP: status.Create("Sleep");			break;
+		case CapybaraStatus::STUNED: status.Create("Stuned");		break;
+		case CapybaraStatus::TAUNTED: status.Create("Taunted");		break;
+		}
+		playerStatus.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 20 + i, status.GetString(), { i * 450 + 150, 5, 155, 20 }, this, { 255, 255, 255, 1 }));
 	}
 }
 
@@ -354,7 +452,7 @@ bool BattleManager::OnGuiMouseClickEvent(GuiControl* control)
 		}
 		if (control->id == 1)
 		{
-
+			CreateAbilityMenu();
 		}
 		if (control->id == 2)
 		{
@@ -392,17 +490,21 @@ bool BattleManager::OnGuiMouseClickEvent(GuiControl* control)
 		}
 		if (control->id == 7)
 		{
-			
+			currentCapybara->data->UseAbility(targets.At(0)->data);
 		}
 		if (control->id == 8)
 		{
-
+			currentCapybara->data->UseAbility(targets.At(1)->data);
 		}
 		if (control->id == 9)
 		{
-
+			currentCapybara->data->UseAbility(targets.At(2)->data);
 		}
-		if (control->id >= 7 && control->id <= 9)
+		if (control->id == 10)
+		{
+			currentCapybara->data->UseAbility(currentCapybara->data);
+		}
+		if (control->id >= 7 && control->id <= 10)
 		{
 			deleteAbilityMenu = true;
 			if (currentCapybara->next == nullptr)

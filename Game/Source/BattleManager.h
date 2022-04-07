@@ -61,6 +61,7 @@ private:
 private:
 	List<Capybara*> enemies;
 	List<Capybara*> playerTeam;
+	List<Capybara*> targets;
 
 	Player* player = nullptr;
 	Enemy* enemy = nullptr;
@@ -86,11 +87,13 @@ private:
 	List<GuiText*> attackInfo;
 	List<GuiBar*> attackBars;
 
+	//Player info UI
 	List<GuiText*> playerNames;
 	List<GuiBar*>  playerHealthBars;
 	List<GuiBar*>  playerManaBars;
 	List<GuiText*> playerLevels;
-	
+	List<GuiText*> playerStatus;
+
 	List<GuiText*> playerHeathText;
 	List<GuiText*> playerManaText;
 

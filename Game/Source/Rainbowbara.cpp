@@ -7,7 +7,7 @@ Rainbowbara::Rainbowbara(uint32 id, iPoint position) : Capybara(CapybaraType::SU
 	this->capybaraStats.strenght		= 2;
 	this->capybaraStats.speed			= 4;
 	this->capybaraStats.intelligence	= 6;
-
+	this->capybaraTarget = CapybaraTarget::ALLIES;
 	InitStats();
 }
 

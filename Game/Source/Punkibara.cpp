@@ -7,7 +7,7 @@ Punkibara::Punkibara(uint32 id, iPoint position) : Capybara(CapybaraType::DPS, i
 	this->capybaraStats.strenght		= 7;
 	this->capybaraStats.speed			= 6;
 	this->capybaraStats.intelligence	= 2;
-
+	this->capybaraTarget = CapybaraTarget::HIMSELF;
 	InitStats();
 }
 
