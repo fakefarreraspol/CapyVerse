@@ -23,6 +23,8 @@ class Scene;
 class EntityManager;
 class BattleManager;
 class GuiManager;
+class ModuleCollisions;
+class Task;
 class FadeToBlack;
 class Fonts;
 class BattleScene1;
@@ -103,6 +105,8 @@ public:
 	EntityManager* entMan;
 	Fonts* fonts;
 	GuiManager* guiManager;
+	ModuleCollisions* colManager;
+	Task* taskManager;
 	FadeToBlack* fadeToBlack;
 	BattleManager* battleManager;
 	BattleScene1* battleScene1;

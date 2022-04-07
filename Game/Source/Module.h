@@ -8,6 +8,7 @@
 
 class App;
 class GuiControl;
+class Collider;
 
 class Module
 {
@@ -15,7 +16,7 @@ public:
 
 	Module(bool startEnabled) : active(false), isEnabled(startEnabled)
 	{}
-
+	
 	void Init()
 	{
 		active = true;
@@ -64,6 +65,10 @@ public:
 	virtual bool SaveState(pugi::xml_node&) const
 	{
 		return true;
+	}
+	virtual void OnCollision(Collider* c1, Collider* c2)
+	{
+		return;
 	}
 	virtual bool OnGuiMouseClickEvent(GuiControl* control)
 	{

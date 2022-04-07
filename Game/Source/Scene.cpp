@@ -12,6 +12,7 @@
 #include "BattleManager.h"
 #include "Fonts.h"
 
+#include "ModuleCollisions.h"
 #include "GuiManager.h"
 #include "GuiButton.h"
 #include "GuiSlider.h"
@@ -52,7 +53,6 @@ bool Scene::Start()
 	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 4, { 100, 350 }, "Rainbowbara"));
 
 	app->battleManager->SetPlayer(player);
-
 	return true;
 }
 
@@ -65,6 +65,7 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	
 	if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		app->render->camera.y -= 1;
 
@@ -96,6 +97,11 @@ bool Scene::PostUpdate()
 		ret = false;
 
 	return ret;
+}
+
+void Scene::OnCollision(Collider* c1, Collider* c2)
+{
+	printf("Collision\n");
 }
 
 // Called before quitting

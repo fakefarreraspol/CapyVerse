@@ -61,6 +61,15 @@
     <ClCompile Include="Source\Player.cpp">
       <Filter>Modules\Gameplay\Entities\Characters</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ModuleCollisions.cpp">
+      <Filter>Modules\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Collider.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TaskQueue.cpp">
+      <Filter>Modules</Filter>
+
     <ClCompile Include="Source\Chinabara.cpp">
       <Filter>Modules\Gameplay\Entities\Characters\Capybaras</Filter>
     </ClCompile>
@@ -180,6 +189,16 @@
     <ClInclude Include="Source\Player.h">
       <Filter>Modules\Gameplay\Entities\Characters</Filter>
     </ClInclude>
+
+    <ClInclude Include="Source\ModuleCollisions.h">
+      <Filter>Modules\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Collider.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TaskQueue.h">
+      <Filter>Modules</Filter>
+
     <ClInclude Include="Source\Chinabara.h">
       <Filter>Modules\Gameplay\Entities\Characters\Capybaras</Filter>
     </ClInclude>
@@ -209,6 +228,7 @@
     </ClInclude>
     <ClInclude Include="Source\Enemy.h">
       <Filter>Modules\Gameplay\Entities\Characters</Filter>
+
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

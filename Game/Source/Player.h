@@ -5,13 +5,17 @@
 
 #include "Entity.h"
 #include "Capybara.h"
-
+#include "Collider.h"
 class Player : public Entity
 {
 public:
 	Player(iPoint position, uint32 id, const char* name);
 	~Player();
 
+	iPoint lastPos;
+	int lastKeyPressed = 0;
+	bool isStuck = false;
+	int speed = 1;
 	//Base functions
 	bool Update(float dt);
 	bool Draw(Render* render);
@@ -31,7 +35,10 @@ public:
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&);
 
+	Collider* collider = nullptr;
+
 	void SetCombat(bool value);
+
 
 private:
 	int money;

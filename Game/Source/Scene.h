@@ -34,7 +34,7 @@ public:
 
 	// Called before all Updates
 	bool PostUpdate();
-
+	void OnCollision(Collider* c1, Collider* c2);
 	// Called before quitting
 	bool CleanUp();
 
