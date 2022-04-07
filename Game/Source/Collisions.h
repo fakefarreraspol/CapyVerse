@@ -5,15 +5,15 @@
 #include "Collider.h"
 #include "List.h"
 
-class ModuleCollisions : public Module
+class Collisions : public Module
 {
 public:
 	// Constructor
 	// Fills all collision matrix data
-	ModuleCollisions(bool startEnabled);
+	Collisions(bool startEnabled);
 
 	// Destructor
-	~ModuleCollisions();
+	~Collisions();
 
 	// Called at the beginning of the application loop
 	// Removes all colliders pending to delete

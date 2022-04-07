@@ -3,7 +3,7 @@
 #include "Input.h"
 #include "Log.h"
 #include "Player.h"
-#include "ModuleCollisions.h"
+#include "Collisions.h"
 
 Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType::PLAYER, id, name, position)
 {

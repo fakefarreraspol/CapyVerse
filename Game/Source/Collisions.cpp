@@ -1,4 +1,4 @@
-#include "ModuleCollisions.h"
+#include "Collisions.h"
 
 #include "App.h"
 #include "Log.h"
@@ -7,7 +7,7 @@
 #include "SDL/include/SDL_Scancode.h"
 
 
-ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
+Collisions::Collisions(bool startEnabled) : Module(startEnabled)
 {
 	/*for(uint i = 0; i < MAX_COLLIDERS; ++i)
 		colliders[i] = nullptr;*/
@@ -50,12 +50,12 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 }
 
 // Destructor
-ModuleCollisions::~ModuleCollisions()
+Collisions::~Collisions()
 {
 
 }
 
-bool ModuleCollisions::PreUpdate()
+bool Collisions::PreUpdate()
 {
 	// Remove all colliders scheduled for deletion
 	for (ListItem<Collider*>* i = colliders.start; i !=nullptr;  i = i->next)
@@ -96,7 +96,7 @@ bool ModuleCollisions::PreUpdate()
 
 
 
-bool ModuleCollisions::Update()
+bool Collisions::Update()
 {
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		debug = !debug;
@@ -104,7 +104,7 @@ bool ModuleCollisions::Update()
 	return true;
 }
 
-bool ModuleCollisions::PostUpdate()
+bool Collisions::PostUpdate()
 {
 	if (debug)
 		DebugDraw();
@@ -112,7 +112,7 @@ bool ModuleCollisions::PostUpdate()
 	return true;
 }
 
-void ModuleCollisions::DebugDraw()
+void Collisions::DebugDraw()
 {
 	Uint8 alpha = 80;
 	for (ListItem<Collider*>* temp = colliders.start; temp != nullptr; temp = temp->next)
@@ -173,7 +173,7 @@ void ModuleCollisions::DebugDraw()
 }
 
 // Called before quitting
-bool ModuleCollisions::CleanUp()
+bool Collisions::CleanUp()
 {
 	LOG("Freeing all colliders");
 	for (ListItem<Collider*>* temp = colliders.start; temp != nullptr; temp = temp->next)
@@ -188,7 +188,7 @@ bool ModuleCollisions::CleanUp()
 	return true;
 }
 
-Collider* ModuleCollisions::AddCollider(SDL_Rect rect, Collider::Type type, Module* listener)
+Collider* Collisions::AddCollider(SDL_Rect rect, Collider::Type type, Module* listener)
 {
 	Collider* ret = nullptr;
 
@@ -205,7 +205,7 @@ Collider* ModuleCollisions::AddCollider(SDL_Rect rect, Collider::Type type, Modu
 	return ret;
 }
 
-void ModuleCollisions::RemoveCollider(Collider* collider)
+void Collisions::RemoveCollider(Collider* collider)
 {
 	
 	for (ListItem<Collider*>* c = colliders.start; c != nullptr; c = c->next)

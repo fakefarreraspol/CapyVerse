@@ -12,7 +12,7 @@
 #include "BattleManager.h"
 #include "Fonts.h"
 
-#include "ModuleCollisions.h"
+#include "Collisions.h"
 #include "GuiManager.h"
 #include "GuiButton.h"
 #include "GuiSlider.h"
