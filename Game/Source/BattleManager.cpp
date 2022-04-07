@@ -84,6 +84,7 @@ bool BattleManager::PreUpdate()
 	bool ret = true;
 
 	DeleteAttackMenu();
+
 	//Updating the capybaras info
 	UpdatePlayerInfo();
 
@@ -333,7 +334,7 @@ bool BattleManager::OnGuiMouseClickEvent(GuiControl* control)
 		}
 		if (control->id == 1)
 		{
-
+			CreateAbilityMenu();
 		}
 		if (control->id == 2)
 		{
