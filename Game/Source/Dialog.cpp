@@ -111,5 +111,19 @@ void Dialog::SetActiveNode(int option)
 			activeNode = &activeNode->nodes.At(option)->data;
 		}
 	}
+	if (size == 0)
+	{
+		finished = true;
+	}
 	
+}
+
+DialogNode* Dialog::GetActiveNode()
+{
+	if (activeNode == nullptr)
+	{
+		finished = true;
+		return nullptr;
+	}
+	return activeNode;
 }

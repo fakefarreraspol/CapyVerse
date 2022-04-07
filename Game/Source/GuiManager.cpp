@@ -103,6 +103,12 @@ bool GuiManager::UpdateAll(float dt, bool doLogic) {
 
 }
 
+bool GuiManager::PostUpdate()
+{
+
+	return Draw();
+}
+
 bool GuiManager::Draw() {
 
 	ListItem<GuiControl*>* control = controls.start;

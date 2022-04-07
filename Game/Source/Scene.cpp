@@ -53,6 +53,11 @@ bool Scene::Start()
 
 	app->battleManager->SetPlayer(player);
 
+
+	// test dialog
+	
+
+
 	return true;
 }
 
@@ -82,7 +87,7 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		app->fadeToBlack->MFadeToBlack(this, (Module*)app->battleScene1, 120);
 
-	app->guiManager->Draw();
+	//app->guiManager->Draw();
 
 	return true;
 }

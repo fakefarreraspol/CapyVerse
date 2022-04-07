@@ -33,6 +33,7 @@ public:
 
 	// Set a node ID as active
 	void SetActiveNode(int option);
+	DialogNode* GetActiveNode();
 
 	// Update dialog
 	void Update();

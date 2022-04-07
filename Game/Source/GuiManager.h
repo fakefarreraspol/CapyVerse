@@ -15,6 +15,7 @@ public:
 	bool Start();
 	bool Update(float dt);
 	bool UpdateAll(float dt, bool logic);
+	bool PostUpdate();
 	bool Draw();
 	bool SetActiveControll(GuiControl* active);
 	const GuiControl* GetActiveControll();

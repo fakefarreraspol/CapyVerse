@@ -135,7 +135,7 @@ void BattleManager::UpdateCurrentName()
 
 void BattleManager::Draw()
 {
-	app->guiManager->Draw();
+	//app->guiManager->Draw();
 
 	int posX = currentCapybara->data->GetPosition().x;
 	int posY = currentCapybara->data->GetPosition().y + SELECT_OFFSET;
