@@ -92,7 +92,7 @@
       <Filter>Modules\Gameplay\Entities\Characters</Filter>
     </ClCompile>
     <ClCompile Include="Source\Dialog.cpp" />
-    <ClCompile Include="DialogManager.cpp" />
+    <ClCompile Include="Source\DialogManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">

@@ -95,11 +95,11 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DialogManager.cpp" />
     <ClCompile Include="Source\BattleScene1.cpp" />
     <ClCompile Include="Source\BattleManager.cpp" />
     <ClCompile Include="Source\Capybara.cpp" />
     <ClCompile Include="Source\Chinabara.cpp" />
+    <ClCompile Include="Source\DialogManager.cpp" />
     <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\Dialog.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />

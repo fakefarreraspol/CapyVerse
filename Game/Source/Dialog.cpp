@@ -49,7 +49,7 @@ void Dialog::Update()
 			else
 			{
 				// selector de opciones
-				int choosenOption;
+				int choosenOption = -1;
 
 				// hay que hacer un menu
 
