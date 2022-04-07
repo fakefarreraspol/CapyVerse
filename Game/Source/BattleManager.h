@@ -77,9 +77,6 @@ private:
 	List<GuiButton*> currentButtons;
 	ListItem<GuiButton*>* currentButton = nullptr;
 
-	List<GuiButton*> abilityBtns;
-
-
 	List<GuiButton*> attackBtns;
 	List<GuiText*> enemyInfo;
 	List<GuiBar*> enemyBars;
@@ -98,7 +95,7 @@ private:
 	bool updateInput = true;
 
 	bool deleteAttackMenu = false;
-	bool deleteAbilityMenu = false;
+	bool showAbilityMenu = false;
 	
 	Turn turn = Turn::NONE;
 };
