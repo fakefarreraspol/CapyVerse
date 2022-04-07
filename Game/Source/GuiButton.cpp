@@ -80,7 +80,7 @@ bool GuiButton::Draw(Render* render)
 	default:
 		break;
 	}
-	render->DrawTexture(textTex, bounds.x, bounds.y);
+	render->DrawTexture(textTex, cBounds.x, cBounds.y);
 
 	return true;
 }
