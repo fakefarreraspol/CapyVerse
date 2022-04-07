@@ -52,6 +52,7 @@ private:
 	void Draw();
 	void UpdatePlayerInfo();
 	void DeleteAttackMenu();
+	void DeleteAbilityMenu();
 	void CreateAttackMenu();
 	void CreateAbilityMenu();
 	void UpdateInput();
@@ -77,9 +78,13 @@ private:
 	List<GuiButton*> currentButtons;
 	ListItem<GuiButton*>* currentButton = nullptr;
 
+	List<GuiButton*> abilityBtns;
+	List<GuiText*> abilityInfo;
+	List<GuiBar*> abilityBars;
+
 	List<GuiButton*> attackBtns;
-	List<GuiText*> enemyInfo;
-	List<GuiBar*> enemyBars;
+	List<GuiText*> attackInfo;
+	List<GuiBar*> attackBars;
 
 	List<GuiText*> playerNames;
 	List<GuiBar*>  playerHealthBars;
@@ -95,7 +100,7 @@ private:
 	bool updateInput = true;
 
 	bool deleteAttackMenu = false;
-	bool showAbilityMenu = false;
+	bool deleteAbilityMenu = false;
 	
 	Turn turn = Turn::NONE;
 };

@@ -97,17 +97,38 @@ void BattleManager::DeleteAttackMenu()
 		for (int i = 0; i < attackBtns.Count(); i++)
 		{
 			app->guiManager->DestroyGuiControl(attackBtns.At(i)->data);
-			app->guiManager->DestroyGuiControl(enemyInfo.At(i)->data);
-			app->guiManager->DestroyGuiControl(enemyBars.At(i)->data);
+			app->guiManager->DestroyGuiControl(attackInfo.At(i)->data);
+			app->guiManager->DestroyGuiControl(attackBars.At(i)->data);
 		}
-		enemyBars.Clear();
-		enemyInfo.Clear();
+		attackBars.Clear();
+		attackInfo.Clear();
 		attackBtns.Clear();
 		currentButtons = menuBtns;
 		currentButton = currentButtons.start;
 
 
 		deleteAttackMenu = false;
+	}
+}
+
+void BattleManager::DeleteAbilityMenu()
+{
+	if (deleteAbilityMenu)
+	{
+		for (int i = 0; i < abilityBtns.Count(); i++)
+		{
+			app->guiManager->DestroyGuiControl(abilityBtns.At(i)->data);
+			app->guiManager->DestroyGuiControl(abilityInfo.At(i)->data);
+			app->guiManager->DestroyGuiControl(abilityBars.At(i)->data);
+		}
+		abilityBars.Clear();
+		abilityInfo.Clear();
+		abilityBtns.Clear();
+		currentButtons = menuBtns;
+		currentButton = currentButtons.start;
+
+
+		deleteAbilityMenu = false;
 	}
 }
 
@@ -194,12 +215,12 @@ void BattleManager::CreateAttackMenu()
 			attackBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, i + 4, enemies.At(i)->data->name.GetString(), { 250, i * 50 + 550, 155, 20 }, this));
 
 			SString enemyHealth("%i/%i HP", enemies.At(i)->data->GetHealth(), enemies.At(i)->data->GetMaxHealth());
-			enemyBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, i + 4, "EnemyBar", { 250, i * 50 + 575, 155, 20 }, this));
-			enemyInfo.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, i + 4, enemyHealth.GetString(), { 250, i * 50 + 575, 155, 20 }, this, { 255, 255, 255, 1 }));
+			attackBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, i + 4, "EnemyBar", { 250, i * 50 + 575, 155, 20 }, this));
+			attackInfo.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, i + 4, enemyHealth.GetString(), { 250, i * 50 + 575, 155, 20 }, this, { 255, 255, 255, 1 }));
 		}
-		for (int i = 0; i < enemyBars.Count(); i++)
+		for (int i = 0; i < attackBars.Count(); i++)
 		{
-			enemyBars.At(i)->data->UpdateValues(enemies.At(i)->data->GetHealth(), enemies.At(i)->data->GetMaxHealth());
+			attackBars.At(i)->data->UpdateValues(enemies.At(i)->data->GetHealth(), enemies.At(i)->data->GetMaxHealth());
 		}
 		currentButton = attackBtns.start;
 		currentButtons = attackBtns;
@@ -358,7 +379,32 @@ bool BattleManager::OnGuiMouseClickEvent(GuiControl* control)
 		if (control->id >= 4 && control->id <= 6)
 		{
 			deleteAttackMenu = true;
+			
+			if (currentCapybara->next == nullptr)
+			{
+				currentCapybara = playerTeam.start;
+				turn = Turn::ENEMY;
+			}
+			else
+				currentCapybara = currentCapybara->next;
 
+			UpdateCurrentName();
+		}
+		if (control->id == 7)
+		{
+			
+		}
+		if (control->id == 8)
+		{
+
+		}
+		if (control->id == 9)
+		{
+
+		}
+		if (control->id >= 7 && control->id <= 9)
+		{
+			deleteAbilityMenu = true;
 			if (currentCapybara->next == nullptr)
 			{
 				currentCapybara = playerTeam.start;
