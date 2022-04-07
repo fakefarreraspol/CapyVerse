@@ -13,7 +13,7 @@
 #include "Scene.h"
 #include "EntityManager.h"
 #include "GuiManager.h"
-#include "ModuleCollisions.h"
+#include "Collisions.h"
 #include "TaskQueue.h"
 #include "FadeToBlack.h"
 #include "BattleManager.h"
@@ -36,7 +36,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	entMan = new EntityManager(true);
 	fonts = new Fonts(true);
 	guiManager = new GuiManager(true);
-	colManager = new ModuleCollisions(true);
+	colManager = new Collisions(true);
 	
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
