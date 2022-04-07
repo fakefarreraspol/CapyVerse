@@ -36,7 +36,7 @@ void Player::AddCapybara(Capybara* capybara)
 	team.Add(capybara);
 }
 
-void Player::AddCapybaraToBatlle(Capybara* capybara)
+void Player::AddCapybaraToBatle(Capybara* capybara)
 {
 	battleTeam.Add(capybara);
 }
@@ -255,12 +255,12 @@ void Player::UpdateInput()
 	}
 }
 
-List<Capybara*> Player::GetBattleTeam()
+List<Capybara*>& Player::GetBattleTeam()
 {
 	return battleTeam;
 }
 
-List<Capybara*> Player::GetTeam()
+List<Capybara*>& Player::GetTeam()
 {
 	return team;
 }
@@ -273,5 +273,13 @@ bool Player::LoadState(pugi::xml_node&)
 bool Player::SaveState(pugi::xml_node&)
 {
 	return false;
+}
+
+void Player::SetCombat(bool value)
+{
+	for (ListItem<Capybara*>* member = battleTeam.start; member != nullptr; member = member->next)
+	{
+		member->data->SetCombat(value);
+	}
 }
 

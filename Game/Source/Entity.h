@@ -14,7 +14,9 @@ enum class EntityType
 	PLAYER,
 	CAPYBARA,
 	ITEM,
-	EQUIPMENT
+	EQUIPMENT,
+	ENEMY,
+	NPC
 };
 
 class Entity
@@ -25,6 +27,12 @@ public:
 	{
 		this->name.Create(name);
 	}
+	
+	iPoint& GetPosition() 
+	{
+		return position;
+	}
+
 
 	virtual bool Start()
 	{

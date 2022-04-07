@@ -34,9 +34,6 @@
     <ClCompile Include="Source\GuiManager.cpp">
       <Filter>Modules\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GuiControl.cpp">
-      <Filter>Modules\UI</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GuiButton.cpp">
       <Filter>Modules\UI</Filter>
     </ClCompile>
@@ -72,6 +69,36 @@
     </ClCompile>
     <ClCompile Include="Source\TaskQueue.cpp">
       <Filter>Modules</Filter>
+
+    <ClCompile Include="Source\Chinabara.cpp">
+      <Filter>Modules\Gameplay\Entities\Characters\Capybaras</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BattleManager.cpp">
+      <Filter>Modules\Gameplay\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FadeToBlack.cpp">
+      <Filter>Modules\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Fonts.cpp">
+      <Filter>Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Rainbowbara.cpp">
+      <Filter>Modules\Gameplay\Entities\Characters\Capybaras</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Punkibara.cpp">
+      <Filter>Modules\Gameplay\Entities\Characters\Capybaras</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiText.cpp">
+      <Filter>Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiBar.cpp">
+      <Filter>Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BattleScene1.cpp">
+      <Filter>Modules\Gameplay\Scenes\Battle</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy.cpp">
+      <Filter>Modules\Gameplay\Entities\Characters</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -162,6 +189,7 @@
     <ClInclude Include="Source\Player.h">
       <Filter>Modules\Gameplay\Entities\Characters</Filter>
     </ClInclude>
+
     <ClInclude Include="Source\ModuleCollisions.h">
       <Filter>Modules\Core</Filter>
     </ClInclude>
@@ -170,6 +198,37 @@
     </ClInclude>
     <ClInclude Include="Source\TaskQueue.h">
       <Filter>Modules</Filter>
+
+    <ClInclude Include="Source\Chinabara.h">
+      <Filter>Modules\Gameplay\Entities\Characters\Capybaras</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BattleManager.h">
+      <Filter>Modules\Gameplay\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FadeToBlack.h">
+      <Filter>Modules\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Fonts.h">
+      <Filter>Modules\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Rainbowbara.h">
+      <Filter>Modules\Gameplay\Entities\Characters\Capybaras</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Punkibara.h">
+      <Filter>Modules\Gameplay\Entities\Characters\Capybaras</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiText.h">
+      <Filter>Modules\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiBar.h">
+      <Filter>Modules\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BattleScene1.h">
+      <Filter>Modules\Gameplay\Scenes\Battle</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy.h">
+      <Filter>Modules\Gameplay\Entities\Characters</Filter>
+
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -211,6 +270,12 @@
     </Filter>
     <Filter Include="Config">
       <UniqueIdentifier>{5c977823-501a-4845-b549-5ff7405e3e0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Gameplay\Entities\Characters\Capybaras">
+      <UniqueIdentifier>{51ca929c-cc01-41cc-a06e-905b84919066}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Gameplay\Scenes\Battle">
+      <UniqueIdentifier>{50cfa5e0-43f8-4889-8af3-12cd48931124}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

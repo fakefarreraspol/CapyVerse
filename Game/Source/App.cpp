@@ -15,6 +15,11 @@
 #include "GuiManager.h"
 #include "ModuleCollisions.h"
 #include "TaskQueue.h"
+#include "FadeToBlack.h"
+#include "BattleManager.h"
+#include "Fonts.h"
+#include "BattleScene1.h"
+
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
 {
@@ -24,8 +29,12 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	render = new Render(true);
 	tex = new Textures(true);
 	audio = new Audio(true);
+	fadeToBlack = new FadeToBlack(true);
 	scene = new Scene(true);
+	battleManager = new BattleManager(false);
+	battleScene1 = new BattleScene1(false);
 	entMan = new EntityManager(true);
+	fonts = new Fonts(true);
 	guiManager = new GuiManager(true);
 	colManager = new ModuleCollisions(true);
 	
@@ -33,15 +42,20 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	// Reverse order of CleanUp
 	AddModule(win);
 	AddModule(input);
-	AddModule(tex);
-	AddModule(audio);
+	AddModule(fadeToBlack);
 	AddModule(entMan);
+	AddModule(tex);
+	AddModule(fonts);
+	AddModule(audio);
 	AddModule(scene);
+	AddModule(battleScene1);
+	AddModule(battleManager);
 	AddModule(guiManager);
 	AddModule(colManager);
 	
 	// Render last to swap buffer
 	AddModule(render);
+
 	ptimer = new PerfTimer();
 	frameDuration = new PerfTimer();
 }

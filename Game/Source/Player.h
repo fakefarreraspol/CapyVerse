@@ -23,19 +23,23 @@ public:
 	//Adds a capybara to the player team 
 	void AddCapybara(Capybara* capybara);
 	//Adds a capybara to the player battle team
-	void AddCapybaraToBatlle(Capybara* capybara);
+	void AddCapybaraToBatle(Capybara* capybara);
 
 	//TODO: Update the player input and move the player
 	void UpdateInput();
 
 	//Getters for the teams
-	List<Capybara*> GetBattleTeam();
-	List<Capybara*> GetTeam();
+	List<Capybara*>& GetBattleTeam();
+	List<Capybara*>& GetTeam();
 
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&);
 
 	Collider* collider = nullptr;
+
+	void SetCombat(bool value);
+
+
 private:
 	int money;
 	

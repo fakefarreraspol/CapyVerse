@@ -3,11 +3,14 @@
 #include "App.h"
 #include "Audio.h"
 #include "GuiManager.h"
+#include "Fonts.h"
 
 GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::BUTTON, id)
 {
 	this->bounds = bounds;
 	this->text = text;
+
+	textTex = app->fonts->LoadRenderedText(bounds, app->fonts->globalFont, text, { 0, 0, 0, 1 });
 
 	canClick = true;
 	drawBasic = false;
@@ -15,7 +18,8 @@ GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(
 
 GuiButton::~GuiButton()
 {
-
+	RELEASE(textTex);
+	RELEASE(texture);
 }
 
 bool GuiButton::Update(float dt)
@@ -44,16 +48,24 @@ bool GuiButton::Update(float dt)
 				NotifyObserver();
 			}
 		}
+		else if (state == GuiControlState::FOCUSED)
+		{
+			if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+			{
+				state = GuiControlState::PRESSED;
+				NotifyObserver();
+			}
+		}
 		else state = GuiControlState::NORMAL;
 	}
 
-	return false;
+
+	return true;
 }
 
 bool GuiButton::Draw(Render* render)
 {
 	SDL_Rect cBounds{ bounds.x - render->camera.x,bounds.y - render->camera.y,bounds.w,bounds.h };
-
 	// Draw the right button depending on state
 	switch (state)
 	{
@@ -68,6 +80,7 @@ bool GuiButton::Draw(Render* render)
 	default:
 		break;
 	}
+	render->DrawTexture(textTex, bounds.x, bounds.y);
 
-	return false;
+	return true;
 }

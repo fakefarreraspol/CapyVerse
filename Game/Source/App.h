@@ -21,9 +21,14 @@ class Textures;
 class Audio;
 class Scene;
 class EntityManager;
+class BattleManager;
 class GuiManager;
 class ModuleCollisions;
 class Task;
+class FadeToBlack;
+class Fonts;
+class BattleScene1;
+
 class App
 {
 public:
@@ -98,9 +103,14 @@ public:
 	Audio* audio;
 	Scene* scene;
 	EntityManager* entMan;
+	Fonts* fonts;
 	GuiManager* guiManager;
 	ModuleCollisions* colManager;
 	Task* taskManager;
+	FadeToBlack* fadeToBlack;
+	BattleManager* battleManager;
+	BattleScene1* battleScene1;
+
 	bool fpsCap = false;
 	float dt = 0.0f;
 	uint32 framesPerSecond = 0;

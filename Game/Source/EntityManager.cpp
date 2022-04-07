@@ -5,7 +5,10 @@
 #include "Log.h"
 
 #include "Player.h"
-
+#include "Enemy.h"
+#include "Chinabara.h"
+#include "Punkibara.h"
+#include "Rainbowbara.h"
 
 EntityManager::EntityManager(bool startEnabled) : Module(startEnabled)
 {
@@ -45,10 +48,10 @@ bool EntityManager::CleanUp()
 	return ret;
 }
 
-Entity* EntityManager::CreateEntity(EntityType type, int id, iPoint position, const char* name)
+Entity* EntityManager::CreateEntity(EntityType type, uint32 id, iPoint position, const char* name)
 {
 	Entity* entity = nullptr;
-
+	
 	switch (type)
 	{
 	case EntityType::NONE:
@@ -60,20 +63,32 @@ Entity* EntityManager::CreateEntity(EntityType type, int id, iPoint position, co
 		break;
 	case EntityType::EQUIPMENT:
 		break;
+	case EntityType::ENEMY:
+		entity = new Enemy(position, id, name);
+		break;
 	default:
 	{
 		LOG("ERROR: Entity with no type couldn't be created");
 	}break;
 	}
+
 	if (entity != nullptr)
 		AddEntity(entity);
 
 	return entity;
 }
 
-Capybara* EntityManager::CreateEntity(CapybaraType capybaraType, int id, iPoint position, const char* name)
+Capybara* EntityManager::CreateEntity(CapybaraType capybaraType, uint32 id, iPoint position, const char* name)
 {
-	Capybara* entity = new Capybara(capybaraType, id, position, name);
+	Capybara* entity = nullptr;
+
+	if(name == "Chinabara")
+		entity = new Chinabara(id, position);
+	if (name == "Punkibara")
+		entity = new Punkibara(id, position);
+	if (name == "Rainbowbara")
+		entity = new Rainbowbara(id, position);
+
 	
 	if (entity != nullptr)
 		AddEntity(entity);

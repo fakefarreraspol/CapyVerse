@@ -10,7 +10,7 @@
 
 Capybara::Capybara(CapybaraType capyType, uint32 id, iPoint position, const char* name) : Entity(EntityType::CAPYBARA, id, name, position), capybaraType(capyType)
 {
-	lvl = 1;
+	level = 1;
 
 	//Change this values in order to balance the game progression
 	xpNext = 50;
@@ -18,8 +18,6 @@ Capybara::Capybara(CapybaraType capyType, uint32 id, iPoint position, const char
 	manaXLvl = 7;
 	damageXLvl = 4;
 	armorXLvl = 3;
-
-	InitStats();
 }
 
 Capybara::~Capybara()
@@ -39,67 +37,95 @@ bool Capybara::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 		AddXp(10);
 
+	if (this->health <= 0)
+	{
+		isCombat = false;
+	}
+
 	return ret;
 }
 
 bool Capybara::Draw(Render* render)
 {
 	bool ret = true;
-
-	render->DrawRectangle({position.x, position.y, 20, 20}, 255, 0, 0);
+	if (isCombat)
+	{
+		render->DrawRectangle({position.x, position.y, 64, 64}, 255, 0, 0);
+	}
 
 	return ret;
 }
 
-int Capybara::GetHealth()
+int& Capybara::GetHealth()
 {
 	return health;
 }
 
-int Capybara::GetMaxHealth()
+int& Capybara::GetMaxHealth()
 {
 	return maxHealth;
 }
 
-int Capybara::GetMana()
+int& Capybara::GetMana()
 {
 	return mana;
 }
 
-int Capybara::GetMaxMana()
+int& Capybara::GetMaxMana()
 {
 	return maxMana;
 }
 
-int Capybara::GetDamage()
+int& Capybara::GetDamage()
 {
 	return damage;
 }
 
-int Capybara::GetArmor()
+int& Capybara::GetArmor()
 {
 	return armor;
 }
 
-CapybaraType Capybara::GetType()
+int& Capybara::GetLVL()
+{
+	return level;
+}
+
+int& Capybara::GetXP()
+{
+	return xp;
+}
+
+int& Capybara::GetNextXP()
+{
+	return xpNext;
+}
+
+CapybaraType& Capybara::GetType()
 {
 	return capybaraType;
 }
 
-CapybaraStats Capybara::GetStats()
+CapybaraStats& Capybara::GetStats()
 {
 	return capybaraStats;
 }
 
-void Capybara::Damage(int value)
+CapybaraStatus& Capybara::GetStatus()
 {
-	//Formula DMG = D * (D + 100) * 0.08 / (A + 8)
-	//D -- Attack value
-	//A -- Character armor 
-	int finalDamage = value * (value + 100) * 0.08 / (armor + 8);
-	if (health - finalDamage > 0)
+	return capybaraStatus;
+}
+
+CapybaraTarget& Capybara::GetTarget()
+{
+	return capybaraTarget;
+}
+
+void Capybara::Damage(int value)
+{ 	
+	if (health - value > 0)
 	{
-		health -= finalDamage;
+		health -= value;
 		return;
 	}
 	
@@ -120,20 +146,56 @@ void Capybara::Heal(int value)
 
 	return;
 }
-//TODO: Think about all the abilities
-void Capybara::UseAbility()
+void Capybara::RestoreMana(int value)
 {
+	if (value + mana < maxMana)
+	{
+		mana += value;
+		return;
+	}
+
+	mana = maxMana;
+
 	return;
+}
+//TODO: Think about all the abilities
+bool Capybara::UseAbility(Capybara* target)
+{
+	return true;
 }
 
 void Capybara::Attack(Capybara* target)
 {
-	target->Damage(this->damage);
+	//Formula DMG = D * (D + 100) * 0.08 / (A + 8)
+	//D -- Attack value
+	//A -- Character armor
+	if (target == nullptr)
+		return;
+	int finalDamage = this->damage* (this->damage + 100) * 0.08 / (target->armor + 8);
+	target->Damage(finalDamage);
+
+	canAttack = false;
+	printf("%s id: %i DMG: %i to %s id: %i", this->name.GetString(), this->id, finalDamage, target->name.GetString(), target->id);
+}
+
+void Capybara::SetStatus(CapybaraStatus status)
+{
+	this->capybaraStatus = status;
+}
+
+void Capybara::SetAttack()
+{
+	canAttack = true;
+}
+
+bool Capybara::CanAttack()
+{
+	return canAttack;
 }
 
 void Capybara::LevelUp()
 {
-	lvl++;
+	level++;
 	xpNext = xpNext + xpNext * 0.1f;
 	switch (capybaraType)
 	{
@@ -183,13 +245,13 @@ void Capybara::LevelUp()
 	
 	//Healing a proporitonal amount after lvlup
 	Heal(0.5 * maxHealth);
-	
+	RestoreMana(0.5 * maxMana);
 	//Updating all the stats 
 	UpdateStats();
 
 	//Debug log
 	LOG("");
-	LOG("%s stats LVL: %i", name.GetString(), lvl);
+	LOG("%s stats LVL: %i", name.GetString(), level);
 	LOG("HP: %i MXHP: %i HPLVL: %i", health, maxHealth, capybaraStats.hp);
 	LOG("MP: %i MXMP: %i MPLVL: %i", mana, maxMana, capybaraStats.mp);
 	LOG("DMG: %i STRLVL: %i", damage, capybaraStats.strenght);
@@ -215,6 +277,11 @@ bool Capybara::LoadState(pugi::xml_node&)
 bool Capybara::SaveState(pugi::xml_node&)
 {
 	return false;
+}
+
+void Capybara::SetCombat(bool value)
+{
+	isCombat = value;
 }
 
 void Capybara::UpdateStats()

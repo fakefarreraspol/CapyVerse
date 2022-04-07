@@ -13,12 +13,35 @@ struct CapybaraStats
 	int intelligence = 1;
 };
 
+enum class CapybaraTarget 
+{
+	NONE = -1,
+	HIMSELF,
+	ALLIES,
+	ENEMIES
+};
+
+
 enum class CapybaraType
 {
 	NONE = -1,
 	TANK,
 	DPS,
 	SUPP
+};
+
+enum class CapybaraStatus
+{
+	NONE = -1,
+	POISONED,
+	SLEEP,
+	BLEED,
+	BLOATED,
+	STUNED,
+	TAUNTED,
+	DEFENSIVE,
+	RAGE,
+	CLEVER
 };
 
 class Capybara : public Entity
@@ -32,21 +55,30 @@ public:
 	bool Update(float dt);
 	bool Draw(Render* render);
 
-	//Setters and getters
-	int GetHealth();
-	int GetMaxHealth();
-	int GetMana();
-	int GetMaxMana();
-	int GetDamage();
-	int GetArmor();
-	CapybaraType GetType();
-	CapybaraStats GetStats();
+	//Getters
+	int& GetHealth();
+	int& GetMaxHealth();
+	int& GetMana();
+	int& GetMaxMana();
+	int& GetDamage();
+	int& GetArmor();
+	int& GetLVL();
+	int& GetXP();
+	int& GetNextXP();
+	CapybaraType& GetType();
+	CapybaraStats& GetStats();
+	CapybaraStatus& GetStatus();
+	CapybaraTarget& GetTarget();
 
 	//Combat functions
 	void Damage(int value);
 	void Heal(int value);
-	void UseAbility();
+	void RestoreMana(int value);
+	virtual bool UseAbility(Capybara* target);
 	void Attack(Capybara* target);
+	void SetStatus(CapybaraStatus status);
+	void SetAttack(); //Sets the capy canAttack to true
+	bool CanAttack();
 
 	//XP functions
 	void LevelUp();
@@ -54,12 +86,15 @@ public:
 
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&);
-private:
+
+	void SetCombat(bool value);
+
+protected:
 	//Update the stats by the lvl
 	void UpdateStats();
 	//Initialize all the stats and update them
 	void InitStats();
-private:
+protected:
 	//Capybara stats
 	CapybaraStats capybaraStats;
 
@@ -83,12 +118,16 @@ private:
 
 	//XP variables
 	int xp = 0;		//Current capy xp points
-	int lvl;		//Capybara lvl
+	int level;		//Capybara lvl
 	int xpNext;		//Xp points for the next level
 
+	//Combat variables
 	bool isCombat = false;
+	bool canAttack = true;
 
-	CapybaraType capybaraType = CapybaraType::NONE;
+	CapybaraType capybaraType = CapybaraType::NONE;			//The capybara type
+	CapybaraStatus capybaraStatus = CapybaraStatus::NONE;	//The current status of the capybara
+	CapybaraTarget capybaraTarget = CapybaraTarget::NONE;	//The type of target of the ability
 };
 
-#endif // !__CAPYBARA_H__
+#endif // __CAPYBARA_H__

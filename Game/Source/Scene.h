@@ -9,6 +9,7 @@
 struct SDL_Texture;
 
 class Capybara;
+class Player;
 
 class Scene : public Module
 {
@@ -20,7 +21,7 @@ public:
 	virtual ~Scene();
 
 	// Called before render is available
-	bool Awake();
+	bool Awake(pugi::xml_node&);
 
 	// Called before the first frame
 	bool Start();
@@ -38,16 +39,13 @@ public:
 	bool CleanUp();
 
 private:
-	SDL_Texture* img;
+	SDL_Texture* img = nullptr;
 
 	GuiButton* btn1 = nullptr;
 	GuiSlider* slider1 = nullptr;
 	GuiCheckBox* box1 = nullptr;
 
-	Capybara* ent = nullptr;
-	Capybara* ent1 = nullptr;
-	Capybara* ent2 = nullptr;
-
+	Player* player = nullptr;
 };
 
 #endif // __SCENE_H__
