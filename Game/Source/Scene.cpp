@@ -51,7 +51,7 @@ bool Scene::Start()
 	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 2, { 100, 150 }, "Chinabara"));
 	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 3, { 100, 250 }, "Punkibara"));
 	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 4, { 100, 350 }, "Rainbowbara"));
-
+	
 	app->battleManager->SetPlayer(player);
 	return true;
 }
@@ -85,6 +85,20 @@ bool Scene::Update(float dt)
 
 	app->guiManager->Draw();
 
+
+	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+	{
+		
+		app->audio->PlayMusicSpatially({ 200, 200 });
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
+	{
+		LOG("W");
+		app->audio->PlayMusic("Assets/Audio/Music/orslok-rojuu-tofu-delivery.wav");
+		//app->audio->ChangeMusic(2);
+	}
+	LOG("%2.2f", app->entMan->entities.At(1)->data->GetPosition().x);
 	return true;
 }
 

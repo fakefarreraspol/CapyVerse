@@ -3,7 +3,9 @@
 
 #include "Defs.h"
 #include "Log.h"
-
+#include "Player.h"
+#include "Entity.h"
+#include "EntityManager.h"
 // NOTE: Recommended using: Additional Include Directories,
 // instead of 'hardcoding' library location path in code logic
 #include "SDL/include/SDL.h"
@@ -85,7 +87,7 @@ bool Audio::CleanUp()
 }
 
 // Play a music file
-bool Audio::PlayMusic(const char* path, float fadeTime)
+bool Audio::PlayMusic(const char* path, float fadeInTime, float fadeOutTime)
 {
 	bool ret = true;
 
@@ -94,9 +96,9 @@ bool Audio::PlayMusic(const char* path, float fadeTime)
 
 	if(music != NULL)
 	{
-		if(fadeTime > 0.0f)
+		if(fadeOutTime > 0.0f)
 		{
-			Mix_FadeOutMusic(int(fadeTime * 1000.0f));
+			Mix_FadeOutMusic(int(fadeOutTime * 1000.0f));
 		}
 		else
 		{
@@ -116,9 +118,9 @@ bool Audio::PlayMusic(const char* path, float fadeTime)
 	}
 	else
 	{
-		if(fadeTime > 0.0f)
+		if(fadeInTime > 0.0f)
 		{
-			if(Mix_FadeInMusic(music, -1, (int) (fadeTime * 1000.0f)) < 0)
+			if(Mix_FadeInMusic(music, -1, (int) (fadeInTime * 1000.0f)) < 0)
 			{
 				LOG("Cannot fade in music %s. Mix_GetError(): %s", path, Mix_GetError());
 				ret = false;
@@ -175,4 +177,51 @@ bool Audio::PlayFx(unsigned int id, int repeat)
 	}
 
 	return ret;
+}
+bool Audio::ChangeMusic(int Id, float fadeInTime, float fadeOutTime)
+{
+	// Todo 1 (done): Complete the music switcher (an enumerator on Audio.h is given with all the playlist)
+	/*switch (Id)
+	{
+	case OFF:
+	{
+		Mix_HaltMusic();
+		break;
+	}
+	case EL_BOOM:
+	{
+		Mix_ResumeMusic();
+
+		app->audio->PlayMusic("Assets/Audio/Music/ElBoom.ogg", fadeInTime, fadeOutTime);
+
+		break;
+	}
+	case PRENDE_UN_PORRO:
+	{
+		Mix_ResumeMusic();
+
+		app->audio->PlayMusic("Assets/Audio/Music/PrendeUnPorro.wav", fadeInTime, fadeOutTime);
+
+		break;
+	}
+	}*/
+	Mix_ResumeMusic();
+
+	app->audio->PlayMusic("Output/Assets/Audio/Music/orslok-rojuu-tofu-delivery.wav", fadeInTime, fadeOutTime);
+
+
+	
+	return true;
+}
+bool Audio::PlayMusicSpatially(iPoint musicGeneratorPosition)
+{
+	// Todo 2 (done): Complete the function to be able to play music tracks spatially
+	
+	int setMusicVolume = MUSIC_VOLUME - (sqrt(pow(app->entMan->entities.At(1)->data->GetPosition().x-musicGeneratorPosition.x, 2) + pow(app->entMan->entities.At(1)->data->GetPosition().y - musicGeneratorPosition.y, 2)) / 6);
+
+	if (setMusicVolume <= 0) setMusicVolume = 0;
+
+	Mix_VolumeMusic(setMusicVolume);
+
+	return true;
 }
