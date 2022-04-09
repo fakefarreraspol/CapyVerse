@@ -19,10 +19,7 @@ public:
 	//Base functions
 	bool Update(float dt);
 	bool Draw(Render* render);
-	iPoint& GetPosition()
-	{
-		return position;
-	}
+
 	//Adds a capybara to the player team 
 	void AddCapybara(Capybara* capybara);
 	//Adds a capybara to the player battle team
