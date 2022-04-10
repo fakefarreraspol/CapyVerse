@@ -1,165 +1,138 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Source\Log.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\PugiXml\src\pugixml.cpp">
-      <Filter>External\PugiXml</Filter>
-    </ClCompile>
     <ClCompile Include="Source\App.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Main.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Source\Audio.cpp">
       <Filter>Modules\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Input.cpp">
-      <Filter>Modules\Core</Filter>
+    <ClCompile Include="Source\BattleManager.cpp">
+      <Filter>Modules\Gameplay</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Render.cpp">
-      <Filter>Modules\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Textures.cpp">
-      <Filter>Modules\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Window.cpp">
-      <Filter>Modules\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene.cpp">
+    <ClCompile Include="Source\BattleScene1.cpp">
       <Filter>Modules\Gameplay\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GuiManager.cpp">
-      <Filter>Modules\UI</Filter>
+    <ClCompile Include="Source\Capybara.cpp">
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GuiButton.cpp">
-      <Filter>Modules\UI</Filter>
+    <ClCompile Include="Source\Chinabara.cpp">
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GuiSlider.cpp">
-      <Filter>Modules\UI</Filter>
+    <ClCompile Include="Source\Collider.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GuiCheckBox.cpp">
-      <Filter>Modules\UI</Filter>
+    <ClCompile Include="Source\Enemy.cpp">
+      <Filter>Modules\Gameplay\Entities\Characters</Filter>
     </ClCompile>
     <ClCompile Include="Source\EntityManager.cpp">
       <Filter>Modules\Gameplay\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Capybara.cpp">
-      <Filter>Modules\Gameplay\Entities\Characters</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Item.cpp">
-      <Filter>Modules\Gameplay\Entities\Items</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\PerfTimer.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Timer.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Player.cpp">
-      <Filter>Modules\Gameplay\Entities\Characters</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Chinabara.cpp">
-      <Filter>Modules\Gameplay\Entities\Characters\Capybaras</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\BattleManager.cpp">
-      <Filter>Modules\Gameplay\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Source\FadeToBlack.cpp">
       <Filter>Modules\Core</Filter>
     </ClCompile>
     <ClCompile Include="Source\Fonts.cpp">
-      <Filter>Modules\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Rainbowbara.cpp">
-      <Filter>Modules\Gameplay\Entities\Characters\Capybaras</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Punkibara.cpp">
-      <Filter>Modules\Gameplay\Entities\Characters\Capybaras</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GuiText.cpp">
-      <Filter>Modules\UI</Filter>
+      <Filter>Modules\Core</Filter>
     </ClCompile>
     <ClCompile Include="Source\GuiBar.cpp">
-      <Filter>Modules\UI</Filter>
+      <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\BattleScene1.cpp">
-      <Filter>Modules\Gameplay\Scenes\Battle</Filter>
+    <ClCompile Include="Source\GuiButton.cpp">
+      <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Enemy.cpp">
+    <ClCompile Include="Source\GuiCheckBox.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiManager.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiSlider.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiText.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Input.cpp">
+      <Filter>Modules\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Item.cpp">
+      <Filter>Modules\Gameplay\Entities\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Log.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Main.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Collisions.cpp">
+      <Filter>Modules\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PerfTimer.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Player.cpp">
       <Filter>Modules\Gameplay\Entities\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\PugiXml\src\pugixml.cpp">
+      <Filter>XML\Pugi</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Punkibara.cpp">
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Rainbowbara.cpp">
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Render.cpp">
+      <Filter>Modules\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene.cpp">
+      <Filter>Modules\Gameplay\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TaskQueue.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Textures.cpp">
+      <Filter>Modules\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Timer.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Window.cpp">
+      <Filter>Modules\Core</Filter>
     </ClCompile>
     <ClCompile Include="Source\Dialog.cpp" />
     <ClCompile Include="Source\DialogManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Defs.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\DynArray.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\List.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Log.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Point.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SString.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
-      <Filter>External\PugiXml</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\PugiXml\src\pugixml.hpp">
-      <Filter>External\PugiXml</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Queue.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Source\App.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Source\Audio.h">
       <Filter>Modules\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Input.h">
-      <Filter>Modules\Core</Filter>
+    <ClInclude Include="Source\BattleManager.h">
+      <Filter>Modules\Gameplay</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Module.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Render.h">
-      <Filter>Modules\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Textures.h">
-      <Filter>Modules\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Window.h">
-      <Filter>Modules\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scene.h">
+    <ClInclude Include="Source\BattleScene1.h">
       <Filter>Modules\Gameplay\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GuiManager.h">
-      <Filter>Modules\UI</Filter>
+    <ClInclude Include="Source\Capybara.h">
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GuiControl.h">
-      <Filter>Modules\UI</Filter>
+    <ClInclude Include="Source\Chinabara.h">
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GuiButton.h">
-      <Filter>Modules\UI</Filter>
+    <ClInclude Include="Source\Collider.h">
+      <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GuiSlider.h">
-      <Filter>Modules\UI</Filter>
+    <ClInclude Include="Source\Defs.h">
+      <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GuiCheckBox.h">
-      <Filter>Modules\UI</Filter>
+    <ClInclude Include="Source\DynArray.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy.h">
+      <Filter>Modules\Gameplay\Entities\Characters</Filter>
     </ClInclude>
     <ClInclude Include="Source\Entity.h">
       <Filter>Modules\Gameplay\Entities</Filter>
@@ -167,108 +140,147 @@
     <ClInclude Include="Source\EntityManager.h">
       <Filter>Modules\Gameplay\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Capybara.h">
-      <Filter>Modules\Gameplay\Entities\Characters</Filter>
+    <ClInclude Include="Source\FadeToBlack.h">
+      <Filter>Modules\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Fonts.h">
+      <Filter>Modules\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiBar.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiButton.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiCheckBox.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiControl.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiManager.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiSlider.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiText.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Input.h">
+      <Filter>Modules\Core</Filter>
     </ClInclude>
     <ClInclude Include="Source\Item.h">
       <Filter>Modules\Gameplay\Entities\Items</Filter>
     </ClInclude>
-    <ClInclude Include="Source\PerfTimer.h">
+    <ClInclude Include="Source\List.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Timer.h">
+    <ClInclude Include="Source\Log.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Module.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Collisions.h">
+      <Filter>Modules\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PerfTimer.h">
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\Player.h">
       <Filter>Modules\Gameplay\Entities\Characters</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Chinabara.h">
-      <Filter>Modules\Gameplay\Entities\Characters\Capybaras</Filter>
+    <ClInclude Include="Source\Point.h">
+      <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\BattleManager.h">
-      <Filter>Modules\Gameplay\Scenes</Filter>
+    <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
+      <Filter>XML\Pugi</Filter>
     </ClInclude>
-    <ClInclude Include="Source\FadeToBlack.h">
-      <Filter>Modules\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Fonts.h">
-      <Filter>Modules\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Rainbowbara.h">
-      <Filter>Modules\Gameplay\Entities\Characters\Capybaras</Filter>
+    <ClInclude Include="Source\External\PugiXml\src\pugixml.hpp">
+      <Filter>XML\Pugi</Filter>
     </ClInclude>
     <ClInclude Include="Source\Punkibara.h">
-      <Filter>Modules\Gameplay\Entities\Characters\Capybaras</Filter>
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GuiText.h">
-      <Filter>Modules\UI</Filter>
+    <ClInclude Include="Source\Queue.h">
+      <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GuiBar.h">
-      <Filter>Modules\UI</Filter>
+    <ClInclude Include="Source\Rainbowbara.h">
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
     </ClInclude>
-    <ClInclude Include="Source\BattleScene1.h">
-      <Filter>Modules\Gameplay\Scenes\Battle</Filter>
+    <ClInclude Include="Source\Render.h">
+      <Filter>Modules\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Enemy.h">
-      <Filter>Modules\Gameplay\Entities\Characters</Filter>
+    <ClInclude Include="Source\Scene.h">
+      <Filter>Modules\Gameplay\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SString.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TaskQueue.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Textures.h">
+      <Filter>Modules\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Timer.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Window.h">
+      <Filter>Modules\Core</Filter>
     </ClInclude>
     <ClInclude Include="Source\Dialog.h" />
     <ClInclude Include="Source\DialogNode.h" />
     <ClInclude Include="Source\DialogManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="External">
-      <UniqueIdentifier>{83a966c7-b4bb-4eff-9c2c-3ff3c7b55a60}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Utils">
-      <UniqueIdentifier>{2cad778a-d356-48b0-9fee-587f1bbb187e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="External\PugiXml">
-      <UniqueIdentifier>{2855ff7f-53a1-413d-a75b-18b4ade921dd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core">
-      <UniqueIdentifier>{d389e94a-5ac6-4bda-855b-49ecbc64c4b0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Modules">
-      <UniqueIdentifier>{62b73b0e-8717-4c46-8cb3-9b0c06126c76}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Modules\Core">
-      <UniqueIdentifier>{21a56a5f-bafc-469e-b5ec-83f313928564}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Modules\Gameplay">
-      <UniqueIdentifier>{80e9a255-7099-40d4-871e-43746ae5e74b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Modules\Gameplay\Scenes">
-      <UniqueIdentifier>{7a0e0dc8-81ca-4f0e-a3a0-b1cf09e53e09}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Modules\Gameplay\Entities">
-      <UniqueIdentifier>{8408e582-99ce-4c05-a4eb-291dba18fdb7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Modules\UI">
-      <UniqueIdentifier>{d4dc3788-23c5-4215-a306-48614c193e55}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Modules\Gameplay\Entities\Characters">
-      <UniqueIdentifier>{fedcd5d5-2a40-4b63-b3d3-61939febc969}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Modules\Gameplay\Entities\Items">
-      <UniqueIdentifier>{3c67718e-0680-4180-a3cc-b89a9291d3f9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Config">
-      <UniqueIdentifier>{5c977823-501a-4845-b549-5ff7405e3e0c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Modules\Gameplay\Entities\Characters\Capybaras">
-      <UniqueIdentifier>{51ca929c-cc01-41cc-a06e-905b84919066}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Modules\Gameplay\Scenes\Battle">
-      <UniqueIdentifier>{50cfa5e0-43f8-4889-8af3-12cd48931124}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
     <Xml Include="..\Output\config.xml">
-      <Filter>Config</Filter>
+      <Filter>XML</Filter>
     </Xml>
     <Xml Include="..\Output\save_game.xml">
-      <Filter>Config</Filter>
+      <Filter>XML</Filter>
     </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Core">
+      <UniqueIdentifier>{b831612f-9a3c-4711-8200-bdd9df437815}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules">
+      <UniqueIdentifier>{5d3cfc81-8b47-4fc8-8a8e-b187ce9dca94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{57401dd9-9671-424e-8db3-d47b880d5e7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Core">
+      <UniqueIdentifier>{01948fa2-ed28-4d5a-ac74-866655942d66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Gameplay">
+      <UniqueIdentifier>{eb8f8544-4eea-4f4c-ae44-e5baf429fde9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Gameplay\Scenes">
+      <UniqueIdentifier>{215685ce-d4b0-4c2d-b7db-267993794664}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Gameplay\Entities">
+      <UniqueIdentifier>{667f864b-3c6f-43d7-b8cc-fa7dbed7a323}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Gameplay\Entities\Capybaras">
+      <UniqueIdentifier>{6b26d6b2-5741-4e4e-a8c5-c81118b01dc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Gameplay\Entities\Characters">
+      <UniqueIdentifier>{ee89e416-ccc2-48d9-bb05-c28727f1bf28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{aa1549cf-788c-402b-9956-4f72c8567371}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XML">
+      <UniqueIdentifier>{b96459f2-04c5-4df4-b78c-3ccaa1a8521e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Gameplay\Entities\Items">
+      <UniqueIdentifier>{4c425b96-4202-4da8-abaa-87d9533c4e30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XML\Pugi">
+      <UniqueIdentifier>{13fec552-8804-4edd-bb79-0d71d8a7bd10}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

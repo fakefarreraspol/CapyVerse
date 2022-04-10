@@ -14,6 +14,10 @@
 #include "EntityManager.h"
 #include "GuiManager.h"
 #include "DialogManager.h"
+
+#include "Collisions.h"
+#include "TaskQueue.h"
+
 #include "FadeToBlack.h"
 #include "BattleManager.h"
 #include "Fonts.h"
@@ -36,6 +40,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	fonts = new Fonts(true);
 	guiManager = new GuiManager(true);
 	dialogManager = new DialogManager(true);
+	colManager = new Collisions(true);
+	
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -51,8 +57,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(battleManager);
 	AddModule(dialogManager);
 	AddModule(guiManager);
-
-
+	AddModule(colManager);
+	
 	// Render last to swap buffer
 	AddModule(render);
 
@@ -174,7 +180,10 @@ pugi::xml_node App::LoadConfig(pugi::xml_document& configFile) const
 
 	pugi::xml_parse_result result = configFile.load_file(CONFIG_FILENAME);
 
-	if (result == NULL) LOG("Could not load xml file: %s. pugi error: %s", CONFIG_FILENAME, result.description());
+	if (result == NULL) 
+	{
+		LOG("Could not load xml file: %s. pugi error: %s", CONFIG_FILENAME, result.description());
+	}
 	else ret = configFile.child("config");
 
 	return ret;
