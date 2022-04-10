@@ -1,5 +1,6 @@
-#ifndef __SCENE_H__
-#define __SCENE_H__
+
+#ifndef __EOB_SECENE_H__
+#define __EOB_SECENE_H__
 
 #include "Module.h"
 
@@ -7,22 +8,16 @@
 #include "GuiSlider.h"
 #include "GuiCheckBox.h"
 
-#include "Dialog.h"
-
-struct SDL_Texture;
-
 class Capybara;
 class Player;
-class Entity;
 
-class Scene : public Module
+class EOBScene : public Module
 {
 public:
+	EOBScene(bool startEnabled);
 
-	Scene(bool startEnabled);
+	~EOBScene();
 
-	// Destructor
-	virtual ~Scene();
 
 	// Called before render is available
 	bool Awake(pugi::xml_node&);
@@ -38,25 +33,13 @@ public:
 
 	// Called before all Updates
 	bool PostUpdate();
-	void OnCollision(Collider* c1, Collider* c2);
 	// Called before quitting
 	bool CleanUp();
 
-	List<Entity*> NPCs;
 private:
-	SDL_Texture* img = nullptr;
-
-
-
-	GuiButton* btn1 = nullptr;
-	GuiSlider* slider1 = nullptr;
-	GuiCheckBox* box1 = nullptr;
-
 	Player* player = nullptr;
-
-public:
-	Dialog* dialogTest;
-
 };
 
-#endif // __SCENE_H__
+#endif // !__EOB_SECENE_H__
+
+

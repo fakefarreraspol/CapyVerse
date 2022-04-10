@@ -59,6 +59,11 @@ bool Scene::Start()
 
 	app->battleManager->SetPlayer(player);
 
+	for (int i = 0; i < NPCs.Count(); i++)
+	{
+		NPCs.At(i)->data->Enable();
+	}
+
 	return true;
 }
 

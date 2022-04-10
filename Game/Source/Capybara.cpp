@@ -123,6 +123,8 @@ CapybaraTarget& Capybara::GetTarget()
 
 void Capybara::Damage(int value)
 { 	
+	if (value <= 0)
+		return;
 	if (health - value > 0)
 	{
 		health -= value;
@@ -175,12 +177,25 @@ void Capybara::Attack(Capybara* target)
 	target->Damage(finalDamage);
 
 	canAttack = false;
-	printf("%s id: %i DMG: %i to %s id: %i", this->name.GetString(), this->id, finalDamage, target->name.GetString(), target->id);
+	printf("%s id: %i DMG: %i to %s id: %i\n", this->name.GetString(), this->id, finalDamage, target->name.GetString(), target->id);
 }
 
 void Capybara::SetStatus(CapybaraStatus status)
 {
 	this->capybaraStatus = status;
+	switch (status)
+	{
+	case CapybaraStatus::NONE:		statusCounter = 0;	break;
+	case CapybaraStatus::POISONED:	statusCounter = 3;	break;
+	case CapybaraStatus::SLEEP:		statusCounter = 3;  break;
+	case CapybaraStatus::BLEED:		statusCounter = 2;	break;
+	case CapybaraStatus::BLOATED:	statusCounter = 4;	break;
+	case CapybaraStatus::STUNED:	statusCounter = 2;	break;
+	case CapybaraStatus::TAUNTED:	statusCounter = 1;	break;
+	case CapybaraStatus::DEFENSIVE: statusCounter = 1;	break;
+	case CapybaraStatus::RAGE:		statusCounter = 2;	break;
+	case CapybaraStatus::CLEVER:	statusCounter = 1;	break;
+	}
 }
 
 void Capybara::SetAttack()
@@ -191,6 +206,60 @@ void Capybara::SetAttack()
 bool Capybara::CanAttack()
 {
 	return canAttack;
+}
+
+void Capybara::UpdateStatus()
+{
+	if (statusCounter > 0)
+	{
+		switch (capybaraStatus)
+		{
+		case CapybaraStatus::POISONED:
+		{
+			Damage(rand() % capybaraStats.hp + 1);
+		}break;
+		case CapybaraStatus::SLEEP:
+		{
+
+		}break;
+		case CapybaraStatus::BLEED:
+		{
+		}break;
+		case CapybaraStatus::TAUNTED:
+		{
+		}break;
+		}
+		statusCounter--;
+	}
+	else
+	{
+		switch (capybaraStatus)
+		{
+
+		case CapybaraStatus::BLOATED:
+		{
+			capybaraStats.speed += (int)capybaraStats.speed * 0.2;
+		}break;
+		case CapybaraStatus::STUNED:
+		{
+			capybaraStats.intelligence += (int)capybaraStats.intelligence * 0.5;
+		}break;
+		case CapybaraStatus::DEFENSIVE:
+		{
+			capybaraStats.armor -= 5;
+		}break;
+		case CapybaraStatus::RAGE:
+		{
+			capybaraStats.strenght -= 5;
+		}break;
+		case CapybaraStatus::CLEVER:
+		{
+			capybaraStats.intelligence -= 5;
+		}break;
+		}
+		this->SetStatus(CapybaraStatus::NONE);
+		UpdateStats();
+	}
 }
 
 void Capybara::LevelUp()

@@ -21,7 +21,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -104,6 +104,7 @@
     <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\Dialog.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
+    <ClCompile Include="Source\EOBScene.cpp" />
     <ClCompile Include="Source\FadeToBlack.cpp" />
     <ClCompile Include="Source\GuiBar.cpp" />
     <ClCompile Include="Source\GuiButton.cpp" />
@@ -139,6 +140,7 @@
     <ClInclude Include="Source\DialogNode.h" />
     <ClInclude Include="Source\Entity.h" />
     <ClInclude Include="Source\EntityManager.h" />
+    <ClInclude Include="Source\EOBScene.h" />
     <ClInclude Include="Source\FadeToBlack.h" />
     <ClInclude Include="Source\GuiBar.h" />
     <ClInclude Include="Source\GuiButton.h" />

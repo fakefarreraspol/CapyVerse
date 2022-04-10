@@ -22,6 +22,7 @@
 #include "BattleManager.h"
 #include "Fonts.h"
 #include "BattleScene1.h"
+#include "EOBScene.h"
 
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
@@ -32,15 +33,16 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	render = new Render(true);
 	tex = new Textures(true);
 	audio = new Audio(true);
-	fadeToBlack = new FadeToBlack(true);
-	scene = new Scene(true);
-	battleManager = new BattleManager(false);
-	battleScene1 = new BattleScene1(false);
 	entMan = new EntityManager(true);
 	fonts = new Fonts(true);
 	guiManager = new GuiManager(true);
 	dialogManager = new DialogManager(true);
 	colManager = new Collisions(true);
+	fadeToBlack = new FadeToBlack(true);
+	scene = new Scene(true);
+	battleManager = new BattleManager(false);
+	battleScene1 = new BattleScene1(false);
+	eobScene = new EOBScene(false);
 	
 
 	// Ordered for awake / Start / Update
@@ -55,6 +57,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene);
 	AddModule(battleScene1);
 	AddModule(battleManager);
+	AddModule(eobScene);
 	AddModule(dialogManager);
 	AddModule(guiManager);
 	AddModule(colManager);
