@@ -15,26 +15,14 @@ struct DialogNode
 		this->text = text;
 	}
 
-	DialogNode* AddOption(SString* newOption, SString nextText)
-	{
-		DialogNode* n = new DialogNode(nextText);
-
-		if (newOption != nullptr)
-			this->options.Add(*newOption);
-
-		this->nodes.Add(*n);
-
-		return n;
-	}
-
 	// The dialog text
 	SString text;
+	SString optionText;
 
 	// The dialog ID of next nodes
-	List<DialogNode> nodes;
+	List<DialogNode*> nodes;
 
 	// The dialog text for the options
-	List<SString> options;
 
 
 	

@@ -11,7 +11,7 @@ Dialog::~Dialog()
 
 bool Dialog::StartDialog()
 {
-	activeNode = &nodes.start->data;
+	activeNode = nodes.start->data;
 	if (activeNode == nullptr)
 		finished = true;
 	else
@@ -20,28 +20,29 @@ bool Dialog::StartDialog()
 	return !finished;
 }
 
-size_t Dialog::AddNode(DialogNode& node)
+size_t Dialog::AddFirstNode(DialogNode *node)
 {
 	size_t id = nodes.Count();
 
 	nodes.Add(node);
 
-	activeNode = &nodes.end->data;
+	activeNode = nodes.start->data;
 
-	node.nodes.Clear();
-	node.options.Clear();
+	/*node.nodes.Clear();
+	node.options.Clear();*/
 
 	return id;
 }
 
 void Dialog::Update()
 {
+
 	if (finished==false) {
 		if (activeNode!=nullptr) {
 
 			this->text->text = activeNode->text;
 
-			if (activeNode->options.Count() == 0)
+			if (activeNode->nodes.Count() == 0)
 			{
 				// esperar input
 				// active node= nodes.start
@@ -53,7 +54,7 @@ void Dialog::Update()
 
 				// hay que hacer un menu
 
-				SetActiveNode(choosenOption);
+				//SetActiveNode(choosenOption);
 			}
 
 			//// get option
@@ -103,19 +104,27 @@ void Dialog::Update()
 
 void Dialog::SetActiveNode(int option)
 {
-	int size = activeNode->options.Count();
-	if ( size > 0)
+	if (activeNode->nodes.Count()==0)
+		finished = true;
+	else
 	{
-		if (option >= 0 || option < size)
+		int size = activeNode->nodes.Count();
+
+		if (size > 0)
 		{
-			activeNode = &activeNode->nodes.At(option)->data;
+			if (option >= 0 || option < size)
+			{
+				activeNode = activeNode->nodes.At(option)->data;
+			}
+		}
+		if (size == 0)
+		{
+			activeNode = nullptr;
+			finished = true;
 		}
 	}
-	if (size == 0)
-	{
-		finished = true;
-	}
 	
+
 }
 
 DialogNode* Dialog::GetActiveNode()
@@ -126,4 +135,20 @@ DialogNode* Dialog::GetActiveNode()
 		return nullptr;
 	}
 	return activeNode;
+}
+
+DialogNode* Dialog::AddOption(DialogNode* node, SString nextText, SString newOption)
+{
+	DialogNode* n = new DialogNode(nextText.GetString());
+	n->optionText=newOption.GetString();
+	node->nodes.Add(n);
+
+	return n;
+}
+
+
+
+void Dialog::AddOption(DialogNode* node, DialogNode* newOption)
+{
+	node->nodes.Add(newOption);
 }

@@ -1,10 +1,12 @@
 #include "DialogManager.h"
 
 #include "App.h"
+#include "Scene.h"
 #include "Window.h"
 #include "Render.h"
 #include "GuiManager.h"
 #include "DialogNode.h"
+#include "GuiText.h"
 
 DialogManager::DialogManager(bool startEnabled):Module(startEnabled)
 {
@@ -59,19 +61,44 @@ bool DialogManager::Start()
 	text = app->guiManager->CreateGuiControl(GuiControlType::TEXT, app->guiManager->controls.Count(), "example text hehe", tBounds, this, { 255,255,255,255 });
 	button = app->guiManager->CreateGuiControl(GuiControlType::BUTTON, app->guiManager->controls.Count(), "", bBounds, this, { 255,0,0,255 });
 
+
+	// test dialog
+	app->scene->dialogTest = new Dialog();
+	DialogNode* first = new DialogNode("dialog test");
+	app->scene->dialogTest->AddFirstNode(first);
+
+	DialogNode* sec = app->scene->dialogTest->AddOption(first, "choose an option","");
+	app->scene->dialogTest->AddOption(sec, "you chose 4", "4");
+	app->scene->dialogTest->AddOption(sec, "you chose 3", "3");
+	app->scene->dialogTest->AddOption(sec, "you chose 2", "2");
+	app->scene->dialogTest->AddOption(sec, "you chose 1", "1");
+	app->dialogManager->SetActiveDialog(app->scene->dialogTest);
+
+
 	return true;
 }
 
 bool DialogManager::Update(float dt)
 {
+	
+
 	if (activeDialog != nullptr)
 	{
-		button->state = GuiControlState::NORMAL;
-		characterName->state = GuiControlState::NORMAL;
-		text->state = GuiControlState::NORMAL;
-
-
+		if (activeDialog->Finished() == true)
+			activeDialog = nullptr;
+		else
+		{
+			if (activeDialog->GetActiveNode()->nodes.Count() > 1)
+				button->state = GuiControlState::DISABLED;
+			else
+				button->state = GuiControlState::NORMAL;
+			characterName->state = GuiControlState::NORMAL;
+			text->state = GuiControlState::NORMAL;
+		}
 		
+
+
+		//aqui se crean las opciones
 
 
 	}
@@ -112,23 +139,22 @@ bool DialogManager::SetActiveDialog(Dialog* dialog)
 	bool res = false;
 	if (activeDialog == nullptr)
 	{
-		DialogNode* activeNode = activeDialog->GetActiveNode();
-
+		
 		if (dialog != nullptr)
 		{
 			activeDialog = dialog;
-			
-			
-			// set character image
-			// set character name
+			dialog->StartDialog();
+			option = 0;
+
+			DialogNode* activeNode = activeDialog->GetActiveNode();
+			if (activeNode != nullptr)
+			{
+				text->SetText(activeNode->text.GetString());
+			}
 		}
 		else
 		{
-
 			activeDialog = nullptr;
-
-			
-			
 		}
 
 		res = true;
@@ -138,43 +164,62 @@ bool DialogManager::SetActiveDialog(Dialog* dialog)
 
 bool DialogManager::OnGuiMouseClickEvent(GuiControl* control)
 {
-	DialogNode* activeNode = activeDialog->GetActiveNode();
-
-	activeDialog->SetActiveNode(option);
+	if (control != button)
+	{
+		option = 0;
+		ListItem <GuiControl*>* item = optionButtons.start;
+		while (item != nullptr)
+		{
+			if (control == item->data)
+				break;
+			option++;
+			item = item->next;
+		}
+	}
 
 	// delete the other options
-	if (options.Count() != 0)
+	if (optionButtons.Count() != 0)
 	{
-		ListItem <GuiControl*>* item = options.start;
+		ListItem <GuiControl*>* item = optionButtons.start;
 
 		while (item != nullptr)
 		{
 			app->guiManager->DestroyGuiControl(item->data);
 			item = item->next;
 		}
-		options.Clear();
+		optionButtons.Clear();
+
 	}
-	
 
 	// creating options
 
+	
+
+	activeDialog->SetActiveNode(option);
+	DialogNode* activeNode = activeDialog->GetActiveNode();
+	if (activeNode != nullptr)
+		text->SetText(activeNode->text.GetString());
+
 	if (activeNode->nodes.Count() > 1)
 	{
-		button->state == GuiControlState::DISABLED;
+		int offset = 20;
 
-		for (int i = 0; i < activeNode->nodes.Count(); i++)
+		for (int i =0; i< activeNode->nodes.Count(); i++)
 		{
 			SDL_Rect optionBounds = { 0,0,0,0 };
+			optionBounds.x = tBounds.x;
+			optionBounds.y = tBounds.y + tBounds.h - offset*(i+1);
+			optionBounds.w = tBounds.w / 2;
+			optionBounds.h = offset;
+
 			int id = app->guiManager->controls.Count();
-			GuiControl* newOption = app->guiManager->CreateGuiControl(GuiControlType::BUTTON, id, activeNode->options.At(i)->data.GetString(), optionBounds, this, { 0,0,0,255 });
-			options.Add(newOption);
+			GuiControl* newOption = app->guiManager->CreateGuiControl(GuiControlType::BUTTON, id, activeNode->nodes.At(i)->data->optionText.GetString(), optionBounds, this, { 0,0,0,255 });
+			optionButtons.Add(newOption);
 		}
 
 	}
-	else
-	{
-		button->state == GuiControlState::NORMAL;
-	}
+
+	option = 0;
 
 	return true;
 }

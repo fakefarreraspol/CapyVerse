@@ -49,7 +49,9 @@ private:
 
 	Player* player = nullptr;
 
-	Dialog* start;
+public:
+	Dialog* dialogTest;
+
 };
 
 #endif // __SCENE_H__

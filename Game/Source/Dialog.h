@@ -14,11 +14,12 @@ class Dialog
 private:
 	// All nodes
 
-	List <DialogNode> nodes;
+	List <DialogNode*> nodes;
 
 	// Active node
 	DialogNode* activeNode = nullptr;
 	GuiText* text = nullptr;
+	SString characterName;
 
 	// Whether the dialog has finished or not
 	bool finished;
@@ -27,12 +28,15 @@ public:
 	~Dialog();
 
 	// Add a node and return its ID
-	size_t AddNode(DialogNode& node);
+	size_t AddFirstNode(DialogNode* node);
 
 	bool StartDialog();
 
 	// Set a node ID as active
 	void SetActiveNode(int option);
+	DialogNode* AddOption(DialogNode* node, SString nextText, SString newOption = "");
+	void AddOption(DialogNode* node, DialogNode* newOption);
+
 	DialogNode* GetActiveNode();
 
 	// Update dialog

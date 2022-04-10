@@ -24,13 +24,14 @@ public:
 private:
 
 	Dialog* activeDialog = nullptr;
+
 	int option;
 	SDL_Rect bounds, cBounds, nBounds, tBounds, bBounds;
 	GuiControl* characterName;
 	GuiControl* text;
 	GuiControl* button;
 
-	List<GuiControl*> options;
+	List<GuiControl*> optionButtons;
 
 
 };

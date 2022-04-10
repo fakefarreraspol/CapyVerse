@@ -17,6 +17,11 @@
 #include "GuiSlider.h"
 #include "Player.h"
 
+#include "Dialog.h"
+#include "DialogManager.h"
+#include "DialogNode.h"
+
+
 #include "Defs.h"
 #include "Log.h"
 
@@ -54,7 +59,7 @@ bool Scene::Start()
 	app->battleManager->SetPlayer(player);
 
 
-	// test dialog
+	
 	
 
 
