@@ -13,8 +13,11 @@
 #include "Scene.h"
 #include "EntityManager.h"
 #include "GuiManager.h"
+#include "DialogManager.h"
+
 #include "Collisions.h"
 #include "TaskQueue.h"
+
 #include "FadeToBlack.h"
 #include "BattleManager.h"
 #include "Fonts.h"
@@ -36,8 +39,10 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	entMan = new EntityManager(true);
 	fonts = new Fonts(true);
 	guiManager = new GuiManager(true);
+	dialogManager = new DialogManager(true);
 	colManager = new Collisions(true);
 	
+
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(win);
@@ -50,6 +55,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene);
 	AddModule(battleScene1);
 	AddModule(battleManager);
+	AddModule(dialogManager);
 	AddModule(guiManager);
 	AddModule(colManager);
 	

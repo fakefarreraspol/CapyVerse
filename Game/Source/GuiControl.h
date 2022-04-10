@@ -73,6 +73,11 @@ public:
 		observer->OnGuiMouseClickEvent(this);
 	}
 
+	virtual bool SetText(const char* text)
+	{
+		return true;
+	}
+
 public:
 
 	uint32 id;

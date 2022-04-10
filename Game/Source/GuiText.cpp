@@ -37,7 +37,8 @@ bool GuiText::SetText(const char* text)
 
 bool GuiText::Draw(Render* render)
 {
-	render->DrawTexture(textTex, bounds.x, bounds.y);
+	if(state!=GuiControlState::DISABLED)
+		render->DrawTexture(textTex, bounds.x, bounds.y);
 	return true;
 }
 
