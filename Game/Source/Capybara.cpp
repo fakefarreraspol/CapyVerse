@@ -193,6 +193,46 @@ bool Capybara::CanAttack()
 	return canAttack;
 }
 
+void Capybara::UpdateStatus()
+{
+	if (statusCounter > 0)
+	{
+		switch (capybaraStatus)
+		{
+		case CapybaraStatus::POISONED:
+		{
+			Damage(rand() % capybaraStats.hp + 1);
+		}break;
+		case CapybaraStatus::SLEEP:
+		{
+
+		}break;
+		case CapybaraStatus::BLEED:
+		{
+		}break;
+		case CapybaraStatus::BLOATED:
+		{
+		}break;
+		case CapybaraStatus::STUNED:
+		{
+		}break;
+		case CapybaraStatus::TAUNTED:
+		{
+		}break;
+		case CapybaraStatus::DEFENSIVE:
+		{
+		}break;
+		case CapybaraStatus::RAGE:
+		{
+		}break;
+		case CapybaraStatus::CLEVER:
+		{
+		}break;
+		}
+		statusCounter--;
+	}
+}
+
 void Capybara::LevelUp()
 {
 	level++;
