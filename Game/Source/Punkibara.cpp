@@ -20,7 +20,7 @@ bool Punkibara::UseAbility(Capybara* target)
 {
 	if (this->mana < 10)
 		return false;
-	this->capybaraStatus = CapybaraStatus::RAGE;
+	SetStatus(CapybaraStatus::RAGE);
 	this->mana -= 10;
 
 	return true;

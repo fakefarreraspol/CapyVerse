@@ -39,7 +39,6 @@ bool BattleManager::Start()
 
 	app->guiManager->Enable();
 	
-
 	attackBtn =	(GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 0, "Attack", { 135, 585, 75, 21 }, this);
 	abilityBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Ability", { 135, 615, 75, 21 }, this);
 	inventoryBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Inventory", { 135, 645, 75, 21 }, this);
@@ -70,7 +69,10 @@ bool BattleManager::Start()
 	currentButton = currentButtons.start;
 
 
-	enemies = enemy->GetBattleTeam();
+	for (int i = 0; i < enemy->GetBattleTeam().Count(); i++)
+	{
+		enemies.Add(enemy->GetBattleTeam().At(i)->data);
+	}
 
 	CreateTexts();
 
@@ -117,11 +119,14 @@ void BattleManager::DeleteAbilityMenu()
 	if (deleteAbilityMenu)
 	{
 		for (int i = 0; i < abilityBtns.Count(); i++)
-		{
 			app->guiManager->DestroyGuiControl(abilityBtns.At(i)->data);
-			app->guiManager->DestroyGuiControl(abilityInfo.At(i)->data);
+
+		for (int i = 0; i < abilityBars.Count(); i++)
 			app->guiManager->DestroyGuiControl(abilityBars.At(i)->data);
-		}
+
+		for (int i = 0; i < abilityInfo.Count(); i++)
+			app->guiManager->DestroyGuiControl(abilityInfo.At(i)->data);
+	
 		abilityBars.Clear();
 		abilityInfo.Clear();
 		abilityBtns.Clear();
@@ -245,14 +250,15 @@ void BattleManager::CreateAttackMenu()
 		{
 			attackBars.At(i)->data->UpdateValues(enemies.At(i)->data->GetHealth(), enemies.At(i)->data->GetMaxHealth());
 		}
-		currentButton = attackBtns.start;
 		currentButtons = attackBtns;
+		currentButton = attackBtns.start;
 	}
 	return;
 }
 
 void BattleManager::CreateAbilityMenu()
 {
+	
 	switch (currentCapybara->data->GetTarget())	
 	{
 	case CapybaraTarget::ALLIES :
@@ -272,6 +278,7 @@ void BattleManager::CreateAbilityMenu()
 			{
 				abilityBars.At(i)->data->UpdateValues(playerTeam.At(i)->data->GetHealth(), playerTeam.At(i)->data->GetMaxHealth());
 			}
+	
 			currentButton = abilityBtns.start;
 			currentButtons = abilityBtns;
 			targets = playerTeam;
@@ -293,6 +300,7 @@ void BattleManager::CreateAbilityMenu()
 			{
 				abilityBars.At(i)->data->UpdateValues(playerTeam.At(i)->data->GetHealth(), playerTeam.At(i)->data->GetMaxHealth());
 			}
+		
 			currentButton = abilityBtns.start;
 			currentButtons = abilityBtns;
 			targets = enemies;
@@ -302,10 +310,6 @@ void BattleManager::CreateAbilityMenu()
 	case CapybaraTarget::HIMSELF:
 	{
 		abilityBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 10, currentCapybara->data->name.GetString(), { 250, 50 + 550, 155, 20 }, this));
-
-		SString allyHealth("%i/%i HP", currentCapybara->data->GetHealth(), currentCapybara->data->GetMaxHealth());
-		abilityBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, 10, "AllyBar", { 250, 50 + 575, 155, 20 }, this));
-		abilityInfo.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 10, allyHealth.GetString(), { 250, 50 + 575, 155, 20 }, this, { 255, 255, 255, 1 }));
 		currentButton = abilityBtns.start;
 		currentButtons = abilityBtns;
 	}break;
@@ -365,8 +369,29 @@ bool BattleManager::PostUpdate()
 bool BattleManager::CleanUp()
 {
 	bool ret = true;
-
 	app->guiManager->Disable();
+
+	enemies.Clear();
+	playerTeam.Clear();
+	
+
+
+	playerNames.Clear();
+	playerHealthBars.Clear();
+	playerManaBars.Clear();
+	playerLevels.Clear();
+	playerStatus.Clear();
+	
+	playerHeathText.Clear();
+	playerManaText.Clear();
+	
+	for (ListItem<GuiButton*>* b = currentButtons.start; b != nullptr; b = b->next)
+	{
+		menuBtns.Del(b);
+	}
+
+	menuBtns.Clear();
+
 
 	return ret;
 }
@@ -394,6 +419,25 @@ void BattleManager::SetTurn(Turn turn)
 Turn BattleManager::GetTurn()
 {
 	return this->turn;
+}
+
+void BattleManager::EndTurn()
+{
+	currentCapybara = playerTeam.start;
+	if (turn == Turn::PLAYER)
+		turn = Turn::ENEMY;
+	else if(turn == Turn::ENEMY)
+		turn = Turn::PLAYER;
+	
+
+	for (int i = 0; i < playerTeam.Count(); i++)
+	{
+		playerTeam.At(i)->data->UpdateStatus();
+	}
+	for (int i = 0; i < enemies.Count(); i++)
+	{
+		enemies.At(i)->data->UpdateStatus();
+	}
 }
 
 void BattleManager::CreateTexts()
@@ -480,8 +524,7 @@ bool BattleManager::OnGuiMouseClickEvent(GuiControl* control)
 			
 			if (currentCapybara->next == nullptr)
 			{
-				currentCapybara = playerTeam.start;
-				turn = Turn::ENEMY;
+				EndTurn();
 			}
 			else
 				currentCapybara = currentCapybara->next;
@@ -509,8 +552,7 @@ bool BattleManager::OnGuiMouseClickEvent(GuiControl* control)
 			deleteAbilityMenu = true;
 			if (currentCapybara->next == nullptr)
 			{
-				currentCapybara = playerTeam.start;
-				turn = Turn::ENEMY;
+				EndTurn();
 			}
 			else
 				currentCapybara = currentCapybara->next;

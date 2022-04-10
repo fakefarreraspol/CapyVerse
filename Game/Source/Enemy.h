@@ -26,6 +26,7 @@ public:
 
 private:
 	List<Capybara*> battleTeam;
+	bool isCombat = false;
 };
 
 

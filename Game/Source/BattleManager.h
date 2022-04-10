@@ -45,6 +45,7 @@ public:
 	void SetEnemy(Enemy* enemy);
 	void SetTurn(Turn turn);
 	Turn GetTurn();
+	void EndTurn();
 
 private:
 
@@ -57,7 +58,6 @@ private:
 	void CreateAbilityMenu();
 	void UpdateInput();
 	void CreateTexts();
-
 private:
 	List<Capybara*> enemies;
 	List<Capybara*> playerTeam;

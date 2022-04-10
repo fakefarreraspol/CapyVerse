@@ -103,6 +103,7 @@
     <ClCompile Include="Source\Chinabara.cpp" />
     <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
+    <ClCompile Include="Source\EOBScene.cpp" />
     <ClCompile Include="Source\FadeToBlack.cpp" />
     <ClCompile Include="Source\GuiBar.cpp" />
     <ClCompile Include="Source\GuiButton.cpp" />
@@ -135,6 +136,7 @@
     <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\Entity.h" />
     <ClInclude Include="Source\EntityManager.h" />
+    <ClInclude Include="Source\EOBScene.h" />
     <ClInclude Include="Source\FadeToBlack.h" />
     <ClInclude Include="Source\GuiBar.h" />
     <ClInclude Include="Source\GuiButton.h" />

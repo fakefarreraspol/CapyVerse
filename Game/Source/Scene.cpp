@@ -53,6 +53,12 @@ bool Scene::Start()
 	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 4, { 100, 350 }, "Rainbowbara"));
 
 	app->battleManager->SetPlayer(player);
+
+	for (int i = 0; i < NPCs.Count(); i++)
+	{
+		NPCs.At(i)->data->Enable();
+	}
+
 	return true;
 }
 
