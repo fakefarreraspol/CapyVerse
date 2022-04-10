@@ -7,6 +7,8 @@
 #include "GuiSlider.h"
 #include "GuiCheckBox.h"
 
+#include "Dialog.h"
+
 struct SDL_Texture;
 
 class Capybara;
@@ -51,6 +53,10 @@ private:
 	GuiCheckBox* box1 = nullptr;
 
 	Player* player = nullptr;
+
+public:
+	Dialog* dialogTest;
+
 };
 
 #endif // __SCENE_H__

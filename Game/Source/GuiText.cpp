@@ -38,7 +38,9 @@ bool GuiText::SetText(const char* text)
 bool GuiText::Draw(Render* render)
 {
 	SDL_Rect cBounds{ bounds.x - render->camera.x,bounds.y - render->camera.y,bounds.w,bounds.h };
-	render->DrawTexture(textTex, cBounds.x,cBounds.y);
+
+	if(state!=GuiControlState::DISABLED)
+		render->DrawTexture(textTex, cBounds.x, cBounds.y);
 	return true;
 }
 

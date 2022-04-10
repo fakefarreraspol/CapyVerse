@@ -48,15 +48,8 @@ bool GuiButton::Update(float dt)
 				NotifyObserver();
 			}
 		}
-		else if (state == GuiControlState::FOCUSED)
-		{
-			if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
-			{
-				state = GuiControlState::PRESSED;
-				NotifyObserver();
-			}
-		}
-		else state = GuiControlState::NORMAL;
+		else
+			state = GuiControlState::NORMAL;
 	}
 
 

@@ -103,6 +103,8 @@
     <ClCompile Include="Source\EOBScene.cpp">
       <Filter>Modules\Gameplay\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Dialog.cpp" />
+    <ClCompile Include="Source\DialogManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App.h">
@@ -234,6 +236,9 @@
     <ClInclude Include="Source\EOBScene.h">
       <Filter>Modules\Gameplay\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Dialog.h" />
+    <ClInclude Include="Source\DialogNode.h" />
+    <ClInclude Include="Source\DialogManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Output\config.xml">
