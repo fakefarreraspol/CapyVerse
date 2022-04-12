@@ -45,100 +45,114 @@ void Player::UpdateInput()
 {
 	GamePad& pad = app->input->pads[0];
 
-	lastPos = position;
+	//lastPos = position;
 
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) 
+	//if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) 
+	//{
+	//	position.x -= speed;
+	//	/*if (currentAnimation != &leftAnim)
+	//	{
+	//		leftAnim.Reset();
+	//		currentAnimation = &leftAnim;
+	//		currentIdleAnim = leftIdleAnim;
+	//	}*/
+	//	lastKeyPressed = SDL_SCANCODE_A;
+
+	//	if (app->input->GetKey(SDL_SCANCODE_W)== KEY_REPEAT && isStuck)
+	//	{
+	//		position.y -= speed;
+	//		isStuck = false;
+	//	}
+	//	else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && isStuck)
+	//	{
+	//		position.y += speed;
+	//		isStuck = false;
+	//	}
+	//}
+	//else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) 
+	//{
+	//	position.x += speed;
+	//	/*if (currentAnimation != &rightAnim)
+	//	{
+	//		rightAnim.Reset();
+	//		currentAnimation = &rightAnim;
+	//		currentIdleAnim = rightIdleAnim;
+	//	}*/
+	//	lastKeyPressed = SDL_SCANCODE_D;
+
+	//	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && isStuck)
+	//	{
+	//		position.y -= speed;
+	//		isStuck = false;
+	//	}
+	//	else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && isStuck)
+	//	{
+	//		position.y += speed;
+	//		isStuck = false;
+	//	}
+
+	//}
+	//else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) 
+	//{
+	//	position.y += speed;
+	//	/*if (currentAnimation != &downAnim)
+	//	{
+	//		downAnim.Reset();
+	//		currentAnimation = &downAnim;
+	//		currentIdleAnim = downIdleAnim;
+	//	}*/
+	//	lastKeyPressed = SDL_SCANCODE_S;
+
+	//	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isStuck)
+	//	{
+	//		position.x -= speed;
+	//		isStuck = false;
+	//	}
+	//	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isStuck)
+	//	{
+	//		position.x += speed;
+	//		isStuck = false;
+	//	}
+
+	//}
+	//else if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	//{
+	//	position.y -= speed;
+	//	/*if (currentAnimation != &upAnim)
+	//	{
+	//		upAnim.Reset();
+	//		currentAnimation = &upAnim;
+	//		currentIdleAnim = upIdleAnim;
+	//	}*/
+	//	lastKeyPressed = SDL_SCANCODE_W;
+
+	//	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isStuck)
+	//	{
+	//		position.x -= speed;
+	//		isStuck = false;
+	//	}
+	//	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isStuck)
+	//	{
+	//		position.x += speed;
+	//		isStuck = false;
+	//	}
+	//}
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		position.x -= speed;
-		/*if (currentAnimation != &leftAnim)
-		{
-			leftAnim.Reset();
-			currentAnimation = &leftAnim;
-			currentIdleAnim = leftIdleAnim;
-		}*/
-		lastKeyPressed = SDL_SCANCODE_A;
-
-		if (app->input->GetKey(SDL_SCANCODE_W)== KEY_REPEAT && isStuck)
-		{
-			position.y -= speed;
-			isStuck = false;
-		}
-		else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && isStuck)
-		{
-			position.y += speed;
-			isStuck = false;
-		}
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) 
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		position.x += speed;
-		/*if (currentAnimation != &rightAnim)
-		{
-			rightAnim.Reset();
-			currentAnimation = &rightAnim;
-			currentIdleAnim = rightIdleAnim;
-		}*/
-		lastKeyPressed = SDL_SCANCODE_D;
-
-		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && isStuck)
-		{
-			position.y -= speed;
-			isStuck = false;
-		}
-		else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && isStuck)
-		{
-			position.y += speed;
-			isStuck = false;
-		}
-
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) 
-	{
-		position.y += speed;
-		/*if (currentAnimation != &downAnim)
-		{
-			downAnim.Reset();
-			currentAnimation = &downAnim;
-			currentIdleAnim = downIdleAnim;
-		}*/
-		lastKeyPressed = SDL_SCANCODE_S;
-
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isStuck)
-		{
-			position.x -= speed;
-			isStuck = false;
-		}
-		else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isStuck)
-		{
-			position.x += speed;
-			isStuck = false;
-		}
-
-	}
-	else if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		position.y -= speed;
-		/*if (currentAnimation != &upAnim)
-		{
-			upAnim.Reset();
-			currentAnimation = &upAnim;
-			currentIdleAnim = upIdleAnim;
-		}*/
-		lastKeyPressed = SDL_SCANCODE_W;
-
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isStuck)
-		{
-			position.x -= speed;
-			isStuck = false;
-		}
-		else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isStuck)
-		{
-			position.x += speed;
-			isStuck = false;
-		}
 	}
-
-
+	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	{
+		position.y += speed;
+	}
 	// GAMEPAD SUPPORT
 
 	// Debug key for gamepad rumble testing purposes
