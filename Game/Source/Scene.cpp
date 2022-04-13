@@ -98,7 +98,7 @@ bool Scene::Update(float dt)
 		app->audio->PlayMusic("Assets/Audio/Music/orslok-rojuu-tofu-delivery.wav");
 		//app->audio->ChangeMusic(2);
 	}
-	LOG("%2.2f", app->entMan->entities.At(1)->data->GetPosition().x);
+	
 	return true;
 }
 
