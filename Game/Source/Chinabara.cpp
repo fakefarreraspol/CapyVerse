@@ -8,6 +8,7 @@ Chinabara::Chinabara(uint32 id, iPoint position) : Capybara(CapybaraType::TANK, 
 	this->capybaraStats.speed			= 4;
 	this->capybaraStats.intelligence	= 2;
 
+	this->capybaraTarget = CapybaraTarget::ENEMIES;
 	InitStats();
 }
 

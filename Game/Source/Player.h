@@ -43,6 +43,8 @@ public:
 private:
 	int money;
 	
+	bool isBattle = false;
+
 	List<Capybara*> battleTeam;
 	List<Capybara*> team;
 };

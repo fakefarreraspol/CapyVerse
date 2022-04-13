@@ -7,7 +7,7 @@ Punkibara::Punkibara(uint32 id, iPoint position) : Capybara(CapybaraType::DPS, i
 	this->capybaraStats.strenght		= 7;
 	this->capybaraStats.speed			= 6;
 	this->capybaraStats.intelligence	= 2;
-
+	this->capybaraTarget = CapybaraTarget::HIMSELF;
 	InitStats();
 }
 
@@ -20,7 +20,7 @@ bool Punkibara::UseAbility(Capybara* target)
 {
 	if (this->mana < 10)
 		return false;
-	this->capybaraStatus = CapybaraStatus::RAGE;
+	SetStatus(CapybaraStatus::RAGE);
 	this->mana -= 10;
 
 	return true;

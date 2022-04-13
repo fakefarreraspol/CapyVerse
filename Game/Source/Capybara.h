@@ -80,6 +80,8 @@ public:
 	void SetAttack(); //Sets the capy canAttack to true
 	bool CanAttack();
 
+	void UpdateStatus();
+
 	//XP functions
 	void LevelUp();
 	void AddXp(int value);
@@ -127,6 +129,7 @@ protected:
 
 	CapybaraType capybaraType = CapybaraType::NONE;			//The capybara type
 	CapybaraStatus capybaraStatus = CapybaraStatus::NONE;	//The current status of the capybara
+	int statusCounter = 0;									//To remove status and apply them
 	CapybaraTarget capybaraTarget = CapybaraTarget::NONE;	//The type of target of the ability
 };
 

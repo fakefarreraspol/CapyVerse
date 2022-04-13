@@ -19,6 +19,10 @@ bool Enemy::Update(float dt)
 bool Enemy::Draw(Render* render)
 {
 	bool ret = true;
+	if (!isCombat)
+	{
+		render->DrawRectangle({ position.x, position.y, 20, 20 }, 255, 0, 0);
+	}
 	return ret;
 }
 
@@ -28,6 +32,7 @@ void Enemy::SetCombat(bool value)
 	{
 		capy->data->SetCombat(value);
 	}
+	this->isCombat = value;
 }
 
 List<Capybara*>& Enemy::GetBattleTeam()

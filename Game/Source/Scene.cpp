@@ -18,6 +18,11 @@
 #include "GuiSlider.h"
 #include "Player.h"
 
+#include "Dialog.h"
+#include "DialogManager.h"
+#include "DialogNode.h"
+
+
 #include "Defs.h"
 #include "Log.h"
 
@@ -53,6 +58,12 @@ bool Scene::Start()
 	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 4, { 100, 350 }, "Rainbowbara"));
 	
 	app->battleManager->SetPlayer(player);
+
+	for (int i = 0; i < NPCs.Count(); i++)
+	{
+		NPCs.At(i)->data->Enable();
+	}
+
 	return true;
 }
 
@@ -83,7 +94,7 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		app->fadeToBlack->MFadeToBlack(this, (Module*)app->battleScene1, 120);
 
-	app->guiManager->Draw();
+	//app->guiManager->Draw();
 
 
 	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)

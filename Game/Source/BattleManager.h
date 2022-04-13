@@ -45,6 +45,7 @@ public:
 	void SetEnemy(Enemy* enemy);
 	void SetTurn(Turn turn);
 	Turn GetTurn();
+	void EndTurn();
 
 private:
 
@@ -52,14 +53,15 @@ private:
 	void Draw();
 	void UpdatePlayerInfo();
 	void DeleteAttackMenu();
+	void DeleteAbilityMenu();
 	void CreateAttackMenu();
 	void CreateAbilityMenu();
 	void UpdateInput();
 	void CreateTexts();
-
 private:
 	List<Capybara*> enemies;
 	List<Capybara*> playerTeam;
+	List<Capybara*> targets;
 
 	Player* player = nullptr;
 	Enemy* enemy = nullptr;
@@ -78,17 +80,20 @@ private:
 	ListItem<GuiButton*>* currentButton = nullptr;
 
 	List<GuiButton*> abilityBtns;
-
+	List<GuiText*> abilityInfo;
+	List<GuiBar*> abilityBars;
 
 	List<GuiButton*> attackBtns;
-	List<GuiText*> enemyInfo;
-	List<GuiBar*> enemyBars;
+	List<GuiText*> attackInfo;
+	List<GuiBar*> attackBars;
 
+	//Player info UI
 	List<GuiText*> playerNames;
 	List<GuiBar*>  playerHealthBars;
 	List<GuiBar*>  playerManaBars;
 	List<GuiText*> playerLevels;
-	
+	List<GuiText*> playerStatus;
+
 	List<GuiText*> playerHeathText;
 	List<GuiText*> playerManaText;
 
