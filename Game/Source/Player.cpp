@@ -273,7 +273,6 @@ void Player::UpdateInput()
 				isStuck = false;
 			}
 		}
-	}
 }
 
 List<Capybara*>& Player::GetBattleTeam()
@@ -298,9 +297,9 @@ bool Player::SaveState(pugi::xml_node&)
 
 void Player::SetCombat(bool value)
 {
-	for (ListItem<Capybara*>* member = battleTeam.start; member != nullptr; member = member->next)
+	for (int i = 0; i < battleTeam.Count(); i++)
 	{
-		member->data->SetCombat(value);
+		battleTeam.At(i)->data->SetCombat(value);
 	}
 	this->isBattle = value;
 }

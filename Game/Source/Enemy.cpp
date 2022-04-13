@@ -28,9 +28,9 @@ bool Enemy::Draw(Render* render)
 
 void Enemy::SetCombat(bool value)
 {
-	for (ListItem<Capybara*>* capy = battleTeam.start; capy != nullptr; capy = capy->next)
+	for (int i = 0; i < battleTeam.Count(); i++)
 	{
-		capy->data->SetCombat(value);
+		battleTeam.At(i)->data->SetCombat(value);
 	}
 	this->isCombat = value;
 }

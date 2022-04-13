@@ -63,16 +63,16 @@ bool DialogManager::Start()
 
 
 	// test dialog
-	app->scene->dialogTest = new Dialog();
-	DialogNode* first = new DialogNode("dialog test");
-	app->scene->dialogTest->AddFirstNode(first);
+	//app->scene->dialogTest = new Dialog();
+	//DialogNode* first = new DialogNode("dialog test");
+	//app->scene->dialogTest->AddFirstNode(first);
 
-	DialogNode* sec = app->scene->dialogTest->AddOption(first, "choose an option","");
-	app->scene->dialogTest->AddOption(sec, "you chose 4", "4");
-	app->scene->dialogTest->AddOption(sec, "you chose 3", "3");
-	app->scene->dialogTest->AddOption(sec, "you chose 2", "2");
-	app->scene->dialogTest->AddOption(sec, "you chose 1", "1");
-	app->dialogManager->SetActiveDialog(app->scene->dialogTest);
+	//DialogNode* sec = app->scene->dialogTest->AddOption(first, "choose an option","");
+	//app->scene->dialogTest->AddOption(sec, "you chose 4", "4");
+	//app->scene->dialogTest->AddOption(sec, "you chose 3", "3");
+	//app->scene->dialogTest->AddOption(sec, "you chose 2", "2");
+	//app->scene->dialogTest->AddOption(sec, "you chose 1", "1");
+	//app->dialogManager->SetActiveDialog(app->scene->dialogTest);
 
 
 	return true;
