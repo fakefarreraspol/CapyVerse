@@ -57,6 +57,7 @@ bool BattleScene1::PreUpdate()
            enemy->GetBattleTeam().Del(enemy->GetBattleTeam().At(i));
        }
     }
+    
     return ret;
 }
 
@@ -78,6 +79,21 @@ bool BattleScene1::Update(float dt)
     if (enemy->GetBattleTeam().Count() == 0 || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
         app->fadeToBlack->MFadeToBlack(this, (Module*)app->eobScene, 120);
 
+
+    for (int i = 0; i < enemy->GetBattleTeam().Count(); i++)
+    {
+        if (enemy->GetBattleTeam().At(i)->data->GetHealth() <= enemy->GetBattleTeam().At(i)->data->GetMaxHealth()/3)
+        {
+            enemy->GetBattleTeam().At(1)->data->UseAbility(enemy->GetBattleTeam().At(i)->data);
+        }
+        else
+        {
+            if (enemy->GetBattleTeam().At(i)->data->CanAttack())
+            {
+                //enemy->GetBattleTeam().At(i)->data->Attack()
+            }
+        }
+    }
     return ret;
 }
 
