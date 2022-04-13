@@ -105,6 +105,9 @@
     </ClCompile>
     <ClCompile Include="Source\Dialog.cpp" />
     <ClCompile Include="Source\DialogManager.cpp" />
+    <ClCompile Include="Source\Map.cpp">
+      <Filter>Modules\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App.h">
@@ -239,6 +242,9 @@
     <ClInclude Include="Source\Dialog.h" />
     <ClInclude Include="Source\DialogNode.h" />
     <ClInclude Include="Source\DialogManager.h" />
+    <ClInclude Include="Source\Map.h">
+      <Filter>Modules\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Output\config.xml">
