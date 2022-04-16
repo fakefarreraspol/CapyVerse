@@ -198,9 +198,9 @@ void Capybara::SetStatus(CapybaraStatus status)
 	}
 }
 
-void Capybara::SetAttack()
+void Capybara::SetAttack(bool isAbleToAttack)
 {
-	canAttack = true;
+	canAttack = isAbleToAttack;
 }
 
 bool Capybara::CanAttack()

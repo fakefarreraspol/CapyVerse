@@ -64,36 +64,56 @@ bool BattleScene1::PreUpdate()
 bool BattleScene1::Update(float dt)
 {
     bool ret = true;
+    srand(time(NULL));
+    randomNum = rand() % 2;
+    //if (app->battleManager->GetTurn() == Turn::ENEMY)
+    //{
+    //    if (enemy->GetBattleTeam().At(1) != nullptr)
+    //    {
+    //        //TODO: Code the Enemy AI
 
+    //        enemy->GetBattleTeam().At(1)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(1)->data);
+    //    }
+    //    app->battleManager->EndTurn();
+    //}
+
+    
+    //enemy Turn
     if (app->battleManager->GetTurn() == Turn::ENEMY)
     {
-        if (enemy->GetBattleTeam().At(1) != nullptr)
+        //supp
+        for (int i = 0; i < enemy->GetBattleTeam().Count() && enemy->GetBattleTeam().At(i) != nullptr && enemy->GetBattleTeam().At(1) != nullptr; i++)
         {
-            //TODO: Code the Enemy AI
-
-            enemy->GetBattleTeam().At(1)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(1)->data);
+            if (enemy->GetBattleTeam().At(i)->data->GetHealth() <= enemy->GetBattleTeam().At(i)->data->GetMaxHealth() / 1.5)
+            {
+                enemy->GetBattleTeam().At(1)->data->UseAbility(enemy->GetBattleTeam().At(i)->data);
+                enemy->GetBattleTeam().At(1)->data->SetAttack(false);
+                break;
+            }
+           
         }
+        if (enemy->GetBattleTeam().At(1)->data->CanAttack())
+        {
+            if (app->battleManager->GetPlayer()->GetBattleTeam().At(randomNum)->data != nullptr)
+            {
+                enemy->GetBattleTeam().At(1)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(randomNum)->data);
+            }
+            else
+            {
+                if (enemy->GetBattleTeam().At(1)->data->GetHealth() < enemy->GetBattleTeam().At(1)->data->GetMaxHealth() / 7) enemy->GetBattleTeam().At(1)->data->Heal(1);
+            }
+        }
+        else enemy->GetBattleTeam().At(1)->data->Heal(2);
+
+        //tank
+
         app->battleManager->EndTurn();
     }
-
+    
     if (enemy->GetBattleTeam().Count() == 0 || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
         app->fadeToBlack->MFadeToBlack(this, (Module*)app->eobScene, 120);
 
-
-    for (int i = 0; i < enemy->GetBattleTeam().Count(); i++)
-    {
-        if (enemy->GetBattleTeam().At(i)->data->GetHealth() <= enemy->GetBattleTeam().At(i)->data->GetMaxHealth()/3)
-        {
-            enemy->GetBattleTeam().At(1)->data->UseAbility(enemy->GetBattleTeam().At(i)->data);
-        }
-        else
-        {
-            if (enemy->GetBattleTeam().At(i)->data->CanAttack())
-            {
-                //enemy->GetBattleTeam().At(i)->data->Attack()
-            }
-        }
-    }
+   
     return ret;
 }
 

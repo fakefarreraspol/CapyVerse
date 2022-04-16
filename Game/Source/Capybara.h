@@ -77,7 +77,7 @@ public:
 	virtual bool UseAbility(Capybara* target);
 	void Attack(Capybara* target);
 	void SetStatus(CapybaraStatus status);
-	void SetAttack(); //Sets the capy canAttack to true
+	void SetAttack(bool isAbleToAttac); //Sets the capy canAttack to true
 	bool CanAttack();
 
 	void UpdateStatus();
