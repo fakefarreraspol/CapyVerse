@@ -320,7 +320,9 @@ void BattleManager::CreateAbilityMenu()
 
 void BattleManager::UpdateInput()
 {
-	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
+	GamePad& pad = app->input->pads[0];
+
+	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || pad.down)
 	{
 		if (currentButton->next == nullptr)
 		{
@@ -334,7 +336,7 @@ void BattleManager::UpdateInput()
 		}
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || pad.up)
 	{	
 		if (currentButton->prev == nullptr)
 		{

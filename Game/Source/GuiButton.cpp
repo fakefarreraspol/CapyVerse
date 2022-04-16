@@ -24,32 +24,41 @@ GuiButton::~GuiButton()
 
 bool GuiButton::Update(float dt)
 {
-
+	GamePad& pad = app->input->pads[0];
 	if (state != GuiControlState::DISABLED)
 	{
 		
-		// L14: TODO 3: Update the state of the GUiButton according to the mouse position
-		int mouseX, mouseY;
-		app->input->GetMousePosition(mouseX, mouseY);
+		//// L14: TODO 3: Update the state of the GUiButton according to the mouse position
+		//int mouseX, mouseY;
+		//app->input->GetMousePosition(mouseX, mouseY);
 
-		if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) &&
-			(mouseY > bounds.y) && (mouseY < (bounds.y + bounds.h)))
+		//if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) &&
+		//	(mouseY > bounds.y) && (mouseY < (bounds.y + bounds.h)))
+		//{
+		//	state = GuiControlState::FOCUSED;
+
+		//	if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
+		//	{
+		//		state = GuiControlState::PRESSED;
+		//	}
+
+		//	// If mouse button pressed -> Generate event!
+		//	if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP)
+		//	{
+		//		NotifyObserver();
+		//	}
+		//}
+		//else
+		//	state = GuiControlState::NORMAL;
+
+		if (state == GuiControlState::FOCUSED)
 		{
-			state = GuiControlState::FOCUSED;
-
-			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
+			if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN || pad.a)
 			{
 				state = GuiControlState::PRESSED;
-			}
-
-			// If mouse button pressed -> Generate event!
-			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP)
-			{
 				NotifyObserver();
 			}
 		}
-		else
-			state = GuiControlState::NORMAL;
 	}
 
 
