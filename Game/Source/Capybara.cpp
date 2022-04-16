@@ -266,6 +266,7 @@ void Capybara::LevelUp()
 {
 	level++;
 	xpNext = xpNext + xpNext * 0.1f;
+	xp = 0;
 	switch (capybaraType)
 	{
 	//Each capybara levels up 1 point per level or 2 depending on their type

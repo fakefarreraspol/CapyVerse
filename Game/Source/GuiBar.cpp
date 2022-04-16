@@ -6,7 +6,7 @@
 #include "Audio.h"
 #include "GuiManager.h"
 
-GuiBar::GuiBar(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::SLIDERBAR, id)
+GuiBar::GuiBar(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::BAR, id)
 {
 	this->bounds = bounds;
 	this->text = text;

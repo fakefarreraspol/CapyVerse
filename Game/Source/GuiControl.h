@@ -16,7 +16,7 @@ enum class GuiControlType
 	BUTTON,
 	CHECKBOX,
 	SLIDER,
-	SLIDERBAR,
+	BAR,
 	SPINNER,
 	TEXT
 };

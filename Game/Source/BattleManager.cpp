@@ -243,7 +243,7 @@ void BattleManager::CreateAttackMenu()
 			attackBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, i + 4, enemies.At(i)->data->name.GetString(), { 250, i * 50 + 550, 155, 20 }, this));
 
 			SString enemyHealth("%i/%i HP", enemies.At(i)->data->GetHealth(), enemies.At(i)->data->GetMaxHealth());
-			attackBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, i + 4, "EnemyBar", { 250, i * 50 + 575, 155, 20 }, this));
+			attackBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::BAR, i + 4, "EnemyBar", { 250, i * 50 + 575, 155, 20 }, this));
 			attackInfo.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, i + 4, enemyHealth.GetString(), { 250, i * 50 + 575, 155, 20 }, this, { 255, 255, 255, 1 }));
 		}
 		for (int i = 0; i < attackBars.Count(); i++)
@@ -271,7 +271,7 @@ void BattleManager::CreateAbilityMenu()
 				abilityBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, i + 7, playerTeam.At(i)->data->name.GetString(), { 250, i * 50 + 550, 155, 20 }, this));
 
 				SString allyHealth("%i/%i HP", playerTeam.At(i)->data->GetHealth(), playerTeam.At(i)->data->GetMaxHealth());
-				abilityBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, i + 7, "AllyBar", { 250, i * 50 + 575, 155, 20 }, this));
+				abilityBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::BAR, i + 7, "AllyBar", { 250, i * 50 + 575, 155, 20 }, this));
 				abilityInfo.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, i + 7, allyHealth.GetString(), { 250, i * 50 + 575, 155, 20 }, this, { 255, 255, 255, 1 }));
 			}
 			for (int i = 0; i < abilityBars.Count(); i++)
@@ -293,7 +293,7 @@ void BattleManager::CreateAbilityMenu()
 				abilityBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, i + 7, playerTeam.At(i)->data->name.GetString(), { 250, i * 50 + 550, 155, 20 }, this));
 
 				SString allyHealth("%i/%i HP", playerTeam.At(i)->data->GetHealth(), playerTeam.At(i)->data->GetMaxHealth());
-				abilityBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, i + 7, "AllyBar", { 250, i * 50 + 575, 155, 20 }, this));
+				abilityBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::BAR, i + 7, "AllyBar", { 250, i * 50 + 575, 155, 20 }, this));
 				abilityInfo.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, i + 7, allyHealth.GetString(), { 250, i * 50 + 575, 155, 20 }, this, { 255, 255, 255, 1 }));
 			}
 			for (int i = 0; i < abilityBars.Count(); i++)
@@ -456,13 +456,13 @@ void BattleManager::CreateTexts()
 		playerLevels.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 20 + i, lvl.GetString(), {i * 450 + 150, 20, 155, 20}, this, {255,255,255,1}));
 
 		//Creating the health bar
-		playerHealthBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, 20 + i, "HealthBar", { i * 450 + 15, 60, 155, 20 }, this ));
+		playerHealthBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::BAR, 20 + i, "HealthBar", { i * 450 + 15, 60, 155, 20 }, this ));
 		//Creating the health text
 		SString hp("%i/%iHP", playerTeam.At(i)->data->GetHealth(), playerTeam.At(i)->data->GetMaxHealth());
 		playerHeathText.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 20 + i, hp.GetString(), {i * 450 + 15, 60, 155, 20}, this, {255, 255, 255, 1}));
 
 		//Creating the mana bar
-		playerManaBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, 20 + i, "ManaBar", { i * 450 + 15, 85, 155, 20 }, this));
+		playerManaBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::BAR, 20 + i, "ManaBar", { i * 450 + 15, 85, 155, 20 }, this));
 		//Creating the mana text
 		SString mp("%i/%iMP", playerTeam.At(i)->data->GetMana(), playerTeam.At(i)->data->GetMaxMana());
 		playerManaText.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 20 + i, mp.GetString(), { i * 450 + 15, 85, 155, 20 }, this, { 255, 255, 255, 1 }));

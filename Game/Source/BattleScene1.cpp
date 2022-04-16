@@ -9,6 +9,7 @@
 #include "EntityManager.h"
 #include "FadeToBlack.h"
 #include "Scene.h"
+#include "EOBScene.h"
 
 
 BattleScene1::BattleScene1(bool startEnabled) : Module(startEnabled)
@@ -85,7 +86,7 @@ bool BattleScene1::CleanUp()
 {
     bool ret = true;
     app->battleManager->Disable();
-
+    app->eobScene->SetXP(60);
     enemy->SetCombat(false);
     enemy->Disable();
 
