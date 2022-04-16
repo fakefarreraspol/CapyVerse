@@ -19,6 +19,7 @@ struct Collider
 		RED_FLOWER,
 		STRUCTURE,
 		PLAYER,
+		NPC,
 		ENEMY,
 		PLAYER_SHOT,
 		ENEMY_SHOT,

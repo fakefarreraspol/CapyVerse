@@ -105,6 +105,9 @@
     </ClCompile>
     <ClCompile Include="Source\Dialog.cpp" />
     <ClCompile Include="Source\DialogManager.cpp" />
+    <ClCompile Include="Source\NPC.cpp">
+      <Filter>Modules\Gameplay\Entities\Characters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App.h">
@@ -239,6 +242,9 @@
     <ClInclude Include="Source\Dialog.h" />
     <ClInclude Include="Source\DialogNode.h" />
     <ClInclude Include="Source\DialogManager.h" />
+    <ClInclude Include="Source\NPC.h">
+      <Filter>Modules\Gameplay\Entities\Characters</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Output\config.xml">
