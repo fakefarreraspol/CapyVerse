@@ -64,6 +64,7 @@ bool Scene::Start()
 		NPCs.At(i)->data->Enable();
 	}
 
+
 	return true;
 }
 
