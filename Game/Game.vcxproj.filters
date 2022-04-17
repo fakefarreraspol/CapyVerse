@@ -301,6 +301,7 @@
     </ClInclude>
     <ClInclude Include="Source\NPC.h">
       <Filter>Modules\Gameplay\Entities\Characters</Filter>
+    </ClInclude>
     <ClInclude Include="Source\DialogNode.h">
       <Filter>Modules\Gameplay\Dialog</Filter>
     </ClInclude>
