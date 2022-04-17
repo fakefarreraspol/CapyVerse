@@ -80,6 +80,7 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
 	app->mapManager->Draw();
+	
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		app->fadeToBlack->MFadeToBlack(this, (Module*)app->battleScene1, 120);
 

@@ -36,6 +36,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	render = new Render(true);
 	tex = new Textures(true);
 	audio = new Audio(true);
+	mapManager = new Map(true);
 	entMan = new EntityManager(true);
 	fonts = new Fonts(true);
 	guiManager = new GuiManager(true);
@@ -48,7 +49,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	battleManager = new BattleManager(false);
 	battleScene1 = new BattleScene1(false);
 	eobScene = new EOBScene(false);
-	mapManager = new Map(true);
 	
 
 	// Ordered for awake / Start / Update
@@ -56,18 +56,18 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(win);
 	AddModule(input);
 	AddModule(fadeToBlack);
-	AddModule(entMan);
+	AddModule(mapManager);
 	AddModule(tex);
 	AddModule(fonts);
 	AddModule(audio);
 	AddModule(intro);
 	AddModule(mainMenu);
 	AddModule(scene);
-	AddModule(mapManager);
 	AddModule(battleScene1);
 	AddModule(battleManager);
 	AddModule(eobScene);
 	AddModule(dialogManager);
+	AddModule(entMan);
 	AddModule(guiManager);
 	AddModule(colManager);
 	
