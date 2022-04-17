@@ -125,6 +125,7 @@
     </ClCompile>
     <ClCompile Include="Source\Chadbara.cpp">
       <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
+    </ClCompile>
     <ClCompile Include="Source\NPC.cpp">
       <Filter>Modules\Gameplay\Entities\Characters</Filter>
     </ClCompile>
@@ -264,6 +265,7 @@
     <ClInclude Include="Source\DialogManager.h" />
     <ClInclude Include="Source\Map.h">
       <Filter>Modules\Core</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Retrobara.h">
       <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
     </ClInclude>
@@ -284,6 +286,7 @@
     </ClInclude>
     <ClInclude Include="Source\Animation.h">
       <Filter>Utils</Filter>
+    </ClInclude>
     <ClInclude Include="Source\NPC.h">
       <Filter>Modules\Gameplay\Entities\Characters</Filter>
     </ClInclude>
