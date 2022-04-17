@@ -34,7 +34,7 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char
 	//Call the constructor according to the GuiControlType
 	switch (type)
 	{
-	case GuiControlType::BUTTON:	control = new GuiButton(id, bounds, text);		break;
+	case GuiControlType::BUTTON:	control = new GuiButton(id, bounds, text, textColor, fontID);		break;
 	case GuiControlType::SLIDER:	control = new GuiSlider(id, bounds, text);		break;
 	case GuiControlType::CHECKBOX:	control = new GuiCheckBox(id, bounds, text);	break;
 	case GuiControlType::TEXT:		control = new GuiText(id, bounds, text, textColor, fontID, blink);		break;

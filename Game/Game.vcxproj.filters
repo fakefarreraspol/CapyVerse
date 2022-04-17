@@ -103,8 +103,6 @@
     <ClCompile Include="Source\EOBScene.cpp">
       <Filter>Modules\Gameplay\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Dialog.cpp" />
-    <ClCompile Include="Source\DialogManager.cpp" />
     <ClCompile Include="Source\Retrobara.cpp">
       <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
     </ClCompile>
@@ -122,6 +120,18 @@
     </ClCompile>
     <ClCompile Include="Source\Chadbara.cpp">
       <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Dialog.cpp">
+      <Filter>Modules\Gameplay\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DialogManager.cpp">
+      <Filter>Modules\Gameplay\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Intro.cpp">
+      <Filter>Modules\Gameplay\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MainMenu.cpp">
+      <Filter>Modules\Gameplay\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -254,9 +264,6 @@
     <ClInclude Include="Source\EOBScene.h">
       <Filter>Modules\Gameplay\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Dialog.h" />
-    <ClInclude Include="Source\DialogNode.h" />
-    <ClInclude Include="Source\DialogManager.h" />
     <ClInclude Include="Source\Retrobara.h">
       <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
     </ClInclude>
@@ -277,6 +284,21 @@
     </ClInclude>
     <ClInclude Include="Source\Animation.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DialogNode.h">
+      <Filter>Modules\Gameplay\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Dialog.h">
+      <Filter>Modules\Gameplay\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DialogManager.h">
+      <Filter>Modules\Gameplay\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Intro.h">
+      <Filter>Modules\Gameplay\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MainMenu.h">
+      <Filter>Modules\Gameplay\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -326,6 +348,9 @@
     </Filter>
     <Filter Include="XML\Pugi">
       <UniqueIdentifier>{13fec552-8804-4edd-bb79-0d71d8a7bd10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Gameplay\Dialog">
+      <UniqueIdentifier>{a0e9337e-b37d-4526-a798-427ac12b9dea}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

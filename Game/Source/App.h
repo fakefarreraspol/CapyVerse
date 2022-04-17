@@ -19,6 +19,8 @@ class Input;
 class Render;
 class Textures;
 class Audio;
+class Intro;
+class MainMenu;
 class Scene;
 class EntityManager;
 class BattleManager;
@@ -103,6 +105,8 @@ public:
 	Render* render;
 	Textures* tex;
 	Audio* audio;
+	Intro* intro;
+	MainMenu* mainMenu;
 	Scene* scene;
 	EntityManager* entMan;
 	Fonts* fonts;
