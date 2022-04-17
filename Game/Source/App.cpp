@@ -22,6 +22,7 @@
 #include "BattleManager.h"
 #include "Fonts.h"
 #include "BattleScene1.h"
+#include "BattleScene2.h"
 #include "EOBScene.h"
 
 // Constructor
@@ -42,6 +43,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new Scene(true);
 	battleManager = new BattleManager(false);
 	battleScene1 = new BattleScene1(false);
+	battleScene2 = new BattleScene2(false);
 	eobScene = new EOBScene(false);
 	
 
@@ -56,6 +58,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(scene);
 	AddModule(battleScene1);
+	AddModule(battleScene2);
 	AddModule(battleManager);
 	AddModule(eobScene);
 	AddModule(dialogManager);

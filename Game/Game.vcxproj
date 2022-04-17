@@ -97,6 +97,7 @@
   <ItemGroup>
     <ClCompile Include="Source\BattleScene1.cpp" />
     <ClCompile Include="Source\BattleManager.cpp" />
+    <ClCompile Include="Source\BattleScene2.cpp" />
     <ClCompile Include="Source\Capybara.cpp" />
     <ClCompile Include="Source\Chadbara.cpp" />
     <ClCompile Include="Source\Collider.cpp" />
@@ -135,6 +136,7 @@
     <ClCompile Include="Source\Textures.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\Window.cpp" />
+    <ClInclude Include="BattleScene2.h" />
     <ClInclude Include="Source\BattleScene1.h" />
     <ClInclude Include="Source\BattleManager.h" />
     <ClInclude Include="Source\Capybara.h" />
