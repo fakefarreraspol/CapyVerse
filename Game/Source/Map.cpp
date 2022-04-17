@@ -237,9 +237,7 @@ bool Map::LoadColliders()
 
 						SDL_Rect r = tileset->GetTileRect(gid);
 						iPoint pos = MapToWorld(x, y);
-						pos.x += r.w / 2;
-						pos.y += r.h / 2;
-						Collider* col = app->colManager->AddCollider({ pos.x, pos.y, r.w, r.h }, Collider::BOUNDS, this);
+						Collider* col = app->colManager->AddCollider({ pos.x, pos.y, r.w, r.h }, Collider::WALL, this);
 						cols.Add(col);
 
 					}
