@@ -107,6 +107,7 @@
     <ClCompile Include="Source\DialogManager.cpp" />
     <ClCompile Include="Source\Map.cpp">
       <Filter>Modules\Core</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Retrobara.cpp">
       <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
     </ClCompile>
