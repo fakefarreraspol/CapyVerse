@@ -45,6 +45,13 @@ public:
 private:
 	SDL_Texture* background = nullptr;
 	
+	List<GuiControl*> menuBtns;
+	List<GuiControl*> playBtns;
+	List<GuiControl*> optionsBtns;
+	List<GuiControl*> exitBtns;
+
+	List<GuiControl*> currentControls;
+
 	GuiButton* playBtn;
 	GuiButton* newGameBtn;
 	GuiButton* continueBtn;
@@ -66,8 +73,7 @@ private:
 	GuiButton* noBtn;
 	GuiText* exitText;
 	
-	GuiControl* currentControl;
+	ListItem<GuiControl*>* currentControl;
 	
-
 };
 #endif // __MAINMENU_H__
