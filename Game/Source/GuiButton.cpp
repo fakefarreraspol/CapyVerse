@@ -69,19 +69,37 @@ bool GuiButton::Draw(Render* render)
 {
 	SDL_Rect cBounds{ bounds.x - render->camera.x,bounds.y - render->camera.y,bounds.w,bounds.h };
 	// Draw the right button depending on state
+	SDL_Rect disabled{ 0, 0, bounds.w, bounds.h };
+
 	switch (state)
 	{
 
-	case GuiControlState::DISABLED:		render->DrawRectangle(cBounds, 0, 0, 0, 0);			break;
-	case GuiControlState::NORMAL:		render->DrawRectangle(cBounds, 255, 0, 0, 255);		break;
-	case GuiControlState::FOCUSED:		render->DrawRectangle(cBounds, 255, 255, 255, 160);	break;
-	case GuiControlState::PRESSED:		render->DrawRectangle(cBounds, 255, 255, 255, 255);	break;
-
-	case GuiControlState::SELECTED:		render->DrawRectangle(cBounds, 0, 255, 0, 255);		break;
+	case GuiControlState::DISABLED:		render->DrawTexture(texture, cBounds.x, cBounds.y, &disabled);			break;
+	case GuiControlState::NORMAL:		render->DrawTexture(texture, cBounds.x, cBounds.y, &disabled);			break;
+	case GuiControlState::FOCUSED:		render->DrawTexture(texture, cBounds.x, cBounds.y, &disabled);			break;
+	case GuiControlState::PRESSED:		render->DrawTexture(texture, cBounds.x, cBounds.y, &disabled);			break;
+	case GuiControlState::SELECTED:		render->DrawTexture(texture, cBounds.x, cBounds.y, &disabled);			break;
 
 	default:
 		break;
 	}
+
+	if (app->GetDebug())
+	{
+		switch (state)
+		{
+
+		case GuiControlState::DISABLED:		render->DrawRectangle(cBounds, 0, 0, 0, 0);			break;
+		case GuiControlState::NORMAL:		render->DrawRectangle(cBounds, 255, 0, 0, 255);		break;
+		case GuiControlState::FOCUSED:		render->DrawRectangle(cBounds, 255, 255, 255, 160);	break;
+		case GuiControlState::PRESSED:		render->DrawRectangle(cBounds, 255, 255, 255, 255);	break;
+		case GuiControlState::SELECTED:		render->DrawRectangle(cBounds, 0, 255, 0, 255);		break;
+
+		default:
+			break;
+		}
+	}
+
 	render->DrawTexture(textTex, cBounds.x, cBounds.y);
 
 	return true;

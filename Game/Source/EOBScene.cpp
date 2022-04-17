@@ -79,8 +79,8 @@ bool EOBScene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
+		
 		app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene, 120);
-		player->SetCombat(false);
 	}
 
 	return ret;

@@ -50,7 +50,10 @@ bool Capybara::Draw(Render* render)
 	bool ret = true;
 	if (isCombat)
 	{
-		render->DrawRectangle({position.x, position.y, 64, 64}, 255, 0, 0);
+		if (app->GetDebug())
+			render->DrawRectangle({ position.x, position.y,  64 , 64 }, 255, 0, 0);
+
+		//render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
 	}
 
 	return ret;

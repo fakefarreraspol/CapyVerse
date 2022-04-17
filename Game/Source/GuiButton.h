@@ -21,6 +21,8 @@ public:
 
 	bool canClick = true;
 	bool drawBasic = false;
+private:
+	SDL_Texture* texture = nullptr;
 };
 
 #endif // GUIBUTTON_H

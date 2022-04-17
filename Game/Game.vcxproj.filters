@@ -275,6 +275,9 @@
     <ClInclude Include="Source\Chadbara.h">
       <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Animation.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Output\config.xml">
