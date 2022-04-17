@@ -11,6 +11,7 @@
 #include "FadeToBlack.h"
 #include "BattleManager.h"
 #include "Fonts.h"
+#include "Map.h"
 
 #include "Collisions.h"
 #include "GuiManager.h"
@@ -61,7 +62,7 @@ bool Scene::Start()
 	{
 		NPCs.At(i)->data->Enable();
 	}
-
+	app->mapManager->Load("Assets/Textures/Map/Zone1/1-1.tmx");
 	app->entMan->CreateEntity(EntityType::NPC, 0, { 200,200 }, "NPC");
 
 	return true;
