@@ -3,6 +3,8 @@
 
 #include "Entity.h"
 
+#include "Animation.h"
+
 struct CapybaraStats
 {
 	int hp = 1;
@@ -131,6 +133,9 @@ protected:
 	CapybaraStatus capybaraStatus = CapybaraStatus::NONE;	//The current status of the capybara
 	int statusCounter = 0;									//To remove status and apply them
 	CapybaraTarget capybaraTarget = CapybaraTarget::NONE;	//The type of target of the ability
+
+
+	Animation* currentAnim = nullptr;
 };
 
 #endif // __CAPYBARA_H__

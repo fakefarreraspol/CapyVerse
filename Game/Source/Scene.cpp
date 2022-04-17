@@ -41,22 +41,20 @@ bool Scene::Awake(pugi::xml_node& node)
 	LOG("Loading Scene");
 	bool ret = true;
 
-	return ret;
-}
-
-// Called before the first frame
-bool Scene::Start()
-{
-	
-	SDL_Rect rect = { 500, 500, 200, 200 };
-	img = app->fonts->LoadRenderedText(rect, app->fonts->globalFont, "This is a test", {0, 255, 0});
-
 	player = (Player*)app->entMan->CreateEntity(EntityType::PLAYER, 1, { 0, 0 }, "Player");
 
 	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 2, { 100, 150 }, "Chinabara"));
 	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 3, { 100, 250 }, "Punkibara"));
 	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 4, { 100, 350 }, "Rainbowbara"));
 
+	return ret;
+}
+
+// Called before the first frame
+bool Scene::Start()
+{
+	player->Enable();
+	player->SetCombat(false);
 	app->battleManager->SetPlayer(player);
 
 	for (int i = 0; i < NPCs.Count(); i++)
@@ -96,6 +94,20 @@ bool Scene::Update(float dt)
 
 	//app->guiManager->Draw();
 
+
+	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+	{
+		
+		app->audio->PlayMusicSpatially({ 200, 200 });
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
+	{
+		LOG("W");
+		app->audio->PlayMusic("Assets/Audio/Music/orslok-rojuu-tofu-delivery.wav");
+		//app->audio->ChangeMusic(2);
+	}
+	
 	return true;
 }
 

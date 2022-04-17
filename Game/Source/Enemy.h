@@ -4,6 +4,8 @@
 #include "Entity.h"
 
 #include "List.h"
+#include "Animation.h"
+
 
 class Capybara;
 

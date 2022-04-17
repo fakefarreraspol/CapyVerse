@@ -6,9 +6,16 @@
 
 #include "Player.h"
 #include "Enemy.h"
+
 #include "Chinabara.h"
 #include "Punkibara.h"
 #include "Rainbowbara.h"
+#include "Retrobara.h"
+#include "Emobara.h"
+#include "Egirlbara.h"
+#include "Pinkbara.h"
+#include "Simpbara.h"
+#include "Chadbara.h"
 
 EntityManager::EntityManager(bool startEnabled) : Module(startEnabled)
 {
@@ -88,7 +95,18 @@ Capybara* EntityManager::CreateEntity(CapybaraType capybaraType, uint32 id, iPoi
 		entity = new Punkibara(id, position);
 	if (name == "Rainbowbara")
 		entity = new Rainbowbara(id, position);
-
+	if (name == "Retrobara")
+		entity = new Retrobara(id, position);
+	if (name == "Emobara")
+		entity = new Emobara(id, position);
+	if (name == "Egirlbara")
+		entity = new Egirlbara(id, position);
+	if (name == "Pinkbara")
+		entity = new Pinkbara(id, position);
+	if (name == "Simpbara")
+		entity = new Simpbara(id, position);
+	if (name == "Chadbara")
+		entity = new Chadbara(id, position);
 	
 	if (entity != nullptr)
 		AddEntity(entity);
