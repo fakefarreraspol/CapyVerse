@@ -107,6 +107,23 @@
     <ClCompile Include="Source\DialogManager.cpp" />
     <ClCompile Include="Source\Map.cpp">
       <Filter>Modules\Core</Filter>
+    <ClCompile Include="Source\Retrobara.cpp">
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Emobara.cpp">
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Egirlbara.cpp">
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Pinkbara.cpp">
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Simpbara.cpp">
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Chadbara.cpp">
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -244,6 +261,26 @@
     <ClInclude Include="Source\DialogManager.h" />
     <ClInclude Include="Source\Map.h">
       <Filter>Modules\Core</Filter>
+    <ClInclude Include="Source\Retrobara.h">
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Emobara.h">
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Egirlbara.h">
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Pinkbara.h">
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Simpbara.h">
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Chadbara.h">
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animation.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
