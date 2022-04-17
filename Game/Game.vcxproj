@@ -115,6 +115,7 @@
     <ClCompile Include="Source\GuiManager.cpp" />
     <ClCompile Include="Source\GuiSlider.cpp" />
     <ClCompile Include="Source\GuiText.cpp" />
+    <ClCompile Include="Source\Intro.cpp" />
     <ClCompile Include="Source\Item.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\App.cpp" />
@@ -123,6 +124,7 @@
     <ClCompile Include="Source\Collisions.cpp" />
     <ClCompile Include="Source\Map.cpp" />
     <ClCompile Include="Source\NPC.cpp" />
+    <ClCompile Include="Source\MainMenu.cpp" />
     <ClCompile Include="Source\PerfTimer.cpp" />
     <ClCompile Include="Source\Pinkbara.cpp" />
     <ClCompile Include="Source\Player.cpp" />
@@ -161,6 +163,8 @@
     <ClInclude Include="Source\GuiManager.h" />
     <ClInclude Include="Source\GuiSlider.h" />
     <ClInclude Include="Source\GuiText.h" />
+    <ClInclude Include="Source\Intro.h" />
+    <ClInclude Include="Source\MainMenu.h" />
     <ClInclude Include="Source\Pinkbara.h" />
     <ClInclude Include="Source\Retrobara.h" />
     <ClInclude Include="Source\Item.h" />

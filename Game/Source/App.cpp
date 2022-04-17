@@ -10,6 +10,8 @@
 #include "Render.h"
 #include "Textures.h"
 #include "Audio.h"
+#include "Intro.h"
+#include "MainMenu.h"
 #include "Scene.h"
 #include "EntityManager.h"
 #include "GuiManager.h"
@@ -40,7 +42,9 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	dialogManager = new DialogManager(true);
 	colManager = new Collisions(true);
 	fadeToBlack = new FadeToBlack(true);
-	scene = new Scene(true);
+	intro = new Intro(true);
+	mainMenu = new MainMenu(false);
+	scene = new Scene(false);
 	battleManager = new BattleManager(false);
 	battleScene1 = new BattleScene1(false);
 	eobScene = new EOBScene(false);
@@ -56,6 +60,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(tex);
 	AddModule(fonts);
 	AddModule(audio);
+	AddModule(intro);
+	AddModule(mainMenu);
 	AddModule(scene);
 	AddModule(mapManager);
 	AddModule(battleScene1);

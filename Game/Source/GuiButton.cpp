@@ -5,12 +5,15 @@
 #include "GuiManager.h"
 #include "Fonts.h"
 
-GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::BUTTON, id)
+GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text, SDL_Color color, int textID) : GuiControl(GuiControlType::BUTTON, id)
 {
 	this->bounds = bounds;
 	this->text = text;
 
-	textTex = app->fonts->LoadRenderedText(bounds, app->fonts->globalFont, text, { 0, 0, 0, 1 });
+	if (textID == 0)
+		textID = app->fonts->globalFont;
+
+	textTex = app->fonts->LoadRenderedText(bounds, textID, text, color);
 
 	canClick = true;
 	drawBasic = false;
@@ -73,8 +76,6 @@ bool GuiButton::Draw(Render* render)
 
 	switch (state)
 	{
-
-	case GuiControlState::DISABLED:		render->DrawTexture(texture, cBounds.x, cBounds.y, &disabled);			break;
 	case GuiControlState::NORMAL:		render->DrawTexture(texture, cBounds.x, cBounds.y, &disabled);			break;
 	case GuiControlState::FOCUSED:		render->DrawTexture(texture, cBounds.x, cBounds.y, &disabled);			break;
 	case GuiControlState::PRESSED:		render->DrawTexture(texture, cBounds.x, cBounds.y, &disabled);			break;
@@ -99,8 +100,8 @@ bool GuiButton::Draw(Render* render)
 			break;
 		}
 	}
-
-	render->DrawTexture(textTex, cBounds.x, cBounds.y);
+	if(state != GuiControlState::DISABLED)
+		render->DrawTexture(textTex, cBounds.x, cBounds.y);
 
 	return true;
 }

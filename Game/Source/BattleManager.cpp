@@ -323,8 +323,10 @@ void BattleManager::UpdateInput()
 {
 	GamePad& pad = app->input->pads[0];
 
+	
 	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || pad.down)
 	{
+		
 		if (currentButton->next == nullptr)
 		{
 			currentButton->data->state = GuiControlState::NORMAL;

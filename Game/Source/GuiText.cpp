@@ -47,14 +47,16 @@ bool GuiText::Draw(Render* render)
 {
 	SDL_Rect cBounds{ bounds.x - render->camera.x,bounds.y - render->camera.y,bounds.w,bounds.h };
 
-	if(state!=GuiControlState::DISABLED)
+	if (state != GuiControlState::DISABLED)
+	{
 		if (blink)
 		{
-			if((counter / 30) % 2 == 0)
+			if ((counter / 30) % 2 == 0)
 				render->DrawTexture(textTex, cBounds.x, cBounds.y);
 		}
 		else
 			render->DrawTexture(textTex, cBounds.x, cBounds.y);
+	}
 	return true;
 }
 

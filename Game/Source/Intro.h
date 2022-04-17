@@ -1,28 +1,21 @@
-#ifndef __SCENE_H__
-#define __SCENE_H__
+#ifndef __INTRO_H__
+#define __INTRO_H__
 
 #include "Module.h"
 
-#include "GuiButton.h"
-#include "GuiSlider.h"
-#include "GuiCheckBox.h"
-
-#include "Dialog.h"
+#include "Animation.h"
+#include "Timer.h"
 
 struct SDL_Texture;
 
-class Capybara;
-class Player;
-class Entity;
-
-class Scene : public Module
+class Intro : public Module
 {
 public:
 
-	Scene(bool startEnabled);
+	Intro(bool startEnabled);
 
 	// Destructor
-	virtual ~Scene();
+	virtual ~Intro();
 
 	// Called before render is available
 	bool Awake(pugi::xml_node&);
@@ -38,16 +31,14 @@ public:
 
 	// Called before all Updates
 	bool PostUpdate();
-	void OnCollision(Collider* c1, Collider* c2);
+
 	// Called before quitting
 	bool CleanUp();
 
 
 private:
-	Player* player = nullptr;
-public:
-	List<Entity*> NPCs;
-
+	SDL_Texture* background = nullptr;
+	Timer counter;
 };
 
-#endif // __SCENE_H__
+#endif // __INTRO_H__
