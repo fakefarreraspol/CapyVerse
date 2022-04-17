@@ -32,6 +32,7 @@ class FadeToBlack;
 class Fonts;
 class BattleScene1;
 class EOBScene;
+class Map;
 
 class App
 {
@@ -111,6 +112,7 @@ public:
 	EntityManager* entMan;
 	Fonts* fonts;
 	GuiManager* guiManager;
+	Map* mapManager;
 	DialogManager* dialogManager;
 	Collisions* colManager;
 	Task* taskManager;

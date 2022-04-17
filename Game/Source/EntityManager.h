@@ -26,6 +26,8 @@ public:
 	// Called before render is available
 	bool Awake(pugi::xml_node&);
 
+	bool Start();
+
 	bool Update(float dt);
 
 	bool Draw();

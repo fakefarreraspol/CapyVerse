@@ -25,6 +25,7 @@
 #include "Fonts.h"
 #include "BattleScene1.h"
 #include "EOBScene.h"
+#include "Map.h"
 
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
@@ -47,6 +48,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	battleManager = new BattleManager(false);
 	battleScene1 = new BattleScene1(false);
 	eobScene = new EOBScene(false);
+	mapManager = new Map(true);
 	
 
 	// Ordered for awake / Start / Update
@@ -61,6 +63,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(intro);
 	AddModule(mainMenu);
 	AddModule(scene);
+	AddModule(mapManager);
 	AddModule(battleScene1);
 	AddModule(battleManager);
 	AddModule(eobScene);

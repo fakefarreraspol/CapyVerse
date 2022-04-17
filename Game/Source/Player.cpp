@@ -19,8 +19,6 @@ bool Player::Update(float dt)
 	bool ret = true;
 	collider->SetPos(position.x, position.y);
 	UpdateInput(dt);
-	LOG("player pos X: %i", position.x);
-	LOG("player pos Y: %i", position.y);
 	return ret;
 }
 

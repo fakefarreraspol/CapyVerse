@@ -11,6 +11,7 @@
 #include "FadeToBlack.h"
 #include "BattleManager.h"
 #include "Fonts.h"
+#include "Map.h"
 
 #include "Collisions.h"
 #include "GuiManager.h"
@@ -63,6 +64,8 @@ bool Scene::Start()
 	{
 		NPCs.At(i)->data->Enable();
 	}
+	app->mapManager->Load("1-1.tmx");
+	app->entMan->CreateEntity(EntityType::NPC, 0, { 200,200 }, "NPC");
 
 	return true;
 }
@@ -76,7 +79,7 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-
+	app->mapManager->Draw();
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		app->fadeToBlack->MFadeToBlack(this, (Module*)app->battleScene1, 120);
 
