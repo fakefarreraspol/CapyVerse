@@ -62,6 +62,8 @@ bool Scene::Start()
 		NPCs.At(i)->data->Enable();
 	}
 
+	app->entMan->CreateEntity(EntityType::NPC, 0, { 200,200 }, "NPC");
+
 	return true;
 }
 

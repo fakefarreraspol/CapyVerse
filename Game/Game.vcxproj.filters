@@ -125,6 +125,8 @@
     </ClCompile>
     <ClCompile Include="Source\Chadbara.cpp">
       <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
+    <ClCompile Include="Source\NPC.cpp">
+      <Filter>Modules\Gameplay\Entities\Characters</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -282,6 +284,8 @@
     </ClInclude>
     <ClInclude Include="Source\Animation.h">
       <Filter>Utils</Filter>
+    <ClInclude Include="Source\NPC.h">
+      <Filter>Modules\Gameplay\Entities\Characters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

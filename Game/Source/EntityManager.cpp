@@ -5,6 +5,7 @@
 #include "Log.h"
 
 #include "Player.h"
+#include "NPC.h"
 #include "Enemy.h"
 
 #include "Chinabara.h"
@@ -73,6 +74,9 @@ Entity* EntityManager::CreateEntity(EntityType type, uint32 id, iPoint position,
 	case EntityType::ENEMY:
 		entity = new Enemy(position, id, name);
 		break;
+	case EntityType::NPC:
+		entity = new NPC(position, id, name);
+		break;
 	default:
 	{
 		LOG("ERROR: Entity with no type couldn't be created");
@@ -127,6 +131,12 @@ void EntityManager::DestroyEntity(Entity* entity)
 void EntityManager::AddEntity(Entity* entity)
 {
 	if (entity != nullptr) entities.Add(entity);
+}
+
+bool EntityManager::Start()
+{
+
+	return true;
 }
 
 bool EntityManager::Update(float dt)
