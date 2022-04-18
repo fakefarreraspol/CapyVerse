@@ -130,7 +130,7 @@ bool BattleScene2::Update(float dt)
 
         if (enemy->GetBattleTeam().At(2)->data->CanAttack())
         {
-            if (enemy->GetBattleTeam().At(2)->data->GetHealth() < 8)
+            if (enemy->GetBattleTeam().At(2)->data->GetHealth() < enemy->GetBattleTeam().At(0)->data->GetMaxHealth()-8)
             {
                 enemy->GetBattleTeam().At(2)->data->UseAbility(enemy->GetBattleTeam().At(2)->data);
                 enemy->GetBattleTeam().At(2)->data->SetAttack(false);
