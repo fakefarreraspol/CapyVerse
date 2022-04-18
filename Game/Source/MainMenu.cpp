@@ -72,8 +72,8 @@ bool MainMenu::Start()
 	yesBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 15, "YES", { 750, 380, 25, 20 }, this, {255, 255, 255, 1});
 	exitText = (GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 200, "ARE YOU SURE YOU WANT TO EXIT THE GAME?", { 475, 325, 420, 15 }, this, {255, 255, 255, 1});
 
-	exitBtns.Add(yesBtn);
 	exitBtns.Add(noBtn);
+	exitBtns.Add(yesBtn);
 
 	newGameBtn->state = GuiControlState::DISABLED;
 	continueBtn->state = GuiControlState::DISABLED;
@@ -155,11 +155,20 @@ bool MainMenu::CleanUp()
 {
 	LOG("Freeing scene");
 	app->guiManager->Disable();
+	
+
+	playBtns.Clear();
+	menuBtns.Clear();
+	optionsBtns.Clear();
+	exitBtns.Clear();
+	
+
 	return true;
 }
 
 bool MainMenu::OnGuiMouseClickEvent(GuiControl* control)
 {
+	bool ret = true;
 	if (control->id == 1)
 	{
 		//PLAY
@@ -193,6 +202,7 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control)
 		{
 			exitBtns.At(i)->data->state = GuiControlState::NORMAL;
 		}
+		exitText->state = GuiControlState::NORMAL;
 		currentControls = exitBtns;
 		currentControl = currentControls.start;
 	}
@@ -273,16 +283,18 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control)
 	if (control->id == 14)
 	{
 		//NO
-		newGameBtn->state = GuiControlState::NORMAL;
-		continueBtn->state = GuiControlState::NORMAL;
-		returnPlBtn->state = GuiControlState::NORMAL;
-		currentControl->data = newGameBtn;
-		currentControls = playBtns;
+		for (int i = 0; i < exitBtns.Count(); i++)
+		{
+			exitBtns.At(i)->data->state = GuiControlState::DISABLED;
+		}
+		exitText->state = GuiControlState::DISABLED;
+		currentControls = menuBtns;
+		currentControl = currentControls.start;
 	}
 	if (control->id == 15)
 	{
 		//YES
-		app->CleanUp();
+		ret = false;
 	}
-	return true;
+	return ret;
 }

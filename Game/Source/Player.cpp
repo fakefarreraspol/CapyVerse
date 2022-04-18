@@ -19,6 +19,12 @@ bool Player::Update(float dt)
 	bool ret = true;
 	collider->SetPos(position.x, position.y);
 	UpdateInput(dt);
+
+	if (app->GetDebug())
+		speed = 0.2f;
+	else
+		speed = 0.1f;
+
 	return ret;
 }
 

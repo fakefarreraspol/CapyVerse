@@ -43,7 +43,7 @@ bool GuiCheckBox::Update(float dt)
 			state = GuiControlState::NORMAL;
 	}
 
-	return false;
+	return true;
 }
 
 bool GuiCheckBox::Draw(Render* render)
@@ -63,5 +63,5 @@ bool GuiCheckBox::Draw(Render* render)
 		break;
 	}
 
-	return false;
+	return true;
 }

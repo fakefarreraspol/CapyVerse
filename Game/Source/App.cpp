@@ -255,7 +255,10 @@ void App::FinishUpdate()
 		if (maxFrameRate > 0 && delay > 0) SDL_Delay(delay);
 		//LOG("Expected %f milliseconds and the real delay is % f", delay, delayt->ReadMs());
 	}
-	app->win->SetTitle(title);
+	if (debug)
+		app->win->SetTitle(title);
+	else
+		app->win->SetTitle("CapyVerse Alpha");
 }
 
 // Call modules before each loop iteration

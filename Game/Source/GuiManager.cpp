@@ -69,10 +69,11 @@ void GuiManager::DestroyGuiControl(GuiControl* entity)
 
 bool GuiManager::Update(float dt)
 {
+	bool ret = true;
 	accumulatedTime += dt;
 	if (accumulatedTime >= updateMsCycle) doLogic = true;
 
-	UpdateAll(dt, doLogic);
+	ret = UpdateAll(dt, doLogic);
 
 	if (doLogic == true)
 	{
@@ -80,27 +81,26 @@ bool GuiManager::Update(float dt)
 		doLogic = false;
 	}
 
-	return true;
+	return ret;
 }
 
 bool GuiManager::UpdateAll(float dt, bool doLogic) {
-
+	bool ret = true;
 	if (doLogic) {
 
 		ListItem<GuiControl*>* control = controls.start;
 
-		while (control != nullptr)
+		while (control != nullptr && ret)
 		{
 			if (activeControl == nullptr)
-				control->data->Update(dt);
+				ret = control->data->Update(dt);
 			else if (activeControl == control->data)
-				control->data->Update(dt);
+				ret = control->data->Update(dt);
 			control = control->next;
 		}
 
 	}
-	return true;
-
+	return ret;
 }
 
 bool GuiManager::PostUpdate()

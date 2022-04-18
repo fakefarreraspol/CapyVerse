@@ -27,6 +27,7 @@ GuiButton::~GuiButton()
 
 bool GuiButton::Update(float dt)
 {
+	bool ret = true;
 	GamePad& pad = app->input->pads[0];
 	if (state != GuiControlState::DISABLED)
 	{
@@ -59,13 +60,13 @@ bool GuiButton::Update(float dt)
 			if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN || pad.a)
 			{
 				state = GuiControlState::PRESSED;
-				NotifyObserver();
+				ret = NotifyObserver();
 			}
 		}
 	}
 
 
-	return true;
+	return ret;
 }
 
 bool GuiButton::Draw(Render* render)
