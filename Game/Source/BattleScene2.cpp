@@ -25,9 +25,9 @@ bool BattleScene2::Awake(pugi::xml_node&)
 
     enemy = (Enemy*)app->entMan->CreateEntity(EntityType::ENEMY, 10, { 10, 10 }, "Enemy");
 
-    enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 11, { 720, 150 }, "Retrobara"));
-    enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::SUPP, 11, { 720, 250 }, "Simpbara"));
-    enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::DPS, 11, { 720, 350 }, "Egirlbara"));
+    enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 11, { 720, 150 }, "Chadbara"));
+    enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::SUPP, 11, { 720, 250 }, "Rainbowbara"));
+    enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::DPS, 11, { 720, 350 }, "Emobara"));
 
     app->scene->NPCs.Add(enemy);
 
@@ -82,16 +82,12 @@ bool BattleScene2::Update(float dt)
     if (app->battleManager->GetTurn() == Turn::ENEMY)
     {
         //supp
-
-        for (int i = 0; i < enemy->GetBattleTeam().Count() && enemy->GetBattleTeam().At(i) != nullptr && enemy->GetBattleTeam().At(1) != nullptr; i++)
+        
+        if (enemy->GetBattleTeam().At(1)->data->GetHealth() <= enemy->GetBattleTeam().At(1)->data->GetMaxHealth() - 1)
         {
-            if (enemy->GetBattleTeam().At(i)->data->GetHealth() <= enemy->GetBattleTeam().At(i)->data->GetMaxHealth() / 1.5)
-            {
-                enemy->GetBattleTeam().At(1)->data->UseAbility(enemy->GetBattleTeam().At(i)->data);
-                enemy->GetBattleTeam().At(1)->data->SetAttack(false);
-                break;
-            }
-
+            enemy->GetBattleTeam().At(1)->data->UseAbility(enemy->GetBattleTeam().At(1)->data);
+            if(enemy->GetBattleTeam().At(1)->data->UseAbility(enemy->GetBattleTeam().At(1)->data) != false) enemy->GetBattleTeam().At(1)->data->SetAttack(false);
+            
         }
         if (enemy->GetBattleTeam().At(1)->data->CanAttack())
         {
@@ -107,11 +103,11 @@ bool BattleScene2::Update(float dt)
         else enemy->GetBattleTeam().At(1)->data->RestoreMana(5);
 
         //tank
-        for (int i = 0; i < enemy->GetBattleTeam().Count() && enemy->GetBattleTeam().At(i) != nullptr && enemy->GetBattleTeam().At(1) != nullptr; i++)
+        for (int i = 0; i < app->battleManager->GetPlayer()->GetBattleTeam().Count(); i++)
         {
-            if (enemy->GetBattleTeam().At(i)->data->GetHealth() <= enemy->GetBattleTeam().At(i)->data->GetMaxHealth() / 3)
+            if (app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data->GetHealth() <= enemy->GetBattleTeam().At(i)->data->GetMaxHealth() / 3)
             {
-                enemy->GetBattleTeam().At(0)->data->UseAbility(enemy->GetBattleTeam().At(i)->data);
+                enemy->GetBattleTeam().At(0)->data->UseAbility(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data);
                 enemy->GetBattleTeam().At(0)->data->SetAttack(false);
                 break;
             }
@@ -134,7 +130,7 @@ bool BattleScene2::Update(float dt)
 
         if (enemy->GetBattleTeam().At(2)->data->CanAttack())
         {
-            if (enemy->GetBattleTeam().At(2)->data->GetHealth() <= enemy->GetBattleTeam().At(2)->data->GetMaxHealth() / 2)
+            if (enemy->GetBattleTeam().At(2)->data->GetHealth() < 8)
             {
                 enemy->GetBattleTeam().At(2)->data->UseAbility(enemy->GetBattleTeam().At(2)->data);
                 enemy->GetBattleTeam().At(2)->data->SetAttack(false);
