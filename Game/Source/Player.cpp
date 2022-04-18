@@ -7,7 +7,7 @@
 
 Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType::PLAYER, id, name, position)
 {
-	collider = app->colManager->AddCollider({ position.x, position.y, 16, 16 }, Collider::Type::PLAYER, (Module*)app->scene);
+	collider = app->colManager->AddCollider({ position.x, position.y, 16, 16 }, Collider::Type::PLAYER, (Module*)app->entMan, this);
 }
 
 Player::~Player()
@@ -311,3 +311,28 @@ void Player::SetCombat(bool value)
 	this->isBattle = value;
 }
 
+
+void Player::OnCollision(Collider* c1, Collider* c2)
+{
+	if (!app->GetDebug())
+	{
+		if (c1->type == Collider::PLAYER)
+		{
+			if (c2->type == Collider::WALL)
+			{
+				if (c1->GetPos().x <= c2->GetPos().x)
+					position.x--;
+				if (c1->GetPos().x >= c2->GetPos().x)
+					position.x++;
+				if (c1->GetPos().y <= c2->GetPos().y)
+					position.y--;
+				if (c1->GetPos().y >= c2->GetPos().y)
+					position.y++;
+
+
+
+			}
+			
+		}
+	}
+}

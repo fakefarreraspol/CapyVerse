@@ -16,7 +16,6 @@ public:
 
 	iPoint lastPos;
 	int lastKeyPressed = 0;
-	bool isStuck = false;
 	float speed = 0.1;
 	//Base functions
 	bool Update(float dt);
@@ -41,11 +40,14 @@ public:
 
 	void SetCombat(bool value);
 
+	void OnCollision(Collider* c1, Collider* c2);
+
 
 private:
 	int money;
 	
 	bool isBattle = false;
+	bool isStuck = false;
 
 	Animation* currentAnim = nullptr;
 

@@ -106,7 +106,7 @@ bool Collisions::Update()
 
 bool Collisions::PostUpdate()
 {
-	if (app->GetDebug())
+	//if (app->GetDebug())
 		DebugDraw();
 
 	return true;
@@ -188,7 +188,7 @@ bool Collisions::CleanUp()
 	return true;
 }
 
-Collider* Collisions::AddCollider(SDL_Rect rect, Collider::Type type, Module* listener)
+Collider* Collisions::AddCollider(SDL_Rect rect, Collider::Type type, Module* listener, Entity* entity)
 {
 	Collider* ret = nullptr;
 
@@ -200,7 +200,7 @@ Collider* Collisions::AddCollider(SDL_Rect rect, Collider::Type type, Module* li
 			break;
 		}
 	}*/
-	ret = new Collider(rect, type, listener);
+	ret = new Collider(rect, type, listener, entity);
 	colliders.Add(ret);
 	return ret;
 }
