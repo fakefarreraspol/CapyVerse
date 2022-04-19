@@ -1,5 +1,5 @@
-#ifndef __MAINMENU_H__
-#define __MAINMENU_H__
+#ifndef __PAUSE_H__
+#define __PAUSE_H__
 
 #include "Module.h"
 
@@ -13,14 +13,14 @@
 
 struct SDL_Texture;
 
-class MainMenu : public Module
+class Pause : public Module
 {
 public:
 
-	MainMenu(bool startEnabled);
+	Pause(bool startEnabled);
 
 	// Destructor
-	virtual ~MainMenu();
+	virtual ~Pause();
 
 	// Called before render is available
 	bool Awake(pugi::xml_node&);
@@ -44,19 +44,13 @@ public:
 
 private:
 	SDL_Texture* background = nullptr;
-	
+
 	List<GuiControl*> menuBtns;
-	List<GuiControl*> playBtns;
 	List<GuiControl*> optionsBtns;
 	List<GuiControl*> exitBtns;
 
 	List<GuiControl*> currentControls;
 
-	GuiButton* playBtn;
-	GuiButton* newGameBtn;
-	GuiButton* continueBtn;
-	GuiButton* returnPlBtn;
-	
 	GuiButton* optionsBtn;
 	GuiButton* volumeBtn;
 	GuiSlider* musicSldr;
@@ -65,19 +59,17 @@ private:
 	GuiCheckBox* vsyncChkbx;
 	GuiButton* returnOPBtn;
 
-	GuiButton* creditsBtn;
-	SDL_Texture* creditsText;
 
 	GuiButton* exitBtn;
 	GuiButton* yesBtn;
 	GuiButton* noBtn;
 	GuiText* exitText;
-	
+
 	ListItem<GuiControl*>* currentControl;
-	
-	List<GuiText*> credits;
+
+	GuiText* pauseText;
 
 	SDL_Texture* arrow = nullptr;
 
 };
-#endif // __MAINMENU_H__
+#endif // __PAUSE_H__

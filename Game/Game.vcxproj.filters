@@ -147,6 +147,9 @@
     <ClCompile Include="Source\BattleScene2.cpp">
       <Filter>Modules\Gameplay\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Pause.cpp">
+      <Filter>Modules\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App.h">
@@ -326,6 +329,9 @@
     </ClInclude>
     <ClInclude Include="Source\MainMenu.h">
       <Filter>Modules\Gameplay\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Pause.h">
+      <Filter>Modules\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

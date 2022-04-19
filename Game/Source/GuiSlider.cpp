@@ -4,11 +4,14 @@
 #include "App.h"
 #include "Audio.h"
 #include "GuiManager.h"
+#include "Fonts.h"
 
 GuiSlider::GuiSlider(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::SLIDER, id)
 {
 	this->bounds = bounds;
 	this->text = text;
+	this->bar = bounds;
+	textTex = app->fonts->LoadRenderedText(bounds, app->fonts->globalFont, text, { 255, 255, 255, 1 });
 
 	drawBasic = false;
 }
@@ -19,97 +22,46 @@ GuiSlider::~GuiSlider()
 	RELEASE(texture);
 }
 
-bool GuiSlider::SetBar(SDL_Rect bar)
-{
-	this->bar = bar;
-
-	if (bar.w > bar.h)
-		horizontal = true;
-	else
-		horizontal = false;
-
-	bounds.x = bar.x + (bar.w / 2) - (bounds.w / 2);
-	bounds.y = bar.y + (bar.h / 2) - (bounds.h / 2);
-
-	return true;
-}
-
-bool GuiSlider::SetValues(int max, int min, int initial)
+bool GuiSlider::SetValues(int max, int min, int value)
 {
 	if (max > min)
 	{
 		maxVal = max;
 		minVal = min;
-		value = initial;
-
-		if (value > maxVal)
-			value = maxVal;
-		if (value < minVal)
-			value = minVal;
-
-		if (horizontal == true)
-			bounds.x = bar.x + (value * (maxVal - minVal) / bar.w) - bounds.w / 2;
-		else
-			bounds.y = bar.y + (value * (maxVal - minVal) / bar.h) - bounds.h / 2;
+		this->value = value;
 	}
-	else
-		return false;
-
 	return true;
 }
 
 bool GuiSlider::Update(float dt)
 {
-
+	GamePad& pad = app->input->pads[0];
 	if (state != GuiControlState::DISABLED)
 	{
-		// L14: TODO 3: Update the state of the GUiButton according to the mouse position
-		int mouseX, mouseY;
-		app->input->GetMousePosition(mouseX, mouseY);
-
-		if (state == GuiControlState::NORMAL)
+		if (state == GuiControlState::FOCUSED)
 		{
-			if ((mouseX > bar.x) && (mouseX < (bar.x + bar.w)) &&
-				(mouseY > bar.y) && (mouseY < (bar.y + bar.h)))
+			if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || pad.left)
 			{
-				if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
+				if (value > 0)
 				{
-					state = GuiControlState::PRESSED;
-					app->guiManager->SetActiveControll(this);
+					value -= 10;
 				}
 			}
-		}
-		if (state == GuiControlState::PRESSED)
-		{
-			if (horizontal == true)
+			if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || pad.right)
 			{
-				bounds.x = mouseX - bounds.w / 2;
-				if (bounds.x < bar.x - bounds.w / 2)
-					bounds.x = bar.x - bounds.w / 2;
-				if (bounds.x > bar.x + bar.w - bounds.w / 2)
-					bounds.x = bar.x + bar.w - bounds.w / 2;
-				value = (bounds.x + bounds.w / 2 - bar.x) * (maxVal - minVal) / bar.w;
-			}
-			else
-			{
-				bounds.y = mouseY - bounds.h / 2;
-				if (bounds.y < bar.y - bounds.h / 2)
-					bounds.y = bar.y - bounds.h / 2;
-				if (bounds.y < bar.y + bar.h - bounds.h / 2)
-					bounds.y = bar.y + bar.h - bounds.h / 2;
-				value = (bounds.y + bounds.h / 2 - bar.y) * (maxVal - minVal) / bar.h;
-
-			}
-			// If mouse button pressed -> Generate event!
-			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP)
-			{
-				NotifyObserver();
-				app->guiManager->SetActiveControll(nullptr);
-				state = GuiControlState::NORMAL;
+				if (value < maxVal)
+				{
+					value += 10;
+				}
+				
 			}
 		}
-
 	}
+	bar.x = bounds.x;
+	bar.y = bounds.y;
+	float percentage = static_cast<float>(value) / maxVal;
+	bar.w = bounds.w * percentage;
+	bar.h = bounds.h;
 	return true;
 }
 
@@ -121,9 +73,11 @@ bool GuiSlider::Draw(Render* render)
 	{
 		SDL_Rect cBar{ bar.x - render->camera.x, bar.y - render->camera.y, bar.w, bar.h };
 		SDL_Rect cBounds{ bounds.x - render->camera.x,bounds.y - render->camera.y,bounds.w,bounds.h };
-		render->DrawRectangle(cBar, 255, 255, 255, 160);
-		render->DrawRectangle(cBounds, 255, 255, 255, 160);
+		render->DrawRectangle(cBounds, 0, 255, 255, 160);
+		render->DrawRectangle(cBar, 255, 0, 255, 160);
 
+		SDL_Rect bounds{ cBounds.x + cBounds.w + 50, cBounds.y, 0, 0 };
+		app->render->DrawTexture(textTex, bounds.x, bounds.y);
 
 	}
 	return true;
