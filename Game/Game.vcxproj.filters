@@ -105,10 +105,52 @@
     </ClCompile>
     <ClCompile Include="Source\Dialog.cpp" />
     <ClCompile Include="Source\DialogManager.cpp" />
+    <ClCompile Include="Source\Map.cpp">
+      <Filter>Modules\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Retrobara.cpp">
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Emobara.cpp">
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Egirlbara.cpp">
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Pinkbara.cpp">
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Simpbara.cpp">
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Chadbara.cpp">
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BattleScene3.cpp">
+      <Filter>Modules\Gameplay\Scenes</Filter>
+    </ClCompile>
     <ClCompile Include="Source\NPC.cpp">
       <Filter>Modules\Gameplay\Entities\Characters</Filter>
     </ClCompile>
     <ClCompile Include="Source\QuestManager.cpp" />
+    <ClCompile Include="Source\Dialog.cpp">
+      <Filter>Modules\Gameplay\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DialogManager.cpp">
+      <Filter>Modules\Gameplay\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Intro.cpp">
+      <Filter>Modules\Gameplay\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MainMenu.cpp">
+      <Filter>Modules\Gameplay\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BattleScene2.cpp">
+      <Filter>Modules\Gameplay\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Pause.cpp">
+      <Filter>Modules\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App.h">
@@ -243,11 +285,57 @@
     <ClInclude Include="Source\Dialog.h" />
     <ClInclude Include="Source\DialogNode.h" />
     <ClInclude Include="Source\DialogManager.h" />
+    <ClInclude Include="Source\Map.h">
+      <Filter>Modules\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Retrobara.h">
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Emobara.h">
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Egirlbara.h">
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Pinkbara.h">
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Simpbara.h">
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Chadbara.h">
+      <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BattleScene2.h">
+      <Filter>Modules\Gameplay\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BattleScene3.h" />
+    <ClInclude Include="Source\Animation.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
     <ClInclude Include="Source\NPC.h">
       <Filter>Modules\Gameplay\Entities\Characters</Filter>
     </ClInclude>
     <ClInclude Include="Source\Quest.h" />
     <ClInclude Include="Source\QuestManager.h" />
+    <ClInclude Include="Source\DialogNode.h">
+      <Filter>Modules\Gameplay\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Dialog.h">
+      <Filter>Modules\Gameplay\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DialogManager.h">
+      <Filter>Modules\Gameplay\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Intro.h">
+      <Filter>Modules\Gameplay\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MainMenu.h">
+      <Filter>Modules\Gameplay\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Pause.h">
+      <Filter>Modules\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Output\config.xml">
@@ -296,6 +384,9 @@
     </Filter>
     <Filter Include="XML\Pugi">
       <UniqueIdentifier>{13fec552-8804-4edd-bb79-0d71d8a7bd10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Gameplay\Dialog">
+      <UniqueIdentifier>{a0e9337e-b37d-4526-a798-427ac12b9dea}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

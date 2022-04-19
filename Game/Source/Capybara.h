@@ -3,6 +3,8 @@
 
 #include "Entity.h"
 
+#include "Animation.h"
+
 struct CapybaraStats
 {
 	int hp = 1;
@@ -77,7 +79,7 @@ public:
 	virtual bool UseAbility(Capybara* target);
 	void Attack(Capybara* target);
 	void SetStatus(CapybaraStatus status);
-	void SetAttack(); //Sets the capy canAttack to true
+	void SetAttack(bool isAbleToAttac); //Sets the capy canAttack to true
 	bool CanAttack();
 
 	void UpdateStatus();
@@ -131,6 +133,9 @@ protected:
 	CapybaraStatus capybaraStatus = CapybaraStatus::NONE;	//The current status of the capybara
 	int statusCounter = 0;									//To remove status and apply them
 	CapybaraTarget capybaraTarget = CapybaraTarget::NONE;	//The type of target of the ability
+
+
+	Animation* currentAnim = nullptr;
 };
 
 #endif // __CAPYBARA_H__

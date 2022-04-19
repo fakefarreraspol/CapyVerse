@@ -19,6 +19,8 @@ class Input;
 class Render;
 class Textures;
 class Audio;
+class Intro;
+class MainMenu;
 class Scene;
 class EntityManager;
 class BattleManager;
@@ -28,8 +30,12 @@ class Collisions;
 class Task;
 class FadeToBlack;
 class Fonts;
+class Pause;
 class BattleScene1;
+class BattleScene2;
+class BattleScene3;
 class EOBScene;
+class Map;
 
 class App
 {
@@ -102,17 +108,23 @@ public:
 	Render* render;
 	Textures* tex;
 	Audio* audio;
+	Intro* intro;
+	MainMenu* mainMenu;
 	Scene* scene;
 	EntityManager* entMan;
 	Fonts* fonts;
 	GuiManager* guiManager;
+	Map* mapManager;
 	DialogManager* dialogManager;
 	Collisions* colManager;
 	Task* taskManager;
 
+	Pause* pauseMenu;
 	FadeToBlack* fadeToBlack;
 	BattleManager* battleManager;
 	BattleScene1* battleScene1;
+	BattleScene2* battleScene2;
+	BattleScene3* battleScene3;
 	EOBScene* eobScene;
 
 	bool fpsCap = false;

@@ -16,7 +16,7 @@ enum class GuiControlType
 	BUTTON,
 	CHECKBOX,
 	SLIDER,
-	SLIDERBAR,
+	BAR,
 	SPINNER,
 	TEXT
 };
@@ -68,9 +68,9 @@ public:
 		observer = module;
 	}
 
-	void NotifyObserver()
+	bool NotifyObserver()
 	{
-		observer->OnGuiMouseClickEvent(this);
+		return observer->OnGuiMouseClickEvent(this);
 	}
 
 	virtual bool SetText(const char* text)

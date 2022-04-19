@@ -42,20 +42,11 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	List<Entity*> NPCs;
+
 private:
-	SDL_Texture* img = nullptr;
-
-
-
-	GuiButton* btn1 = nullptr;
-	GuiSlider* slider1 = nullptr;
-	GuiCheckBox* box1 = nullptr;
-
 	Player* player = nullptr;
-
 public:
-	Dialog* dialogTest;
+	List<Entity*> NPCs;
 
 };
 

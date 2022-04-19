@@ -6,6 +6,8 @@
 #include "Entity.h"
 #include "Capybara.h"
 #include "Collider.h"
+#include "Animation.h"
+
 class Player : public Entity
 {
 public:
@@ -15,7 +17,7 @@ public:
 	iPoint lastPos;
 	int lastKeyPressed = 0;
 	bool isStuck = false;
-	int speed = 1;
+	float speed = 0.1;
 	//Base functions
 	bool Update(float dt);
 	bool Draw(Render* render);
@@ -26,7 +28,7 @@ public:
 	void AddCapybaraToBatle(Capybara* capybara);
 
 	//TODO: Update the player input and move the player
-	void UpdateInput();
+	void UpdateInput(float dt);
 
 	//Getters for the teams
 	List<Capybara*>& GetBattleTeam();
@@ -44,6 +46,8 @@ private:
 	int money;
 	
 	bool isBattle = false;
+
+	Animation* currentAnim = nullptr;
 
 	List<Capybara*> battleTeam;
 	List<Capybara*> team;

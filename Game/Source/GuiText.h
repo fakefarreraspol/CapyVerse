@@ -10,7 +10,7 @@ class GuiText : public GuiControl
 {
 public:
 
-	GuiText(uint32 id, SDL_Rect bounds, const char* text, SDL_Color color);
+	GuiText(uint32 id, SDL_Rect bounds, const char* text, SDL_Color color, int fontID = 0,bool blink = false);
 	virtual ~GuiText();
 
 	bool Update(float dt);
@@ -18,6 +18,11 @@ public:
 	bool Draw(Render* render);
 
 	const char* GetText();
+
+private:
+	bool blink = false;
+
+	int counter = 0;
 };
 
 #endif // __GUITEXT_H__

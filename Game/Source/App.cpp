@@ -10,10 +10,13 @@
 #include "Render.h"
 #include "Textures.h"
 #include "Audio.h"
+#include "Intro.h"
+#include "MainMenu.h"
 #include "Scene.h"
 #include "EntityManager.h"
 #include "GuiManager.h"
 #include "DialogManager.h"
+#include "Pause.h"
 
 #include "Collisions.h"
 #include "TaskQueue.h"
@@ -22,7 +25,10 @@
 #include "BattleManager.h"
 #include "Fonts.h"
 #include "BattleScene1.h"
+#include "BattleScene2.h"
+#include "BattleScene3.h"
 #include "EOBScene.h"
+#include "Map.h"
 
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
@@ -33,16 +39,22 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	render = new Render(true);
 	tex = new Textures(true);
 	audio = new Audio(true);
+	mapManager = new Map(true);
 	entMan = new EntityManager(true);
 	fonts = new Fonts(true);
 	guiManager = new GuiManager(true);
 	dialogManager = new DialogManager(true);
 	colManager = new Collisions(true);
 	fadeToBlack = new FadeToBlack(true);
-	scene = new Scene(true);
+	intro = new Intro(true);
+	mainMenu = new MainMenu(false);
+	scene = new Scene(false);
 	battleManager = new BattleManager(false);
 	battleScene1 = new BattleScene1(false);
+	battleScene2 = new BattleScene2(false);
+	battleScene3 = new BattleScene3(false);
 	eobScene = new EOBScene(false);
+	pauseMenu = new Pause(false);
 	
 
 	// Ordered for awake / Start / Update
@@ -50,15 +62,21 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(win);
 	AddModule(input);
 	AddModule(fadeToBlack);
-	AddModule(entMan);
+	AddModule(mapManager);
 	AddModule(tex);
 	AddModule(fonts);
 	AddModule(audio);
+	AddModule(intro);
+	AddModule(mainMenu);
 	AddModule(scene);
 	AddModule(battleScene1);
+	AddModule(battleScene2);
+	AddModule(battleScene3);
 	AddModule(battleManager);
 	AddModule(eobScene);
 	AddModule(dialogManager);
+	AddModule(entMan);
+	AddModule(pauseMenu);
 	AddModule(guiManager);
 	AddModule(colManager);
 	
@@ -244,9 +262,12 @@ void App::FinishUpdate()
 		PerfTimer* delayt = new PerfTimer();
 		delayt->Start();
 		if (maxFrameRate > 0 && delay > 0) SDL_Delay(delay);
-		LOG("Expected %f milliseconds and the real delay is % f", delay, delayt->ReadMs());
+		//LOG("Expected %f milliseconds and the real delay is % f", delay, delayt->ReadMs());
 	}
-	app->win->SetTitle(title);
+	if (debug)
+		app->win->SetTitle(title);
+	else
+		app->win->SetTitle("CapyVerse Alpha");
 }
 
 // Call modules before each loop iteration

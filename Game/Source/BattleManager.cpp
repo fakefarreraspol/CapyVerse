@@ -11,10 +11,12 @@
 #include "EntityManager.h"
 #include "GuiText.h"
 #include "GuiBar.h"
+#include "Textures.h"
 
 #include "Enemy.h"
 #include "Capybara.h"
 #include "Player.h"
+#include "Pause.h"
 
 BattleManager::BattleManager(bool startEnabled) : Module(startEnabled)
 {
@@ -39,6 +41,7 @@ bool BattleManager::Start()
 
 	app->guiManager->Enable();
 	
+	app->pauseMenu->Enable();
 	attackBtn =	(GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 0, "Attack", { 135, 585, 75, 21 }, this);
 	abilityBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Ability", { 135, 615, 75, 21 }, this);
 	inventoryBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Inventory", { 135, 645, 75, 21 }, this);
@@ -56,7 +59,7 @@ bool BattleManager::Start()
 		printf("Player is nullptr\n");
 		ret = false;
 	}
-
+	player->Disable();
 	player->SetCombat(true);
 
 	for (int i = 0; i < player->GetBattleTeam().Count(); i++)
@@ -76,7 +79,7 @@ bool BattleManager::Start()
 
 	CreateTexts();
 
-
+	arrow = app->tex->Load("Assets/Menus/arrow.png");
 
 	return ret;
 }
@@ -144,7 +147,7 @@ bool BattleManager::Update(float dt)
 {
 	bool ret = true;
 	
-	if (turn == Turn::PLAYER)
+	if (turn == Turn::PLAYER && !app->pause)
 	{
 		UpdateInput();
 	}
@@ -164,13 +167,13 @@ void BattleManager::Draw()
 {
 	//app->guiManager->Draw();
 
-	int posX = currentCapybara->data->GetPosition().x;
+	int posX = currentCapybara->data->GetPosition().x - 30;
 	int posY = currentCapybara->data->GetPosition().y + SELECT_OFFSET;
-	app->render->DrawCircle(posX, posY, 10, 0, 255, 0);
+	app->render->DrawTexture(arrow, posX, posY);
 
-	int btnX = currentButton->data->bounds.x;
+	int btnX = currentButton->data->bounds.x - 30;
 	int btnY = currentButton->data->bounds.y;
-	app->render->DrawCircle(btnX, btnY, 10, 0, 255, 0);
+	app->render->DrawTexture(arrow, btnX, btnY);
 }
 
 void BattleManager::UpdatePlayerInfo()
@@ -243,7 +246,7 @@ void BattleManager::CreateAttackMenu()
 			attackBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, i + 4, enemies.At(i)->data->name.GetString(), { 250, i * 50 + 550, 155, 20 }, this));
 
 			SString enemyHealth("%i/%i HP", enemies.At(i)->data->GetHealth(), enemies.At(i)->data->GetMaxHealth());
-			attackBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, i + 4, "EnemyBar", { 250, i * 50 + 575, 155, 20 }, this));
+			attackBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::BAR, i + 4, "EnemyBar", { 250, i * 50 + 575, 155, 20 }, this));
 			attackInfo.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, i + 4, enemyHealth.GetString(), { 250, i * 50 + 575, 155, 20 }, this, { 255, 255, 255, 1 }));
 		}
 		for (int i = 0; i < attackBars.Count(); i++)
@@ -271,7 +274,7 @@ void BattleManager::CreateAbilityMenu()
 				abilityBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, i + 7, playerTeam.At(i)->data->name.GetString(), { 250, i * 50 + 550, 155, 20 }, this));
 
 				SString allyHealth("%i/%i HP", playerTeam.At(i)->data->GetHealth(), playerTeam.At(i)->data->GetMaxHealth());
-				abilityBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, i + 7, "AllyBar", { 250, i * 50 + 575, 155, 20 }, this));
+				abilityBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::BAR, i + 7, "AllyBar", { 250, i * 50 + 575, 155, 20 }, this));
 				abilityInfo.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, i + 7, allyHealth.GetString(), { 250, i * 50 + 575, 155, 20 }, this, { 255, 255, 255, 1 }));
 			}
 			for (int i = 0; i < abilityBars.Count(); i++)
@@ -293,7 +296,7 @@ void BattleManager::CreateAbilityMenu()
 				abilityBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, i + 7, playerTeam.At(i)->data->name.GetString(), { 250, i * 50 + 550, 155, 20 }, this));
 
 				SString allyHealth("%i/%i HP", playerTeam.At(i)->data->GetHealth(), playerTeam.At(i)->data->GetMaxHealth());
-				abilityBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, i + 7, "AllyBar", { 250, i * 50 + 575, 155, 20 }, this));
+				abilityBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::BAR, i + 7, "AllyBar", { 250, i * 50 + 575, 155, 20 }, this));
 				abilityInfo.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, i + 7, allyHealth.GetString(), { 250, i * 50 + 575, 155, 20 }, this, { 255, 255, 255, 1 }));
 			}
 			for (int i = 0; i < abilityBars.Count(); i++)
@@ -320,8 +323,12 @@ void BattleManager::CreateAbilityMenu()
 
 void BattleManager::UpdateInput()
 {
-	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
+	GamePad& pad = app->input->pads[0];
+
+	
+	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || pad.down)
 	{
+		
 		if (currentButton->next == nullptr)
 		{
 			currentButton->data->state = GuiControlState::NORMAL;
@@ -334,7 +341,7 @@ void BattleManager::UpdateInput()
 		}
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || pad.up)
 	{	
 		if (currentButton->prev == nullptr)
 		{
@@ -371,6 +378,8 @@ bool BattleManager::CleanUp()
 	bool ret = true;
 	app->guiManager->Disable();
 
+	app->tex->UnLoad(arrow);
+
 	enemies.Clear();
 	playerTeam.Clear();
 	
@@ -392,7 +401,7 @@ bool BattleManager::CleanUp()
 
 	menuBtns.Clear();
 
-
+	app->pauseMenu->Disable();
 	return ret;
 }
 
@@ -454,13 +463,13 @@ void BattleManager::CreateTexts()
 		playerLevels.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 20 + i, lvl.GetString(), {i * 450 + 150, 20, 155, 20}, this, {255,255,255,1}));
 
 		//Creating the health bar
-		playerHealthBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, 20 + i, "HealthBar", { i * 450 + 15, 60, 155, 20 }, this ));
+		playerHealthBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::BAR, 20 + i, "HealthBar", { i * 450 + 15, 60, 155, 20 }, this ));
 		//Creating the health text
 		SString hp("%i/%iHP", playerTeam.At(i)->data->GetHealth(), playerTeam.At(i)->data->GetMaxHealth());
 		playerHeathText.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 20 + i, hp.GetString(), {i * 450 + 15, 60, 155, 20}, this, {255, 255, 255, 1}));
 
 		//Creating the mana bar
-		playerManaBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, 20 + i, "ManaBar", { i * 450 + 15, 85, 155, 20 }, this));
+		playerManaBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::BAR, 20 + i, "ManaBar", { i * 450 + 15, 85, 155, 20 }, this));
 		//Creating the mana text
 		SString mp("%i/%iMP", playerTeam.At(i)->data->GetMana(), playerTeam.At(i)->data->GetMaxMana());
 		playerManaText.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 20 + i, mp.GetString(), { i * 450 + 15, 85, 155, 20 }, this, { 255, 255, 255, 1 }));

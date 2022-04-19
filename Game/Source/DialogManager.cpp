@@ -62,7 +62,7 @@ bool DialogManager::Start()
 	button = app->guiManager->CreateGuiControl(GuiControlType::BUTTON, app->guiManager->controls.Count(), "", bBounds, this, { 255,0,0,255 });
 
 
-	//// test dialog
+	// test dialog
 	//app->scene->dialogTest = new Dialog();
 	//DialogNode* first = new DialogNode("dialog test");
 	//app->scene->dialogTest->AddFirstNode(first);

@@ -20,8 +20,12 @@ public:
 	bool Update(float dt);
 
 	bool CleanUp();
+	 
 private:
 	Enemy* enemy;
+
+public: 
+	int randomNum = 0;
 };
 
 
