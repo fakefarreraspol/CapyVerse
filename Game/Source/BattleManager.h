@@ -106,6 +106,8 @@ private:
 	bool deleteAbilityMenu = false;
 	
 	Turn turn = Turn::NONE;
+
+	SDL_Texture* arrow = nullptr;
 };
 
 

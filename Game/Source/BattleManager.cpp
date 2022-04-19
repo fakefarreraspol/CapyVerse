@@ -11,6 +11,7 @@
 #include "EntityManager.h"
 #include "GuiText.h"
 #include "GuiBar.h"
+#include "Textures.h"
 
 #include "Enemy.h"
 #include "Capybara.h"
@@ -77,7 +78,7 @@ bool BattleManager::Start()
 
 	CreateTexts();
 
-
+	arrow = app->tex->Load("Assets/Menus/arrow.png");
 
 	return ret;
 }
@@ -165,13 +166,13 @@ void BattleManager::Draw()
 {
 	//app->guiManager->Draw();
 
-	int posX = currentCapybara->data->GetPosition().x;
+	int posX = currentCapybara->data->GetPosition().x - 30;
 	int posY = currentCapybara->data->GetPosition().y + SELECT_OFFSET;
-	app->render->DrawCircle(posX, posY, 10, 0, 255, 0);
+	app->render->DrawTexture(arrow, posX, posY);
 
-	int btnX = currentButton->data->bounds.x;
+	int btnX = currentButton->data->bounds.x - 30;
 	int btnY = currentButton->data->bounds.y;
-	app->render->DrawCircle(btnX, btnY, 10, 0, 255, 0);
+	app->render->DrawTexture(arrow, btnX, btnY);
 }
 
 void BattleManager::UpdatePlayerInfo()
@@ -375,6 +376,8 @@ bool BattleManager::CleanUp()
 {
 	bool ret = true;
 	app->guiManager->Disable();
+
+	app->tex->UnLoad(arrow);
 
 	enemies.Clear();
 	playerTeam.Clear();

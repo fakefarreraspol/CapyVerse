@@ -56,7 +56,8 @@ bool Audio::Awake(pugi::xml_node& config)
 		active = false;
 		ret = true;
 	}
-
+	volMusic = Mix_VolumeMusic(config.child("music").attribute("value").as_int());
+	volFX = Mix_Volume(-1, config.child("fx").attribute("value").as_int());
 	return ret;
 }
 
@@ -84,6 +85,14 @@ bool Audio::CleanUp()
 	SDL_QuitSubSystem(SDL_INIT_AUDIO);
 
 	return true;
+}
+
+bool Audio::Update(float dt)
+{
+	bool ret = true;
+	Mix_VolumeMusic(volMusic);
+	Mix_Volume(-1, volFX);
+	return ret;
 }
 
 // Play a music file

@@ -75,5 +75,9 @@ private:
 	
 	ListItem<GuiControl*>* currentControl;
 	
+	List<GuiText*> credits;
+
+	SDL_Texture* arrow = nullptr;
+
 };
 #endif // __MAINMENU_H__

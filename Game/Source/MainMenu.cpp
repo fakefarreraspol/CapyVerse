@@ -56,6 +56,19 @@ bool MainMenu::Start()
 	playBtns.Add(continueBtn);
 	playBtns.Add(returnPlBtn);
 
+	credits.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 40, "CREDITS", { 635, 225, 70, 20 }, this, { 255,255,255, 1 }));
+	credits.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 40, "Iván Jose Caballero - Team Leader, game artist, music artist", { 415, 260, 70, 20 }, this, { 255,255,255, 1 }));
+	credits.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 40, "Víctor Falcón - Managment, game design, coding", { 415, 285, 70, 20 }, this, { 255,255,255, 1 }));
+	credits.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 40, "Pol Farreras - Game design, coding", { 415, 310, 70, 20 }, this, { 255,255,255, 1 }));
+	credits.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 40, "Laura Isidro - Coding, design", { 415, 335, 70, 20 }, this, { 255,255,255, 1 }));
+	credits.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 40, "Sofia Liles - Game artist, Q&A", { 415, 360, 70, 20 }, this, { 255,255,255, 1 }));
+	credits.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 40, "Marta Llurba - Game artist, Q&A, UI", { 415, 385, 70, 20 }, this, { 255,255,255, 1 }));
+
+
+	for (int i = 0; i < credits.Count(); i++)
+	{
+		credits.At(i)->data->state = GuiControlState::DISABLED;
+	}
 
 	volumeBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 8, "VOLUME", { 325, 285, 125, 20 }, this, { 255, 255, 255 });
 	
@@ -96,7 +109,8 @@ bool MainMenu::Start()
 	noBtn->state = GuiControlState::DISABLED;
 	exitText->state = GuiControlState::DISABLED;
 
-
+	app->audio->PlayMusic("Assets/Audio/Music/backgroundForest.ogg");
+	arrow = app->tex->Load("Assets/Menus/arrow.png");
 	currentControls = menuBtns;
 	currentControl = currentControls.start;
 
@@ -114,9 +128,13 @@ bool MainMenu::PreUpdate()
 bool MainMenu::Update(float dt)
 {
 
-	app->render->DrawRectangle({ currentControl->data->bounds.x, currentControl->data->bounds.y, 10, 10 }, 255, 255, 0);
+	app->render->DrawTexture(arrow, currentControl->data->bounds.x - 30, currentControl->data->bounds.y - 3);
 	vsyncChkbx->checked = app->render->vsync;
 	fullscreenChkbx->checked = app->win->fullscreen;
+
+	app->audio->volFX = soundSlrd->value;
+	app->audio->volMusic = musicSldr->value;
+
 	GamePad& pad = app->input->pads[0];
 	if (yesBtn->state == GuiControlState::DISABLED)
 	{
@@ -199,7 +217,7 @@ bool MainMenu::CleanUp()
 	LOG("Freeing scene");
 	app->guiManager->Disable();
 	
-
+	app->tex->UnLoad(arrow);
 	playBtns.Clear();
 	menuBtns.Clear();
 	optionsBtns.Clear();
@@ -235,8 +253,20 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control)
 	if (control->id == 3)
 	{
 		//CREDITS
-		currentControl->data = newGameBtn;
-		currentControls = playBtns;
+		if (credits.At(1)->data->state == GuiControlState::DISABLED)
+		{
+			for (int i = 0; i < credits.Count(); i++)
+			{
+				credits.At(i)->data->state = GuiControlState::NORMAL;
+			}
+		}
+		else
+		{
+			for (int i = 0; i < credits.Count(); i++)
+			{
+				credits.At(i)->data->state = GuiControlState::DISABLED;
+			}
+		}
 	}
 	if (control->id == 4)
 	{
