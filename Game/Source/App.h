@@ -30,6 +30,7 @@ class Collisions;
 class Task;
 class FadeToBlack;
 class Fonts;
+class Pause;
 class BattleScene1;
 class EOBScene;
 class Map;
@@ -117,6 +118,7 @@ public:
 	Collisions* colManager;
 	Task* taskManager;
 
+	Pause* pauseMenu;
 	FadeToBlack* fadeToBlack;
 	BattleManager* battleManager;
 	BattleScene1* battleScene1;

@@ -9,6 +9,7 @@
 #include "Window.h"
 #include "Render.h"
 #include "Audio.h"
+#include "Pause.h"
 
 #include "Log.h"
 
@@ -36,7 +37,7 @@ bool MainMenu::Awake(pugi::xml_node& node)
 bool MainMenu::Start()
 {
 	app->guiManager->Enable();
-
+	app->pauseMenu->Disable();
 	playBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "PLAY", { 108, 300, 125, 20 }, this, {255, 255, 255});
 	optionsBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "OPTIONS", { 108, 360, 125, 20 }, this, {255, 255, 255});
 	creditsBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "CREDITS", { 108, 420, 125, 20 }, this, {255, 255, 255});

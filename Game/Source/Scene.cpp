@@ -22,7 +22,7 @@
 #include "Dialog.h"
 #include "DialogManager.h"
 #include "DialogNode.h"
-
+#include "Pause.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -41,7 +41,7 @@ bool Scene::Awake(pugi::xml_node& node)
 {
 	LOG("Loading Scene");
 	bool ret = true;
-
+	
 	player = (Player*)app->entMan->CreateEntity(EntityType::PLAYER, 1, { 0, 0 }, "Player");
 
 	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 2, { 100, 150 }, "Chinabara"));
@@ -56,6 +56,7 @@ bool Scene::Awake(pugi::xml_node& node)
 // Called before the first frame
 bool Scene::Start()
 {
+	app->pauseMenu->Enable();
 	player->Enable();
 	player->SetCombat(false);
 	app->battleManager->SetPlayer(player);
@@ -108,8 +109,7 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
-	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
+	
 
 	return ret;
 }
@@ -138,6 +138,6 @@ bool Scene::CleanUp()
 	LOG("Freeing scene");
 
 	app->guiManager->Disable();
-
+	app->pauseMenu->Disable();
 	return true;
 }

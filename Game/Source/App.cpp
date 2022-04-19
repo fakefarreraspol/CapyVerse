@@ -16,6 +16,7 @@
 #include "EntityManager.h"
 #include "GuiManager.h"
 #include "DialogManager.h"
+#include "Pause.h"
 
 #include "Collisions.h"
 #include "TaskQueue.h"
@@ -49,6 +50,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	battleManager = new BattleManager(false);
 	battleScene1 = new BattleScene1(false);
 	eobScene = new EOBScene(false);
+	pauseMenu = new Pause(false);
 	
 
 	// Ordered for awake / Start / Update
@@ -68,6 +70,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(eobScene);
 	AddModule(dialogManager);
 	AddModule(entMan);
+	AddModule(pauseMenu);
 	AddModule(guiManager);
 	AddModule(colManager);
 	

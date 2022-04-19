@@ -16,6 +16,7 @@
 #include "Enemy.h"
 #include "Capybara.h"
 #include "Player.h"
+#include "Pause.h"
 
 BattleManager::BattleManager(bool startEnabled) : Module(startEnabled)
 {
@@ -40,7 +41,7 @@ bool BattleManager::Start()
 
 	app->guiManager->Enable();
 	
-	
+	app->pauseMenu->Enable();
 	attackBtn =	(GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 0, "Attack", { 135, 585, 75, 21 }, this);
 	abilityBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Ability", { 135, 615, 75, 21 }, this);
 	inventoryBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Inventory", { 135, 645, 75, 21 }, this);
@@ -146,7 +147,7 @@ bool BattleManager::Update(float dt)
 {
 	bool ret = true;
 	
-	if (turn == Turn::PLAYER)
+	if (turn == Turn::PLAYER && !app->pause)
 	{
 		UpdateInput();
 	}
@@ -400,7 +401,7 @@ bool BattleManager::CleanUp()
 
 	menuBtns.Clear();
 
-
+	app->pauseMenu->Disable();
 	return ret;
 }
 
