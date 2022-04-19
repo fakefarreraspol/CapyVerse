@@ -133,6 +133,7 @@
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\Fonts.cpp" />
     <ClCompile Include="Source\Punkibara.cpp" />
+    <ClCompile Include="Source\QuestManager.cpp" />
     <ClCompile Include="Source\Rainbowbara.cpp" />
     <ClCompile Include="Source\Retrobara.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
@@ -181,6 +182,8 @@
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\Fonts.h" />
     <ClInclude Include="Source\Punkibara.h" />
+    <ClInclude Include="Source\Quest.h" />
+    <ClInclude Include="Source\QuestManager.h" />
     <ClInclude Include="Source\Queue.h" />
     <ClInclude Include="Source\Rainbowbara.h" />
     <ClInclude Include="Source\Scene.h" />

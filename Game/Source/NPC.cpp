@@ -44,8 +44,8 @@ bool NPC::Start()
 
 bool NPC::Update(float dt)
 {
-	if (app->input->GetKey(SDL_SCANCODE_N) == KEY_REPEAT)
-		OnCollision(nullptr,nullptr);
+	/*if (app->input->GetKey(SDL_SCANCODE_N) == KEY_REPEAT)
+		OnCollision(nullptr,nullptr);*/
 	return true;
 }
 

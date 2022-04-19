@@ -80,7 +80,6 @@ private:
 	// NOTE: It receives config document
 	pugi::xml_node LoadConfig(pugi::xml_document&) const;
 
-
 	// Call modules before each loop iteration
 	void PrepareUpdate();
 

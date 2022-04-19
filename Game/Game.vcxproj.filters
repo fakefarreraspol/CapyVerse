@@ -132,6 +132,7 @@
     <ClCompile Include="Source\NPC.cpp">
       <Filter>Modules\Gameplay\Entities\Characters</Filter>
     </ClCompile>
+    <ClCompile Include="Source\QuestManager.cpp" />
     <ClCompile Include="Source\Dialog.cpp">
       <Filter>Modules\Gameplay\Dialog</Filter>
     </ClCompile>
@@ -315,6 +316,8 @@
     <ClInclude Include="Source\NPC.h">
       <Filter>Modules\Gameplay\Entities\Characters</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Quest.h" />
+    <ClInclude Include="Source\QuestManager.h" />
     <ClInclude Include="Source\DialogNode.h">
       <Filter>Modules\Gameplay\Dialog</Filter>
     </ClInclude>
