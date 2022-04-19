@@ -8,7 +8,7 @@
 #include "SDL_image/include/SDL_image.h"
 //#pragma comment(lib, "../Game/Source/External/SDL_image/libx86/SDL2_image.lib")
 
-Textures::Textures() : Module()
+Textures::Textures(bool startEnabled) : Module(startEnabled)
 {
 	name.Create("textures");
 }
@@ -59,6 +59,7 @@ bool Textures::CleanUp()
 	IMG_Quit();
 	return true;
 }
+
 
 // Load new texture from file path
 SDL_Texture* const Textures::Load(const char* path)

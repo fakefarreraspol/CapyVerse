@@ -10,7 +10,7 @@ class Window : public Module
 {
 public:
 
-	Window();
+	Window(bool startEnabled);
 
 	// Destructor
 	virtual ~Window();
@@ -30,6 +30,7 @@ public:
 	// Retrieve window scale
 	uint GetScale() const;
 
+	void SetFullscreen(bool value);
 public:
 	// The window we'll be rendering to
 	SDL_Window* window;
@@ -37,6 +38,7 @@ public:
 	// The surface contained by the window
 	SDL_Surface* screenSurface;
 
+	bool fullscreen;
 private:
 	SString title;
 	uint width;

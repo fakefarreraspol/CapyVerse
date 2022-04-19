@@ -157,9 +157,7 @@ public:
 		return(pItem->data);
 	}
 
-	/**
-	* const read operator access directly to a position in the list
-	*/
+	// const read operator access directly to a position in the list
 	const tdata& operator [](const unsigned int index) const
 	{
 		long pos;

@@ -1,8 +1,5 @@
-#include "App.h"
-
-#include "Defs.h"
-#include "Log.h"
-
+#include <stdlib.h>
+#include <time.h>
 // NOTE: SDL redefines main function
 #include "SDL/include/SDL.h"
 
@@ -10,7 +7,19 @@
 //#pragma comment(lib, "../Game/Source/External/SDL/libx86/SDL2.lib")
 //#pragma comment(lib, "../Game/Source/External/SDL/libx86/SDL2main.lib")
 
-#include <stdlib.h>
+#ifdef DEBUG
+#pragma comment(lib, "../Game/Source/External/Optick/lib/_debug/OptickCore.lib")
+#else
+#pragma comment(lib, "../Game/Source/External/Optick/lib/release/OptickCore.lib")
+
+#endif // DEBUG
+
+#include "App.h"
+
+#include "Defs.h"
+#include "Log.h"
+
+
 
 enum MainState
 {
@@ -28,6 +37,8 @@ App* app = NULL;
 int main(int argc, char* args[])
 {
 	LOG("Engine starting ...");
+
+	srand(time(NULL));
 
 	MainState state = CREATE;
 	int result = EXIT_FAILURE;

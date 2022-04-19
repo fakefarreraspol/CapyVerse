@@ -7,7 +7,7 @@
 #include "SDL/include/SDL.h"
 
 
-Window::Window() : Module()
+Window::Window(bool startEnabled) : Module(startEnabled)
 {
 	window = NULL;
 	screenSurface = NULL;
@@ -35,7 +35,7 @@ bool Window::Awake(pugi::xml_node& config)
 		// Create window
 		// L01: DONE 6: Load all required configurations from config.xml
 		Uint32 flags = SDL_WINDOW_SHOWN;
-		bool fullscreen = config.child("fullscreen").attribute("value").as_bool(false);
+		fullscreen = config.child("fullscreen").attribute("value").as_bool(false);
 		bool borderless = config.child("borderless").attribute("value").as_bool(false);
 		bool resizable = config.child("resizable").attribute("value").as_bool(false);
 		bool fullscreen_window = config.child("fullscreen_window").attribute("value").as_bool(false);
@@ -98,4 +98,15 @@ void Window::GetWindowSize(uint& width, uint& height) const
 uint Window::GetScale() const
 {
 	return scale;
+}
+
+void Window::SetFullscreen(bool value)
+{
+	if (value)
+		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+	else if (!value)
+		SDL_SetWindowFullscreen(window, SDL_FALSE);
+
+	fullscreen = value;
+	return;
 }
