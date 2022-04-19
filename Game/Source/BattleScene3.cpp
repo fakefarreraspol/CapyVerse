@@ -86,7 +86,7 @@ bool BattleScene3::Update(float dt)
         {
             if (enemy->GetBattleTeam().At(1)->data->GetHealth() <= enemy->GetBattleTeam().At(1)->data->GetMaxHealth() - 7)
             {
-                enemy->GetBattleTeam().At(1)->data->UseAbility(enemy->GetBattleTeam().At(1)->data);
+                //enemy->GetBattleTeam().At(1)->data->UseAbility(enemy->GetBattleTeam().At(1)->data);
                 if (enemy->GetBattleTeam().At(1)->data->UseAbility(enemy->GetBattleTeam().At(1)->data) != false) enemy->GetBattleTeam().At(1)->data->SetAttack(false);
             }
             if (enemy->GetBattleTeam().At(1)->data->CanAttack())
@@ -109,7 +109,7 @@ bool BattleScene3::Update(float dt)
         {
             if (enemy->GetBattleTeam().At(0)->data->GetHealth() < enemy->GetBattleTeam().At(0)->data->GetMaxHealth() - 6)
             {
-                enemy->GetBattleTeam().At(0)->data->UseAbility(enemy->GetBattleTeam().At(0)->data);
+                //enemy->GetBattleTeam().At(0)->data->UseAbility(enemy->GetBattleTeam().At(0)->data);
                 if (enemy->GetBattleTeam().At(0)->data->UseAbility(enemy->GetBattleTeam().At(0)->data) != false) enemy->GetBattleTeam().At(0)->data->SetAttack(false);
             }
             if (enemy->GetBattleTeam().At(0)->data->CanAttack())
@@ -132,7 +132,7 @@ bool BattleScene3::Update(float dt)
         {
             if (enemy->GetBattleTeam().At(2)->data->GetHealth() < enemy->GetBattleTeam().At(2)->data->GetMaxHealth() - 8)
             {
-                enemy->GetBattleTeam().At(2)->data->UseAbility(enemy->GetBattleTeam().At(2)->data);
+                //enemy->GetBattleTeam().At(2)->data->UseAbility(enemy->GetBattleTeam().At(2)->data);
                 if (enemy->GetBattleTeam().At(2)->data->UseAbility(enemy->GetBattleTeam().At(2)->data) == true) enemy->GetBattleTeam().At(2)->data->SetAttack(false);
             }
             if (enemy->GetBattleTeam().At(2)->data->CanAttack())
