@@ -30,6 +30,7 @@ class FadeToBlack;
 class Fonts;
 class BattleScene1;
 class BattleScene2;
+class BattleScene3;
 class EOBScene;
 
 class App
@@ -116,6 +117,7 @@ public:
 	BattleManager* battleManager;
 	BattleScene1* battleScene1;
 	BattleScene2* battleScene2;
+	BattleScene3* battleScene3;
 	EOBScene* eobScene;
 
 	bool fpsCap = false;
