@@ -82,69 +82,81 @@ bool BattleScene2::Update(float dt)
     if (app->battleManager->GetTurn() == Turn::ENEMY)
     {
         //supp
-        
-        if (enemy->GetBattleTeam().At(1)->data->GetHealth() <= enemy->GetBattleTeam().At(1)->data->GetMaxHealth() - 1)
+        if (enemy->GetBattleTeam().At(1)->data != nullptr)
         {
-            enemy->GetBattleTeam().At(1)->data->UseAbility(enemy->GetBattleTeam().At(1)->data);
-            if(enemy->GetBattleTeam().At(1)->data->UseAbility(enemy->GetBattleTeam().At(1)->data) != false) enemy->GetBattleTeam().At(1)->data->SetAttack(false);
-            
-        }
-        if (enemy->GetBattleTeam().At(1)->data->CanAttack())
-        {
-            if (app->battleManager->GetPlayer()->GetBattleTeam().At(randomNum)->data != nullptr)
+            if (enemy->GetBattleTeam().At(1)->data->GetHealth() <= enemy->GetBattleTeam().At(1)->data->GetMaxHealth() - 1)
             {
-                enemy->GetBattleTeam().At(1)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(randomNum)->data);
+                //enemy->GetBattleTeam().At(1)->data->UseAbility(enemy->GetBattleTeam().At(1)->data);
+                if (enemy->GetBattleTeam().At(1)->data->UseAbility(enemy->GetBattleTeam().At(1)->data) != false) enemy->GetBattleTeam().At(1)->data->SetAttack(false);
+
             }
-            else
+            if (enemy->GetBattleTeam().At(1)->data->CanAttack())
             {
-                if (enemy->GetBattleTeam().At(1)->data->GetHealth() < enemy->GetBattleTeam().At(1)->data->GetMaxHealth() / 7) enemy->GetBattleTeam().At(1)->data->Heal(1);
+                if (app->battleManager->GetPlayer()->GetBattleTeam().At(randomNum)->data != nullptr)
+                {
+                    enemy->GetBattleTeam().At(1)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(randomNum)->data);
+                }
+                else
+                {
+                    if (enemy->GetBattleTeam().At(1)->data->GetHealth() < enemy->GetBattleTeam().At(1)->data->GetMaxHealth() / 7) enemy->GetBattleTeam().At(1)->data->Heal(1);
+                }
             }
+            else enemy->GetBattleTeam().At(1)->data->RestoreMana(5);
         }
-        else enemy->GetBattleTeam().At(1)->data->RestoreMana(5);
+       
 
         //tank
-        for (int i = 0; i < app->battleManager->GetPlayer()->GetBattleTeam().Count(); i++)
+        if (enemy->GetBattleTeam().At(0)->data != nullptr)
         {
-            if (app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data->GetHealth() <= enemy->GetBattleTeam().At(i)->data->GetMaxHealth() / 3)
+            for (int i = 0; i < app->battleManager->GetPlayer()->GetBattleTeam().Count(); i++)
             {
-                enemy->GetBattleTeam().At(0)->data->UseAbility(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data);
-                enemy->GetBattleTeam().At(0)->data->SetAttack(false);
-                break;
-            }
+                if ((app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data->GetHealth() <= enemy->GetBattleTeam().At(i)->data->GetMaxHealth() / 3) && app->battleManager->GetPlayer()->GetBattleTeam().At(i) != nullptr)
+                {
+                    //enemy->GetBattleTeam().At(0)->data->UseAbility(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data);
+                    if (enemy->GetBattleTeam().At(0)->data->UseAbility(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data) != false)
+                    {
+                        enemy->GetBattleTeam().At(0)->data->SetAttack(false);
+                    }
+                    break;
+                }
 
-        }
-        if (enemy->GetBattleTeam().At(0)->data->CanAttack())
-        {
-            if (app->battleManager->GetPlayer()->GetBattleTeam().At(randomNum)->data != nullptr)
-            {
-                enemy->GetBattleTeam().At(0)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(randomNum)->data);
             }
-            else
+            if (enemy->GetBattleTeam().At(0)->data->CanAttack())
             {
-                if (enemy->GetBattleTeam().At(0)->data->GetHealth() < enemy->GetBattleTeam().At(0)->data->GetMaxHealth() / 7) enemy->GetBattleTeam().At(0)->data->Heal(3);
+                if (app->battleManager->GetPlayer()->GetBattleTeam().At(randomNum)->data != nullptr)
+                {
+                    enemy->GetBattleTeam().At(0)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(randomNum)->data);
+                }
+                else
+                {
+                    if (enemy->GetBattleTeam().At(0)->data->GetHealth() < enemy->GetBattleTeam().At(0)->data->GetMaxHealth() / 7) enemy->GetBattleTeam().At(0)->data->Heal(3);
+                }
             }
+            else enemy->GetBattleTeam().At(0)->data->RestoreMana(3);
         }
-        else enemy->GetBattleTeam().At(0)->data->RestoreMana(3);
+       
 
         //dmg
-
-        if (enemy->GetBattleTeam().At(2)->data->CanAttack())
+        if (enemy->GetBattleTeam().At(2)->data != nullptr)
         {
-            if (enemy->GetBattleTeam().At(2)->data->GetHealth() < enemy->GetBattleTeam().At(0)->data->GetMaxHealth()-8)
+            if (enemy->GetBattleTeam().At(2)->data->CanAttack())
             {
-                enemy->GetBattleTeam().At(2)->data->UseAbility(enemy->GetBattleTeam().At(2)->data);
-                enemy->GetBattleTeam().At(2)->data->SetAttack(false);
+                if (enemy->GetBattleTeam().At(2)->data->GetHealth() < enemy->GetBattleTeam().At(0)->data->GetMaxHealth() - 8)
+                {
+                    if (enemy->GetBattleTeam().At(2)->data->UseAbility(enemy->GetBattleTeam().At(2)->data) != false) enemy->GetBattleTeam().At(2)->data->SetAttack(false);
+                }
+                else if (app->battleManager->GetPlayer()->GetBattleTeam().At(randomNum)->data != nullptr)
+                {
+                    enemy->GetBattleTeam().At(2)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(randomNum)->data);
+                }
+                else if (enemy->GetBattleTeam().At(2)->data->GetHealth() < enemy->GetBattleTeam().At(2)->data->GetMaxHealth() / 7) enemy->GetBattleTeam().At(2)->data->Heal(2);
+
+
+
             }
-            else if (app->battleManager->GetPlayer()->GetBattleTeam().At(randomNum)->data != nullptr)
-            {
-                enemy->GetBattleTeam().At(2)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(randomNum)->data);
-            }
-            else if (enemy->GetBattleTeam().At(2)->data->GetHealth() < enemy->GetBattleTeam().At(2)->data->GetMaxHealth() / 7) enemy->GetBattleTeam().At(2)->data->Heal(2);
-
-
-
+            else enemy->GetBattleTeam().At(2)->data->RestoreMana(1);
         }
-        else enemy->GetBattleTeam().At(2)->data->RestoreMana(2);
+       
 
         app->battleManager->EndTurn();
     }
