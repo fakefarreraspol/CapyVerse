@@ -97,6 +97,8 @@
   <ItemGroup>
     <ClCompile Include="Source\BattleScene1.cpp" />
     <ClCompile Include="Source\BattleManager.cpp" />
+    <ClCompile Include="Source\BattleScene2.cpp" />
+    <ClCompile Include="Source\BattleScene3.cpp" />
     <ClCompile Include="Source\Capybara.cpp" />
     <ClCompile Include="Source\Chadbara.cpp" />
     <ClCompile Include="Source\Collider.cpp" />
@@ -143,6 +145,8 @@
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\BattleScene1.h" />
     <ClInclude Include="Source\BattleManager.h" />
+    <ClInclude Include="Source\BattleScene2.h" />
+    <ClInclude Include="Source\BattleScene3.h" />
     <ClInclude Include="Source\Capybara.h" />
     <ClInclude Include="Source\Chadbara.h" />
     <ClInclude Include="Source\Collider.h" />

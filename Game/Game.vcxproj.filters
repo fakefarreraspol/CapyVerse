@@ -126,6 +126,9 @@
     <ClCompile Include="Source\Chadbara.cpp">
       <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
     </ClCompile>
+    <ClCompile Include="Source\BattleScene3.cpp">
+      <Filter>Modules\Gameplay\Scenes</Filter>
+    </ClCompile>
     <ClCompile Include="Source\NPC.cpp">
       <Filter>Modules\Gameplay\Entities\Characters</Filter>
     </ClCompile>
@@ -139,6 +142,9 @@
       <Filter>Modules\Gameplay\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Source\MainMenu.cpp">
+      <Filter>Modules\Gameplay\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BattleScene2.cpp">
       <Filter>Modules\Gameplay\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Source\Pause.cpp">
@@ -299,6 +305,10 @@
     <ClInclude Include="Source\Chadbara.h">
       <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
     </ClInclude>
+    <ClInclude Include="Source\BattleScene2.h">
+      <Filter>Modules\Gameplay\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BattleScene3.h" />
     <ClInclude Include="Source\Animation.h">
       <Filter>Utils</Filter>
     </ClInclude>

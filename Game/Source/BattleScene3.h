@@ -1,15 +1,15 @@
-#ifndef __BATTLESCENE1_H__
-#define __BATTLESCENE1_H__
+#ifndef __BATTLESCENE3_H__
+#define __BATTLESCENE3_H__
 
 #include "Module.h"
 
 class Enemy;
 
-class BattleScene1 : public Module
+class BattleScene3 : public Module
 {
 public:
-	BattleScene1(bool startEnabled);
-	virtual ~BattleScene1();
+	BattleScene3(bool startEnabled);
+	virtual ~BattleScene3();
 
 	bool Awake(pugi::xml_node&);
 
@@ -20,13 +20,14 @@ public:
 	bool Update(float dt);
 
 	bool CleanUp();
-	 
+
 private:
 	Enemy* enemy;
 
-public: 
+public:
 	int randomNum = 0;
 };
 
 
 #endif
+
