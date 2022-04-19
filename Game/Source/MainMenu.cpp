@@ -312,7 +312,7 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control)
 			optionsBtns.At(i)->data->state = GuiControlState::DISABLED;
 		}
 		currentControls = menuBtns;
-		currentControl = currentControls.start;
+		currentControl->data = optionsBtn;
 	}
 	if (control->id == 14)
 	{
@@ -323,7 +323,7 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control)
 		}
 		exitText->state = GuiControlState::DISABLED;
 		currentControls = menuBtns;
-		currentControl = currentControls.start;
+		currentControl->data = exitBtn;
 	}
 	if (control->id == 15)
 	{
