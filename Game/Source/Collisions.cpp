@@ -3,6 +3,8 @@
 #include "App.h"
 #include "Log.h"
 #include "Render.h"
+#include "Scene.h"
+#include "Player.h"
 #include "Input.h"
 #include "SDL/include/SDL_Scancode.h"
 
@@ -89,7 +91,7 @@ bool Collisions::PreUpdate()
 			}
 		}
 	}
-	
+	app->scene->player->wallsDetected = 0;
 
 	return true;
 }

@@ -15,6 +15,7 @@ public:
 	~Player();
 
 	iPoint lastPos;
+	int wallsDetected;
 	int lastKeyPressed = 0;
 	float speed = 0.1;
 	//Base functions
@@ -45,7 +46,7 @@ public:
 
 private:
 	int money;
-	
+
 	bool isBattle = false;
 	bool isStuck = false;
 
