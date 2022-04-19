@@ -7,6 +7,7 @@
 #define MAX_LISTENERS 5
 
 class Module;
+class Entity;
 
 struct Collider
 {
@@ -33,7 +34,7 @@ struct Collider
 	};
 
 	//Methods
-	Collider(SDL_Rect rectangle, Type type, Module* listener = nullptr);
+	Collider(SDL_Rect rectangle, Type type, Module* listener = nullptr, Entity* entity = nullptr);
 
 	void SetPos(int x, int y);
 
@@ -49,6 +50,7 @@ struct Collider
 	Type type;
 	
 	List<Module*> listeners;
+	Entity* entity = nullptr;
 };
 
 

@@ -227,3 +227,11 @@ bool EntityManager::Draw() {
 
 	return ret;
 }
+
+void EntityManager::OnCollision(Collider* c1, Collider* c2)
+{
+
+	if (c1->entity != nullptr)
+		if (c1->entity->active == true)
+			c1->entity->OnCollision(c1, c2);
+}

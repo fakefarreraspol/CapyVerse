@@ -7,7 +7,7 @@
 
 Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType::PLAYER, id, name, position)
 {
-	collider = app->colManager->AddCollider({ position.x, position.y, 16, 16 }, Collider::Type::PLAYER, (Module*)app->scene);
+	collider = app->colManager->AddCollider({ position.x, position.y, 16, 16 }, Collider::Type::PLAYER, (Module*)app->entMan, this);
 }
 
 Player::~Player()
@@ -54,12 +54,10 @@ void Player::AddCapybaraToBatle(Capybara* capybara)
 void Player::UpdateInput(float dt)
 {
 	GamePad& pad = app->input->pads[0];
-
-	//lastPos = position;
+	lastPos = position;
 
 	//if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) 
 	//{
-	//	position.x -= speed;
 	//	/*if (currentAnimation != &leftAnim)
 	//	{
 	//		leftAnim.Reset();
@@ -70,18 +68,19 @@ void Player::UpdateInput(float dt)
 
 	//	if (app->input->GetKey(SDL_SCANCODE_W)== KEY_REPEAT && isStuck)
 	//	{
-	//		position.y -= speed;
+	//		//position.y -= speed * dt * sqrt(2) / 2;
+	//		twoInputs = true;
 	//		isStuck = false;
 	//	}
 	//	else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && isStuck)
 	//	{
-	//		position.y += speed;
+	//		//position.y += speed * dt * sqrt(2) / 2;
+	//		twoInputs = true;
 	//		isStuck = false;
 	//	}
 	//}
 	//else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) 
 	//{
-	//	position.x += speed;
 	//	/*if (currentAnimation != &rightAnim)
 	//	{
 	//		rightAnim.Reset();
@@ -92,19 +91,20 @@ void Player::UpdateInput(float dt)
 
 	//	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && isStuck)
 	//	{
-	//		position.y -= speed;
+	//		//position.y -= speed * dt * sqrt(2) / 2;
+	//		twoInputs = true;
 	//		isStuck = false;
 	//	}
 	//	else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && isStuck)
 	//	{
-	//		position.y += speed;
+	//		//position.y += speed * dt * sqrt(2) / 2;
+	//		twoInputs = true;
 	//		isStuck = false;
 	//	}
 
 	//}
 	//else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) 
 	//{
-	//	position.y += speed;
 	//	/*if (currentAnimation != &downAnim)
 	//	{
 	//		downAnim.Reset();
@@ -115,19 +115,20 @@ void Player::UpdateInput(float dt)
 
 	//	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isStuck)
 	//	{
-	//		position.x -= speed;
+	//		//position.x -= speed * dt * sqrt(2) / 2;
+	//		twoInputs = true;
 	//		isStuck = false;
 	//	}
 	//	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isStuck)
 	//	{
-	//		position.x += speed;
+	//		//position.x += speed * dt * sqrt(2) / 2;
+	//		twoInputs = true;
 	//		isStuck = false;
 	//	}
 
 	//}
 	//else if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	//{
-	//	position.y -= speed;
 	//	/*if (currentAnimation != &upAnim)
 	//	{
 	//		upAnim.Reset();
@@ -138,148 +139,170 @@ void Player::UpdateInput(float dt)
 
 	//	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isStuck)
 	//	{
-	//		position.x -= speed;
+	//		//position.x -= speed * dt * sqrt(2) / 2;
+	//		twoInputs = true;
 	//		isStuck = false;
 	//	}
 	//	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isStuck)
 	//	{
-	//		position.x += speed;
+	//		//position.x += speed * dt * sqrt(2) / 2;
+	//		twoInputs = true;
 	//		isStuck = false;
 	//	}
 	//}
+
+	int inputs = 0;
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		inputs++;
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		inputs++;
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		inputs++;
+	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		inputs++;
+
+
+	float mov = speed * dt;
+	if (inputs > 1)
+		mov *= sqrt(2) / 2;		// sine of 45
+
+
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		position.x -= speed * dt;
+		position.x -= mov;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		position.x += speed * dt;
+		position.x += mov;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
-		position.y -= speed * dt;
+		position.y -= mov;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
-		position.y += speed * dt;
+		position.y += mov;
 	}
-	// GAMEPAD SUPPORT
 
 
-		// GAMEPAD SUPPORT
 
-		// Debug key for gamepad rumble testing purposes
-		if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-		{
-			app->input->ShakeController(0, 12, 0.33f);
-		}
-
-		// Debug key for gamepad rumble testing purposes
-		if (app->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-		{
-			app->input->ShakeController(0, 36, 0.66f);
-		}
-
-		// Debug key for gamepad rumble testing purposes
-		if (app->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
-		{
-			app->input->ShakeController(0, 60, 1.0f);
-		}
+	//// GAMEPAD SUPPORT
 
 
-		// Implement gamepad support
+	//	// GAMEPAD SUPPORT
 
-		if (pad.left_x < 0.0f || pad.left == true)
-		{
-			position.x -= speed;
-			/*if (currentAnimation != &leftAnim)
-			{
-				leftAnim.Reset();
-				currentAnimation = &leftAnim;
-				currentIdleAnim = leftIdleAnim;
-			}*/
-			lastKeyPressed = SDL_SCANCODE_A;
+	//	// Debug key for gamepad rumble testing purposes
+	//	if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	//	{
+	//		app->input->ShakeController(0, 12, 0.33f);
+	//	}
 
-			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && isStuck)
-			{
-				position.y -= speed;
-				isStuck = false;
-			}
-			else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && isStuck)
-			{
-				position.y += speed;
-				isStuck = false;
-			}
-		}
+	//	// Debug key for gamepad rumble testing purposes
+	//	if (app->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+	//	{
+	//		app->input->ShakeController(0, 36, 0.66f);
+	//	}
 
-		if (pad.left_x > 0.0f || pad.right == true)
-		{
-			position.x += speed;
-			/*if (currentAnimation != &rightAnim)
-			{
-				rightAnim.Reset();
-				currentAnimation = &rightAnim;
-				currentIdleAnim = rightIdleAnim;
-			}*/
-			lastKeyPressed = SDL_SCANCODE_D;
+	//	// Debug key for gamepad rumble testing purposes
+	//	if (app->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+	//	{
+	//		app->input->ShakeController(0, 60, 1.0f);
+	//	}
 
-			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && isStuck)
-			{
-				position.y -= speed;
-				isStuck = false;
-			}
-			else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && isStuck)
-			{
-				position.y += speed;
-				isStuck = false;
-			}
-		}
 
-		if (pad.left_y > 0.0f || pad.down == true)
-		{
-			position.y += speed;
-			/*if (currentAnimation != &downAnim)
-			{
-				downAnim.Reset();
-				currentAnimation = &downAnim;
-				currentIdleAnim = downIdleAnim;
-			}*/
-			lastKeyPressed = SDL_SCANCODE_S;
+	//	// Implement gamepad support
 
-			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isStuck)
-			{
-				position.x -= speed;
-				isStuck = false;
-			}
-			else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isStuck)
-			{
-				position.x += speed;
-				isStuck = false;
-			}
-		}
+	//	if (pad.left_x < 0.0f || pad.left == true)
+	//	{
+	//		position.x -= speed;
+	//		/*if (currentAnimation != &leftAnim)
+	//		{
+	//			leftAnim.Reset();
+	//			currentAnimation = &leftAnim;
+	//			currentIdleAnim = leftIdleAnim;
+	//		}*/
+	//		lastKeyPressed = SDL_SCANCODE_A;
 
-		if (pad.left_y < 0.0f || pad.up == true)
-		{
-			position.y -= speed;
-			/*if (currentAnimation != &upAnim)
-			{
-				upAnim.Reset();
-				currentAnimation = &upAnim;
-				currentIdleAnim = upIdleAnim;
-			}*/
-			lastKeyPressed = SDL_SCANCODE_W;
+	//		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && isStuck)
+	//		{
+	//			position.y -= speed;
+	//			isStuck = false;
+	//		}
+	//		else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && isStuck)
+	//		{
+	//			position.y += speed;
+	//			isStuck = false;
+	//		}
+	//	}
 
-			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isStuck)
-			{
-				position.x -= speed;
-				isStuck = false;
-			}
-			else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isStuck)
-			{
-				position.x += speed;
-				isStuck = false;
-			}
-		}
+	//	if (pad.left_x > 0.0f || pad.right == true)
+	//	{
+	//		position.x += speed;
+	//		/*if (currentAnimation != &rightAnim)
+	//		{
+	//			rightAnim.Reset();
+	//			currentAnimation = &rightAnim;
+	//			currentIdleAnim = rightIdleAnim;
+	//		}*/
+	//		lastKeyPressed = SDL_SCANCODE_D;
+
+	//		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && isStuck)
+	//		{
+	//			position.y -= speed;
+	//			isStuck = false;
+	//		}
+	//		else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && isStuck)
+	//		{
+	//			position.y += speed;
+	//			isStuck = false;
+	//		}
+	//	}
+
+	//	if (pad.left_y > 0.0f || pad.down == true)
+	//	{
+	//		position.y += speed;
+	//		/*if (currentAnimation != &downAnim)
+	//		{
+	//			downAnim.Reset();
+	//			currentAnimation = &downAnim;
+	//			currentIdleAnim = downIdleAnim;
+	//		}*/
+	//		lastKeyPressed = SDL_SCANCODE_S;
+
+	//		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isStuck)
+	//		{
+	//			position.x -= speed;
+	//			isStuck = false;
+	//		}
+	//		else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isStuck)
+	//		{
+	//			position.x += speed;
+	//			isStuck = false;
+	//		}
+	//	}
+
+	//	if (pad.left_y < 0.0f || pad.up == true)
+	//	{
+	//		position.y -= speed;
+	//		/*if (currentAnimation != &upAnim)
+	//		{
+	//			upAnim.Reset();
+	//			currentAnimation = &upAnim;
+	//			currentIdleAnim = upIdleAnim;
+	//		}*/
+	//		lastKeyPressed = SDL_SCANCODE_W;
+
+	//		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isStuck)
+	//		{
+	//			position.x -= speed;
+	//			isStuck = false;
+	//		}
+	//		else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isStuck)
+	//		{
+	//			position.x += speed;
+	//			isStuck = false;
+	//		}
+	//	}
 }
 
 List<Capybara*>& Player::GetBattleTeam()
@@ -311,3 +334,77 @@ void Player::SetCombat(bool value)
 	this->isBattle = value;
 }
 
+
+void Player::OnCollision(Collider* c1, Collider* c2)
+{
+	if (!app->GetDebug())
+	{
+		if (c1->type == Collider::PLAYER)
+		{
+			if (c2->type == Collider::WALL)
+			{
+				wallsDetected++;
+
+				int difference = c1->rect.w;
+
+				if (c1->GetPos().x <= c2->GetPos().x)
+				{
+					if (difference > c1->rect.w - (c2->rect.x - c1->rect.x))
+					{
+						difference = c1->rect.w - (c2->rect.x - c1->rect.x);
+						lastKeyPressed = SDL_SCANCODE_D;
+					}
+				}
+				else
+				{
+					if (difference > c2->rect.w - (c1->rect.x - c2->rect.x))
+					{
+						difference = c2->rect.w - (c1->rect.x - c2->rect.x);
+						lastKeyPressed = SDL_SCANCODE_A;
+					}
+				}
+				if (c1->GetPos().y <= c2->GetPos().y)
+				{
+					if (difference > c1->rect.h - (c2->rect.y - c1->rect.y))
+					{
+						difference = c1->rect.h - (c2->rect.y - c1->rect.y);
+						lastKeyPressed = SDL_SCANCODE_S;
+					}
+				}
+				else
+				{
+					if (difference > c2->rect.h - (c1->rect.y - c2->rect.y))
+					{
+						difference = c2->rect.h - (c1->rect.y - c2->rect.y);
+						lastKeyPressed = SDL_SCANCODE_W;
+					}
+				}
+
+				switch (lastKeyPressed)
+				{
+				case SDL_SCANCODE_A:	position.x++;	break;
+				case SDL_SCANCODE_D:	position.x--;	break;
+				case SDL_SCANCODE_W:	position.y++;	break;
+				case SDL_SCANCODE_S:	position.y--;	break;
+				default:
+					break;
+				}
+				
+				
+
+				/*if (c1->GetPos().x <= c2->GetPos().x)
+					position.x--;
+				if (c1->GetPos().x >= c2->GetPos().x)
+					position.x++;
+				if (c1->GetPos().y <= c2->GetPos().y)
+					position.y--;
+				if (c1->GetPos().y >= c2->GetPos().y)
+					position.y++;*/
+
+
+
+			}
+			
+		}
+	}
+}
