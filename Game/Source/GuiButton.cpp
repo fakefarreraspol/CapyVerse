@@ -12,7 +12,7 @@ GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text, SDL_Color col
 
 	if (textID == 0)
 		textID = app->fonts->globalFont;
-
+	sfx = app->audio->LoadFx("Assets/Audio/FX/notification2.wav");
 	textTex = app->fonts->LoadRenderedText(bounds, textID, text, color);
 
 	canClick = true;
@@ -60,6 +60,7 @@ bool GuiButton::Update(float dt)
 			if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN || pad.a)
 			{
 				state = GuiControlState::PRESSED;
+				app->audio->PlayFx(sfx);
 				ret = NotifyObserver();
 			}
 		}

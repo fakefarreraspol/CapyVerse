@@ -23,6 +23,7 @@ public:
 	bool drawBasic = false;
 private:
 	SDL_Texture* texture = nullptr;
+	int sfx;
 };
 
 #endif // GUIBUTTON_H

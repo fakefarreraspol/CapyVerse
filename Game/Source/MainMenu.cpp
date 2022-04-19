@@ -6,6 +6,8 @@
 #include "Render.h"
 #include "Textures.h"
 #include "Input.h"
+#include "Window.h"
+#include "Render.h"
 
 #include "Log.h"
 
@@ -57,8 +59,8 @@ bool MainMenu::Start()
 	volumeBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 8, "VOLUME", { 325, 285, 125, 20 }, this, { 255, 255, 255 });
 	musicSldr = (GuiSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 9, "MUSIC", { 500, 280, 220, 20 }, this);
 	soundSlrd = (GuiSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 10, "SOUND FX", { 500, 320, 220, 20 }, this);
-	fullscreenChkbx = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 11, "FULLSCREEN", { 505, 375, 25, 25 }, this);
-	vsyncChkbx = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 12, "VSYNC", { 505, 420, 25, 25 }, this);
+	fullscreenChkbx = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 11, "FULLSCREEN", { 325, 375, 25, 25 }, this);
+	vsyncChkbx = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 12, "VSYNC            ", { 325, 420, 25, 25 }, this);
 	returnOPBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 13, "RETURN", { 325, 485, 125, 20 }, this, { 255, 255, 255 });
 
 	optionsBtns.Add(volumeBtn);
@@ -107,34 +109,70 @@ bool MainMenu::PreUpdate()
 // Called each loop iteration
 bool MainMenu::Update(float dt)
 {
+	app->render->DrawRectangle({ currentControl->data->bounds.x, currentControl->data->bounds.y, 10, 10 }, 255, 255, 0);
+	vsyncChkbx->checked = app->render->vsync;
+	fullscreenChkbx->checked = app->win->fullscreen;
 	GamePad& pad = app->input->pads[0];
-
-	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || pad.down)
+	if (yesBtn->state == GuiControlState::DISABLED)
 	{
+		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || pad.down)
+		{
 
-		if (currentControl->next == nullptr)
-		{
-			currentControl->data->state = GuiControlState::NORMAL;
-			currentControl = currentControls.start;
+			if (currentControl->next == nullptr)
+			{
+				currentControl->data->state = GuiControlState::NORMAL;
+				currentControl = currentControls.start;
+			}
+			else
+			{
+				currentControl->data->state = GuiControlState::NORMAL;
+				currentControl = currentControl->next;
+			}
 		}
-		else
+
+		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || pad.up)
 		{
-			currentControl->data->state = GuiControlState::NORMAL;
-			currentControl = currentControl->next;
+			if (currentControl->prev == nullptr)
+			{
+				currentControl->data->state = GuiControlState::NORMAL;
+				currentControl = currentControls.end;
+			}
+			else
+			{
+				currentControl->data->state = GuiControlState::NORMAL;
+				currentControl = currentControl->prev;
+			}
 		}
 	}
-
-	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || pad.up)
+	else
 	{
-		if (currentControl->prev == nullptr)
+		if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || pad.down)
 		{
-			currentControl->data->state = GuiControlState::NORMAL;
-			currentControl = currentControls.end;
+
+			if (currentControl->next == nullptr)
+			{
+				currentControl->data->state = GuiControlState::NORMAL;
+				currentControl = currentControls.start;
+			}
+			else
+			{
+				currentControl->data->state = GuiControlState::NORMAL;
+				currentControl = currentControl->next;
+			}
 		}
-		else
+
+		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || pad.up)
 		{
-			currentControl->data->state = GuiControlState::NORMAL;
-			currentControl = currentControl->prev;
+			if (currentControl->prev == nullptr)
+			{
+				currentControl->data->state = GuiControlState::NORMAL;
+				currentControl = currentControls.end;
+			}
+			else
+			{
+				currentControl->data->state = GuiControlState::NORMAL;
+				currentControl = currentControl->prev;
+			}
 		}
 	}
 	currentControl->data->state = GuiControlState::FOCUSED;
@@ -256,29 +294,25 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control)
 	if (control->id == 11)
 	{
 		//FULLSCREEN
-		newGameBtn->state = GuiControlState::NORMAL;
-		continueBtn->state = GuiControlState::NORMAL;
-		returnPlBtn->state = GuiControlState::NORMAL;
-		currentControl->data = newGameBtn;
-		currentControls = playBtns;
+		app->win->SetFullscreen(fullscreenChkbx->checked);
+		app->render->SetFullScreen();
+
 	}
 	if (control->id == 12)
 	{
 		//VSYNC
-		newGameBtn->state = GuiControlState::NORMAL;
-		continueBtn->state = GuiControlState::NORMAL;
-		returnPlBtn->state = GuiControlState::NORMAL;
-		currentControl->data = newGameBtn;
-		currentControls = playBtns;
+		app->render->vsync = !app->render->vsync;
+		app->render->SetVsync(app->render->vsync, (Module*)this);
 	}
 	if (control->id == 13)
 	{
 		//RETURN
-		newGameBtn->state = GuiControlState::NORMAL;
-		continueBtn->state = GuiControlState::NORMAL;
-		returnPlBtn->state = GuiControlState::NORMAL;
-		currentControl->data = newGameBtn;
-		currentControls = playBtns;
+		for (int i = 0; i < optionsBtns.Count(); i++)
+		{
+			optionsBtns.At(i)->data->state = GuiControlState::DISABLED;
+		}
+		currentControls = menuBtns;
+		currentControl = currentControls.start;
 	}
 	if (control->id == 14)
 	{

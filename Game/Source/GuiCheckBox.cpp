@@ -3,12 +3,14 @@
 #include "Render.h"
 #include "App.h"
 #include "Audio.h"
+#include "Fonts.h"
+#include "Textures.h"
 
 GuiCheckBox::GuiCheckBox(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::BUTTON, id)
 {
 	this->bounds = bounds;
 	this->text = text;
-
+	textTex = app->fonts->LoadRenderedText(bounds, app->fonts->globalFont, text, {255, 255, 255, 1});
 	checked = true;
 }
 
@@ -19,23 +21,16 @@ GuiCheckBox::~GuiCheckBox()
 
 bool GuiCheckBox::Update(float dt)
 {
+	GamePad& pad = app->input->pads[0];
 	if (state != GuiControlState::DISABLED)
 	{
-		// L14: TODO 3: Update the state of the GuiCheckBox according to the mouse position
-		int mouseX, mouseY;
-		app->input->GetMousePosition(mouseX, mouseY);
-
-		if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) &&
-			(mouseY > bounds.y) && (mouseY < (bounds.y + bounds.h)))
+		if (state == GuiControlState::FOCUSED)
 		{
-			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_DOWN)
+			if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN || pad.a)
 			{
-				checked =! checked;
+				checked = !checked;
 				NotifyObserver();
 			}
-
-			
-			
 		}
 		if (checked == true)
 			state = GuiControlState::PRESSED;
@@ -51,17 +46,23 @@ bool GuiCheckBox::Draw(Render* render)
 	SDL_Rect cBounds{ bounds.x - render->camera.x,bounds.y - render->camera.y,bounds.w,bounds.h };
 
 	// Draw the right button depending on state
-	switch (state)
+	if (state != GuiControlState::DISABLED)
 	{
+		uint w, h;
+		app->tex->GetSize(textTex,w, h);
+		SDL_Rect Bounds{ cBounds.x + w + 50, cBounds.y, bounds.w, bounds.h};
+		switch (state)
+		{
 
-	case GuiControlState::DISABLED:		render->DrawRectangle(cBounds, 0, 0, 0, 0);			break;
-	case GuiControlState::NORMAL:		render->DrawRectangle(cBounds, 255, 0, 0, 255);		break;
-	case GuiControlState::PRESSED:		render->DrawRectangle(cBounds, 255, 255, 255, 255);	break;
+		case GuiControlState::DISABLED:		render->DrawRectangle(Bounds, 0, 0, 0, 0);			break;
+		case GuiControlState::NORMAL:		render->DrawRectangle(Bounds, 255, 0, 0, 255);		break;
+		case GuiControlState::PRESSED:		render->DrawRectangle(Bounds, 255, 255, 255, 255);	break;
 
 
-	default:
-		break;
+		default:
+			break;
+		}
+		app->render->DrawTexture(textTex, cBounds.x, cBounds.y);
 	}
-
 	return true;
 }
