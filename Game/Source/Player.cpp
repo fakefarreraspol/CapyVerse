@@ -192,25 +192,25 @@ void Player::UpdateInput(float dt)
 		LOG("%2.2f", pad.left_y);
 		if (pad.left_x < 0.0f || pad.left == true)
 		{
-			position.x -= speed * dt;
+			position.x -= speed * dt * -pad.left_x;
 			
 		}
 
 		if (pad.left_x > 0.0f || pad.right == true)
 		{
-			position.x += speed * dt;
+			position.x += speed * dt *pad.left_x;
 			
 		}
 
 		if (pad.left_y > 0.0f || pad.down == true)
 		{
-			position.y += speed * dt;
+			position.y += speed * dt * pad.left_y;
 			
 		}
 
 		if (pad.left_y < 0.0f || pad.up == true)
 		{
-			position.y -= speed * dt;
+			position.y -= speed * dt * -pad.left_y;
 			
 		}
 }
