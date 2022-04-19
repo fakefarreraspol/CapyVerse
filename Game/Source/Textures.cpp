@@ -60,6 +60,7 @@ bool Textures::CleanUp()
 	return true;
 }
 
+
 // Load new texture from file path
 SDL_Texture* const Textures::Load(const char* path)
 {

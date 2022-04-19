@@ -10,7 +10,7 @@ class GuiButton : public GuiControl
 {
 public:
 
-	GuiButton(uint32 id, SDL_Rect bounds, const char* text);
+	GuiButton(uint32 id, SDL_Rect bounds, const char* text, SDL_Color color = {0, 0, 0, 1}, int textID = 0);
 	virtual ~GuiButton();
 
 	bool Update(float dt);
@@ -21,6 +21,9 @@ public:
 
 	bool canClick = true;
 	bool drawBasic = false;
+private:
+	SDL_Texture* texture = nullptr;
+	int sfx;
 };
 
 #endif // GUIBUTTON_H

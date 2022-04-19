@@ -6,7 +6,7 @@
 #include "Audio.h"
 #include "GuiManager.h"
 
-GuiBar::GuiBar(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::SLIDERBAR, id)
+GuiBar::GuiBar(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::BAR, id)
 {
 	this->bounds = bounds;
 	this->text = text;
@@ -43,8 +43,11 @@ bool GuiBar::Draw(Render* render)
 	{
 		SDL_Rect cBar{ bar.x - render->camera.x, bar.y - render->camera.y, bar.w, bar.h };
 		SDL_Rect cBounds{ bounds.x - render->camera.x,bounds.y - render->camera.y,bounds.w,bounds.h };
-		render->DrawRectangle(cBounds, 150, 0, 0);
-		render->DrawRectangle(cBar, 0, 150, 0);
+		if (app->GetDebug())
+		{
+			render->DrawRectangle(cBounds, 150, 0, 0);
+			render->DrawRectangle(cBar, 0, 150, 0);
+		}
 	}
 	return true;
 }

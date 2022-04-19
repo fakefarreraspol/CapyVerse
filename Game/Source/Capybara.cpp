@@ -50,7 +50,10 @@ bool Capybara::Draw(Render* render)
 	bool ret = true;
 	if (isCombat)
 	{
-		render->DrawRectangle({position.x, position.y, 64, 64}, 255, 0, 0);
+		if (app->GetDebug())
+			render->DrawRectangle({ position.x, position.y,  64 , 64 }, 255, 0, 0);
+
+		//render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
 	}
 
 	return ret;
@@ -266,6 +269,7 @@ void Capybara::LevelUp()
 {
 	level++;
 	xpNext = xpNext + xpNext * 0.1f;
+	xp = 0;
 	switch (capybaraType)
 	{
 	//Each capybara levels up 1 point per level or 2 depending on their type

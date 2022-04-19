@@ -7,7 +7,7 @@
 
 Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType::PLAYER, id, name, position)
 {
-	collider = app->colManager->AddCollider({ position.x, position.y, 16, 16 }, Collider::Type::PLAYER);
+	collider = app->colManager->AddCollider({ position.x, position.y, 16, 16 }, Collider::Type::PLAYER, (Module*)app->scene);
 }
 
 Player::~Player()
@@ -18,9 +18,13 @@ bool Player::Update(float dt)
 {
 	bool ret = true;
 	collider->SetPos(position.x, position.y);
-	UpdateInput();
-	LOG("player pos X: %i", position.x);
-	LOG("player pos Y: %i", position.y);
+	UpdateInput(dt);
+
+	if (app->GetDebug())
+		speed = 0.2f;
+	else
+		speed = 0.1f;
+
 	return ret;
 }
 
@@ -29,7 +33,10 @@ bool Player::Draw(Render* render)
 	bool ret = true;
 	if (!isBattle)
 	{
-		render->DrawRectangle({ position.x, position.y,  20 , 20 }, 255, 255, 0);
+		if(app->GetDebug())
+			render->DrawRectangle({ position.x, position.y,  20 , 20 }, 255, 255, 0);
+
+		//render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
 	}
 	return ret;
 }
@@ -44,7 +51,7 @@ void Player::AddCapybaraToBatle(Capybara* capybara)
 	battleTeam.Add(capybara);
 }
 //TODO: Update the player input and move the player
-void Player::UpdateInput()
+void Player::UpdateInput(float dt)
 {
 	GamePad& pad = app->input->pads[0];
 
@@ -142,19 +149,19 @@ void Player::UpdateInput()
 	//}
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		position.x -= speed;
+		position.x -= speed * dt;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		position.x += speed;
+		position.x += speed * dt;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
-		position.y -= speed;
+		position.y -= speed * dt;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
-		position.y += speed;
+		position.y += speed * dt;
 	}
 	// GAMEPAD SUPPORT
 

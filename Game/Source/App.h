@@ -19,6 +19,8 @@ class Input;
 class Render;
 class Textures;
 class Audio;
+class Intro;
+class MainMenu;
 class Scene;
 class EntityManager;
 class BattleManager;
@@ -32,6 +34,7 @@ class BattleScene1;
 class BattleScene2;
 class BattleScene3;
 class EOBScene;
+class Map;
 
 class App
 {
@@ -105,10 +108,13 @@ public:
 	Render* render;
 	Textures* tex;
 	Audio* audio;
+	Intro* intro;
+	MainMenu* mainMenu;
 	Scene* scene;
 	EntityManager* entMan;
 	Fonts* fonts;
 	GuiManager* guiManager;
+	Map* mapManager;
 	DialogManager* dialogManager;
 	Collisions* colManager;
 	Task* taskManager;

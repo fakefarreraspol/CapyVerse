@@ -1,6 +1,7 @@
 #include "Enemy.h"
 
-#include "Capybara.h"+
+#include "App.h"
+#include "Capybara.h"
 
 Enemy::Enemy(iPoint position, uint32 id, const char* name) : Entity(EntityType::ENEMY, id, name, position)
 {
@@ -21,7 +22,10 @@ bool Enemy::Draw(Render* render)
 	bool ret = true;
 	if (!isCombat)
 	{
-		render->DrawRectangle({ position.x, position.y, 20, 20 }, 255, 0, 0);
+		if (app->GetDebug())
+			render->DrawRectangle({ position.x, position.y,  20 , 20 }, 255, 255, 0);
+
+		//render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
 	}
 	return ret;
 }

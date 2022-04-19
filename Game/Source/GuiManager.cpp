@@ -25,7 +25,7 @@ bool GuiManager::Start()
 	return true;
 }
 
-GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char* text, SDL_Rect bounds, Module* observer, SDL_Color textColor)
+GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char* text, SDL_Rect bounds, Module* observer, SDL_Color textColor, int fontID, bool blink)
 {
 	// L14: TODO1: Create a GUI control and add it to the list of controls
 
@@ -34,11 +34,11 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char
 	//Call the constructor according to the GuiControlType
 	switch (type)
 	{
-	case GuiControlType::BUTTON:	control = new GuiButton(id, bounds, text);		break;
+	case GuiControlType::BUTTON:	control = new GuiButton(id, bounds, text, textColor, fontID);		break;
 	case GuiControlType::SLIDER:	control = new GuiSlider(id, bounds, text);		break;
 	case GuiControlType::CHECKBOX:	control = new GuiCheckBox(id, bounds, text);	break;
-	case GuiControlType::TEXT:		control = new GuiText(id, bounds, text, textColor);		break;
-	case GuiControlType::SLIDERBAR:		control = new GuiBar(id, bounds, text);		break;
+	case GuiControlType::TEXT:		control = new GuiText(id, bounds, text, textColor, fontID, blink);		break;
+	case GuiControlType::BAR:		control = new GuiBar(id, bounds, text);		break;
 		// More Gui Controls can go here
 
 	default:
@@ -69,10 +69,11 @@ void GuiManager::DestroyGuiControl(GuiControl* entity)
 
 bool GuiManager::Update(float dt)
 {
+	bool ret = true;
 	accumulatedTime += dt;
 	if (accumulatedTime >= updateMsCycle) doLogic = true;
 
-	UpdateAll(dt, doLogic);
+	ret = UpdateAll(dt, doLogic);
 
 	if (doLogic == true)
 	{
@@ -80,27 +81,26 @@ bool GuiManager::Update(float dt)
 		doLogic = false;
 	}
 
-	return true;
+	return ret;
 }
 
 bool GuiManager::UpdateAll(float dt, bool doLogic) {
-
+	bool ret = true;
 	if (doLogic) {
 
 		ListItem<GuiControl*>* control = controls.start;
 
-		while (control != nullptr)
+		while (control != nullptr && ret)
 		{
 			if (activeControl == nullptr)
-				control->data->Update(dt);
+				ret = control->data->Update(dt);
 			else if (activeControl == control->data)
-				control->data->Update(dt);
+				ret = control->data->Update(dt);
 			control = control->next;
 		}
 
 	}
-	return true;
-
+	return ret;
 }
 
 bool GuiManager::PostUpdate()
