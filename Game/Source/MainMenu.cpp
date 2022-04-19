@@ -267,29 +267,14 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control)
 	if (control->id == 8)
 	{
 		//VOLUME
-		newGameBtn->state = GuiControlState::NORMAL;
-		continueBtn->state = GuiControlState::NORMAL;
-		returnPlBtn->state = GuiControlState::NORMAL;
-		currentControl->data = newGameBtn;
-		currentControls = playBtns;
 	}
 	if (control->id == 9)
 	{
 		//MUSIC
-		newGameBtn->state = GuiControlState::NORMAL;
-		continueBtn->state = GuiControlState::NORMAL;
-		returnPlBtn->state = GuiControlState::NORMAL;
-		currentControl->data = newGameBtn;
-		currentControls = playBtns;
 	}
 	if (control->id == 10)
 	{
 		//SOUND FX
-		newGameBtn->state = GuiControlState::NORMAL;
-		continueBtn->state = GuiControlState::NORMAL;
-		returnPlBtn->state = GuiControlState::NORMAL;
-		currentControl->data = newGameBtn;
-		currentControls = playBtns;
 	}
 	if (control->id == 11)
 	{
@@ -311,8 +296,8 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control)
 		{
 			optionsBtns.At(i)->data->state = GuiControlState::DISABLED;
 		}
+		currentControl = menuBtns.At(1);
 		currentControls = menuBtns;
-		currentControl->data = optionsBtn;
 	}
 	if (control->id == 14)
 	{
@@ -323,7 +308,7 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control)
 		}
 		exitText->state = GuiControlState::DISABLED;
 		currentControls = menuBtns;
-		currentControl->data = exitBtn;
+		currentControl = menuBtns.At(3);
 	}
 	if (control->id == 15)
 	{
