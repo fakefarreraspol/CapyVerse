@@ -134,25 +134,26 @@ bool BattleScene1::Update(float dt)
         else enemy->GetBattleTeam().At(0)->data->RestoreMana(3);
        
         //dmg
-        
-        if (enemy->GetBattleTeam().At(2)->data->CanAttack())
+        if (enemy->GetBattleTeam().At(2) != nullptr)
         {
-            if (enemy->GetBattleTeam().At(2)->data->GetHealth() <= enemy->GetBattleTeam().At(2)->data->GetMaxHealth() / 2)
+            if (enemy->GetBattleTeam().At(2)->data->CanAttack())
             {
-                enemy->GetBattleTeam().At(2)->data->UseAbility(enemy->GetBattleTeam().At(2)->data);
-                enemy->GetBattleTeam().At(2)->data->SetAttack(false);
-            }
-            else if (app->battleManager->GetPlayer()->GetBattleTeam().At(randomNum)->data != nullptr)
-            {
-                enemy->GetBattleTeam().At(2)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(randomNum)->data);
-            }
-            else if (enemy->GetBattleTeam().At(2)->data->GetHealth() < enemy->GetBattleTeam().At(2)->data->GetMaxHealth() / 7) enemy->GetBattleTeam().At(2)->data->Heal(2);
-            
-               
-            
-        }
-        else enemy->GetBattleTeam().At(2)->data->RestoreMana(2);
+                if (enemy->GetBattleTeam().At(2)->data->GetHealth() <= enemy->GetBattleTeam().At(2)->data->GetMaxHealth() / 2)
+                {
+                    enemy->GetBattleTeam().At(2)->data->UseAbility(enemy->GetBattleTeam().At(2)->data);
+                    enemy->GetBattleTeam().At(2)->data->SetAttack(false);
+                }
+                else if (app->battleManager->GetPlayer()->GetBattleTeam().At(randomNum)->data != nullptr)
+                {
+                    enemy->GetBattleTeam().At(2)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(randomNum)->data);
+                }
+                else if (enemy->GetBattleTeam().At(2)->data->GetHealth() < enemy->GetBattleTeam().At(2)->data->GetMaxHealth() / 7) enemy->GetBattleTeam().At(2)->data->Heal(2);
 
+
+
+            }
+            else enemy->GetBattleTeam().At(2)->data->RestoreMana(2);
+        }
         app->battleManager->EndTurn();
     }
     
