@@ -10,6 +10,7 @@ Will you destroy this Capyverse?
 
  - Combat system
  - Dialog system
+ - 3 locations to visit - forest - town - field 
 
  
 ## Controls
