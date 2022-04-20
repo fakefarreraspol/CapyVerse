@@ -18,6 +18,7 @@ public:
 	iPoint lastPos;
 	int wallsDetected;
 	int lastKeyPressed = 0;
+	bool canMove = true;
 	float speed = 0.1;
 	//Base functions
 	bool Update(float dt);

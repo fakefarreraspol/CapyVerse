@@ -32,8 +32,6 @@ private:
 	GuiControl* button;
 
 	List<GuiControl*> optionButtons;
-
-
 };
 
 #endif // !__DIALOG_MANAGER_H__
