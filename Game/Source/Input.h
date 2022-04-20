@@ -2,6 +2,7 @@
 #define __INPUT_H__
 
 #include "Module.h"
+#include "Timer.h"
 struct _SDL_GameController;
 struct _SDL_Haptic;
 //#define NUM_KEYS 352
@@ -89,7 +90,9 @@ public:
 	
 	//CONTROLLERS
 	
-	
+	Timer inputTimer;
+	bool isInputEnabled = true;
+	bool inputSwitch = true;
 	bool ShakeController(int id, int duration, float strength = 0.5f);
 	GamePad pads[MAX_PADS];
 	const char* GetControllerName(int id) const;

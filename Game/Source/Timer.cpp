@@ -18,6 +18,12 @@ void Timer::Start()
 	startTime = SDL_GetTicks();
 }
 
+void Timer::Restart()
+{
+	startTime = 0;
+	Start();
+}
+
 uint32 Timer::Read() const
 {
 	return SDL_GetTicks() - startTime;
