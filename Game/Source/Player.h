@@ -50,7 +50,7 @@ public:
 	bool isWalking = false;
 	void OnCollision(Collider* c1, Collider* c2);
 	bool CleanUp();
-	SDL_Rect playerIddle = { 0,0,66,66 };
+	
 	/*SDL_Rect playerWalkRight[4];*/
 	
 private:
@@ -60,7 +60,11 @@ private:
 	bool isStuck = false;
 
 	Animation* currentAnim = nullptr;
-
+	Animation idle;
+	Animation walkRight;
+	Animation walkLeft;
+	Animation walkUp;
+	Animation walkDown;
 	List<Capybara*> battleTeam;
 	List<Capybara*> team;
 	bool load = true;

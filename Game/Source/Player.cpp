@@ -10,15 +10,14 @@
 
 Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType::PLAYER, id, name, position)
 {
-<<<<<<< Updated upstream
-=======
-	collider = app->colManager->AddCollider({ position.x, position.y, 64, 64 }, Collider::Type::PLAYER, (Module*)app->entMan, this);
-
-	/*playerWalkRight[0] = { 66,66,66*2,66 };
-	playerWalkRight[1] = { 66*2,66,66*3,66 };
-	playerWalkRight[3] = { 66 * 3,66,66 * 4,66 };
-	playerWalkRight[4] = { 66 * 4,66,66 * 5,66 };*/
->>>>>>> Stashed changes
+	idle.PushBack({ 0,0,66,66 });
+	walkRight.PushBack( { 66, 66, 66 * 2, 66 });
+	walkRight.PushBack( { 66 * 2, 66, 66 * 3, 66 });
+	walkRight.PushBack( { 66 * 3, 66, 66 * 4, 66 });
+	walkRight.PushBack( { 66 * 4, 66, 66 * 5, 66 });
+	walkRight.loop = true;
+	walkRight.speed = 0.1f;
+	currentAnim = &idle;
 }
 
 Player::~Player()
@@ -80,13 +79,13 @@ bool Player::Draw(Render* render)
 	bool ret = true;
 	if (!isBattle)
 	{
-		//if(app->GetDebug())
-			//render->DrawRectangle({ position.x, position.y,  64 , 64 }, 255, 255, 0);
+		if(app->GetDebug())
+			render->DrawRectangle({ position.x, position.y,  64 , 64 }, 255, 255, 0);
 
 		//render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
-		if (!isWalking) app->render->DrawTexture(texture, position.x, position.y, &playerIddle);
+		app->render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
 
-		/*else app->render->DrawTexture(texture, position.x, position.y, &playerWalkRight);*/
+		
 	}
 	return ret;
 }
@@ -134,18 +133,22 @@ void Player::UpdateInput(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		position.x -= mov;
+		currentAnim = &walkLeft;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		position.x += mov;
+		currentAnim = &walkRight;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		position.y -= mov;
+		currentAnim = &walkUp;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
 		position.y += mov;
+		currentAnim = &walkDown;
 	}
 
 
