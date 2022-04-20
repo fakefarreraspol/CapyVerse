@@ -79,6 +79,14 @@ bool Capybara::Draw(Render* render)
 	return ret;
 }
 
+void Capybara::SetLevel(int level)
+{
+	for (int i = 0; i < level - this->level; i++)
+	{
+		LevelUp();
+	}
+}
+
 int& Capybara::GetHealth()
 {
 	return health;
