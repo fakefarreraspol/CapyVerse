@@ -24,7 +24,7 @@ bool Player::Update(float dt)
 	UpdateCamera();
 	if (load)
 	{
-		app->tex->Load("Assets/Textures/Sprites/characters.png");
+		texture  = app->tex->Load("Assets/Textures/Sprites/characters.png");
 		load = false;
 	}
 
