@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Collisions.h"
 #include "Timer.h"
+#include "Window.h"
 
 Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType::PLAYER, id, name, position)
 {
@@ -19,7 +20,7 @@ bool Player::Update(float dt)
 {
 	bool ret = true;
 	
-	if()
+	UpdateCamera();
 
 
 	collider->SetPos(position.x, position.y);
@@ -32,6 +33,22 @@ bool Player::Update(float dt)
 		speed = 0.1f;
 
 	return ret;
+}
+
+void Player::UpdateCamera()
+{
+	if (position.y <= 0)
+	{
+		uint w, h;
+		app->win->GetWindowSize(w, h);
+		app->render->camera.x = w / 2 - position.x;
+		app->render->camera.y = h / 2 - position.y;
+	}
+	else
+	{
+		app->render->camera.x = 0;
+		app->render->camera.y = 0;
+	}
 }
 
 bool Player::Draw(Render* render)

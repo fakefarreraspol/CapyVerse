@@ -22,6 +22,7 @@ public:
 	float speed = 0.1;
 	//Base functions
 	bool Update(float dt);
+	void UpdateCamera();
 	bool Draw(Render* render);
 	bool Start();
 	//Adds a capybara to the player team 
