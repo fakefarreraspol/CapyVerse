@@ -60,7 +60,9 @@ bool EntityManager::CleanUp()
 Entity* EntityManager::CreateEntity(EntityType type, uint32 id, iPoint position, const char* name)
 {
 	Entity* entity = nullptr;
-	
+
+	id = entities.Count();
+
 	switch (type)
 	{
 	case EntityType::NONE:
@@ -94,6 +96,8 @@ Capybara* EntityManager::CreateEntity(CapybaraType capybaraType, uint32 id, iPoi
 {
 	Capybara* entity = nullptr;
 
+	id = entities.Count();
+
 	if(name == "Chinabara")
 		entity = new Chinabara(id, position);
 	if (name == "Punkibara")
@@ -112,7 +116,8 @@ Capybara* EntityManager::CreateEntity(CapybaraType capybaraType, uint32 id, iPoi
 		entity = new Simpbara(id, position);
 	if (name == "Chadbara")
 		entity = new Chadbara(id, position);
-	
+
+
 	if (entity != nullptr)
 	{
 		AddEntity(entity);
@@ -186,31 +191,41 @@ bool EntityManager::LoadState(pugi::xml_node& data)
 {
 	bool ret = true;
 
-	ListItem<Entity*>* item;
+	for (pugi::xml_node entityNode = data.first_child(); entityNode && ret; entityNode = entityNode.next_sibling())
+	{
+		int entityId = entityNode.attribute("id").as_int();
+		ret = entities.At(entityId)->data->LoadState(entityNode);
+	}
+
+	/*ListItem<Entity*>* item;
 	item = entities.start;
 
 	while (item != NULL && ret == true)
 	{
 		ret = item->data->LoadState(data.child(item->data->name.GetString()));
 		item = item->next;
-	}
+	}*/
 
 	return ret;
 }
 
-bool EntityManager::SaveState(pugi::xml_node& data)
+bool EntityManager::SaveState(pugi::xml_node& data) const
 {
 	bool ret = true;
 
-	ListItem<Entity*>* item;
-	item = entities.start;
+	ListItem<Entity*>* item = entities.start;
 
-	while (item != NULL && ret == true)
+	while (item != NULL)
 	{
 		data.append_child(item->data->name.GetString());
+		// = item->data->SaveState(data.child(item->data->name.GetString()));
+
 		ret = item->data->SaveState(data.child(item->data->name.GetString()));
 		item = item->next;
 	}
+
+
+	
 
 	return ret;
 }

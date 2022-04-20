@@ -11,6 +11,7 @@
 
 Collisions::Collisions(bool startEnabled) : Module(startEnabled)
 {
+	name.Create("CollisionsManager");
 	/*for(uint i = 0; i < MAX_COLLIDERS; ++i)
 		colliders[i] = nullptr;*/
 	
@@ -93,7 +94,7 @@ bool Collisions::Update()
 
 bool Collisions::PostUpdate()
 {
-	//if (app->GetDebug())
+	if (app->GetDebug())
 		DebugDraw();
 
 	return true;

@@ -256,7 +256,7 @@ bool Pause::OnGuiMouseClickEvent(GuiControl* control)
 	if (control->id == 3)
 	{
 		//SAVE
-		
+		app->SaveGameRequest();
 	}
 	if (control->id == 4)
 	{
