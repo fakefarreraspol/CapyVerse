@@ -7,7 +7,7 @@
 
 Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType::PLAYER, id, name, position)
 {
-	collider = app->colManager->AddCollider({ position.x, position.y, 16, 16 }, Collider::Type::PLAYER, (Module*)app->entMan, this);
+	collider = app->colManager->AddCollider({ position.x, position.y, 64, 64 }, Collider::Type::PLAYER, (Module*)app->entMan, this);
 }
 
 Player::~Player()
@@ -33,8 +33,8 @@ bool Player::Draw(Render* render)
 	bool ret = true;
 	if (!isBattle)
 	{
-		if(app->GetDebug())
-			render->DrawRectangle({ position.x, position.y,  20 , 20 }, 255, 255, 0);
+		//if(app->GetDebug())
+			render->DrawRectangle({ position.x, position.y,  64 , 64 }, 255, 255, 0);
 
 		//render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
 	}
@@ -43,7 +43,7 @@ bool Player::Draw(Render* render)
 
 bool Player::Start()
 {
-	collider = app->colManager->AddCollider({ position.x, position.y, 16, 16 }, Collider::Type::PLAYER, (Module*)app->entMan, this);
+	collider = app->colManager->AddCollider({ position.x, position.y, 64, 64 }, Collider::Type::PLAYER, (Module*)app->entMan, this);
 	return true;
 }
 

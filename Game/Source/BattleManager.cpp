@@ -17,6 +17,7 @@
 #include "Capybara.h"
 #include "Player.h"
 #include "Pause.h"
+#include "Fonts.h"
 
 #include "Audio.h"
 
@@ -164,8 +165,7 @@ bool BattleManager::Update(float dt)
 
 void BattleManager::UpdateCurrentName()
 {
-	app->guiManager->DestroyGuiControl(currentName);
-	currentName = (GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 10, currentCapybara->data->name.GetString(), { 115, 545, 155, 20 }, this, { 255, 255, 255, 1 });
+	currentName->SetText(currentCapybara->data->name.GetString());
 }
 
 void BattleManager::Draw()
@@ -180,9 +180,13 @@ void BattleManager::Draw()
 	int btnY = currentButton->data->bounds.y;
 	app->render->DrawTexture(arrow, btnX, btnY);
 	SDL_Rect info{ 0, 369, 270, 120 };
+	SDL_Rect options{ 269, 369, 185, 155 };
+	SDL_Rect enemy{ 821, 369, 226, 155 };
 	app->render->DrawTexture(capyinfo, 0, 0, &info);
 	app->render->DrawTexture(capyinfo, 440, 0, &info);
 	app->render->DrawTexture(capyinfo, 890, 0, &info);
+	app->render->DrawTexture(capyinfo, 75, 530, &options);
+	app->render->DrawTexture(capyinfo, 340, 540, &options);
 }
 
 void BattleManager::UpdatePlayerInfo()
@@ -252,12 +256,12 @@ void BattleManager::CreateAttackMenu()
 	{
 		for (int i = 0; i < enemies.Count(); i++)
 		{
-			attackBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, i + 4, enemies.At(i)->data->name.GetString(), { 250, i * 50 + 550, 155, 20 }, this));
+			attackBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, i + 4, enemies.At(i)->data->name.GetString(), { 350, i * 50 + 550, 112, 20 }, this));
 
 			SString enemyHealth("%i/%i HP", enemies.At(i)->data->GetHealth(), enemies.At(i)->data->GetMaxHealth());
-			attackBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::BAR, i + 4, "EnemyBar", { 250, i * 50 + 575, 112, 9 }, this));
+			attackBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::BAR, i + 4, "EnemyBar", { 350, i * 50 + 575, 112, 9 }, this));
 			attackBars.At(i)->data->type = BarType::HEALTH;
-			attackInfo.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, i + 4, enemyHealth.GetString(), { 360, i * 50 + 575, 155, 20 }, this, { 255, 255, 255, 1 }));
+			attackInfo.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, i + 4, enemyHealth.GetString(), { 465, i * 50 + 570, 112, 20 }, this, { 255, 255, 255, 1 }, app->fonts->indicatorsFont));
 		}
 		for (int i = 0; i < attackBars.Count(); i++)
 		{
@@ -283,12 +287,12 @@ void BattleManager::CreateAbilityMenu()
 			{
 				if (playerTeam.At(i)->data->GetHealth() > 0)
 				{
-					abilityBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, i + 7, playerTeam.At(i)->data->name.GetString(), { 250, i * 50 + 550, 155, 20 }, this));
+					abilityBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, i + 7, playerTeam.At(i)->data->name.GetString(), { 350, i * 50 + 550, 112, 20 }, this));
 
 					SString allyHealth("%i/%i HP", playerTeam.At(i)->data->GetHealth(), playerTeam.At(i)->data->GetMaxHealth());
-					abilityBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::BAR, i + 7, "AllyBar", { 250, i * 50 + 575, 112, 9 }, this));
+					abilityBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::BAR, i + 7, "AllyBar", { 350, i * 50 + 570, 112, 9 }, this));
 					abilityBars.At(i)->data->type = BarType::HEALTH;
-					abilityInfo.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, i + 7, allyHealth.GetString(), { 360, i * 50 + 575, 155, 20 }, this, { 255, 255, 255, 1 }));
+					abilityInfo.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, i + 7, allyHealth.GetString(), { 465, i * 50 + 570, 155, 20 }, this, { 255, 255, 255, 1 }, app->fonts->indicatorsFont));
 				}
 			}
 			for (int i = 0; i < abilityBars.Count(); i++)
@@ -309,11 +313,11 @@ void BattleManager::CreateAbilityMenu()
 			{
 				if (enemies.At(i)->data->GetHealth() > 0)
 				{
-					abilityBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, i + 7, enemies.At(i)->data->name.GetString(), { 250, i * 50 + 550, 155, 20 }, this));
+					abilityBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, i + 7, enemies.At(i)->data->name.GetString(), { 350, i * 50 + 550, 112, 20 }, this));
 
 					SString allyHealth("%i/%i HP", enemies.At(i)->data->GetHealth(), enemies.At(i)->data->GetMaxHealth());
-					abilityBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::BAR, i + 7, "AllyBar", { 250, i * 50 + 575, 112, 9 }, this));
-					abilityInfo.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, i + 7, allyHealth.GetString(), { 360, i * 50 + 575, 112, 9 }, this, { 255, 255, 255, 1 }));
+					abilityBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::BAR, i + 7, "AllyBar", { 350, i * 50 + 575, 112, 9 }, this));
+					abilityInfo.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, i + 7, allyHealth.GetString(), { 465, i * 50 + 570, 112, 9 }, this, { 255, 255, 255, 1 }, app->fonts->indicatorsFont));
 					abilityBars.At(i)->data->type = BarType::HEALTH;
 				}
 			}
@@ -330,7 +334,7 @@ void BattleManager::CreateAbilityMenu()
 
 	case CapybaraTarget::HIMSELF:
 	{
-		abilityBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 10, currentCapybara->data->name.GetString(), { 360, 50 + 550, 155, 20 }, this));
+		abilityBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 10, currentCapybara->data->name.GetString(), { 460, 50 + 550, 112, 20 }, this));
 		currentButton = abilityBtns.start;
 		currentButtons = abilityBtns;
 	}break;
@@ -484,21 +488,21 @@ void BattleManager::CreateTexts()
 
 		//Creating the character LVL text
 		SString lvl("LVL: %i", playerTeam.At(i)->data->GetLVL());
-		playerLevels.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 20 + i, lvl.GetString(), {i * 450 + 150, 40, 155, 20}, this, {255,255,255,1}));
+		playerLevels.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 20 + i, lvl.GetString(), {i * 450 + 150, 40, 155, 20}, this, {255,255,255,1}, app->fonts->indicatorsFont));
 
 		//Creating the health bar
 		playerHealthBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::BAR, 20 + i, "HealthBar", { i * 450 + 15, 60, 112, 9 }, this ));
 		playerHealthBars.At(i)->data->type = BarType::HEALTH;
 		//Creating the health text
 		SString hp("%i/%iHP", playerTeam.At(i)->data->GetHealth(), playerTeam.At(i)->data->GetMaxHealth());
-		playerHeathText.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 20 + i, hp.GetString(), {i * 450 + 130, 60, 155, 20}, this, {255, 255, 255, 1}));
+		playerHeathText.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 20 + i, hp.GetString(), {i * 450 + 128, 60, 155, 20}, this, {255, 255, 255, 1}, app->fonts->indicatorsFont));
 
 		//Creating the mana bar
 		playerManaBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::BAR, 20 + i, "ManaBar", { i * 450 + 15, 85, 112, 12 }, this));
 		playerManaBars.At(i)->data->type = BarType::MANA;
 		//Creating the mana text
 		SString mp("%i/%iMP", playerTeam.At(i)->data->GetMana(), playerTeam.At(i)->data->GetMaxMana());
-		playerManaText.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 20 + i, mp.GetString(), { i * 450 + 130, 85, 155, 20 }, this, { 255, 255, 255, 1 }));
+		playerManaText.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 20 + i, mp.GetString(), { i * 450 + 128, 85, 155, 20 }, this, { 255, 255, 255, 1 }, app->fonts->indicatorsFont));
 		
 		//Creating the status text
 		SString status;
@@ -514,7 +518,7 @@ void BattleManager::CreateTexts()
 		case CapybaraStatus::STUNED: status.Create("Stuned");		break;
 		case CapybaraStatus::TAUNTED: status.Create("Taunted");		break;
 		}
-		playerStatus.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 20 + i, status.GetString(), { i * 450 + 200, 15, 155, 20 }, this, { 255, 255, 255, 1 }));
+		playerStatus.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 20 + i, status.GetString(), { i * 450 + 200, 15, 155, 20 }, this, { 255, 255, 255, 1 }, app->fonts->indicatorsFont));
 	}
 }
 

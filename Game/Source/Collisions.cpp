@@ -94,7 +94,7 @@ bool Collisions::Update()
 
 bool Collisions::PostUpdate()
 {
-	//if (app->GetDebug())
+	if (app->GetDebug())
 		DebugDraw();
 
 	return true;

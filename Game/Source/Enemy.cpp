@@ -18,7 +18,7 @@ Enemy::~Enemy()
 
 bool Enemy::Start()
 {
-	collider = app->colManager->AddCollider({ position.x, position.y, 16, 16 }, Collider::Type::ENEMY, (Module*)app->entMan, this);
+	collider = app->colManager->AddCollider({ position.x - 32, position.y - 32, 128, 128 }, Collider::Type::ENEMY, (Module*)app->entMan, this);
 	return true;
 }
 
@@ -33,8 +33,8 @@ bool Enemy::Draw(Render* render)
 	bool ret = true;
 	if (!isCombat)
 	{
-		if (app->GetDebug())
-			render->DrawRectangle({ position.x, position.y,  20 , 20 }, 255, 255, 0);
+		//if (app->GetDebug())
+			render->DrawRectangle({ position.x, position.y,  64 , 64 }, 255, 0, 0);
 
 		//render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
 	}
@@ -71,7 +71,7 @@ void Enemy::OnCollision(Collider* c1, Collider* c2)
 		{
 			app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene3, 120);
 		}
-		this->Disable();
+		app->colManager->RemoveCollider(collider);
 	}
 
 }
