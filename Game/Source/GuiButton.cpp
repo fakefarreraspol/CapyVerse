@@ -4,7 +4,7 @@
 #include "Audio.h"
 #include "GuiManager.h"
 #include "Fonts.h"
-
+#include "Log.h"
 GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text, SDL_Color color, int textID) : GuiControl(GuiControlType::BUTTON, id)
 {
 	this->bounds = bounds;
@@ -54,7 +54,8 @@ bool GuiButton::Update(float dt)
 		//}
 		//else
 		//	state = GuiControlState::NORMAL;
-
+		
+		//if (pad.a) LOG("TUS MUERTOS MARICON");
 		if (state == GuiControlState::FOCUSED)
 		{
 			if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN || pad.a)

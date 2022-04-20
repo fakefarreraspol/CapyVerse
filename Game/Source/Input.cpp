@@ -171,8 +171,13 @@ bool Input::PreUpdate()
 			
 		}
 	}
-	
-	LOG("inputTimer %2.2f", inputTimer.ReadSec());
+	GamePad& pad = pads[0];
+	if (pad.a)
+	{
+		for (int i = 0; i < 8; i++) LOG("chupapimuñaño");
+	}
+
+	//LOG("inputTimer %2.2f", inputTimer.ReadSec());
 	if ((isInputEnabled == false) && (inputSwitch == true))
 	{
 		inputTimer.Restart();
@@ -260,11 +265,11 @@ bool Input::ShakeController(int id, int duration, float strength)
 
 	return ret;
 }
-const char* Input::GetControllerName(int id) const
+const char* Input::GetControllerName() const
 {
 	// Check if the given id has a valid controller
-	if (id >= 0 && id < MAX_PADS && pads[id].enabled == true && pads[id].controller != nullptr)
-		return SDL_GameControllerName(pads[id].controller);
+	if (pads[0].enabled == true && pads[0].controller != nullptr)
+		return SDL_GameControllerName(pads[0].controller);
 
 	return "unplugged";
 }
@@ -272,22 +277,21 @@ void Input::HandleDeviceConnection(int index)
 {
 	if (SDL_IsGameController(index))
 	{
-		for (int i = 0; i < MAX_PADS; ++i)
-		{
-			GamePad& pad = pads[i];
+		
+		GamePad& pad = pads[0];
 
-			if (pad.enabled == false)
+		if (pad.enabled == false)
+		{
+			if (pad.controller = SDL_GameControllerOpen(index))
 			{
-				if (pad.controller = SDL_GameControllerOpen(index))
-				{
-					LOG("Found a gamepad with id %i named %s", i, SDL_GameControllerName(pad.controller));
-					pad.enabled = true;
-					pad.left_dz = pad.right_dz = 0.1f;
-					pad.haptic = SDL_HapticOpen(index);
-					if (pad.haptic != nullptr) LOG("... gamepad has force feedback capabilities");
-					pad.index = SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(pad.controller));
-				}
+				LOG("Found a gamepad with id %i named %s", 0, SDL_GameControllerName(pad.controller));
+				pad.enabled = true;
+				pad.left_dz = pad.right_dz = 0.1f;
+				pad.haptic = SDL_HapticOpen(index);
+				if (pad.haptic != nullptr) LOG("... gamepad has force feedback capabilities");
+				pad.index = SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(pad.controller));
 			}
+		
 			else LOG("notfound %s");
 		}
 	}
@@ -296,94 +300,121 @@ void Input::HandleDeviceConnection(int index)
 void Input::HandleDeviceRemoval(int index)
 {
 	// If an existing gamepad has the given index, deactivate all SDL device functionallity
-	for (int i = 0; i < MAX_PADS; ++i)
+	GamePad& pad = pads[0];
+	if (pad.enabled && pad.index == index)
 	{
-		GamePad& pad = pads[i];
-		if (pad.enabled && pad.index == index)
-		{
-			SDL_HapticClose(pad.haptic);
-			SDL_GameControllerClose(pad.controller);
-			memset(&pad, 0, sizeof(GamePad));
-		}
+		SDL_HapticClose(pad.haptic);
+		SDL_GameControllerClose(pad.controller);
+		memset(&pad, 0, sizeof(GamePad));
 	}
+	
 }
 
 void Input::UpdateGamepadsInput()
 {
 	// Iterate through all active gamepads and update all input data
-	for (int i = 0; i < MAX_PADS; ++i)
+	GamePad& pad = pads[0];
+
+	if (pad.enabled == true)
 	{
-		GamePad& pad = pads[i];
-
-		if (pad.enabled == true)
+		if (isInputEnabled)
 		{
-			if (isInputEnabled)
+			pad.a = SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_A) == 1;
+			if (SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_A) == 1)
 			{
-				pad.a = SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_A) == 1;
-				if (SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_A) == 1) 
-				{ 
-					isInputEnabled = false; 
-				}
-				
-				pad.b = SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_B) == 1;
-				if (SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_B) == 1) isInputEnabled = false;
-				
-				pad.x = SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_X) == 1;
-				if (SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_X) == 1) isInputEnabled = false;
-				
-				pad.y = SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_Y) == 1;
-				if (SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_Y) == 1) isInputEnabled = false;
-				
-				pad.l1 = SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == 1;
-				if (SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == 1) isInputEnabled = false;
-				
-				pad.r1 = SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) == 1;
-				if (SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) == 1) isInputEnabled = false;
-				
-				pad.l3 = SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_LEFTSTICK) == 1;
-				if (SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_LEFTSTICK) == 1) isInputEnabled = false;
-				
-				pad.r3 = SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_RIGHTSTICK) == 1;
-				if (SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_RIGHTSTICK) == 1) isInputEnabled = false;
-				
-				pad.up = SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_DPAD_UP) == 1;
-				if (SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_DPAD_UP) == 1) isInputEnabled = false;
-				
-				pad.down = SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_DPAD_DOWN) == 1;
-				if (SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_DPAD_DOWN) == 1) isInputEnabled = false;
-				
-				pad.left = SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_DPAD_LEFT) == 1;
-				if (SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_DPAD_LEFT) == 1) isInputEnabled = false;
-				
-				pad.right = SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_DPAD_RIGHT) == 1;
-				if (SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_DPAD_RIGHT) == 1) isInputEnabled = false;
-				
-				pad.start = SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_START) == 1;
-				if (SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_START) == 1) isInputEnabled = false;
-				
-				pad.guide = SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_GUIDE) == 1;
-				if (SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_GUIDE) == 1) isInputEnabled = false;
-				
-				pad.back = SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_BACK) == 1;
-				if (SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_BACK) == 1) isInputEnabled = false;
-
+				isInputEnabled = false;
 			}
 			
-			pad.l2 = float(SDL_GameControllerGetAxis(pad.controller, SDL_CONTROLLER_AXIS_TRIGGERLEFT)) / 32767.0f;
-			pad.r2 = float(SDL_GameControllerGetAxis(pad.controller, SDL_CONTROLLER_AXIS_TRIGGERRIGHT)) / 32767.0f;
-			pad.left_x = float(SDL_GameControllerGetAxis(pad.controller, SDL_CONTROLLER_AXIS_LEFTX)) / 32767.0f;
-			pad.left_y = float(SDL_GameControllerGetAxis(pad.controller, SDL_CONTROLLER_AXIS_LEFTY)) / 32767.0f;
-			pad.right_x = float(SDL_GameControllerGetAxis(pad.controller, SDL_CONTROLLER_AXIS_RIGHTX)) / 32767.0f;
-			pad.right_y = float(SDL_GameControllerGetAxis(pad.controller, SDL_CONTROLLER_AXIS_RIGHTY)) / 32767.0f;
+			pad.b = SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_B) == 1;
+			if (SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_B) == 1) isInputEnabled = false;
 
-			// Apply deadzone. All values below the deadzone will be discarded
-			pad.left_x = (fabsf(pad.left_x) > pad.left_dz) ? pad.left_x : 0.0f;
-			pad.left_y = (fabsf(pad.left_y) > pad.left_dz) ? pad.left_y : 0.0f;
-			pad.right_x = (fabsf(pad.right_x) > pad.right_dz) ? pad.right_x : 0.0f;
-			pad.right_y = (fabsf(pad.right_y) > pad.right_dz) ? pad.right_y : 0.0f;
+			pad.x = SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_X) == 1;
+			if (SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_X) == 1) isInputEnabled = false;
 
-			if (pad.rumble_countdown > 0)
-				pad.rumble_countdown--;
+			pad.y = SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_Y) == 1;
+			if (SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_Y) == 1) isInputEnabled = false;
+
+			pad.l1 = SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == 1;
+			if (SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == 1) isInputEnabled = false;
+
+			pad.r1 = SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) == 1;
+			if (SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) == 1) isInputEnabled = false;
+
+			pad.l3 = SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_LEFTSTICK) == 1;
+			if (SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_LEFTSTICK) == 1) isInputEnabled = false;
+
+			pad.r3 = SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_RIGHTSTICK) == 1;
+			if (SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_RIGHTSTICK) == 1) isInputEnabled = false;
+
+			pad.up = SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_DPAD_UP) == 1;
+			if (SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_DPAD_UP) == 1) isInputEnabled = false;
+
+			pad.down = SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_DPAD_DOWN) == 1;
+			if (SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_DPAD_DOWN) == 1) isInputEnabled = false;
+
+			pad.left = SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_DPAD_LEFT) == 1;
+			if (SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_DPAD_LEFT) == 1) isInputEnabled = false;
+
+			pad.right = SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_DPAD_RIGHT) == 1;
+			if (SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_DPAD_RIGHT) == 1) isInputEnabled = false;
+
+			pad.start = SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_START) == 1;
+			if (SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_START) == 1) isInputEnabled = false;
+
+			pad.guide = SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_GUIDE) == 1;
+			if (SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_GUIDE) == 1) isInputEnabled = false;
+
+			pad.back = SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_BACK) == 1;
+			if (SDL_GameControllerGetButton(pad.controller, SDL_CONTROLLER_BUTTON_BACK) == 1) isInputEnabled = false;
+
 		}
+		else
+		{
+			pad.a = false;
+			pad.b = false;
+
+			pad.x = false;
+
+			pad.y = false;
+
+			pad.l1 = false;
+
+			pad.r1 = false;
+
+			pad.l3 = false;
+
+			pad.r3 = false;
+
+			pad.up = false;
+
+			pad.down = false;
+			pad.left = false;
+
+			pad.right = false;
+
+			pad.start = false;
+
+			pad.guide = false;
+
+			pad.back = false;
+
+
+
+		}
+		pad.l2 = float(SDL_GameControllerGetAxis(pad.controller, SDL_CONTROLLER_AXIS_TRIGGERLEFT)) / 32767.0f;
+		pad.r2 = float(SDL_GameControllerGetAxis(pad.controller, SDL_CONTROLLER_AXIS_TRIGGERRIGHT)) / 32767.0f;
+		pad.left_x = float(SDL_GameControllerGetAxis(pad.controller, SDL_CONTROLLER_AXIS_LEFTX)) / 32767.0f;
+		pad.left_y = float(SDL_GameControllerGetAxis(pad.controller, SDL_CONTROLLER_AXIS_LEFTY)) / 32767.0f;
+		pad.right_x = float(SDL_GameControllerGetAxis(pad.controller, SDL_CONTROLLER_AXIS_RIGHTX)) / 32767.0f;
+		pad.right_y = float(SDL_GameControllerGetAxis(pad.controller, SDL_CONTROLLER_AXIS_RIGHTY)) / 32767.0f;
+
+		// Apply deadzone. All values below the deadzone will be discarded
+		pad.left_x = (fabsf(pad.left_x) > pad.left_dz) ? pad.left_x : 0.0f;
+		pad.left_y = (fabsf(pad.left_y) > pad.left_dz) ? pad.left_y : 0.0f;
+		pad.right_x = (fabsf(pad.right_x) > pad.right_dz) ? pad.right_x : 0.0f;
+		pad.right_y = (fabsf(pad.right_y) > pad.right_dz) ? pad.right_y : 0.0f;
+
+		if (pad.rumble_countdown > 0)
+			pad.rumble_countdown--;
 	}
 }
