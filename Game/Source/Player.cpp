@@ -11,10 +11,10 @@
 Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType::PLAYER, id, name, position)
 {
 	idle.PushBack({ 0,0,66,66 });
-	walkRight.PushBack( { 66, 66, 66 * 2, 66 });
-	walkRight.PushBack( { 66 * 2, 66, 66 * 3, 66 });
-	walkRight.PushBack( { 66 * 3, 66, 66 * 4, 66 });
-	walkRight.PushBack( { 66 * 4, 66, 66 * 5, 66 });
+	walkRight.PushBack( { 66, 66* 2, 66, 66 });
+	walkRight.PushBack( { 66 * 2, 66 *3, 66, 66 });
+	walkRight.PushBack( { 66 * 3, 66 * 4, 66, 66 });
+	walkRight.PushBack( { 66 * 4, 66 * 5, 66, 66 });
 	walkRight.loop = true;
 	walkRight.speed = 0.1f;
 	currentAnim = &idle;
