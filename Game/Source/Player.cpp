@@ -133,25 +133,52 @@ void Player::UpdateInput(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		position.x -= mov;
-		currentAnim = &walkLeft;
+		if (currentAnim != &walkLeft)
+		{
+			walkLeft.Reset();
+			currentAnim = &walkLeft;
+
+		}
 	}
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		position.x += mov;
-		currentAnim = &walkRight;
+		if (currentAnim != &walkRight)
+		{
+			walkRight.Reset();
+			currentAnim = &walkRight;
+
+		}
 	}
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		position.y -= mov;
-		currentAnim = &walkUp;
+		if (currentAnim != &walkUp)
+		{
+			walkUp.Reset();
+			currentAnim = &walkUp;
+
+		}
 	}
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
 		position.y += mov;
-		currentAnim = &walkDown;
+		if (currentAnim != &walkDown)
+		{
+			walkDown.Reset();
+			currentAnim = &walkDown;
+		}
 	}
-
-
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE
+		&& app->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && pad.left_x == 0.0f || pad.left == false
+		&& pad.left_x == 0.0f || pad.right == false && pad.left_y == 0.0f || pad.down == false && pad.left_y == 0.0f || pad.up == false)
+	{
+		if (currentAnim != &idle)
+		{
+			idle.Reset();
+			currentAnim = &idle;
+		}
+	}
 
 	//// GAMEPAD SUPPORT
 
@@ -172,19 +199,42 @@ void Player::UpdateInput(float dt)
 	if (pad.left_x < 0.0f || pad.left == true)
 	{
 		position.x -= speed * dt * -pad.left_x;
+		if (currentAnim != &walkLeft)
+		{
+			walkLeft.Reset();
+			currentAnim = &walkLeft;
+
+		}
 	}
 	if (pad.left_x > 0.0f || pad.right == true)
 	{
 		position.x += speed * dt * pad.left_x;
+		if (currentAnim != &walkRight)
+		{
+			walkRight.Reset();
+			currentAnim = &walkRight;
+
+		}
 	}
 	if (pad.left_y > 0.0f || pad.down == true)
 	{
 		position.y += speed * dt * pad.left_y;
+		if (currentAnim != &walkDown)
+		{
+			walkDown.Reset();
+			currentAnim = &walkDown;
+		}
 	}
 
 	if (pad.left_y < 0.0f || pad.up == true)
 	{
 		position.y -= speed * dt * -pad.left_y;
+		if (currentAnim != &walkUp)
+		{
+			walkUp.Reset();
+			currentAnim = &walkUp;
+
+		}
 	}
 		
 	
