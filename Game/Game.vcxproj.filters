@@ -309,7 +309,6 @@
     <ClInclude Include="Source\BattleScene2.h">
       <Filter>Modules\Gameplay\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Source\BattleScene3.h" />
     <ClInclude Include="Source\Animation.h">
       <Filter>Utils</Filter>
     </ClInclude>
@@ -335,6 +334,9 @@
     </ClInclude>
     <ClInclude Include="Source\Pause.h">
       <Filter>Modules\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BattleScene3.h">
+      <Filter>Modules\Gameplay\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
