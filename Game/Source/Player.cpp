@@ -10,7 +10,6 @@
 
 Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType::PLAYER, id, name, position)
 {
-	collider = app->colManager->AddCollider({ position.x, position.y, 64, 64 }, Collider::Type::PLAYER, (Module*)app->entMan, this);
 }
 
 Player::~Player()
@@ -47,7 +46,14 @@ void Player::UpdateCamera()
 	app->win->GetWindowSize(w, h);
 	app->render->camera.x = w / 2 - position.x;
 	app->render->camera.y = h / 2 - position.y;
-	
+	if (w / 2 - position.x < 0)
+	{
+		app->render->camera.y = 0;
+	}
+	if (h / 2 - position.y < 0)
+	{
+		app->render->camera.x = 0;
+	}
 
 }
 
@@ -286,6 +292,5 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 
 bool Player::CleanUp()
 {
-	app->colManager->RemoveCollider(collider);
 	return true;
 }

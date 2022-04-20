@@ -14,7 +14,6 @@
 
 NPC::NPC(iPoint position, uint32 id, const char* name) : Entity(EntityType::NPC, id, name, position)
 {
-	collider = app->colManager->AddCollider({ position.x - 64, position.y - 64, 128, 128 }, Collider::Type::NPC, (Module*)app->entMan, this);
 	dialog = nullptr;
 }
 
@@ -63,9 +62,6 @@ void NPC::OnCollision(Collider* c1, Collider* c2)
 
 bool NPC::CleanUp()
 {
-	delete texture;
-	delete dialog;
-	app->colManager->RemoveCollider(collider);
 	return true;
 }
 

@@ -89,6 +89,6 @@ void Enemy::AddCapybaraToBatle(Capybara* capybara)
 
 bool Enemy::CleanUp()
 {
-	app->colManager->RemoveCollider(collider);
+	
 	return true;
 }
