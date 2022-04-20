@@ -217,7 +217,7 @@ void Player::SetCombat(bool value)
 
 void Player::OnCollision(Collider* c1, Collider* c2)
 {
-	if (!app->GetDebug())
+	if (!app->GetDebug() || c2->type == Collider::NPC)
 	{
 		if (c1->type == Collider::PLAYER)
 		{
