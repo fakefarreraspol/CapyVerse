@@ -12,10 +12,8 @@ class GuiSlider : public GuiControl
 public:
 	GuiSlider(uint32 id, SDL_Rect bounds, const char* text);
 	virtual ~GuiSlider();
-	
-	bool SetBar(SDL_Rect bar);
-	bool SetValues(int max, int min, int initial);
 
+	bool SetValues(int max, int min, int value);
 	bool Update(float dt);
 	bool Draw(Render* render);
 
@@ -28,6 +26,7 @@ private:
 	bool horizontal = true;
 	int maxVal;
 	int minVal;
+	
 };
 
 #endif

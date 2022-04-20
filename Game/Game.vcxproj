@@ -97,6 +97,8 @@
   <ItemGroup>
     <ClCompile Include="Source\BattleScene1.cpp" />
     <ClCompile Include="Source\BattleManager.cpp" />
+    <ClCompile Include="Source\BattleScene2.cpp" />
+    <ClCompile Include="Source\BattleScene3.cpp" />
     <ClCompile Include="Source\Capybara.cpp" />
     <ClCompile Include="Source\Chadbara.cpp" />
     <ClCompile Include="Source\Collider.cpp" />
@@ -125,11 +127,13 @@
     <ClCompile Include="Source\Map.cpp" />
     <ClCompile Include="Source\NPC.cpp" />
     <ClCompile Include="Source\MainMenu.cpp" />
+    <ClCompile Include="Source\Pause.cpp" />
     <ClCompile Include="Source\PerfTimer.cpp" />
     <ClCompile Include="Source\Pinkbara.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\Fonts.cpp" />
     <ClCompile Include="Source\Punkibara.cpp" />
+    <ClCompile Include="Source\QuestManager.cpp" />
     <ClCompile Include="Source\Rainbowbara.cpp" />
     <ClCompile Include="Source\Retrobara.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
@@ -142,6 +146,8 @@
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\BattleScene1.h" />
     <ClInclude Include="Source\BattleManager.h" />
+    <ClInclude Include="Source\BattleScene2.h" />
+    <ClInclude Include="Source\BattleScene3.h" />
     <ClInclude Include="Source\Capybara.h" />
     <ClInclude Include="Source\Chadbara.h" />
     <ClInclude Include="Source\Collider.h" />
@@ -165,6 +171,7 @@
     <ClInclude Include="Source\GuiText.h" />
     <ClInclude Include="Source\Intro.h" />
     <ClInclude Include="Source\MainMenu.h" />
+    <ClInclude Include="Source\Pause.h" />
     <ClInclude Include="Source\Pinkbara.h" />
     <ClInclude Include="Source\Retrobara.h" />
     <ClInclude Include="Source\Item.h" />
@@ -175,6 +182,8 @@
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\Fonts.h" />
     <ClInclude Include="Source\Punkibara.h" />
+    <ClInclude Include="Source\Quest.h" />
+    <ClInclude Include="Source\QuestManager.h" />
     <ClInclude Include="Source\Queue.h" />
     <ClInclude Include="Source\Rainbowbara.h" />
     <ClInclude Include="Source\Scene.h" />

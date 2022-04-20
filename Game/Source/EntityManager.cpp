@@ -17,7 +17,7 @@
 #include "Pinkbara.h"
 #include "Simpbara.h"
 #include "Chadbara.h"
-
+#include "Pause.h"
 EntityManager::EntityManager(bool startEnabled) : Module(startEnabled)
 {
 	name.Create("entitymanager");
@@ -144,7 +144,8 @@ bool EntityManager::Update(float dt)
 	accumulatedTime += dt;
 	if (accumulatedTime >= updateMsCycle) doLogic = true;
 
-	UpdateAll(dt, doLogic);
+	if(!app->pause)
+		UpdateAll(dt, doLogic);
 
 	if (doLogic == true)
 	{

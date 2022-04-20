@@ -56,7 +56,8 @@ bool Audio::Awake(pugi::xml_node& config)
 		active = false;
 		ret = true;
 	}
-
+	volMusic = Mix_VolumeMusic(config.child("music").attribute("value").as_int());
+	volFX = Mix_Volume(-1, config.child("fx").attribute("value").as_int());
 	return ret;
 }
 
@@ -84,6 +85,14 @@ bool Audio::CleanUp()
 	SDL_QuitSubSystem(SDL_INIT_AUDIO);
 
 	return true;
+}
+
+bool Audio::Update(float dt)
+{
+	bool ret = true;
+	Mix_VolumeMusic(volMusic);
+	Mix_Volume(-1, volFX);
+	return ret;
 }
 
 // Play a music file
@@ -181,33 +190,48 @@ bool Audio::PlayFx(unsigned int id, int repeat)
 bool Audio::ChangeMusic(int Id, float fadeInTime, float fadeOutTime)
 {
 	// Todo 1 (done): Complete the music switcher (an enumerator on Audio.h is given with all the playlist)
-	/*switch (Id)
+	switch (Id)
 	{
-	case OFF:
+	case 0:
 	{
 		Mix_HaltMusic();
-		break;
-	}
-	case EL_BOOM:
+	}break;
+	case 1:
 	{
 		Mix_ResumeMusic();
 
-		app->audio->PlayMusic("Assets/Audio/Music/ElBoom.ogg", fadeInTime, fadeOutTime);
+		app->audio->PlayMusic("Assets/Audio/Music/intro.wav", fadeInTime, fadeOutTime);
 
-		break;
-	}
-	case PRENDE_UN_PORRO:
+	}break;
+	case 2:
 	{
 		Mix_ResumeMusic();
 
-		app->audio->PlayMusic("Assets/Audio/Music/PrendeUnPorro.wav", fadeInTime, fadeOutTime);
+		app->audio->PlayMusic("Assets/Audio/Music/backgroundForest.ogg", fadeInTime, fadeOutTime);
 
-		break;
+	}break;
+	case 3:
+	{
+		Mix_ResumeMusic();
+
+		app->audio->PlayMusic("Assets/Audio/Music/battleMusic1.ogg", fadeInTime, fadeOutTime);
+	}break;
+	case 4:
+	{
+		Mix_ResumeMusic();
+
+		app->audio->PlayMusic("Assets/Audio/Music/bossFight1.ogg", fadeInTime, fadeOutTime);
+	}break;
+	case 5:
+	{
+		Mix_ResumeMusic();
+
+		app->audio->PlayMusic("Assets/Audio/Music/houseMusic.wav", fadeInTime, fadeOutTime);
+	}break;
 	}
-	}*/
 	Mix_ResumeMusic();
 
-	app->audio->PlayMusic("Output/Assets/Audio/Music/orslok-rojuu-tofu-delivery.wav", fadeInTime, fadeOutTime);
+	
 
 
 	

@@ -16,6 +16,7 @@
 #include "EntityManager.h"
 #include "GuiManager.h"
 #include "DialogManager.h"
+#include "Pause.h"
 
 #include "Collisions.h"
 #include "TaskQueue.h"
@@ -24,6 +25,8 @@
 #include "BattleManager.h"
 #include "Fonts.h"
 #include "BattleScene1.h"
+#include "BattleScene2.h"
+#include "BattleScene3.h"
 #include "EOBScene.h"
 #include "Map.h"
 
@@ -48,14 +51,16 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new Scene(false);
 	battleManager = new BattleManager(false);
 	battleScene1 = new BattleScene1(false);
+	battleScene2 = new BattleScene2(false);
+	battleScene3 = new BattleScene3(false);
 	eobScene = new EOBScene(false);
+	pauseMenu = new Pause(false);
 	
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(win);
 	AddModule(input);
-	AddModule(fadeToBlack);
 	AddModule(mapManager);
 	AddModule(tex);
 	AddModule(fonts);
@@ -64,12 +69,16 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(mainMenu);
 	AddModule(scene);
 	AddModule(battleScene1);
+	AddModule(battleScene2);
+	AddModule(battleScene3);
 	AddModule(battleManager);
 	AddModule(eobScene);
 	AddModule(dialogManager);
 	AddModule(entMan);
+	AddModule(pauseMenu);
 	AddModule(guiManager);
 	AddModule(colManager);
+	AddModule(fadeToBlack);
 	
 	// Render last to swap buffer
 	AddModule(render);

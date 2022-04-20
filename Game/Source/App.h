@@ -30,7 +30,10 @@ class Collisions;
 class Task;
 class FadeToBlack;
 class Fonts;
+class Pause;
 class BattleScene1;
+class BattleScene2;
+class BattleScene3;
 class EOBScene;
 class Map;
 
@@ -77,7 +80,6 @@ private:
 	// NOTE: It receives config document
 	pugi::xml_node LoadConfig(pugi::xml_document&) const;
 
-
 	// Call modules before each loop iteration
 	void PrepareUpdate();
 
@@ -117,9 +119,12 @@ public:
 	Collisions* colManager;
 	Task* taskManager;
 
+	Pause* pauseMenu;
 	FadeToBlack* fadeToBlack;
 	BattleManager* battleManager;
 	BattleScene1* battleScene1;
+	BattleScene2* battleScene2;
+	BattleScene3* battleScene3;
 	EOBScene* eobScene;
 
 	bool fpsCap = false;

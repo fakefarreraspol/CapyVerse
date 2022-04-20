@@ -27,6 +27,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	bool Update(float dt);
+
 	// Play a music file
 	bool PlayMusic(const char* path, float fadeTime = DEFAULT_MUSIC_FADE_TIME, float fadeOutTime = DEFAULT_MUSIC_FADE_TIME);
 
@@ -47,7 +49,8 @@ private:
 	_Mix_Music* music;
 	List<Mix_Chunk *>	fx;
 public:
-
+	int volMusic;
+	int volFX;
 	bool playMusicSpatially = false;
 };
 

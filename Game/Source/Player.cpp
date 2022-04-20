@@ -197,112 +197,32 @@ void Player::UpdateInput(float dt)
 	//		app->input->ShakeController(0, 12, 0.33f);
 	//	}
 
-	//	// Debug key for gamepad rumble testing purposes
-	//	if (app->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-	//	{
-	//		app->input->ShakeController(0, 36, 0.66f);
-	//	}
+		// Implement gamepad support
+		LOG("%2.2f", pad.left_x);
+		LOG("%2.2f", pad.left_y);
+		if (pad.left_x < 0.0f || pad.left == true)
+		{
+			position.x -= speed * dt * -pad.left_x;
+			
+		}
 
-	//	// Debug key for gamepad rumble testing purposes
-	//	if (app->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
-	//	{
-	//		app->input->ShakeController(0, 60, 1.0f);
-	//	}
+		if (pad.left_x > 0.0f || pad.right == true)
+		{
+			position.x += speed * dt *pad.left_x;
+			
+		}
 
+		if (pad.left_y > 0.0f || pad.down == true)
+		{
+			position.y += speed * dt * pad.left_y;
+			
+		}
 
-	//	// Implement gamepad support
-
-	//	if (pad.left_x < 0.0f || pad.left == true)
-	//	{
-	//		position.x -= speed;
-	//		/*if (currentAnimation != &leftAnim)
-	//		{
-	//			leftAnim.Reset();
-	//			currentAnimation = &leftAnim;
-	//			currentIdleAnim = leftIdleAnim;
-	//		}*/
-	//		lastKeyPressed = SDL_SCANCODE_A;
-
-	//		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && isStuck)
-	//		{
-	//			position.y -= speed;
-	//			isStuck = false;
-	//		}
-	//		else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && isStuck)
-	//		{
-	//			position.y += speed;
-	//			isStuck = false;
-	//		}
-	//	}
-
-	//	if (pad.left_x > 0.0f || pad.right == true)
-	//	{
-	//		position.x += speed;
-	//		/*if (currentAnimation != &rightAnim)
-	//		{
-	//			rightAnim.Reset();
-	//			currentAnimation = &rightAnim;
-	//			currentIdleAnim = rightIdleAnim;
-	//		}*/
-	//		lastKeyPressed = SDL_SCANCODE_D;
-
-	//		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && isStuck)
-	//		{
-	//			position.y -= speed;
-	//			isStuck = false;
-	//		}
-	//		else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && isStuck)
-	//		{
-	//			position.y += speed;
-	//			isStuck = false;
-	//		}
-	//	}
-
-	//	if (pad.left_y > 0.0f || pad.down == true)
-	//	{
-	//		position.y += speed;
-	//		/*if (currentAnimation != &downAnim)
-	//		{
-	//			downAnim.Reset();
-	//			currentAnimation = &downAnim;
-	//			currentIdleAnim = downIdleAnim;
-	//		}*/
-	//		lastKeyPressed = SDL_SCANCODE_S;
-
-	//		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isStuck)
-	//		{
-	//			position.x -= speed;
-	//			isStuck = false;
-	//		}
-	//		else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isStuck)
-	//		{
-	//			position.x += speed;
-	//			isStuck = false;
-	//		}
-	//	}
-
-	//	if (pad.left_y < 0.0f || pad.up == true)
-	//	{
-	//		position.y -= speed;
-	//		/*if (currentAnimation != &upAnim)
-	//		{
-	//			upAnim.Reset();
-	//			currentAnimation = &upAnim;
-	//			currentIdleAnim = upIdleAnim;
-	//		}*/
-	//		lastKeyPressed = SDL_SCANCODE_W;
-
-	//		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isStuck)
-	//		{
-	//			position.x -= speed;
-	//			isStuck = false;
-	//		}
-	//		else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isStuck)
-	//		{
-	//			position.x += speed;
-	//			isStuck = false;
-	//		}
-	//	}
+		if (pad.left_y < 0.0f || pad.up == true)
+		{
+			position.y -= speed * dt * -pad.left_y;
+			
+		}
 }
 
 List<Capybara*>& Player::GetBattleTeam()

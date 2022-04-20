@@ -22,10 +22,12 @@
 #include "Dialog.h"
 #include "DialogManager.h"
 #include "DialogNode.h"
-
+#include "Pause.h"
+#include "Audio.h"
 
 #include "Defs.h"
 #include "Log.h"
+#include "NPC.h"
 
 Scene::Scene(bool startEnabled) : Module(startEnabled)
 {
@@ -41,7 +43,7 @@ bool Scene::Awake(pugi::xml_node& node)
 {
 	LOG("Loading Scene");
 	bool ret = true;
-
+	
 	player = (Player*)app->entMan->CreateEntity(EntityType::PLAYER, 1, { 0, 0 }, "Player");
 
 	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 2, { 100, 150 }, "Chinabara"));
@@ -49,6 +51,12 @@ bool Scene::Awake(pugi::xml_node& node)
 	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 4, { 100, 350 }, "Rainbowbara"));
 
 	player->Disable();
+	NPCs.Add(app->entMan->CreateEntity(EntityType::NPC, 10, { 200,200 }, "NPC"));
+	NPCs.Add(app->entMan->CreateEntity(EntityType::NPC, 10, { 350,500 }, "NPC"));
+	NPCs.Add(app->entMan->CreateEntity(EntityType::NPC, 10, { 400,120 }, "NPC"));
+
+	
+
 
 	return ret;
 }
@@ -56,6 +64,7 @@ bool Scene::Awake(pugi::xml_node& node)
 // Called before the first frame
 bool Scene::Start()
 {
+	app->pauseMenu->Enable();
 	player->Enable();
 	player->SetCombat(false);
 	app->battleManager->SetPlayer(player);
@@ -65,8 +74,8 @@ bool Scene::Start()
 		NPCs.At(i)->data->Enable();
 	}
 	app->mapManager->Load("1-1.tmx");
-	app->entMan->CreateEntity(EntityType::NPC, 0, { 200,200 }, "NPC");
-
+	
+	app->audio->ChangeMusic(2);
 	return true;
 }
 
@@ -80,26 +89,7 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
 	app->mapManager->Draw();
-	
-	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-		app->fadeToBlack->MFadeToBlack(this, (Module*)app->battleScene1, 120);
 
-	//app->guiManager->Draw();
-
-
-	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
-	{
-		
-		app->audio->PlayMusicSpatially({ 200, 200 });
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
-	{
-		LOG("W");
-		app->audio->PlayMusic("Assets/Audio/Music/orslok-rojuu-tofu-delivery.wav");
-		//app->audio->ChangeMusic(2);
-	}
-	
 	return true;
 }
 
@@ -108,8 +98,7 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
-	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
+	
 
 	return ret;
 }
@@ -125,6 +114,6 @@ bool Scene::CleanUp()
 	LOG("Freeing scene");
 
 	app->guiManager->Disable();
-
+	app->pauseMenu->Disable();
 	return true;
 }

@@ -11,10 +11,14 @@
 #include "EntityManager.h"
 #include "GuiText.h"
 #include "GuiBar.h"
+#include "Textures.h"
 
 #include "Enemy.h"
 #include "Capybara.h"
 #include "Player.h"
+#include "Pause.h"
+
+#include "Audio.h"
 
 BattleManager::BattleManager(bool startEnabled) : Module(startEnabled)
 {
@@ -38,8 +42,8 @@ bool BattleManager::Start()
 	bool ret = true;
 
 	app->guiManager->Enable();
-	
-	
+	battlewonSFX = app->audio->LoadFx("Assets/Audio/Fx/battle-won.wav");
+	app->pauseMenu->Enable();
 	attackBtn =	(GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 0, "Attack", { 135, 585, 75, 21 }, this);
 	abilityBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Ability", { 135, 615, 75, 21 }, this);
 	inventoryBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Inventory", { 135, 645, 75, 21 }, this);
@@ -77,7 +81,7 @@ bool BattleManager::Start()
 
 	CreateTexts();
 
-
+	arrow = app->tex->Load("Assets/Menus/arrow.png");
 
 	return ret;
 }
@@ -145,7 +149,7 @@ bool BattleManager::Update(float dt)
 {
 	bool ret = true;
 	
-	if (turn == Turn::PLAYER)
+	if (turn == Turn::PLAYER && !app->pause)
 	{
 		UpdateInput();
 	}
@@ -165,13 +169,13 @@ void BattleManager::Draw()
 {
 	//app->guiManager->Draw();
 
-	int posX = currentCapybara->data->GetPosition().x;
+	int posX = currentCapybara->data->GetPosition().x - 30;
 	int posY = currentCapybara->data->GetPosition().y + SELECT_OFFSET;
-	app->render->DrawCircle(posX, posY, 10, 0, 255, 0);
+	app->render->DrawTexture(arrow, posX, posY);
 
-	int btnX = currentButton->data->bounds.x;
+	int btnX = currentButton->data->bounds.x - 30;
 	int btnY = currentButton->data->bounds.y;
-	app->render->DrawCircle(btnX, btnY, 10, 0, 255, 0);
+	app->render->DrawTexture(arrow, btnX, btnY);
 }
 
 void BattleManager::UpdatePlayerInfo()
@@ -376,6 +380,8 @@ bool BattleManager::CleanUp()
 	bool ret = true;
 	app->guiManager->Disable();
 
+	app->tex->UnLoad(arrow);
+
 	enemies.Clear();
 	playerTeam.Clear();
 	
@@ -397,7 +403,7 @@ bool BattleManager::CleanUp()
 
 	menuBtns.Clear();
 
-
+	app->pauseMenu->Disable();
 	return ret;
 }
 

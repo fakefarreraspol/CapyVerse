@@ -2,8 +2,9 @@
 
 #include "App.h"
 #include "Capybara.h"
+#include "DialogManager.h"
 
-Enemy::Enemy(iPoint position, uint32 id, const char* name) : Entity(EntityType::ENEMY, id, name, position)
+Enemy::Enemy(iPoint position, uint32 id, const char* name) : NPC(position, id, name)
 {
 }
 
@@ -42,6 +43,11 @@ void Enemy::SetCombat(bool value)
 List<Capybara*>& Enemy::GetBattleTeam()
 {
 	return battleTeam;
+}
+
+void Enemy::OnCollision(Collider* c1, Collider* c2)
+{
+	app->dialogManager->SetActiveDialog(dialog);
 }
 
 void Enemy::AddCapybaraToBatle(Capybara* capybara)
