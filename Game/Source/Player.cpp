@@ -42,18 +42,13 @@ bool Player::Update(float dt)
 
 void Player::UpdateCamera()
 {
-	if (position.y <= 0)
-	{
-		uint w, h;
-		app->win->GetWindowSize(w, h);
-		app->render->camera.x = w / 2 - position.x;
-		app->render->camera.y = h / 2 - position.y;
-	}
-	else
-	{
-		app->render->camera.x = 0;
-		app->render->camera.y = 0;
-	}
+
+	uint w, h;
+	app->win->GetWindowSize(w, h);
+	app->render->camera.x = w / 2 - position.x;
+	app->render->camera.y = h / 2 - position.y;
+	
+
 }
 
 bool Player::Draw(Render* render)

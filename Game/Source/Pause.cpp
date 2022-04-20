@@ -109,6 +109,7 @@ bool Pause::PreUpdate()
 // Called each loop iteration
 bool Pause::Update(float dt)
 {
+	GamePad& pad = app->input->pads[0];
 	if (app->pause)
 	{
 		vsyncChkbx->checked = app->render->vsync;
@@ -183,7 +184,7 @@ bool Pause::Update(float dt)
 		app->render->DrawRectangle({ 540, 210, 195, 300 }, 170, 170, 170, 120);
 		app->render->DrawTexture(arrow, currentControl->data->bounds.x - 30, currentControl->data->bounds.y - 3);
 	}
-	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || pad.start)
 	{
 		app->pause = true;
 		for (int i = 0; i < menuBtns.Count(); i++)
