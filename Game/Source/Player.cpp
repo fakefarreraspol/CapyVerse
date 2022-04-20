@@ -8,8 +8,7 @@
 
 Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType::PLAYER, id, name, position)
 {
-	collider = app->colManager->AddCollider({ position.x, position.y, 16, 16 }, Collider::Type::PLAYER, (Module*)app->entMan, this);
-	
+	collider = app->colManager->AddCollider({ position.x, position.y, 64, 64 }, Collider::Type::PLAYER, (Module*)app->entMan, this);
 }
 
 Player::~Player()
@@ -37,12 +36,18 @@ bool Player::Draw(Render* render)
 	bool ret = true;
 	if (!isBattle)
 	{
-		if(app->GetDebug())
-			render->DrawRectangle({ position.x, position.y,  20 , 20 }, 255, 255, 0);
+		//if(app->GetDebug())
+			render->DrawRectangle({ position.x, position.y,  64 , 64 }, 255, 255, 0);
 
 		//render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
 	}
 	return ret;
+}
+
+bool Player::Start()
+{
+	collider = app->colManager->AddCollider({ position.x, position.y, 64, 64 }, Collider::Type::PLAYER, (Module*)app->entMan, this);
+	return true;
 }
 
 void Player::AddCapybara(Capybara* capybara)
@@ -145,14 +150,34 @@ List<Capybara*>& Player::GetTeam()
 	return team;
 }
 
-bool Player::LoadState(pugi::xml_node&)
+bool Player::LoadState(pugi::xml_node& node)
 {
+	position.x = node.child("position").attribute("x").as_float();
+	position.y = node.child("position").attribute("y").as_float();
+	
+	isBattle = node.attribute("isBattle").as_bool();
+	money = node.attribute("money").as_int();
+
+	active = node.attribute("active").as_bool();
+	renderable = node.attribute("renderable").as_bool();
+
 	return false;
 }
 
-bool Player::SaveState(pugi::xml_node&)
+bool Player::SaveState(pugi::xml_node& node)
 {
-	return false;
+	pugi::xml_node position = node.append_child("position");
+	position.append_attribute("x").set_value(this->position.x);
+	position.append_attribute("y").set_value(this->position.y);
+	
+	node.append_attribute("id").set_value(id);
+	node.append_attribute("isBattle").set_value(isBattle);
+	node.append_attribute("money").set_value(money);
+
+	node.append_attribute("active").set_value(active);
+	node.append_attribute("renderable").set_value(renderable);
+
+	return true;
 }
 
 void Player::SetCombat(bool value)
@@ -237,4 +262,10 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 			
 		}
 	}
+}
+
+bool Player::CleanUp()
+{
+	app->colManager->RemoveCollider(collider);
+	return true;
 }

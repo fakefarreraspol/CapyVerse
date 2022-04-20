@@ -43,6 +43,7 @@ bool Fonts::Start()
 
 	//This takes in the path to the font file and the point size we want to render at.
 	globalFont = LoadTIFF("Assets/GUI/Fonts/RobotoMedium.ttf", 18);
+	indicatorsFont = LoadTIFF("Assets/GUI/Fonts/RobotoMedium.ttf", 12);
 	titles = LoadTIFF("Assets/GUI/Fonts/VT323-Regular.ttf",48);
 
 	menuButtonFont = LoadTIFF("Assets/GUI/Fonts/VT323-Regular.ttf", 60);

@@ -22,7 +22,7 @@ public:
 	//Base functions
 	bool Update(float dt);
 	bool Draw(Render* render);
-
+	bool Start();
 	//Adds a capybara to the player team 
 	void AddCapybara(Capybara* capybara);
 	//Adds a capybara to the player battle team
@@ -43,7 +43,7 @@ public:
 	void SetCombat(bool value);
 
 	void OnCollision(Collider* c1, Collider* c2);
-
+	bool CleanUp();
 
 private:
 	int money;

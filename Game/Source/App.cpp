@@ -61,23 +61,23 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	// Reverse order of CleanUp
 	AddModule(win);
 	AddModule(input);
-	AddModule(mapManager);
 	AddModule(tex);
+	AddModule(mapManager);
 	AddModule(fonts);
 	AddModule(audio);
 	AddModule(intro);
 	AddModule(mainMenu);
+	AddModule(dialogManager);
 	AddModule(scene);
 	AddModule(battleScene1);
 	AddModule(battleScene2);
 	AddModule(battleScene3);
 	AddModule(battleManager);
 	AddModule(eobScene);
-	AddModule(dialogManager);
 	AddModule(entMan);
 	AddModule(pauseMenu);
-	AddModule(guiManager);
 	AddModule(colManager);
+	AddModule(guiManager);
 	AddModule(fadeToBlack);
 	
 	// Render last to swap buffer
@@ -446,8 +446,6 @@ bool App::SaveGame() const
 
 	pugi::xml_document* saveDoc = new pugi::xml_document();
 	pugi::xml_node saveStateNode = saveDoc->append_child("game_state");
-
-
 
 	ListItem<Module*>* item;
 	item = modules.start;

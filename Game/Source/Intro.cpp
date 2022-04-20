@@ -5,7 +5,7 @@
 #include "Render.h"
 #include "Textures.h"
 #include "Input.h"
-
+#include "Audio.h"
 #include "Log.h"
 
 Intro::Intro(bool startEnabled) : Module(startEnabled)
@@ -33,8 +33,8 @@ bool Intro::Start()
 {
 	counter.Start();
 
-
-
+	introSFX = app->audio->LoadFx("Assets/Audio/Fx/item-obtained.wav");
+	background = app->tex->Load("Assets/Menus/intro.png");
 	return true;
 }
 
@@ -47,7 +47,13 @@ bool Intro::PreUpdate()
 // Called each loop iteration
 bool Intro::Update(float dt)
 {
-	app->render->DrawRectangle({ 0, 0, 1280, 720 }, 255, 255, 0);
+	app->render->DrawTexture(background, 0, 0);
+	if (sound)
+	{
+		app->audio->PlayFx(introSFX);
+		sound = false;
+	}
+	
 
 	GamePad& pad = app->input->pads[0];
 	if (counter.ReadSec() >= 4 || app->input->GetKey(SDL_SCANCODE_RETURN) || pad.a == true)

@@ -5,6 +5,8 @@
 #include "GuiManager.h"
 #include "Fonts.h"
 #include "Log.h"
+#include "Textures.h"
+
 GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text, SDL_Color color, int textID) : GuiControl(GuiControlType::BUTTON, id)
 {
 	this->bounds = bounds;
@@ -13,6 +15,7 @@ GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text, SDL_Color col
 	if (textID == 0)
 		textID = app->fonts->globalFont;
 	sfx = app->audio->LoadFx("Assets/Audio/FX/notification2.wav");
+	texture = app->tex->Load("Assets/Menus/Buttons.png");
 	textTex = app->fonts->LoadRenderedText(bounds, textID, text, color);
 
 	canClick = true;
@@ -75,14 +78,17 @@ bool GuiButton::Draw(Render* render)
 {
 	SDL_Rect cBounds{ bounds.x - render->camera.x,bounds.y - render->camera.y,bounds.w,bounds.h };
 	// Draw the right button depending on state
-	SDL_Rect disabled{ 0, 0, bounds.w, bounds.h };
+	SDL_Rect normal{ 0, 0, bounds.w, bounds.h };
+	SDL_Rect focussed{ 0, 25, bounds.w, bounds.h };
+	SDL_Rect pressed{ 0, 50, bounds.w, bounds.h };
+	SDL_Rect selected{ 0, 75, bounds.w, bounds.h };
 
 	switch (state)
 	{
-	case GuiControlState::NORMAL:		render->DrawTexture(texture, cBounds.x, cBounds.y, &disabled);			break;
-	case GuiControlState::FOCUSED:		render->DrawTexture(texture, cBounds.x, cBounds.y, &disabled);			break;
-	case GuiControlState::PRESSED:		render->DrawTexture(texture, cBounds.x, cBounds.y, &disabled);			break;
-	case GuiControlState::SELECTED:		render->DrawTexture(texture, cBounds.x, cBounds.y, &disabled);			break;
+	case GuiControlState::NORMAL:		render->DrawTexture(texture, cBounds.x, cBounds.y, &normal);			break;
+	case GuiControlState::FOCUSED:		render->DrawTexture(texture, cBounds.x, cBounds.y, &focussed);			break;
+	case GuiControlState::PRESSED:		render->DrawTexture(texture, cBounds.x, cBounds.y, &pressed);			break;
+	case GuiControlState::SELECTED:		render->DrawTexture(texture, cBounds.x, cBounds.y, &selected);			break;
 
 	default:
 		break;

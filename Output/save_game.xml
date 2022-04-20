@@ -1,10 +1,75 @@
 <?xml version="1.0"?>
 <game_state>
-	<input />
 	<window />
+	<input />
+	<map />
 	<textures />
+	<fonts />
 	<audio />
+	<intro />
+	<main_menu />
 	<scene />
+	<battle_scene1 />
+	<battle_scene1 />
+	<battle_scene1 />
+	<BattleManager />
+	<eob_scene />
+	<DialogManager />
+	<entitymanager>
+		<Player id="0" isBattle="false" money="0" active="true" renderable="false">
+			<position x="116" y="90" />
+		</Player>
+		<Chinabara id="1" level="1" health="60" xp="0" mana="21" type="0" target="2" active="true" renderable="false" id="16" level="1" health="60" xp="0" mana="21" type="0" target="2" active="true" renderable="false">
+			<position x="100" y="150" />
+			<position x="720" y="150" />
+		</Chinabara>
+		<Punkibara id="2" level="1" health="30" xp="0" mana="14" type="1" target="0" active="true" renderable="false" id="18" level="1" health="30" xp="0" mana="14" type="1" target="0" active="true" renderable="false">
+			<position x="100" y="250" />
+			<position x="720" y="350" />
+		</Punkibara>
+		<Rainbowbara id="3" level="1" health="30" xp="0" mana="35" type="2" target="1" active="true" renderable="false" id="13" level="1" health="30" xp="0" mana="35" type="2" target="1" active="true" renderable="false" id="17" level="1" health="30" xp="0" mana="35" type="2" target="1" active="true" renderable="false">
+			<position x="100" y="350" />
+			<position x="720" y="250" />
+			<position x="720" y="250" />
+		</Rainbowbara>
+		<NPC id="4" active="true" renderable="false" id="5" active="true" renderable="false" id="6" active="true" renderable="false">
+			<position x="200" y="200" />
+			<position x="350" y="500" />
+			<position x="400" y="120" />
+		</NPC>
+		<NPC />
+		<NPC />
+		<Enemy id="7" active="true" renderable="false" id="11" active="true" renderable="false" id="15" active="true" renderable="false">
+			<position x="10" y="10" />
+			<position x="10" y="10" />
+			<position x="10" y="10" />
+		</Enemy>
+		<Retrobara id="8" level="1" health="70" xp="0" mana="14" type="0" target="2" active="true" renderable="false">
+			<position x="720" y="150" />
+		</Retrobara>
+		<Simpbara id="9" level="1" health="20" xp="0" mana="35" type="2" target="1" active="true" renderable="false">
+			<position x="720" y="250" />
+		</Simpbara>
+		<Egirlbara id="10" level="1" health="30" xp="0" mana="7" type="1" target="0" active="true" renderable="false">
+			<position x="720" y="350" />
+		</Egirlbara>
+		<Enemy />
+		<Chadbara id="12" level="1" health="90" xp="0" mana="7" type="0" target="2" active="true" renderable="false">
+			<position x="720" y="150" />
+		</Chadbara>
+		<Rainbowbara />
+		<Emobara id="14" level="1" health="10" xp="0" mana="7" type="1" target="0" active="true" renderable="false">
+			<position x="720" y="350" />
+		</Emobara>
+		<Enemy />
+		<Chinabara />
+		<Rainbowbara />
+		<Punkibara />
+	</entitymanager>
+	<pause />
+	<guiManager />
+	<CollisionsManager />
+	<fadetoblack />
 	<renderer>
 		<camera x="0" y="0" />
 	</renderer>

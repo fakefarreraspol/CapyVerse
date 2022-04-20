@@ -109,7 +109,8 @@ private:
 	Turn turn = Turn::NONE;
 
 	SDL_Texture* arrow = nullptr;
-
+	SDL_Texture* selectedArrow = nullptr;
+	SDL_Texture* capyinfo = nullptr;
 };
 
 
