@@ -11,12 +11,46 @@
 Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType::PLAYER, id, name, position)
 {
 	idle.PushBack({ 0,0,66,66 });
+<<<<<<< Updated upstream
 	walkRight.PushBack( { 66, 66* 2, 66, 66 });
 	walkRight.PushBack( { 66 * 2, 66 *3, 66, 66 });
 	walkRight.PushBack( { 66 * 3, 66 * 4, 66, 66 });
 	walkRight.PushBack( { 66 * 4, 66 * 5, 66, 66 });
+=======
+	walkRight.PushBack( { 66, 0, 66 * 2, 66 });
+	walkRight.PushBack( { 66 * 2, 0, 66 * 3, 66 });
+	walkRight.PushBack( { 66 * 3, 0, 66 * 4, 66 });
+	walkRight.PushBack( { 66 * 4, 0, 66 * 5, 66 });
+>>>>>>> Stashed changes
 	walkRight.loop = true;
 	walkRight.speed = 0.1f;
+	
+	walkLeft.PushBack({ 66, 0, 66 * 2, 66 });
+	walkLeft.PushBack({ 66 * 2, 0, 66 * 3, 66 });
+	walkLeft.PushBack({ 66 * 3, 0, 66 * 4, 66 });
+	walkLeft.PushBack({ 66 * 4, 0, 66 * 5, 66 });
+	walkLeft.loop = true;
+	walkLeft.speed = 0.1f;
+
+	walkUp.PushBack({ 0, 66, 66 , 66*2 });
+	walkUp.PushBack({ 66, 66, 66 * 2, 66*2 });
+	walkUp.PushBack({ 66*2, 66, 66 * 3, 66*2 });
+	walkUp.PushBack({ 66*3, 66, 66 * 4, 66 * 2 });
+	walkUp.PushBack({ 66*4, 66, 66 * 5, 66 * 2 });
+	walkUp.PushBack({ 66*5, 66, 66 * 6, 66 * 2 });
+	walkUp.PushBack({ 66*6, 66, 66 * 7, 66 * 2 });
+	walkUp.PushBack({ 66*7, 66, 66 * 8, 66 * 2 });
+	walkLeft.loop = true;
+	walkLeft.speed = 0.1f;
+	
+	walkDown.PushBack({ 0, 66, 66 , 66 * 2 });
+	walkDown.PushBack({ 66, 66, 66 * 2, 66 * 2 });
+	walkDown.PushBack({ 66 * 2, 66, 66 * 3, 66 * 2 });
+	walkDown.PushBack({ 66 * 3, 66, 66 * 4, 66 * 2 });
+	walkDown.PushBack({ 66 * 4, 66, 66 * 5, 66 * 2 });
+	walkDown.PushBack({ 66 * 5, 66, 66 * 6, 66 * 2 });
+	walkDown.PushBack({ 66 * 6, 66, 66 * 7, 66 * 2 });
+	walkDown.PushBack({ 66 * 7, 66, 66 * 8, 66 * 2 });
 	currentAnim = &idle;
 }
 

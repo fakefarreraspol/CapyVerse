@@ -65,6 +65,7 @@ private:
 	Animation walkLeft;
 	Animation walkUp;
 	Animation walkDown;
+
 	List<Capybara*> battleTeam;
 	List<Capybara*> team;
 	bool load = true;
