@@ -2,18 +2,29 @@
 
 ## Description
 
-{project description}
+A new NFT game appears in a very saturated market. You, an anti-NFTs hacker, want this blockchain on fire. Your mission is to defeat 2 mods and the admin. Your only weapon: cute capybaras. Build a team of up to 3 capybaras in order to defeat anything standing between your objective of taking down the blockchain.
+
+Will you destroy this Capyverse?
 
 ## Key Features
 
- - {Feature01}
- - {Feature02}
- - {Feature03}
- - {Feature04}
+ - Combat system
+ - Dialog system
+ - 3 locations to visit - forest - town - field 
+
  
 ## Controls
-
- - {ControlsScheme}
+### Keyboard
+ - WASD - Move
+ - E - Interact
+ - RETURN - Next Scene
+ - Esc - Pause
+ - Arrows - Menu navigation
+ ### GamePad
+ - LSD - Move
+ - A - Interact
+ - Start - Pause
+ - DPad - Menu navigation
 
 ## Developers
 
@@ -39,4 +50,3 @@
 
 This project is licensed under an unmodified MIT license, which is an OSI-certified license that allows static linking with closed source software. Check [LICENSE](LICENSE) for further details.
 
-{AdditionalLicenses}

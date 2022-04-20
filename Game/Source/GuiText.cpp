@@ -14,10 +14,10 @@ GuiText::GuiText(uint32 id, SDL_Rect bounds, const char* text, SDL_Color color_,
 	this->color = color_;
 	this->blink = blink;
 	this->counter = rand() % 60;
-
 	if (fontID == 0)
 		fontID = app->fonts->globalFont;
-	textTex = app->fonts->LoadRenderedText(bounds, fontID, text, color);
+	font = fontID;
+	textTex = app->fonts->LoadRenderedText(bounds, font, text, color);
 }
 
 GuiText::~GuiText()
@@ -39,7 +39,7 @@ bool GuiText::SetText(const char* text)
 {
 	SDL_Rect tmpBounds = bounds;
 	this->text = text;
-	textTex = app->fonts->LoadRenderedText(tmpBounds, app->fonts->globalFont, text, color);
+	textTex = app->fonts->LoadRenderedText(tmpBounds, font, text, color);
 	return true;
 }
 

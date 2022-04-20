@@ -11,7 +11,7 @@ public:
 
 	Collider* collider = nullptr;
 	Dialog* dialog;
-
+	bool load = true;
 public:
 
 	NPC(iPoint position, uint32 id, const char* name);

@@ -6,6 +6,7 @@
 #include "Dialog.h"
 #include "Input.h"
 #include "DialogManager.h"
+#include "Textures.h"
 
 #include "Collider.h"
 
@@ -30,6 +31,11 @@ bool NPC::Start()
 
 bool NPC::Update(float dt)
 {
+	if (load)
+	{
+		texture = app->tex->Load("Assets/Textures/Sprites/characters.png");
+		load = false;
+	}
 	/*if (app->input->GetKey(SDL_SCANCODE_N) == KEY_REPEAT)
 		OnCollision(nullptr,nullptr);*/
 	return true;
@@ -37,7 +43,10 @@ bool NPC::Update(float dt)
 
 bool NPC::Draw(Render* render)
 {
-	render->DrawRectangle({ position.x,position.y,65,65 }, 228, 0, 224, 255);
+	if (app->GetDebug())
+		render->DrawRectangle({ position.x, position.y,  64 , 64 }, 255, 0, 0);
+	SDL_Rect rect = { 17, 198, 66, 66 };
+	render->DrawTexture(texture, position.x, position.y, &rect);
 
 	return true;
 }
