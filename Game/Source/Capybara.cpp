@@ -5,6 +5,9 @@
 #include "Capybara.h"
 #include "Input.h"
 #include "App.h"
+#include "Textures.h"
+#include "Render.h"
+#include "Audio.h"
 
 
 
@@ -18,24 +21,35 @@ Capybara::Capybara(CapybaraType capyType, uint32 id, iPoint position, const char
 	manaXLvl = 7;
 	damageXLvl = 4;
 	armorXLvl = 3;
+	
 }
 
 Capybara::~Capybara()
 {
 }
 
+bool Capybara::Start()
+{
+	
+	return true;
+}
+
 bool Capybara::Update(float dt)
 {
 	bool ret = true;
-		
+	if (load)
+	{
+		texture = app->tex->Load("Assets/Textures/Sprites/capybaras.png");
+		attackSFX = app->audio->LoadFx("Assets/Audio/Fx/capybara-attack4.wav");
+		abilitySFX = app->audio->LoadFx("Assets/Audio/Fx/capybara-attack2.wav");
+		healSFX = app->audio->LoadFx("Assets/Audio/Fx/capybara-spell1.wav");
+		hitSFX = app->audio->LoadFx("Assets/Audio/Fx/capybara-chirp.wav");
+		load = false;
+	}
 	if (xp >= xpNext)
 		LevelUp();
 
-	if (app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
-		LevelUp();
-
-	if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-		AddXp(10);
+	
 
 	if (this->health <= 0)
 	{
@@ -52,8 +66,14 @@ bool Capybara::Draw(Render* render)
 	{
 		if (app->GetDebug())
 			render->DrawRectangle({ position.x, position.y,  64 , 64 }, 255, 0, 0);
-
-		//render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
+		if (!enemy)
+		{
+			render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
+		}
+		else
+		{
+			render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame(), false, 1.0f, SDL_FLIP_HORIZONTAL);
+		}
 	}
 
 	return ret;
@@ -133,7 +153,7 @@ void Capybara::Damage(int value)
 		health -= value;
 		return;
 	}
-	
+	app->audio->PlayFx(hitSFX);
 	health = 0;
 
 	return;
@@ -148,7 +168,7 @@ void Capybara::Heal(int value)
 	}
 
 	health = maxHealth;
-
+	app->audio->PlayFx(healSFX);
 	return;
 }
 void Capybara::RestoreMana(int value)
@@ -158,7 +178,7 @@ void Capybara::RestoreMana(int value)
 		mana += value;
 		return;
 	}
-
+	app->audio->PlayFx(healSFX);
 	mana = maxMana;
 
 	return;
@@ -178,7 +198,7 @@ void Capybara::Attack(Capybara* target)
 		return;
 	int finalDamage = this->damage* (this->damage + 100) * 0.08 / (target->armor + 8);
 	target->Damage(finalDamage);
-
+	app->audio->PlayFx(attackSFX);
 	canAttack = false;
 	printf("%s id: %i DMG: %i to %s id: %i\n", this->name.GetString(), this->id, finalDamage, target->name.GetString(), target->id);
 }
@@ -355,6 +375,12 @@ bool Capybara::SaveState(pugi::xml_node&)
 void Capybara::SetCombat(bool value)
 {
 	isCombat = value;
+}
+
+bool Capybara::CleanUp()
+{
+	app->tex->UnLoad(texture);
+	return true;
 }
 
 void Capybara::UpdateStats()

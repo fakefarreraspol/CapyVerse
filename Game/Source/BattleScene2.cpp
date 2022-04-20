@@ -13,6 +13,7 @@
 #include "EOBScene.h"
 
 
+
 BattleScene2::BattleScene2(bool startEnabled) : Module(startEnabled)
 {
     name.Create("battle_scene1");
@@ -25,14 +26,17 @@ bool BattleScene2::Awake(pugi::xml_node&)
 {
 
 
-    enemy = (Enemy*)app->entMan->CreateEntity(EntityType::ENEMY, 10, { 10, 10 }, "Enemy");
+    enemy = (Enemy*)app->entMan->CreateEntity(EntityType::ENEMY, 11, { 450, 350 }, "Enemy");
 
-    enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 11, { 720, 150 }, "Chadbara"));
-    enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::SUPP, 11, { 720, 250 }, "Rainbowbara"));
-    enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::DPS, 11, { 720, 350 }, "Emobara"));
-
+    enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 11, { 928, 305 }, "Chadbara"));
+    enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::SUPP, 11, { 750, 443 }, "Rainbowbara"));
+    enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::DPS, 11, { 1115, 444 }, "Emobara"));
+    for (int i = 0; i < enemy->GetBattleTeam().Count(); i++)
+    {
+        enemy->GetBattleTeam().At(i)->data->enemy = true;
+    }
     app->scene->NPCs.Add(enemy);
-
+    enemy->Disable();
     return true;
 }
 
@@ -40,12 +44,13 @@ bool BattleScene2::Start()
 {
     bool ret = true;
     app->battleManager->SetTurn(Turn::PLAYER);
+    background = app->tex->Load("Assets/Textures/Sprites/battleback.png");
     enemy->SetCombat(true);
 
     app->battleManager->SetEnemy(enemy);
 
     app->battleManager->Enable();
-    app->audio->ChangeMusic(3, 120, 120);
+    app->audio->ChangeMusic(3);
     return ret;
 }
 
@@ -84,7 +89,7 @@ bool BattleScene2::Update(float dt)
     if (app->battleManager->GetTurn() == Turn::ENEMY)
     {
         //supp
-        if (enemy->GetBattleTeam().At(1)->data != nullptr)
+        if (enemy->GetBattleTeam().At(1) != nullptr)
         {
             if (enemy->GetBattleTeam().At(1)->data->GetHealth() <= enemy->GetBattleTeam().At(1)->data->GetMaxHealth() - 1)
             {
@@ -108,38 +113,42 @@ bool BattleScene2::Update(float dt)
        
 
         //tank
-        if (enemy->GetBattleTeam().At(0)->data != nullptr)
+        if (enemy->GetBattleTeam().At(0) != nullptr)
         {
-            for (int i = 0; i < app->battleManager->GetPlayer()->GetBattleTeam().Count(); i++)
+            if (enemy->GetBattleTeam().At(0)->data->GetType() == CapybaraType::TANK)
             {
-                if ((app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data->GetHealth() <= enemy->GetBattleTeam().At(i)->data->GetMaxHealth() / 3) && app->battleManager->GetPlayer()->GetBattleTeam().At(i) != nullptr)
+                for (int i = 0; i < app->battleManager->GetPlayer()->GetBattleTeam().Count(); i++)
                 {
-                    //enemy->GetBattleTeam().At(0)->data->UseAbility(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data);
-                    if (enemy->GetBattleTeam().At(0)->data->UseAbility(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data) != false)
+                    if (app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data != nullptr && enemy->GetBattleTeam().At(i) != nullptr)
                     {
-                        enemy->GetBattleTeam().At(0)->data->SetAttack(false);
+                        if ((app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data->GetHealth() <= enemy->GetBattleTeam().At(i)->data->GetMaxHealth() / 3))
+                        {
+                            //enemy->GetBattleTeam().At(0)->data->UseAbility(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data);
+                            if (enemy->GetBattleTeam().At(0)->data->UseAbility(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data) != false)
+                            {
+                                enemy->GetBattleTeam().At(0)->data->SetAttack(false);
+                            }
+                            break;
+                        }
                     }
-                    break;
                 }
-
-            }
-            if (enemy->GetBattleTeam().At(0)->data->CanAttack())
-            {
-                if (app->battleManager->GetPlayer()->GetBattleTeam().At(randomNum)->data != nullptr)
+                if (enemy->GetBattleTeam().At(0)->data->CanAttack())
                 {
-                    enemy->GetBattleTeam().At(0)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(randomNum)->data);
+                    if (app->battleManager->GetPlayer()->GetBattleTeam().At(randomNum)->data != nullptr)
+                    {
+                        enemy->GetBattleTeam().At(0)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(randomNum)->data);
+                    }
+                    else
+                    {
+                        if (enemy->GetBattleTeam().At(0)->data->GetHealth() < enemy->GetBattleTeam().At(0)->data->GetMaxHealth() / 7) enemy->GetBattleTeam().At(0)->data->Heal(3);
+                    }
                 }
-                else
-                {
-                    if (enemy->GetBattleTeam().At(0)->data->GetHealth() < enemy->GetBattleTeam().At(0)->data->GetMaxHealth() / 7) enemy->GetBattleTeam().At(0)->data->Heal(3);
-                }
+                else enemy->GetBattleTeam().At(0)->data->RestoreMana(3);
             }
-            else enemy->GetBattleTeam().At(0)->data->RestoreMana(3);
         }
-       
 
         //dmg
-        if (enemy->GetBattleTeam().At(2)->data != nullptr)
+        if (enemy->GetBattleTeam().At(2) != nullptr)
         {
             if (enemy->GetBattleTeam().At(2)->data->CanAttack())
             {
@@ -166,10 +175,9 @@ bool BattleScene2::Update(float dt)
     if (enemy->GetBattleTeam().Count() == 0 || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
     {
         app->fadeToBlack->MFadeToBlack(this, (Module*)app->eobScene, 120);
-        app->audio->PlayFx(app->battleManager->battlewonSFX);
     }
 
-
+    app->render->DrawTexture(background, 0, 0);
     return ret;
 }
 
@@ -181,5 +189,8 @@ bool BattleScene2::CleanUp()
     enemy->SetCombat(false);
     enemy->Disable();
     app->eobScene->SetXP(90);
+    app->tex->UnLoad(background);
+    app->entMan->DestroyEntity(enemy);
+   
     return ret;
 }

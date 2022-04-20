@@ -23,32 +23,17 @@ Collisions::Collisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::PLAYER][Collider::Type::WALL] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::PLAYER] = false;
 	matrix[Collider::Type::PLAYER][Collider::Type::ENEMY] = true;
-	matrix[Collider::Type::PLAYER][Collider::Type::PLAYER_SHOT] = false;
-	matrix[Collider::Type::PLAYER][Collider::Type::ENEMY_SHOT] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::NPC] = true;
+
 
 	matrix[Collider::Type::ENEMY][Collider::Type::WALL] = true;
 	matrix[Collider::Type::ENEMY][Collider::Type::PLAYER] = true;
 	matrix[Collider::Type::ENEMY][Collider::Type::ENEMY] = false;
-	matrix[Collider::Type::ENEMY][Collider::Type::PLAYER_SHOT] = true;
-	matrix[Collider::Type::ENEMY][Collider::Type::ENEMY_SHOT] = false;
 
-	matrix[Collider::Type::EXPLOSION][Collider::Type::WALL] = true;
-	matrix[Collider::Type::EXPLOSION][Collider::Type::PLAYER] = true;
-	matrix[Collider::Type::EXPLOSION][Collider::Type::ENEMY] = true;
-	matrix[Collider::Type::EXPLOSION][Collider::Type::RED_FLOWER] = true;
-	matrix[Collider::Type::EXPLOSION][Collider::Type::YELLOW_FLOWER] = true;
+	matrix[Collider::Type::NPC][Collider::Type::WALL] = true;
+	matrix[Collider::Type::NPC][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::NPC][Collider::Type::ENEMY] = false;
 
-	matrix[Collider::Type::BOMB][Collider::Type::WALL] = true;
-	matrix[Collider::Type::BOMB][Collider::Type::PLAYER] = true;
-	matrix[Collider::Type::BOMB][Collider::Type::ENEMY] = true;
-	matrix[Collider::Type::BOMB][Collider::Type::RED_FLOWER] = true;
-	matrix[Collider::Type::BOMB][Collider::Type::YELLOW_FLOWER] = true;
-
-	matrix[Collider::Type::ENEMY_SHOT][Collider::Type::WALL] = true;
-	matrix[Collider::Type::ENEMY_SHOT][Collider::Type::PLAYER] = true;
-	matrix[Collider::Type::ENEMY_SHOT][Collider::Type::ENEMY] = false;
-	matrix[Collider::Type::ENEMY_SHOT][Collider::Type::PLAYER_SHOT] = false;
-	matrix[Collider::Type::ENEMY_SHOT][Collider::Type::ENEMY_SHOT] = false;
 }
 
 // Destructor
@@ -128,7 +113,7 @@ void Collisions::DebugDraw()
 			case Collider::Type::WALL: // blue
 			app->render->DrawRectangle(temp->data->rect, 0, 0, 255, alpha);
 			break;
-			case Collider::Type::ORB: // blue
+			case Collider::Type::NPC: // blue
 			app->render->DrawRectangle(temp->data->rect, 0, 255, 155, alpha);
 			break;
 			case Collider::Type::YELLOW_FLOWER: // yellow

@@ -45,6 +45,7 @@ private:
 	List<GuiText*> lvls;
 	List<GuiText*> lvlUp;
 	int XP = 0;
+	SDL_Texture* background;
 };
 
 #endif // !__EOB_SECENE_H__

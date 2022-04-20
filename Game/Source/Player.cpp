@@ -41,6 +41,12 @@ bool Player::Draw(Render* render)
 	return ret;
 }
 
+bool Player::Start()
+{
+	collider = app->colManager->AddCollider({ position.x, position.y, 16, 16 }, Collider::Type::PLAYER, (Module*)app->entMan, this);
+	return true;
+}
+
 void Player::AddCapybara(Capybara* capybara)
 {
 	team.Add(capybara);
@@ -327,4 +333,10 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 			
 		}
 	}
+}
+
+bool Player::CleanUp()
+{
+	app->colManager->RemoveCollider(collider);
+	return true;
 }

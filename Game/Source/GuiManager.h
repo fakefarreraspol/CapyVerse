@@ -23,7 +23,7 @@ public:
 	bool CleanUp();
 
 	// Additional methods
-	GuiControl* CreateGuiControl(GuiControlType type, int id, const char* text, SDL_Rect bounds, Module* observer, SDL_Color textColor = {0, 0, 0, 1}, int textID = 0, bool blink = false);
+	GuiControl* CreateGuiControl(GuiControlType type, int id, const char* text, SDL_Rect bounds, Module* observer, SDL_Color textColor = {255, 255, 255, 1}, int textID = 0, bool blink = false);
 	void DestroyGuiControl(GuiControl* entity);
 	void AddGuiControl(GuiControl* entity);
 
