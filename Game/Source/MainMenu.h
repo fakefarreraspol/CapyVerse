@@ -8,6 +8,8 @@
 #include "GuiCheckBox.h"
 #include "GuiText.h"
 
+#include "Timer.h"
+
 #include "List.h"
 
 
@@ -78,6 +80,9 @@ private:
 	List<GuiText*> credits;
 
 	SDL_Texture* arrow = nullptr;
-
+	SDL_Texture* title = nullptr;
+	Timer time;
+	bool sound = true;
+	int titleSFX;
 };
 #endif // __MAINMENU_H__

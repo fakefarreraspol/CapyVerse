@@ -110,12 +110,15 @@ bool MainMenu::Start()
 	noBtn->state = GuiControlState::DISABLED;
 	exitText->state = GuiControlState::DISABLED;
 
-
+	titleSFX = app->audio->LoadFx("Assets/Audio/Fx/title.wav");
 	arrow = app->tex->Load("Assets/Menus/arrow.png");
+	background = app->tex->Load("Assets/Menus/arrow.png");
+	title = app->tex->Load("Assets/Menus/arrow.png");
 	currentControls = menuBtns;
 	currentControl = currentControls.start;
 	app->audio->ChangeMusic(1);
 
+	time.Start();
 	return true;
 }
 
@@ -129,7 +132,12 @@ bool MainMenu::PreUpdate()
 // Called each loop iteration
 bool MainMenu::Update(float dt)
 {
+	app->render->DrawTexture(background, 0, 0);
 
+	
+	app->render->DrawTexture(title, 0, 0);
+	
+	
 	app->render->DrawTexture(arrow, currentControl->data->bounds.x - 30, currentControl->data->bounds.y - 3);
 	vsyncChkbx->checked = app->render->vsync;
 	fullscreenChkbx->checked = app->win->fullscreen;
