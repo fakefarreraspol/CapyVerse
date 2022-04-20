@@ -3,6 +3,8 @@
 #include "App.h"
 #include "Log.h"
 #include "Render.h"
+#include "Scene.h"
+#include "Player.h"
 #include "Input.h"
 #include "SDL/include/SDL_Scancode.h"
 
@@ -89,7 +91,7 @@ bool Collisions::PreUpdate()
 			}
 		}
 	}
-	
+	app->scene->player->wallsDetected = 0;
 
 	return true;
 }
@@ -106,7 +108,7 @@ bool Collisions::Update()
 
 bool Collisions::PostUpdate()
 {
-	if (app->GetDebug())
+	//if (app->GetDebug())
 		DebugDraw();
 
 	return true;
@@ -188,7 +190,7 @@ bool Collisions::CleanUp()
 	return true;
 }
 
-Collider* Collisions::AddCollider(SDL_Rect rect, Collider::Type type, Module* listener)
+Collider* Collisions::AddCollider(SDL_Rect rect, Collider::Type type, Module* listener, Entity* entity)
 {
 	Collider* ret = nullptr;
 
@@ -200,7 +202,7 @@ Collider* Collisions::AddCollider(SDL_Rect rect, Collider::Type type, Module* li
 			break;
 		}
 	}*/
-	ret = new Collider(rect, type, listener);
+	ret = new Collider(rect, type, listener, entity);
 	colliders.Add(ret);
 	return ret;
 }

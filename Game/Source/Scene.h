@@ -44,9 +44,10 @@ public:
 
 
 private:
-	Player* player = nullptr;
 public:
 	List<Entity*> NPCs;
+	Player* player = nullptr;
+
 
 };
 

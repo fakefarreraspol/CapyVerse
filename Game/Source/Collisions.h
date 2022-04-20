@@ -5,6 +5,8 @@
 #include "Collider.h"
 #include "List.h"
 
+class Entity;
+
 class Collisions : public Module
 {
 public:
@@ -41,7 +43,7 @@ public:
 	bool CleanUp();
 
 	// Adds a new collider to the list
-	Collider* AddCollider(SDL_Rect rect, Collider::Type type, Module* listener = nullptr);
+	Collider* AddCollider(SDL_Rect rect, Collider::Type type, Module* listener = nullptr, Entity* entity = nullptr);
 
 	// Removes the collider memory and removes it from the colliders array
 	void RemoveCollider(Collider* collider);

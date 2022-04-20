@@ -44,6 +44,7 @@ public:
 	void AddEntity(Entity* entity);
 
 	bool UpdateAll(float dt, bool doLogic);
+	void OnCollision(Collider* c1, Collider* c2);
 
 	bool LoadState(pugi::xml_node& data);
 	bool SaveState(pugi::xml_node& data);

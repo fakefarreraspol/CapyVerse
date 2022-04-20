@@ -105,20 +105,7 @@ bool Scene::PostUpdate()
 
 void Scene::OnCollision(Collider* c1, Collider* c2)
 {
-	if (!app->GetDebug())
-	{
-		if (c1->type == Collider::PLAYER)
-		{
-			if (c1->GetPos().x <= c2->GetPos().x)
-				player->position.x--;
-			if (c1->GetPos().x >= c2->GetPos().x)
-				player->position.x++;
-			if (c1->GetPos().y <= c2->GetPos().y)
-				player->position.y--;
-			if (c1->GetPos().y >= c2->GetPos().y)
-				player->position.y++;
-		}
-	}
+	
 }
 
 // Called before quitting
