@@ -8,6 +8,7 @@
 #include "Collider.h"
 #include "Animation.h"
 
+
 class Player : public Entity
 {
 public:
@@ -54,6 +55,7 @@ private:
 
 	List<Capybara*> battleTeam;
 	List<Capybara*> team;
+	
 };
 
 

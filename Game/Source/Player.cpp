@@ -4,6 +4,7 @@
 #include "Log.h"
 #include "Player.h"
 #include "Collisions.h"
+#include "Timer.h"
 
 Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType::PLAYER, id, name, position)
 {
@@ -17,6 +18,8 @@ Player::~Player()
 bool Player::Update(float dt)
 {
 	bool ret = true;
+	
+
 	collider->SetPos(position.x, position.y);
 	UpdateInput(dt);
 
@@ -62,100 +65,7 @@ void Player::UpdateInput(float dt)
 	GamePad& pad = app->input->pads[0];
 	lastPos = position;
 
-	//if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) 
-	//{
-	//	/*if (currentAnimation != &leftAnim)
-	//	{
-	//		leftAnim.Reset();
-	//		currentAnimation = &leftAnim;
-	//		currentIdleAnim = leftIdleAnim;
-	//	}*/
-	//	lastKeyPressed = SDL_SCANCODE_A;
-
-	//	if (app->input->GetKey(SDL_SCANCODE_W)== KEY_REPEAT && isStuck)
-	//	{
-	//		//position.y -= speed * dt * sqrt(2) / 2;
-	//		twoInputs = true;
-	//		isStuck = false;
-	//	}
-	//	else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && isStuck)
-	//	{
-	//		//position.y += speed * dt * sqrt(2) / 2;
-	//		twoInputs = true;
-	//		isStuck = false;
-	//	}
-	//}
-	//else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) 
-	//{
-	//	/*if (currentAnimation != &rightAnim)
-	//	{
-	//		rightAnim.Reset();
-	//		currentAnimation = &rightAnim;
-	//		currentIdleAnim = rightIdleAnim;
-	//	}*/
-	//	lastKeyPressed = SDL_SCANCODE_D;
-
-	//	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && isStuck)
-	//	{
-	//		//position.y -= speed * dt * sqrt(2) / 2;
-	//		twoInputs = true;
-	//		isStuck = false;
-	//	}
-	//	else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && isStuck)
-	//	{
-	//		//position.y += speed * dt * sqrt(2) / 2;
-	//		twoInputs = true;
-	//		isStuck = false;
-	//	}
-
-	//}
-	//else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) 
-	//{
-	//	/*if (currentAnimation != &downAnim)
-	//	{
-	//		downAnim.Reset();
-	//		currentAnimation = &downAnim;
-	//		currentIdleAnim = downIdleAnim;
-	//	}*/
-	//	lastKeyPressed = SDL_SCANCODE_S;
-
-	//	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isStuck)
-	//	{
-	//		//position.x -= speed * dt * sqrt(2) / 2;
-	//		twoInputs = true;
-	//		isStuck = false;
-	//	}
-	//	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isStuck)
-	//	{
-	//		//position.x += speed * dt * sqrt(2) / 2;
-	//		twoInputs = true;
-	//		isStuck = false;
-	//	}
-
-	//}
-	//else if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-	//{
-	//	/*if (currentAnimation != &upAnim)
-	//	{
-	//		upAnim.Reset();
-	//		currentAnimation = &upAnim;
-	//		currentIdleAnim = upIdleAnim;
-	//	}*/
-	//	lastKeyPressed = SDL_SCANCODE_W;
-
-	//	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isStuck)
-	//	{
-	//		//position.x -= speed * dt * sqrt(2) / 2;
-	//		twoInputs = true;
-	//		isStuck = false;
-	//	}
-	//	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isStuck)
-	//	{
-	//		//position.x += speed * dt * sqrt(2) / 2;
-	//		twoInputs = true;
-	//		isStuck = false;
-	//	}
-	//}
+	
 
 	int inputs = 0;
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
@@ -204,31 +114,30 @@ void Player::UpdateInput(float dt)
 	//	}
 
 		// Implement gamepad support
-		LOG("%2.2f", pad.left_x);
-		LOG("%2.2f", pad.left_y);
-		if (pad.left_x < 0.0f || pad.left == true)
-		{
-			position.x -= speed * dt * -pad.left_x;
-			
-		}
+	
+		
+	LOG("%2.2f", pad.left_x);
+	LOG("%2.2f", pad.left_y);
+	if (pad.left_x < 0.0f || pad.left == true)
+	{
+		position.x -= speed * dt * -pad.left_x;
+	}
+	if (pad.left_x > 0.0f || pad.right == true)
+	{
+		position.x += speed * dt * pad.left_x;
+	}
+	if (pad.left_y > 0.0f || pad.down == true)
+	{
+		position.y += speed * dt * pad.left_y;
+	}
 
-		if (pad.left_x > 0.0f || pad.right == true)
-		{
-			position.x += speed * dt *pad.left_x;
-			
-		}
-
-		if (pad.left_y > 0.0f || pad.down == true)
-		{
-			position.y += speed * dt * pad.left_y;
-			
-		}
-
-		if (pad.left_y < 0.0f || pad.up == true)
-		{
-			position.y -= speed * dt * -pad.left_y;
-			
-		}
+	if (pad.left_y < 0.0f || pad.up == true)
+	{
+		position.y -= speed * dt * -pad.left_y;
+	}
+		
+	
+	
 }
 
 List<Capybara*>& Player::GetBattleTeam()
