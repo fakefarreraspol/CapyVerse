@@ -17,7 +17,7 @@ GuiText::GuiText(uint32 id, SDL_Rect bounds, const char* text, SDL_Color color_,
 
 	if (fontID == 0)
 		fontID = app->fonts->globalFont;
-	textTex = app->fonts->LoadRenderedParagraph(bounds, fontID, text, color, 2);
+	textTex = app->fonts->LoadRenderedText(bounds, fontID, text, color);
 }
 
 GuiText::~GuiText()

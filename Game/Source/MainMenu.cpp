@@ -214,11 +214,21 @@ bool MainMenu::Update(float dt)
 	{
 		SDL_Rect rect{ 644, 43, 413, 258 };
 		app->render->DrawTexture(menus, 325, 250, &rect);
+		returnPlBtn->state = GuiControlState::DISABLED;
+	}
+	else
+	{
+		returnOPBtn->state = GuiControlState::DISABLED;
 	}
 	if (play)
 	{
 		SDL_Rect rect{ 0, 43, 188, 230 };
 		app->render->DrawTexture(menus, 275, 290, &rect);
+		returnOPBtn->state = GuiControlState::DISABLED;
+	}
+	else
+	{
+		returnPlBtn->state = GuiControlState::DISABLED;
 	}
 	if (creditsB)
 	{
@@ -229,6 +239,11 @@ bool MainMenu::Update(float dt)
 	{
 		SDL_Rect rect{ 1057, 43, 327, 87 };
 		app->render->DrawTexture(menus, 450, 300, &rect);
+
+	}
+	else
+	{
+		noBtn->state = GuiControlState::DISABLED;
 	}
 	return true;
 }
@@ -336,6 +351,7 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control)
 		{
 			playBtns.At(i)->data->state = GuiControlState::DISABLED;
 		}
+		returnPlBtn->state = GuiControlState::DISABLED;
 		currentControls = menuBtns;
 		currentControl = currentControls.start;
 	}
@@ -372,6 +388,7 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control)
 		{
 			optionsBtns.At(i)->data->state = GuiControlState::DISABLED;
 		}
+		returnOPBtn->state = GuiControlState::DISABLED;
 		currentControl = menuBtns.At(1);
 		currentControls = menuBtns;
 	}

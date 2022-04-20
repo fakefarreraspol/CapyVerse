@@ -58,7 +58,9 @@ bool EOBScene::PreUpdate()
 bool EOBScene::Update(float dt)
 {
 	bool ret = true;
-	
+	app->render->camera.x = 0;
+	app->render->camera.y = 0;
+
 
 	if (XP >= 0)
 	{
