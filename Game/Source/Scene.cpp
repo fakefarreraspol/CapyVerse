@@ -61,13 +61,21 @@ bool Scene::Awake(pugi::xml_node& node)
 	}
 
 	NPCs.At(0)->data->dialog = new Dialog();
-	DialogNode* first = new DialogNode("Hello, and welcome to the Capyverse. Do you already have your capys?");
-	NPCs.At(0)->data->dialog->AddFirstNode(first);
-	DialogNode* sec = new DialogNode("No, no problem I've got you!");
-	NPCs.At(0)->data->dialog->AddOption(first, sec);
-	DialogNode* thr = new DialogNode("I'll give you mine. Here you go!");
-	NPCs.At(0)->data->dialog->AddOption(sec, thr);
+	DialogNode* fst0 = new DialogNode("Hello, and welcome to the Capyverse. Do you already have your capys?");
+	DialogNode* sec0 = NPCs.At(0)->data->dialog->AddOption(fst0, "No, no problem I've got you!", "");
+	DialogNode* thr0 = NPCs.At(0)->data->dialog->AddOption(sec0, "I'll give you mine. Here you go!", "");
+	NPCs.At(0)->data->dialog->AddFirstNode(fst0);
 
+	NPCs.At(1)->data->dialog = new Dialog();
+	DialogNode* fst1 = new DialogNode("Hey, do you know the ADMIN of this game?");
+	DialogNode* sec1 = NPCs.At(0)->data->dialog->AddOption(fst1, "I think he is the richest one", "");
+	DialogNode* thr1 = NPCs.At(0)->data->dialog->AddOption(sec1, "I wish i could be as him ^^", "");
+	NPCs.At(1)->data->dialog->AddFirstNode(fst1);
+
+	NPCs.At(2)->data->dialog = new Dialog();
+	DialogNode* fst2 = new DialogNode("There are so many capybaras");
+	DialogNode* sec2 = NPCs.At(2)->data->dialog->AddOption(fst2, "Gotta catch 'em all!!!!!!", "");
+	NPCs.At(2)->data->dialog->AddFirstNode(fst2);
 
 	return ret;
 }

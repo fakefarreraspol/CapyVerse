@@ -18,7 +18,8 @@ bool Player::Update(float dt)
 {
 	bool ret = true;
 	collider->SetPos(position.x, position.y);
-	UpdateInput(dt);
+	if (canMove == true)
+		UpdateInput(dt);
 
 	if (app->GetDebug())
 		speed = 0.2f;
@@ -267,7 +268,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 	{
 		if (c1->type == Collider::PLAYER)
 		{
-			if (c2->type == Collider::WALL)
+			if (c2->type == Collider::WALL|| c2->type == Collider::NPC)
 			{
 				wallsDetected++;
 

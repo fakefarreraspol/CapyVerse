@@ -64,6 +64,7 @@ bool GuiButton::Update(float dt)
 				state = GuiControlState::PRESSED;
 				app->audio->PlayFx(sfx);
 				ret = NotifyObserver();
+				state= GuiControlState::NORMAL;
 			}
 		}
 	}
