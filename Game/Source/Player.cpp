@@ -19,6 +19,8 @@ bool Player::Update(float dt)
 {
 	bool ret = true;
 	
+	if()
+
 
 	collider->SetPos(position.x, position.y);
 	if (canMove == true)

@@ -47,6 +47,7 @@ void NPC::OnCollision(Collider* c1, Collider* c2)
 	if (c2->type == Collider::PLAYER)
 	{
 		app->dialogManager->SetActiveDialog(dialog);
+		app->dialogManager->characterName->SetText(this->name.GetString());
 	}
 	
 }

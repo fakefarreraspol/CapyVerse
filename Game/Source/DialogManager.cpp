@@ -8,6 +8,7 @@
 #include "DialogNode.h"
 #include "GuiText.h"
 #include "Input.h"
+#include "Textures.h"
 #include "Player.h"
 
 DialogManager::DialogManager(bool startEnabled):Module(startEnabled)
@@ -75,7 +76,7 @@ bool DialogManager::Start()
 	//app->scene->dialogTest->AddOption(sec, "you chose 2", "2");
 	//app->scene->dialogTest->AddOption(sec, "you chose 1", "1");
 	//app->dialogManager->SetActiveDialog(app->scene->dialogTest);
-
+	texture = app->tex->Load("Assets/Menus/menus.png");
 
 	return true;
 }
@@ -154,6 +155,8 @@ bool DialogManager::PostUpdate()
 		app->render->DrawRectangle(cBounds, 0, 0, 0, 255);
 		app->render->DrawRectangle(nBounds, 0, 0, 0, 255);
 		app->render->DrawRectangle(tBounds, 0, 0, 0, 255);
+		/*SDL_Rect rect{ 0, 624,592, 163 };
+		app->render->DrawTexture(texture, bounds.x, bounds.y, &rect);*/
 
 		text->Draw(app->render);
 		characterName->Draw(app->render);
@@ -253,5 +256,12 @@ bool DialogManager::OnGuiMouseClickEvent(GuiControl* control)
 
 	option = 0;
 
+	return true;
+}
+
+bool DialogManager::CleanUp()
+{
+	app->tex->UnLoad(texture);
+	optionButtons.Clear();
 	return true;
 }

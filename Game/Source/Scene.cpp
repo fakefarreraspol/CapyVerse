@@ -51,9 +51,9 @@ bool Scene::Awake(pugi::xml_node& node)
 	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 4, { 464, 443 }, "Rainbowbara"));
 
 	player->Disable();
-	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 300,200 }, "Farmer"));
-	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 500,500 }, "NPC"));
-	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 800,300 }, "NPC"));
+	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 300,200 }, "Sara"));
+	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 500,500 }, "Joe"));
+	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 800,300 }, "George"));
 
 	for (int i = 0; i < NPCs.Count(); i++)
 	{
@@ -61,9 +61,11 @@ bool Scene::Awake(pugi::xml_node& node)
 	}
 
 	NPCs.At(0)->data->dialog = new Dialog();
-	DialogNode* fst0 = new DialogNode("Hello, and welcome to the Capyverse. Do you already have your capys?");
+	DialogNode* fst0 = new DialogNode("Hello there you seem to be new here. Do you already have your capys?");
 	DialogNode* sec0 = NPCs.At(0)->data->dialog->AddOption(fst0, "No, no problem I've got you!", "");
-	DialogNode* thr0 = NPCs.At(0)->data->dialog->AddOption(sec0, "I'll give you mine. Here you go!", "");
+	DialogNode* thr0 = NPCs.At(0)->data->dialog->AddOption(sec0, "I'll give you mine. Here you go! But promise you wont sell them!", "");
+	DialogNode* for0 = NPCs.At(0)->data->dialog->AddOption(thr0, "By the way, I run a shop on a town near by.", "");
+	DialogNode* ft0 = NPCs.At(0)->data->dialog->AddOption(for0, "Today it's closed. But you can come later, I sell a lot of goodies for the capys!", "");
 	NPCs.At(0)->data->dialog->AddFirstNode(fst0);
 
 	NPCs.At(1)->data->dialog = new Dialog();
