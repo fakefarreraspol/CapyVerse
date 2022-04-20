@@ -80,9 +80,14 @@ private:
 	List<GuiText*> credits;
 
 	SDL_Texture* arrow = nullptr;
+	SDL_Texture* menus = nullptr;
 	SDL_Texture* title = nullptr;
 	Timer time;
 	bool sound = true;
+	bool optionsB = false;
+	bool creditsB = false;
+	bool exit = false;
+	bool play = false;
 	int titleSFX;
 };
 #endif // __MAINMENU_H__
