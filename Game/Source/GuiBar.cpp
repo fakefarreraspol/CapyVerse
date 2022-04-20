@@ -5,6 +5,7 @@
 #include "App.h"
 #include "Audio.h"
 #include "GuiManager.h"
+#include "Textures.h"
 
 GuiBar::GuiBar(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::BAR, id)
 {
@@ -12,6 +13,7 @@ GuiBar::GuiBar(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiCon
 	this->text = text;
 
 	drawBasic = false;
+	texture = app->tex->Load("Assets/Menus/bars.png");
 }
 
 GuiBar::~GuiBar()
@@ -47,6 +49,34 @@ bool GuiBar::Draw(Render* render)
 		{
 			render->DrawRectangle(cBounds, 150, 0, 0);
 			render->DrawRectangle(cBar, 0, 150, 0);
+		}
+		switch (type)
+		{
+		case BarType::NONE:
+			break;
+		case BarType::HEALTH:
+		{
+			SDL_Rect cbar{ 0, 9, cBounds.w, cBounds.h };
+			render->DrawTexture(texture, cBounds.x, cBounds.y, &cbar);
+			SDL_Rect cbounds{ 0, 0, cBar.w, cBar.h };
+			render->DrawTexture(texture, cBar.x, cBar.y, &cbounds);
+		}break;
+		case BarType::MANA:
+		{
+			SDL_Rect cbar{ 0, 30, cBounds.w, cBounds.h };
+			render->DrawTexture(texture, cBounds.x, cBounds.y, &cbar);
+			SDL_Rect cbounds{ 0, 18, cBar.w, cBar.h };
+			render->DrawTexture(texture, cBar.x, cBar.y, &cbounds);
+		}break;
+		case BarType::XP:
+		{
+			SDL_Rect cbar{ 0, 51, cBounds.w, cBounds.h };
+			render->DrawTexture(texture, cBounds.x, cBounds.y, &cbar);
+			SDL_Rect cbounds{ 0, 42, cBar.w, cBar.h };
+			render->DrawTexture(texture, cBar.x, cBar.y, &cbounds);
+		}break;
+		default:
+			break;
 		}
 	}
 	return true;

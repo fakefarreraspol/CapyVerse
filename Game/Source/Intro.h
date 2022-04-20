@@ -39,6 +39,8 @@ public:
 private:
 	SDL_Texture* background = nullptr;
 	Timer counter;
+	int introSFX;
+	bool sound = true;
 };
 
 #endif // __INTRO_H__

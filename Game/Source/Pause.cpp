@@ -185,7 +185,7 @@ bool Pause::Update(float dt)
 	}
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
-		app->pause = !app->pause;
+		app->pause = true;
 		for (int i = 0; i < menuBtns.Count(); i++)
 		{
 			

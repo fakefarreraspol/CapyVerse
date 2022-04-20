@@ -10,6 +10,8 @@ Retrobara::Retrobara(uint32 id, iPoint position) : Capybara(CapybaraType::TANK, 
 
 	this->capybaraTarget = CapybaraTarget::ENEMIES;
 	InitStats();
+	anim.PushBack({ 64, 392, 60, 56 });
+	currentAnim = &anim;
 }
 
 Retrobara::~Retrobara()

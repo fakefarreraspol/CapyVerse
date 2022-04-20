@@ -13,7 +13,7 @@ struct SDL_Texture;
 
 class Capybara;
 class Player;
-class Entity;
+class NPC;
 
 class Scene : public Module
 {
@@ -45,7 +45,7 @@ public:
 
 private:
 public:
-	List<Entity*> NPCs;
+	List<NPC*> NPCs;
 	Player* player = nullptr;
 
 

@@ -2,9 +2,9 @@
 #define __BATTLESCENE1_H__
 
 #include "Module.h"
+#include "Textures.h"
 
 class Enemy;
-
 class BattleScene1 : public Module
 {
 public:
@@ -23,6 +23,7 @@ public:
 	 
 private:
 	Enemy* enemy;
+	SDL_Texture* background;
 
 public: 
 	int randomNum = 0;
