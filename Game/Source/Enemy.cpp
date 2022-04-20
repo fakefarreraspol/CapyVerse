@@ -6,6 +6,7 @@
 #include "Collisions.h"
 #include "Collider.h"
 #include "FadeToBlack.h"
+#include "Textures.h"
 
 Enemy::Enemy(iPoint position, uint32 id, const char* name) : NPC(position, id, name)
 {
@@ -24,6 +25,11 @@ bool Enemy::Start()
 
 bool Enemy::Update(float dt)
 {
+	if (load)
+	{
+		texture = app->tex->Load("Assets/Textures/Sprites/characters.png");
+		load = false;
+	}
 	bool ret = true;
 	return ret;
 }
@@ -33,10 +39,10 @@ bool Enemy::Draw(Render* render)
 	bool ret = true;
 	if (!isCombat)
 	{
-		//if (app->GetDebug())
+		if (app->GetDebug())
 			render->DrawRectangle({ position.x, position.y,  64 , 64 }, 255, 0, 0);
-
-		//render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
+		SDL_Rect rect = { 17, 132, 66, 66 };
+		render->DrawTexture(texture, position.x, position.y, &rect);
 	}
 	return ret;
 }

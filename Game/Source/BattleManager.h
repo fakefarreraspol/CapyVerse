@@ -105,6 +105,7 @@ private:
 
 	bool deleteAttackMenu = false;
 	bool deleteAbilityMenu = false;
+	bool showMenu = false;
 	
 	Turn turn = Turn::NONE;
 
