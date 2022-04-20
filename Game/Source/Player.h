@@ -32,7 +32,10 @@ public:
 
 	//TODO: Update the player input and move the player
 	void UpdateInput(float dt);
-
+	iPoint PositionGetterxd()
+	{
+		return position;
+	}
 	//Getters for the teams
 	List<Capybara*>& GetBattleTeam();
 	List<Capybara*>& GetTeam();
@@ -44,9 +47,12 @@ public:
 
 	void SetCombat(bool value);
 
+	bool isWalking = false;
 	void OnCollision(Collider* c1, Collider* c2);
 	bool CleanUp();
-
+	SDL_Rect playerIddle = { 0,0,66,66 };
+	/*SDL_Rect playerWalkRight[4];*/
+	
 private:
 	int money;
 
