@@ -6,7 +6,6 @@
 #include "Collisions.h"
 #include "Timer.h"
 #include "Window.h"
-#include "Textures.h"
 
 Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType::PLAYER, id, name, position)
 {
@@ -22,11 +21,7 @@ bool Player::Update(float dt)
 	bool ret = true;
 	
 	UpdateCamera();
-	if (load)
-	{
-		texture  = app->tex->Load("Assets/Textures/Sprites/characters.png");
-		load = false;
-	}
+
 
 	collider->SetPos(position.x, position.y);
 	if (canMove == true)

@@ -57,7 +57,7 @@ private:
 
 	List<Capybara*> battleTeam;
 	List<Capybara*> team;
-	bool load = true;
+	
 };
 
 

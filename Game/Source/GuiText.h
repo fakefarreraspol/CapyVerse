@@ -21,7 +21,7 @@ public:
 
 private:
 	bool blink = false;
-	int font;
+
 	int counter = 0;
 };
 

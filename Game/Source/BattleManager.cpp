@@ -183,13 +183,12 @@ void BattleManager::Draw()
 	app->render->DrawTexture(arrow, btnX, btnY);
 	SDL_Rect info{ 0, 369, 270, 120 };
 	SDL_Rect options{ 269, 369, 185, 155 };
-	SDL_Rect enemy{ 455, 369, 226, 155 };
+	SDL_Rect enemy{ 821, 369, 226, 155 };
 	app->render->DrawTexture(capyinfo, 0, 0, &info);
 	app->render->DrawTexture(capyinfo, 440, 0, &info);
 	app->render->DrawTexture(capyinfo, 890, 0, &info);
 	app->render->DrawTexture(capyinfo, 75, 530, &options);
-	if(showMenu)
-		app->render->DrawTexture(capyinfo, 340, 540, &enemy);
+	app->render->DrawTexture(capyinfo, 340, 540, &options);
 }
 
 void BattleManager::UpdatePlayerInfo()
@@ -337,7 +336,7 @@ void BattleManager::CreateAbilityMenu()
 
 	case CapybaraTarget::HIMSELF:
 	{
-		abilityBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 10, currentCapybara->data->name.GetString(), { 360, 50 + 550, 112, 20 }, this));
+		abilityBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 10, currentCapybara->data->name.GetString(), { 460, 50 + 550, 112, 20 }, this));
 		currentButton = abilityBtns.start;
 		currentButtons = abilityBtns;
 	}break;
@@ -535,12 +534,10 @@ bool BattleManager::OnGuiMouseClickEvent(GuiControl* control)
 		if (control->id == 0)
 		{
 			CreateAttackMenu();
-			showMenu = true;
 		}
 		if (control->id == 1)
 		{
 			CreateAbilityMenu();
-			showMenu = true;
 		}
 		if (control->id == 2)
 		{
@@ -553,17 +550,14 @@ bool BattleManager::OnGuiMouseClickEvent(GuiControl* control)
 		if (control->id == 4)
 		{
 			currentCapybara->data->Attack(enemies.At(0)->data);
-			
 		}
 		if (control->id == 5)
 		{
 			currentCapybara->data->Attack(enemies.At(1)->data);
-		
 		}
 		if (control->id == 6)
 		{
 			currentCapybara->data->Attack(enemies.At(2)->data);
-		
 		}
 		if (control->id >= 4 && control->id <= 6)
 		{
@@ -591,7 +585,6 @@ bool BattleManager::OnGuiMouseClickEvent(GuiControl* control)
 				}
 			}
 			UpdateCurrentName();
-			showMenu = false;
 		}
 		if (control->id == 7)
 		{
@@ -635,7 +628,6 @@ bool BattleManager::OnGuiMouseClickEvent(GuiControl* control)
 			}
 
 			UpdateCurrentName();
-			showMenu = false;
 		}
 
 	}break;
