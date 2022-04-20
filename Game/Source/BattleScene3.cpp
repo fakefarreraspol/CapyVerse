@@ -24,14 +24,17 @@ bool BattleScene3::Awake(pugi::xml_node&)
 {
 
 
-    enemy = (Enemy*)app->entMan->CreateEntity(EntityType::ENEMY, 10, { 10, 10 }, "Enemy");
+    enemy = (Enemy*)app->entMan->CreateEntity(EntityType::ENEMY, 12, { 300, 300 }, "Enemy");
 
-    enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 11, { 720, 150 }, "Chinabara"));
-    enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::SUPP, 11, { 720, 250 }, "Rainbowbara"));
-    enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::DPS, 11, { 720, 350 }, "Punkibara"));
-
+    enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 11, { 928, 305 }, "Chinabara"));
+    enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::SUPP, 11, { 750, 443 }, "Rainbowbara"));
+    enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::DPS, 11, { 1115, 444 }, "Punkibara"));
+    for (int i = 0; i < enemy->GetBattleTeam().Count(); i++)
+    {
+        enemy->GetBattleTeam().At(i)->data->enemy = true;
+    }
     app->scene->NPCs.Add(enemy);
-
+    enemy->Disable();
     return true;
 }
 
@@ -39,12 +42,13 @@ bool BattleScene3::Start()
 {
     bool ret = true;
     app->battleManager->SetTurn(Turn::PLAYER);
+    background = app->tex->Load("Assets/Textures/Sprites/battleback.png");
     enemy->SetCombat(true);
 
     app->battleManager->SetEnemy(enemy);
 
     app->battleManager->Enable();
-    app->audio->ChangeMusic(4, 120, 120);
+    app->audio->ChangeMusic(4);
     return ret;
 }
 
@@ -83,7 +87,7 @@ bool BattleScene3::Update(float dt)
     if (app->battleManager->GetTurn() == Turn::ENEMY)
     {
         //supp
-        if (enemy->GetBattleTeam().At(1)->data != nullptr)
+        if (enemy->GetBattleTeam().At(1) != nullptr)
         {
             if (enemy->GetBattleTeam().At(1)->data->GetHealth() <= enemy->GetBattleTeam().At(1)->data->GetMaxHealth() - 7)
             {
@@ -102,11 +106,11 @@ bool BattleScene3::Update(float dt)
 
 
             }
-            else enemy->GetBattleTeam().At(2)->data->RestoreMana(2);
+            else enemy->GetBattleTeam().At(1)->data->RestoreMana(2);
         }
         
         //tank
-        if (enemy->GetBattleTeam().At(0)->data != nullptr)
+        if (enemy->GetBattleTeam().At(0) != nullptr)
         {
             if (enemy->GetBattleTeam().At(0)->data->GetHealth() < enemy->GetBattleTeam().At(0)->data->GetMaxHealth() - 6)
             {
@@ -129,7 +133,7 @@ bool BattleScene3::Update(float dt)
         
 
         //dmg
-        if (enemy->GetBattleTeam().At(2)->data != nullptr)
+        if (enemy->GetBattleTeam().At(2) != nullptr)
         {
             if (enemy->GetBattleTeam().At(2)->data->GetHealth() < enemy->GetBattleTeam().At(2)->data->GetMaxHealth() - 8)
             {
@@ -158,10 +162,8 @@ bool BattleScene3::Update(float dt)
     if (enemy->GetBattleTeam().Count() == 0 || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
     {
         app->fadeToBlack->MFadeToBlack(this, (Module*)app->eobScene, 120);
-        app->audio->PlayFx(app->battleManager->battlewonSFX);
     }
-
-
+    app->render->DrawTexture(background, 0, 0);
     return ret;
 }
 
@@ -169,9 +171,11 @@ bool BattleScene3::CleanUp()
 {
     bool ret = true;
     app->battleManager->Disable();
-
+    app->tex->UnLoad(background);
     enemy->SetCombat(false);
     enemy->Disable();
     app->eobScene->SetXP(150);
+    app->entMan->DestroyEntity(enemy);
+    
     return ret;
 }

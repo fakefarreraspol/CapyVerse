@@ -59,8 +59,8 @@ bool DialogManager::Start()
 
 	characterName = app->guiManager->CreateGuiControl(GuiControlType::TEXT, app->guiManager->controls.Count(), "Name", nBounds, this, { 255,255,255,255 });
 	text = app->guiManager->CreateGuiControl(GuiControlType::TEXT, app->guiManager->controls.Count(), "example text hehe", tBounds, this, { 255,255,255,255 });
-	button = app->guiManager->CreateGuiControl(GuiControlType::BUTTON, app->guiManager->controls.Count(), "", bBounds, this, { 255,0,0,255 });
-
+	button = app->guiManager->CreateGuiControl(GuiControlType::BUTTON, app->guiManager->controls.Count(), "continue", bBounds, this, { 255,255,255,255 });
+	button->state = GuiControlState::FOCUSED;
 
 	// test dialog
 	//app->scene->dialogTest = new Dialog();
@@ -91,7 +91,9 @@ bool DialogManager::Update(float dt)
 			if (activeDialog->GetActiveNode()->nodes.Count() > 1)
 				button->state = GuiControlState::DISABLED;
 			else
-				button->state = GuiControlState::NORMAL;
+			{
+				button->state = GuiControlState::FOCUSED;
+			}
 			characterName->state = GuiControlState::NORMAL;
 			text->state = GuiControlState::NORMAL;
 		}

@@ -3,6 +3,9 @@
 #include "App.h"
 #include "Capybara.h"
 #include "DialogManager.h"
+#include "Collisions.h"
+#include "Collider.h"
+#include "FadeToBlack.h"
 
 Enemy::Enemy(iPoint position, uint32 id, const char* name) : NPC(position, id, name)
 {
@@ -11,6 +14,12 @@ Enemy::Enemy(iPoint position, uint32 id, const char* name) : NPC(position, id, n
 
 Enemy::~Enemy()
 {
+}
+
+bool Enemy::Start()
+{
+	collider = app->colManager->AddCollider({ position.x, position.y, 16, 16 }, Collider::Type::ENEMY, (Module*)app->entMan, this);
+	return true;
 }
 
 bool Enemy::Update(float dt)
@@ -48,10 +57,32 @@ List<Capybara*>& Enemy::GetBattleTeam()
 
 void Enemy::OnCollision(Collider* c1, Collider* c2)
 {
-	app->dialogManager->SetActiveDialog(dialog);
+	if (c2->type == Collider::PLAYER)
+	{
+		if (id == 10)
+		{
+			app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene1, 120);
+		}
+		if (id == 11)
+		{
+			app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene2, 120);
+		}
+		if (id == 12)
+		{
+			app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene3, 120);
+		}
+		this->Disable();
+	}
+
 }
 
 void Enemy::AddCapybaraToBatle(Capybara* capybara)
 {
 	battleTeam.Add(capybara);
+}
+
+bool Enemy::CleanUp()
+{
+	app->colManager->RemoveCollider(collider);
+	return true;
 }

@@ -57,8 +57,8 @@ bool MainMenu::Start()
 	playBtns.Add(continueBtn);
 	playBtns.Add(returnPlBtn);
 
-	credits.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 40, "CREDITS", { 635, 225, 70, 20 }, this, { 255,255,255, 1 }));
-	credits.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 40, "Iván Jose Caballero - Team Leader, game artist, music artist", { 415, 260, 70, 20 }, this, { 255,255,255, 1 }));
+	credits.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 40, "CREDITS", { 550, 225, 70, 20 }, this, { 255,255,255, 1 }));
+	credits.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 40, "Iván Jose Caballero - Team leader, art & music", { 415, 260, 70, 20 }, this, { 255,255,255, 1 }));
 	credits.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 40, "Víctor Falcón - Managment, game design, coding", { 415, 285, 70, 20 }, this, { 255,255,255, 1 }));
 	credits.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 40, "Pol Farreras - Game design, coding", { 415, 310, 70, 20 }, this, { 255,255,255, 1 }));
 	credits.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 40, "Laura Isidro - Coding, design", { 415, 335, 70, 20 }, this, { 255,255,255, 1 }));
@@ -71,26 +71,24 @@ bool MainMenu::Start()
 		credits.At(i)->data->state = GuiControlState::DISABLED;
 	}
 
-	volumeBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 8, "VOLUME", { 325, 285, 125, 20 }, this, { 255, 255, 255 });
 	
-	musicSldr = (GuiSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 9, "MUSIC", { 500, 280, 220, 20 }, this);
+	musicSldr = (GuiSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 9, "MUSIC", { 370, 280, 220, 20 }, this);
 	musicSldr->SetValues(100, 1, 50);
-	soundSlrd = (GuiSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 10, "SOUND FX", { 500, 320, 220, 20 }, this);
+	soundSlrd = (GuiSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 10, "SOUND FX", { 370, 320, 220, 20 }, this);
 	soundSlrd->SetValues(100, 1, 50);
-	fullscreenChkbx = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 11, "FULLSCREEN", { 325, 375, 25, 25 }, this);
-	vsyncChkbx = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 12, "VSYNC            ", { 325, 420, 25, 25 }, this);
-	returnOPBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 13, "RETURN", { 325, 485, 125, 20 }, this, { 255, 255, 255 });
+	fullscreenChkbx = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 11, "FULLSCREEN", { 370, 375, 25, 25 }, this);
+	vsyncChkbx = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 12, "VSYNC            ", { 370, 420, 25, 25 }, this);
+	returnOPBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 13, "RETURN", { 370, 460, 125, 20 }, this, { 255, 255, 255 });
 
-	optionsBtns.Add(volumeBtn);
 	optionsBtns.Add(musicSldr);
 	optionsBtns.Add(soundSlrd);
 	optionsBtns.Add(fullscreenChkbx);
 	optionsBtns.Add(vsyncChkbx);
 	optionsBtns.Add(returnOPBtn);
 
-	noBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 14, "NO", { 565, 380, 25, 20 }, this, {255, 255, 255, 1});
-	yesBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 15, "YES", { 750, 380, 25, 20 }, this, {255, 255, 255, 1});
-	exitText = (GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 200, "ARE YOU SURE YOU WANT TO EXIT THE GAME?", { 475, 325, 420, 15 }, this, {255, 255, 255, 1});
+	noBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 14, "NO", { 500, 350, 25, 20 }, this, {255, 255, 255, 1});
+	yesBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 15, "YES", { 675, 350, 30, 20 }, this, {255, 255, 255, 1});
+	exitText = (GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 200, "ARE YOU SURE YOU WANT TO EXIT?", { 475, 325, 420, 15 }, this, {255, 255, 255, 1});
 
 	exitBtns.Add(noBtn);
 	exitBtns.Add(yesBtn);
@@ -99,7 +97,7 @@ bool MainMenu::Start()
 	continueBtn->state = GuiControlState::DISABLED;
 	returnPlBtn->state = GuiControlState::DISABLED;
 
-	volumeBtn->state = GuiControlState::DISABLED;
+
 	musicSldr->state = GuiControlState::DISABLED;
 	soundSlrd->state = GuiControlState::DISABLED;
 	fullscreenChkbx->state = GuiControlState::DISABLED;
@@ -110,12 +108,16 @@ bool MainMenu::Start()
 	noBtn->state = GuiControlState::DISABLED;
 	exitText->state = GuiControlState::DISABLED;
 
-
+	titleSFX = app->audio->LoadFx("Assets/Audio/Fx/title.wav");
 	arrow = app->tex->Load("Assets/Menus/arrow.png");
+	background = app->tex->Load("Assets/Menus/portada.png");
+	title = app->tex->Load("Assets/Menus/title.png");
+	menus = app->tex->Load("Assets/Menus/menus.png");
 	currentControls = menuBtns;
 	currentControl = currentControls.start;
 	app->audio->ChangeMusic(1);
 
+	time.Start();
 	return true;
 }
 
@@ -129,7 +131,12 @@ bool MainMenu::PreUpdate()
 // Called each loop iteration
 bool MainMenu::Update(float dt)
 {
+	app->render->DrawTexture(background, 0, 0);
 
+	
+	app->render->DrawTexture(title, 0, 0);
+	
+	
 	app->render->DrawTexture(arrow, currentControl->data->bounds.x - 30, currentControl->data->bounds.y - 3);
 	vsyncChkbx->checked = app->render->vsync;
 	fullscreenChkbx->checked = app->win->fullscreen;
@@ -201,6 +208,28 @@ bool MainMenu::Update(float dt)
 		}
 	}
 	currentControl->data->state = GuiControlState::FOCUSED;
+	SDL_Rect recttt{ 0, 43, 188, 230 };
+	app->render->DrawTexture(menus, 75, 290, &recttt);
+	if (optionsB)
+	{
+		SDL_Rect rect{ 644, 43, 413, 258 };
+		app->render->DrawTexture(menus, 325, 250, &rect);
+	}
+	if (play)
+	{
+		SDL_Rect rect{ 0, 43, 188, 230 };
+		app->render->DrawTexture(menus, 275, 290, &rect);
+	}
+	if (creditsB)
+	{
+		SDL_Rect rect{ 644, 43, 413, 258 };
+		app->render->DrawTexture(menus, 400, 200, &rect);
+	}
+	if (exit)
+	{
+		SDL_Rect rect{ 1057, 43, 327, 87 };
+		app->render->DrawTexture(menus, 450, 300, &rect);
+	}
 	return true;
 }
 
@@ -220,6 +249,9 @@ bool MainMenu::CleanUp()
 	app->guiManager->Disable();
 	
 	app->tex->UnLoad(arrow);
+	app->tex->UnLoad(background);
+	app->tex->UnLoad(title);
+	app->tex->UnLoad(menus);
 	playBtns.Clear();
 	menuBtns.Clear();
 	optionsBtns.Clear();
@@ -234,6 +266,7 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control)
 	bool ret = true;
 	if (control->id == 1)
 	{
+		play = true;
 		//PLAY
 		for (int i = 0; i < playBtns.Count(); i++)
 		{
@@ -244,6 +277,7 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control)
 	}
 	if (control->id == 2)
 	{
+		optionsB = true;
 		//OPTIONS
 		for (int i = 0; i < optionsBtns.Count(); i++)
 		{
@@ -254,6 +288,7 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control)
 	}
 	if (control->id == 3)
 	{
+		creditsB = !creditsB;
 		//CREDITS
 		if (credits.At(1)->data->state == GuiControlState::DISABLED)
 		{
@@ -272,6 +307,7 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control)
 	}
 	if (control->id == 4)
 	{
+		exit = true;
 		//EXIT
 		for (int i = 0; i < exitBtns.Count(); i++)
 		{
@@ -294,6 +330,7 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control)
 	}
 	if (control->id == 7)
 	{
+		play = false;
 		//RETURN
 		for (int i = 0; i < playBtns.Count(); i++)
 		{
@@ -329,6 +366,7 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control)
 	}
 	if (control->id == 13)
 	{
+		optionsB = false;
 		//RETURN
 		for (int i = 0; i < optionsBtns.Count(); i++)
 		{
@@ -339,6 +377,7 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control)
 	}
 	if (control->id == 14)
 	{
+		exit = false;
 		//NO
 		for (int i = 0; i < exitBtns.Count(); i++)
 		{

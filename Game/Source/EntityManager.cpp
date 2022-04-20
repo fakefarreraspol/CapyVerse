@@ -17,6 +17,7 @@
 #include "Pinkbara.h"
 #include "Simpbara.h"
 #include "Chadbara.h"
+#include "Textures.h"
 #include "Pause.h"
 EntityManager::EntityManager(bool startEnabled) : Module(startEnabled)
 {
@@ -34,7 +35,7 @@ bool EntityManager::Awake(pugi::xml_node& config)
 	bool ret = true;
 
 	//L13: TODO 6: Initialize Entities from XML 
-
+	
 	return ret;
 }
 
@@ -118,7 +119,10 @@ Capybara* EntityManager::CreateEntity(CapybaraType capybaraType, uint32 id, iPoi
 
 
 	if (entity != nullptr)
+	{
 		AddEntity(entity);
+		entity->Start();
+	}
 
 	return entity;
 }
@@ -140,7 +144,7 @@ void EntityManager::AddEntity(Entity* entity)
 
 bool EntityManager::Start()
 {
-
+	
 	return true;
 }
 
