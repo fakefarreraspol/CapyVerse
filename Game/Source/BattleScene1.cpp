@@ -1,4 +1,4 @@
-#include "BattleScene1.h"
+   #include "BattleScene1.h"
 
 #include "Enemy.h"
 #include "Player.h"
@@ -10,6 +10,7 @@
 #include "FadeToBlack.h"
 #include "Scene.h"
 #include "EOBScene.h"
+#include "Audio.h"
 
 
 BattleScene1::BattleScene1(bool startEnabled) : Module(startEnabled)
@@ -32,7 +33,7 @@ bool BattleScene1::Awake(pugi::xml_node&)
     enemy->Disable();
 
     app->scene->NPCs.Add(enemy);
-
+    
 
     return true;
 }
@@ -46,6 +47,8 @@ bool BattleScene1::Start()
     app->battleManager->SetEnemy(enemy);
 
     app->battleManager->Enable();
+
+    app->audio->ChangeMusic(3, 120, 120);
 
     return ret;
 }
@@ -165,7 +168,10 @@ bool BattleScene1::Update(float dt)
     }
     
     if (enemy->GetBattleTeam().Count() == 0 || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+    {
         app->fadeToBlack->MFadeToBlack(this, (Module*)app->eobScene, 120);
+        app->audio->PlayFx(app->battleManager->battlewonSFX);
+    }
 
    
     return ret;

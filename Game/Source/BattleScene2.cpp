@@ -9,6 +9,8 @@
 #include "EntityManager.h"
 #include "FadeToBlack.h"
 #include "Scene.h"
+#include "Audio.h"
+#include "EOBScene.h"
 
 
 BattleScene2::BattleScene2(bool startEnabled) : Module(startEnabled)
@@ -43,7 +45,7 @@ bool BattleScene2::Start()
     app->battleManager->SetEnemy(enemy);
 
     app->battleManager->Enable();
-
+    app->audio->ChangeMusic(3, 120, 120);
     return ret;
 }
 
@@ -162,7 +164,10 @@ bool BattleScene2::Update(float dt)
     }
 
     if (enemy->GetBattleTeam().Count() == 0 || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+    {
         app->fadeToBlack->MFadeToBlack(this, (Module*)app->eobScene, 120);
+        app->audio->PlayFx(app->battleManager->battlewonSFX);
+    }
 
 
     return ret;
@@ -175,6 +180,6 @@ bool BattleScene2::CleanUp()
 
     enemy->SetCombat(false);
     enemy->Disable();
-
+    app->eobScene->SetXP(90);
     return ret;
 }

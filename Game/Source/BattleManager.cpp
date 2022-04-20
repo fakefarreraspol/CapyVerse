@@ -18,6 +18,8 @@
 #include "Player.h"
 #include "Pause.h"
 
+#include "Audio.h"
+
 BattleManager::BattleManager(bool startEnabled) : Module(startEnabled)
 {
 }
@@ -40,7 +42,7 @@ bool BattleManager::Start()
 	bool ret = true;
 
 	app->guiManager->Enable();
-	
+	battlewonSFX = app->audio->LoadFx("Assets/Audio/Fx/battle-won.wav");
 	app->pauseMenu->Enable();
 	attackBtn =	(GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 0, "Attack", { 135, 585, 75, 21 }, this);
 	abilityBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Ability", { 135, 615, 75, 21 }, this);

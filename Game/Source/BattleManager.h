@@ -47,6 +47,7 @@ public:
 	Turn GetTurn();
 	void EndTurn();
 
+	int battlewonSFX;
 private:
 
 	void UpdateCurrentName();
@@ -108,6 +109,7 @@ private:
 	Turn turn = Turn::NONE;
 
 	SDL_Texture* arrow = nullptr;
+
 };
 
 

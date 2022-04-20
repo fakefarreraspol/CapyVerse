@@ -61,7 +61,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	// Reverse order of CleanUp
 	AddModule(win);
 	AddModule(input);
-	AddModule(fadeToBlack);
 	AddModule(mapManager);
 	AddModule(tex);
 	AddModule(fonts);
@@ -79,6 +78,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(pauseMenu);
 	AddModule(guiManager);
 	AddModule(colManager);
+	AddModule(fadeToBlack);
 	
 	// Render last to swap buffer
 	AddModule(render);

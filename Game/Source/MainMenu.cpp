@@ -110,10 +110,11 @@ bool MainMenu::Start()
 	noBtn->state = GuiControlState::DISABLED;
 	exitText->state = GuiControlState::DISABLED;
 
-	app->audio->PlayMusic("Assets/Audio/Music/backgroundForest.ogg");
+
 	arrow = app->tex->Load("Assets/Menus/arrow.png");
 	currentControls = menuBtns;
 	currentControl = currentControls.start;
+	app->audio->ChangeMusic(1);
 
 	return true;
 }
