@@ -79,6 +79,14 @@ bool Capybara::Draw(Render* render)
 	return ret;
 }
 
+void Capybara::SetLevel(int level)
+{
+	for (int i = 0; i < level - this->level; i++)
+	{
+		LevelUp();
+	}
+}
+
 int& Capybara::GetHealth()
 {
 	return health;
@@ -362,13 +370,41 @@ void Capybara::AddXp(int value)
 	return;
 }
 
-bool Capybara::LoadState(pugi::xml_node&)
+bool Capybara::LoadState(pugi::xml_node& node)
 {
+	position.x = node.child("position").attribute("x").as_float();
+	position.y = node.child("position").attribute("y").as_float();
+
+	level = node.attribute("level").as_int();
+	health = node.attribute("health").as_int();
+	xp = node.attribute("xp").as_int();
+	mana = node.attribute("mana").as_int();
+	capybaraType = (CapybaraType)node.attribute("type").as_int();
+	capybaraTarget = (CapybaraTarget)node.attribute("target").as_int();
+	active = node.attribute("active").as_bool();
+	renderable = node.attribute("renderable").as_bool();
+
+	// must update other stats depending on level
+
 	return false;
 }
 
-bool Capybara::SaveState(pugi::xml_node&)
+bool Capybara::SaveState(pugi::xml_node& node)
 {
+	pugi::xml_node position = node.append_child("position");
+	position.append_attribute("x").set_value(this->position.x);
+	position.append_attribute("y").set_value(this->position.y);
+
+	node.append_attribute("id").set_value(id);
+	node.append_attribute("level").set_value(level);
+	node.append_attribute("health").set_value(health);
+	node.append_attribute("xp").set_value(xp);
+	node.append_attribute("mana").set_value(mana);
+	node.append_attribute("type").set_value((int)capybaraType);
+	node.append_attribute("target").set_value((int)capybaraTarget);
+	node.append_attribute("active").set_value(active);
+	node.append_attribute("renderable").set_value(renderable);
+
 	return false;
 }
 

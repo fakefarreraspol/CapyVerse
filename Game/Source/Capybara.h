@@ -56,7 +56,7 @@ public:
 	//Base functions
 	bool Update(float dt);
 	bool Draw(Render* render);
-
+	void SetLevel(int level);
 	//Getters
 	int& GetHealth();
 	int& GetMaxHealth();
