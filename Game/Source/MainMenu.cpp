@@ -290,6 +290,7 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control)
 	{
 		//CONTINUE
 		app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene);
+		app->LoadGameRequest();
 	}
 	if (control->id == 7)
 	{

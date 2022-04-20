@@ -22,6 +22,7 @@
 
 BattleManager::BattleManager(bool startEnabled) : Module(startEnabled)
 {
+	name.Create("BattleManager");
 }
 
 BattleManager::~BattleManager()

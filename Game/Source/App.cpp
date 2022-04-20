@@ -447,8 +447,6 @@ bool App::SaveGame() const
 	pugi::xml_document* saveDoc = new pugi::xml_document();
 	pugi::xml_node saveStateNode = saveDoc->append_child("game_state");
 
-
-
 	ListItem<Module*>* item;
 	item = modules.start;
 

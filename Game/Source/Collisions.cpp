@@ -11,6 +11,7 @@
 
 Collisions::Collisions(bool startEnabled) : Module(startEnabled)
 {
+	name.Create("CollisionsManager");
 	/*for(uint i = 0; i < MAX_COLLIDERS; ++i)
 		colliders[i] = nullptr;*/
 	

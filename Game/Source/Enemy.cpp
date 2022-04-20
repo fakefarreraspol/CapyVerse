@@ -6,6 +6,7 @@
 
 Enemy::Enemy(iPoint position, uint32 id, const char* name) : NPC(position, id, name)
 {
+
 }
 
 Enemy::~Enemy()

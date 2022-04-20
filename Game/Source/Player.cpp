@@ -235,14 +235,34 @@ List<Capybara*>& Player::GetTeam()
 	return team;
 }
 
-bool Player::LoadState(pugi::xml_node&)
+bool Player::LoadState(pugi::xml_node& node)
 {
+	position.x = node.child("position").attribute("x").as_float();
+	position.y = node.child("position").attribute("y").as_float();
+	
+	isBattle = node.attribute("isBattle").as_bool();
+	money = node.attribute("money").as_int();
+
+	active = node.attribute("active").as_bool();
+	renderable = node.attribute("renderable").as_bool();
+
 	return false;
 }
 
-bool Player::SaveState(pugi::xml_node&)
+bool Player::SaveState(pugi::xml_node& node)
 {
-	return false;
+	pugi::xml_node position = node.append_child("position");
+	position.append_attribute("x").set_value(this->position.x);
+	position.append_attribute("y").set_value(this->position.y);
+	
+	node.append_attribute("id").set_value(id);
+	node.append_attribute("isBattle").set_value(isBattle);
+	node.append_attribute("money").set_value(money);
+
+	node.append_attribute("active").set_value(active);
+	node.append_attribute("renderable").set_value(renderable);
+
+	return true;
 }
 
 void Player::SetCombat(bool value)

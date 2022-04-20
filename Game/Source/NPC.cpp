@@ -56,3 +56,26 @@ bool NPC::CleanUp()
 
 	return true;
 }
+
+bool NPC::LoadState(pugi::xml_node& node)
+{
+	position.x = node.child("position").attribute("x").as_float();
+	position.y = node.child("position").attribute("y").as_float();
+
+	active = node.attribute("active").as_bool();
+	renderable = node.attribute("renderable").as_bool();
+
+	return true;
+}
+bool NPC::SaveState(pugi::xml_node& node)
+{
+	pugi::xml_node position = node.append_child("position");
+	position.append_attribute("x").set_value(this->position.x);
+	position.append_attribute("y").set_value(this->position.y);
+
+	node.append_attribute("id").set_value(id);
+	node.append_attribute("active").set_value(active);
+	node.append_attribute("renderable").set_value(renderable);
+
+	return true;
+}
