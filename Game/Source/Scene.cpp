@@ -52,8 +52,8 @@ bool Scene::Awake(pugi::xml_node& node)
 
 	player->Disable();
 	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 300,200 }, "Farmer"));
-	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 350,500 }, "NPC"));
-	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 400,120 }, "NPC"));
+	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 500,500 }, "NPC"));
+	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 800,300 }, "NPC"));
 
 	for (int i = 0; i < NPCs.Count(); i++)
 	{
