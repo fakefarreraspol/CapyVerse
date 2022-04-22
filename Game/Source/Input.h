@@ -2,11 +2,12 @@
 #define __INPUT_H__
 
 #include "Module.h"
+#include "Timer.h"
 struct _SDL_GameController;
 struct _SDL_Haptic;
 //#define NUM_KEYS 352
 #define NUM_MOUSE_BUTTONS 5
-#define MAX_PADS 20
+#define MAX_PADS 1
 //#define LAST_KEYS_PRESSED_BUFFER 50
 
 struct SDL_Rect;
@@ -89,10 +90,12 @@ public:
 	
 	//CONTROLLERS
 	
-	
+	Timer inputTimer;
+	bool isInputEnabled = true;
+	bool inputSwitch = true;
 	bool ShakeController(int id, int duration, float strength = 0.5f);
 	GamePad pads[MAX_PADS];
-	const char* GetControllerName(int id) const;
+	const char* GetControllerName() const;
 	// Called at PreUpdate
 	// Iterates through all active gamepads and update all input data
 	void UpdateGamepadsInput();

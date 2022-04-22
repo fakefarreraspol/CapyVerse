@@ -11,7 +11,7 @@ public:
 
 	Collider* collider = nullptr;
 	Dialog* dialog;
-
+	bool load = true;
 public:
 
 	NPC(iPoint position, uint32 id, const char* name);
@@ -22,8 +22,8 @@ public:
 	bool Update(float dt);
 	bool Draw(Render* render);
 
-	/*bool LoadState(pugi::xml_node&);
-	bool SaveState(pugi::xml_node&);*/
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&);
 
 	void OnCollision(Collider* c1, Collider* c2);
 

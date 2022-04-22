@@ -59,7 +59,7 @@ void GuiManager::DestroyGuiControl(GuiControl* entity)
 {
 	ListItem<GuiControl*>* item;
 
-	for (item = controls.start; item != NULL; item = item->next)
+	for (item = controls.start; item != nullptr; item = item->next)
 	{
 		if (item->data == entity) controls.Del(item);
 	}
@@ -92,9 +92,9 @@ bool GuiManager::UpdateAll(float dt, bool doLogic) {
 
 		while (control != nullptr && ret)
 		{
-			if (activeControl == nullptr)
+			/*if (activeControl == nullptr)
 				ret = control->data->Update(dt);
-			else if (activeControl == control->data)
+			else if (activeControl == control->data)*/
 				ret = control->data->Update(dt);
 			control = control->next;
 		}

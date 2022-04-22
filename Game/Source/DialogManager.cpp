@@ -7,6 +7,9 @@
 #include "GuiManager.h"
 #include "DialogNode.h"
 #include "GuiText.h"
+#include "Input.h"
+#include "Textures.h"
+#include "Player.h"
 
 DialogManager::DialogManager(bool startEnabled):Module(startEnabled)
 {
@@ -53,14 +56,14 @@ bool DialogManager::Start()
 	tBounds.w = bounds.w - cBounds.w - 3*offset;
 	tBounds.h = bounds.h - (2 * offset);
 
-	bBounds.x = tBounds.x + tBounds.w - offset;
+	bBounds.x = tBounds.x + tBounds.w - offset-50;
 	bBounds.y = tBounds.y + tBounds.h - offset;
 	bBounds.w = bBounds.h = offset;
 
 	characterName = app->guiManager->CreateGuiControl(GuiControlType::TEXT, app->guiManager->controls.Count(), "Name", nBounds, this, { 255,255,255,255 });
 	text = app->guiManager->CreateGuiControl(GuiControlType::TEXT, app->guiManager->controls.Count(), "example text hehe", tBounds, this, { 255,255,255,255 });
-	button = app->guiManager->CreateGuiControl(GuiControlType::BUTTON, app->guiManager->controls.Count(), "", bBounds, this, { 255,0,0,255 });
-
+	button = app->guiManager->CreateGuiControl(GuiControlType::BUTTON, app->guiManager->controls.Count(), "continue", bBounds, this, { 255,255,255,255 });
+	button->state = GuiControlState::FOCUSED;
 
 	// test dialog
 	//app->scene->dialogTest = new Dialog();
@@ -73,7 +76,7 @@ bool DialogManager::Start()
 	//app->scene->dialogTest->AddOption(sec, "you chose 2", "2");
 	//app->scene->dialogTest->AddOption(sec, "you chose 1", "1");
 	//app->dialogManager->SetActiveDialog(app->scene->dialogTest);
-
+	texture = app->tex->Load("Assets/Menus/menus.png");
 
 	return true;
 }
@@ -91,22 +94,50 @@ bool DialogManager::Update(float dt)
 			if (activeDialog->GetActiveNode()->nodes.Count() > 1)
 				button->state = GuiControlState::DISABLED;
 			else
-				button->state = GuiControlState::NORMAL;
+			{
+				button->state = GuiControlState::FOCUSED;
+			}
 			characterName->state = GuiControlState::NORMAL;
 			text->state = GuiControlState::NORMAL;
+
+			if (optionButtons.Count() == 0)
+			{
+				button->state = GuiControlState::FOCUSED;
+				button->Update(dt);
+			}
+			else
+			{
+				if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+				{
+					option++;
+					if (option >= optionButtons.Count())
+						option = 0;
+				}
+				if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+				{
+					option--;
+					if (option < 0)
+						option = optionButtons.Count()-1;
+				}
+
+				optionButtons.At(option)->data->state = GuiControlState::FOCUSED;
+				ListItem <GuiControl*>* item = optionButtons.start;
+				while (item != nullptr)
+				{
+					item->data->Update(dt);
+					item = item->next;
+				}
+			}
+
 		}
 		
-
-
-		//aqui se crean las opciones
-
-
 	}
 	else
 	{
 		button->state = GuiControlState::DISABLED;
 		characterName->state = GuiControlState::DISABLED;
 		text->state = GuiControlState::DISABLED;
+		app->scene->player->canMove = true;
 	}
 
 
@@ -124,6 +155,27 @@ bool DialogManager::PostUpdate()
 		app->render->DrawRectangle(cBounds, 0, 0, 0, 255);
 		app->render->DrawRectangle(nBounds, 0, 0, 0, 255);
 		app->render->DrawRectangle(tBounds, 0, 0, 0, 255);
+		/*SDL_Rect rect{ 0, 624,592, 163 };
+		app->render->DrawTexture(texture, bounds.x, bounds.y, &rect);*/
+
+		text->Draw(app->render);
+		characterName->Draw(app->render);
+		if (optionButtons.Count()==0)
+			button->Draw(app->render);
+		else
+		{
+			
+			ListItem <GuiControl*>* item = optionButtons.start;
+			while (item != nullptr)
+			{
+				item->data->Draw(app->render);
+				item->data->state = GuiControlState::NORMAL;
+				item = item->next;
+			}
+
+		}
+		
+
 	}
 
 	
@@ -151,6 +203,7 @@ bool DialogManager::SetActiveDialog(Dialog* dialog)
 			{
 				text->SetText(activeNode->text.GetString());
 			}
+			app->scene->player->canMove = false;
 		}
 		else
 		{
@@ -164,36 +217,17 @@ bool DialogManager::SetActiveDialog(Dialog* dialog)
 
 bool DialogManager::OnGuiMouseClickEvent(GuiControl* control)
 {
-	if (control != button)
-	{
-		option = 0;
-		ListItem <GuiControl*>* item = optionButtons.start;
-		while (item != nullptr)
-		{
-			if (control == item->data)
-				break;
-			option++;
-			item = item->next;
-		}
-	}
-
 	// delete the other options
-	if (optionButtons.Count() != 0)
+	ListItem <GuiControl*>* item = optionButtons.start;
+
+	while (item != nullptr)
 	{
-		ListItem <GuiControl*>* item = optionButtons.start;
-
-		while (item != nullptr)
-		{
-			app->guiManager->DestroyGuiControl(item->data);
-			item = item->next;
-		}
-		optionButtons.Clear();
-
+		app->guiManager->DestroyGuiControl(item->data);
+		item = item->next;
 	}
+	optionButtons.Clear();
 
 	// creating options
-
-	
 
 	activeDialog->SetActiveNode(option);
 	DialogNode* activeNode = activeDialog->GetActiveNode();
@@ -204,7 +238,7 @@ bool DialogManager::OnGuiMouseClickEvent(GuiControl* control)
 	{
 		int offset = 20;
 
-		for (int i =0; i< activeNode->nodes.Count(); i++)
+		for (int i = activeNode->nodes.Count()-1; i< 0; i--)
 		{
 			SDL_Rect optionBounds = { 0,0,0,0 };
 			optionBounds.x = tBounds.x;
@@ -213,13 +247,21 @@ bool DialogManager::OnGuiMouseClickEvent(GuiControl* control)
 			optionBounds.h = offset;
 
 			int id = app->guiManager->controls.Count();
-			GuiControl* newOption = app->guiManager->CreateGuiControl(GuiControlType::BUTTON, id, activeNode->nodes.At(i)->data->optionText.GetString(), optionBounds, this, { 0,0,0,255 });
+			GuiControl* newOption = app->guiManager->CreateGuiControl(GuiControlType::BUTTON, id, activeNode->nodes.At(i)->data->optionText.GetString(), optionBounds, this, { 225,225,255,255 });
+			newOption->state = GuiControlState::NORMAL;
 			optionButtons.Add(newOption);
 		}
-
+		button->state = GuiControlState::DISABLED;
 	}
 
 	option = 0;
 
+	return true;
+}
+
+bool DialogManager::CleanUp()
+{
+	app->tex->UnLoad(texture);
+	optionButtons.Clear();
 	return true;
 }

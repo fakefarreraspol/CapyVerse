@@ -57,7 +57,7 @@ public:
 	int globalFont;
 	//Font used in menu buttons
 	int menuButtonFont;
-
+	int indicatorsFont;
 	int titles;
 
 private:

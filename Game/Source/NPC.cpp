@@ -6,29 +6,15 @@
 #include "Dialog.h"
 #include "Input.h"
 #include "DialogManager.h"
+#include "Textures.h"
 
-
+#include "Collider.h"
 
 #include "Scene.h"
 
 NPC::NPC(iPoint position, uint32 id, const char* name) : Entity(EntityType::NPC, id, name, position)
 {
-	collider = app->colManager->AddCollider({ position.x, position.y, 16, 16 }, Collider::Type::NPC);
 	dialog = nullptr;
-
-	// test dialog
-	dialog = new Dialog();
-	DialogNode* first = new DialogNode("dialog NPC");
-	dialog->AddFirstNode(first);
-
-	DialogNode* sec = dialog->AddOption(first, "choose an option", "");
-	dialog->AddOption(sec, "you chose 4", "4");
-	dialog->AddOption(sec, "you chose 3", "3");
-	dialog->AddOption(sec, "you chose 2", "2");
-	dialog->AddOption(sec, "you chose 1", "1");
-
-
-
 }
 
 NPC::~NPC()
@@ -38,45 +24,66 @@ NPC::~NPC()
 
 bool NPC::Start()
 {
-	
+	collider = app->colManager->AddCollider({ position.x - 32, position.y - 32, 128, 128 }, Collider::Type::NPC, (Module*)app->entMan, this);
 	return true;
 }
 
 bool NPC::Update(float dt)
 {
-	if (app->input->GetKey(SDL_SCANCODE_N) == KEY_REPEAT)
-		OnCollision(nullptr,nullptr);
+	if (load)
+	{
+		texture = app->tex->Load("Assets/Textures/Sprites/characters.png");
+		load = false;
+	}
+	/*if (app->input->GetKey(SDL_SCANCODE_N) == KEY_REPEAT)
+		OnCollision(nullptr,nullptr);*/
 	return true;
 }
 
 bool NPC::Draw(Render* render)
 {
-	render->DrawRectangle({ position.x,position.y,50,50 }, 228, 0, 224, 255);
+	if (app->GetDebug())
+		render->DrawRectangle({ position.x, position.y,  64 , 64 }, 255, 0, 0);
+	SDL_Rect rect = { 17, 198, 66, 66 };
+	render->DrawTexture(texture, position.x, position.y, &rect);
 
 	return true;
 }
 
 void NPC::OnCollision(Collider* c1, Collider* c2)
 {
-	// start dialog if player interacts
-	// select dialog depending on quest manager
-
-	/*if (c2->type == Collider::Type::PLAYER)
+	if (c2->type == Collider::PLAYER)
 	{
-		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT)
-			if (dialog != nullptr)
-				app->dialogManager->SetActiveDialog(this->dialog);
-	}*/
-
-	app->dialogManager->SetActiveDialog(dialog);
-	//app->dialogManager->SetActiveDialog(app->scene->dialogTest);
+		app->dialogManager->SetActiveDialog(dialog);
+		app->dialogManager->characterName->SetText(this->name.GetString());
+	}
+	
 }
 
 bool NPC::CleanUp()
 {
-	app->colManager->RemoveCollider(collider);
-	delete texture;
-	delete dialog;
+	return true;
+}
+
+bool NPC::LoadState(pugi::xml_node& node)
+{
+	position.x = node.child("position").attribute("x").as_float();
+	position.y = node.child("position").attribute("y").as_float();
+
+	active = node.attribute("active").as_bool();
+	renderable = node.attribute("renderable").as_bool();
+
+	return true;
+}
+bool NPC::SaveState(pugi::xml_node& node)
+{
+	pugi::xml_node position = node.append_child("position");
+	position.append_attribute("x").set_value(this->position.x);
+	position.append_attribute("y").set_value(this->position.y);
+
+	node.append_attribute("id").set_value(id);
+	node.append_attribute("active").set_value(active);
+	node.append_attribute("renderable").set_value(renderable);
 
 	return true;
 }

@@ -52,11 +52,11 @@ public:
 	//Contructor and destructor
 	Capybara(CapybaraType capybaraType, uint32 id, iPoint position, const char* name);
 	~Capybara();
-
+	bool Start();
 	//Base functions
 	bool Update(float dt);
 	bool Draw(Render* render);
-
+	void SetLevel(int level);
 	//Getters
 	int& GetHealth();
 	int& GetMaxHealth();
@@ -79,7 +79,7 @@ public:
 	virtual bool UseAbility(Capybara* target);
 	void Attack(Capybara* target);
 	void SetStatus(CapybaraStatus status);
-	void SetAttack(); //Sets the capy canAttack to true
+	void SetAttack(bool isAbleToAttac); //Sets the capy canAttack to true
 	bool CanAttack();
 
 	void UpdateStatus();
@@ -92,7 +92,9 @@ public:
 	bool SaveState(pugi::xml_node&);
 
 	void SetCombat(bool value);
+	bool CleanUp();
 
+	bool enemy = false;
 protected:
 	//Update the stats by the lvl
 	void UpdateStats();
@@ -135,7 +137,14 @@ protected:
 	CapybaraTarget capybaraTarget = CapybaraTarget::NONE;	//The type of target of the ability
 
 
-	Animation* currentAnim = nullptr;
+	Animation* currentAnim;
+	Animation anim;
+	bool load = true;
+	int attackSFX;
+	int abilitySFX;
+	int healSFX;
+	int hitSFX;
+
 };
 
 #endif // __CAPYBARA_H__

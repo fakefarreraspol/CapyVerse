@@ -20,20 +20,19 @@ public:
 
 	bool SetActiveDialog(Dialog* dialog);
 	bool OnGuiMouseClickEvent(GuiControl* control);
-
+	bool CleanUp();
+	GuiControl* characterName;
 private:
 
 	Dialog* activeDialog = nullptr;
 
 	int option;
 	SDL_Rect bounds, cBounds, nBounds, tBounds, bBounds;
-	GuiControl* characterName;
 	GuiControl* text;
 	GuiControl* button;
 
 	List<GuiControl*> optionButtons;
-
-
+	SDL_Texture* texture;
 };
 
 #endif // !__DIALOG_MANAGER_H__

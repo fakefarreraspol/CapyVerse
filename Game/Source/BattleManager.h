@@ -47,6 +47,7 @@ public:
 	Turn GetTurn();
 	void EndTurn();
 
+	int battlewonSFX;
 private:
 
 	void UpdateCurrentName();
@@ -104,10 +105,13 @@ private:
 
 	bool deleteAttackMenu = false;
 	bool deleteAbilityMenu = false;
+	bool showMenu = false;
 	
 	Turn turn = Turn::NONE;
 
 	SDL_Texture* arrow = nullptr;
+	SDL_Texture* selectedArrow = nullptr;
+	SDL_Texture* capyinfo = nullptr;
 };
 
 

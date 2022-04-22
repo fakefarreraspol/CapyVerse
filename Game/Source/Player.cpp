@@ -4,10 +4,49 @@
 #include "Log.h"
 #include "Player.h"
 #include "Collisions.h"
+#include "Timer.h"
+#include "Window.h"
+#include "Textures.h"
 
 Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType::PLAYER, id, name, position)
 {
-	collider = app->colManager->AddCollider({ position.x, position.y, 16, 16 }, Collider::Type::PLAYER, (Module*)app->entMan, this);
+	idle.PushBack({ 0,0,66,66 });
+	walkRight.PushBack( { 66, 0, 66 * 2, 66 });
+	walkRight.PushBack( { 66 * 2, 0, 66 * 3, 66 });
+	walkRight.PushBack( { 66 * 3, 0, 66 * 4, 66 });
+	walkRight.PushBack( { 66 * 4, 0, 66 * 5, 66 });
+
+	walkRight.loop = true;
+	walkRight.speed = 0.1f;
+	
+	walkLeft.PushBack({ 66, 0, 66 * 2, 66 });
+	walkLeft.PushBack({ 66 * 2, 0, 66 * 3, 66 });
+	walkLeft.PushBack({ 66 * 3, 0, 66 * 4, 66 });
+	walkLeft.PushBack({ 66 * 4, 0, 66 * 5, 66 });
+	walkLeft.loop = true;
+	walkLeft.speed = 0.1f;
+
+	walkUp.PushBack({ 0, 66, 66 , 66*2 });
+	walkUp.PushBack({ 66, 66, 66 * 2, 66*2 });
+	walkUp.PushBack({ 66*2, 66, 66 * 3, 66*2 });
+	walkUp.PushBack({ 66*3, 66, 66 * 4, 66 * 2 });
+	walkUp.PushBack({ 66*4, 66, 66 * 5, 66 * 2 });
+	walkUp.PushBack({ 66*5, 66, 66 * 6, 66 * 2 });
+	walkUp.PushBack({ 66*6, 66, 66 * 7, 66 * 2 });
+	walkUp.PushBack({ 66*7, 66, 66 * 8, 66 * 2 });
+	walkLeft.loop = true;
+	walkLeft.speed = 0.1f;
+	
+	walkDown.PushBack({ 0, 66, 66 , 66 * 2 });
+	walkDown.PushBack({ 66, 66, 66 * 2, 66 * 2 });
+	walkDown.PushBack({ 66 * 2, 66, 66 * 3, 66 * 2 });
+	walkDown.PushBack({ 66 * 3, 66, 66 * 4, 66 * 2 });
+	walkDown.PushBack({ 66 * 4, 66, 66 * 5, 66 * 2 });
+	walkDown.PushBack({ 66 * 5, 66, 66 * 6, 66 * 2 });
+	walkDown.PushBack({ 66 * 6, 66, 66 * 7, 66 * 2 });
+	walkDown.PushBack({ 66 * 7, 66, 66 * 8, 66 * 2 });
+	walkDown.speed = 0.1f;
+	currentAnim = &idle;
 }
 
 Player::~Player()
@@ -17,8 +56,26 @@ Player::~Player()
 bool Player::Update(float dt)
 {
 	bool ret = true;
+	
+	UpdateCamera();
+	if (load)
+	{
+		texture  = app->tex->Load("Assets/Textures/Sprites/characters.png");
+		load = false;
+	}
+	
+	//app->render->DrawTexture(texture, 50, 50);
+	
+	/*if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) || (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) || (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) || (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT))
+	{
+		isWalking = true;
+	}*/
+
+	
+	
 	collider->SetPos(position.x, position.y);
-	UpdateInput(dt);
+	if (canMove == true)
+		UpdateInput(dt);
 
 	if (app->GetDebug())
 		speed = 0.2f;
@@ -28,17 +85,45 @@ bool Player::Update(float dt)
 	return ret;
 }
 
+void Player::UpdateCamera()
+{
+
+	uint w, h;
+	app->win->GetWindowSize(w, h);
+	app->render->camera.x = w / 2 - position.x;
+	app->render->camera.y = h / 2 - position.y;
+	if (w / 2 - position.x < 0)
+	{
+		app->render->camera.y = 0;
+	}
+	if (h / 2 - position.y < 0)
+	{
+		app->render->camera.x = 0;
+	}
+
+}
+
 bool Player::Draw(Render* render)
 {
 	bool ret = true;
 	if (!isBattle)
 	{
 		if(app->GetDebug())
-			render->DrawRectangle({ position.x, position.y,  20 , 20 }, 255, 255, 0);
+			render->DrawRectangle({ position.x, position.y,  64 , 64 }, 255, 255, 0);
 
 		//render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
+		app->render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
+
+		
 	}
+	currentAnim->Update();
 	return ret;
+}
+
+bool Player::Start()
+{
+	collider = app->colManager->AddCollider({ position.x, position.y, 64, 64 }, Collider::Type::PLAYER, (Module*)app->entMan, this);
+	return true;
 }
 
 void Player::AddCapybara(Capybara* capybara)
@@ -56,100 +141,7 @@ void Player::UpdateInput(float dt)
 	GamePad& pad = app->input->pads[0];
 	lastPos = position;
 
-	//if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) 
-	//{
-	//	/*if (currentAnimation != &leftAnim)
-	//	{
-	//		leftAnim.Reset();
-	//		currentAnimation = &leftAnim;
-	//		currentIdleAnim = leftIdleAnim;
-	//	}*/
-	//	lastKeyPressed = SDL_SCANCODE_A;
-
-	//	if (app->input->GetKey(SDL_SCANCODE_W)== KEY_REPEAT && isStuck)
-	//	{
-	//		//position.y -= speed * dt * sqrt(2) / 2;
-	//		twoInputs = true;
-	//		isStuck = false;
-	//	}
-	//	else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && isStuck)
-	//	{
-	//		//position.y += speed * dt * sqrt(2) / 2;
-	//		twoInputs = true;
-	//		isStuck = false;
-	//	}
-	//}
-	//else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) 
-	//{
-	//	/*if (currentAnimation != &rightAnim)
-	//	{
-	//		rightAnim.Reset();
-	//		currentAnimation = &rightAnim;
-	//		currentIdleAnim = rightIdleAnim;
-	//	}*/
-	//	lastKeyPressed = SDL_SCANCODE_D;
-
-	//	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && isStuck)
-	//	{
-	//		//position.y -= speed * dt * sqrt(2) / 2;
-	//		twoInputs = true;
-	//		isStuck = false;
-	//	}
-	//	else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && isStuck)
-	//	{
-	//		//position.y += speed * dt * sqrt(2) / 2;
-	//		twoInputs = true;
-	//		isStuck = false;
-	//	}
-
-	//}
-	//else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) 
-	//{
-	//	/*if (currentAnimation != &downAnim)
-	//	{
-	//		downAnim.Reset();
-	//		currentAnimation = &downAnim;
-	//		currentIdleAnim = downIdleAnim;
-	//	}*/
-	//	lastKeyPressed = SDL_SCANCODE_S;
-
-	//	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isStuck)
-	//	{
-	//		//position.x -= speed * dt * sqrt(2) / 2;
-	//		twoInputs = true;
-	//		isStuck = false;
-	//	}
-	//	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isStuck)
-	//	{
-	//		//position.x += speed * dt * sqrt(2) / 2;
-	//		twoInputs = true;
-	//		isStuck = false;
-	//	}
-
-	//}
-	//else if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-	//{
-	//	/*if (currentAnimation != &upAnim)
-	//	{
-	//		upAnim.Reset();
-	//		currentAnimation = &upAnim;
-	//		currentIdleAnim = upIdleAnim;
-	//	}*/
-	//	lastKeyPressed = SDL_SCANCODE_W;
-
-	//	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isStuck)
-	//	{
-	//		//position.x -= speed * dt * sqrt(2) / 2;
-	//		twoInputs = true;
-	//		isStuck = false;
-	//	}
-	//	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isStuck)
-	//	{
-	//		//position.x += speed * dt * sqrt(2) / 2;
-	//		twoInputs = true;
-	//		isStuck = false;
-	//	}
-	//}
+	
 
 	int inputs = 0;
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
@@ -161,7 +153,8 @@ void Player::UpdateInput(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 		inputs++;
 
-
+	
+	
 	float mov = speed * dt;
 	if (inputs > 1)
 		mov *= sqrt(2) / 2;		// sine of 45
@@ -170,21 +163,51 @@ void Player::UpdateInput(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		position.x -= mov;
+		if (currentAnim != &walkLeft)
+		{
+			walkLeft.Reset();
+			currentAnim = &walkLeft;
+		}
 	}
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		position.x += mov;
+		if (currentAnim != &walkRight)
+		{
+			walkRight.Reset();
+			currentAnim = &walkRight;
+
+		}
 	}
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		position.y -= mov;
+		if (currentAnim != &walkUp)
+		{
+			walkUp.Reset();
+			currentAnim = &walkUp;
+
+		}
 	}
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
 		position.y += mov;
+		if (currentAnim != &walkDown)
+		{
+			walkDown.Reset();
+			currentAnim = &walkDown;
+		}
 	}
-
-
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE
+		&& app->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && pad.left_x == 0.0f || pad.left == false
+		&& pad.left_x == 0.0f || pad.right == false && pad.left_y == 0.0f || pad.down == false && pad.left_y == 0.0f || pad.up == false)
+	{
+		if (currentAnim != &idle)
+		{
+			idle.Reset();
+			currentAnim = &idle;
+		}
+	}
 
 	//// GAMEPAD SUPPORT
 
@@ -197,112 +220,54 @@ void Player::UpdateInput(float dt)
 	//		app->input->ShakeController(0, 12, 0.33f);
 	//	}
 
-	//	// Debug key for gamepad rumble testing purposes
-	//	if (app->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-	//	{
-	//		app->input->ShakeController(0, 36, 0.66f);
-	//	}
+		// Implement gamepad support
+	
+		
+	LOG("%2.2f", pad.left_x);
+	LOG("%2.2f", pad.left_y);
+	if (pad.left_x < 0.0f || pad.left == true)
+	{
+		position.x -= speed * dt * -pad.left_x;
+		if (currentAnim != &walkLeft)
+		{
+			walkLeft.Reset();
+			currentAnim = &walkLeft;
 
-	//	// Debug key for gamepad rumble testing purposes
-	//	if (app->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
-	//	{
-	//		app->input->ShakeController(0, 60, 1.0f);
-	//	}
+		}
+	}
+	if (pad.left_x > 0.0f || pad.right == true)
+	{
+		position.x += speed * dt * pad.left_x;
+		if (currentAnim != &walkRight)
+		{
+			walkRight.Reset();
+			currentAnim = &walkRight;
 
+		}
+	}
+	if (pad.left_y > 0.0f || pad.down == true)
+	{
+		position.y += speed * dt * pad.left_y;
+		if (currentAnim != &walkDown)
+		{
+			walkDown.Reset();
+			currentAnim = &walkDown;
+		}
+	}
 
-	//	// Implement gamepad support
+	if (pad.left_y < 0.0f || pad.up == true)
+	{
+		position.y -= speed * dt * -pad.left_y;
+		if (currentAnim != &walkUp)
+		{
+			walkUp.Reset();
+			currentAnim = &walkUp;
 
-	//	if (pad.left_x < 0.0f || pad.left == true)
-	//	{
-	//		position.x -= speed;
-	//		/*if (currentAnimation != &leftAnim)
-	//		{
-	//			leftAnim.Reset();
-	//			currentAnimation = &leftAnim;
-	//			currentIdleAnim = leftIdleAnim;
-	//		}*/
-	//		lastKeyPressed = SDL_SCANCODE_A;
-
-	//		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && isStuck)
-	//		{
-	//			position.y -= speed;
-	//			isStuck = false;
-	//		}
-	//		else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && isStuck)
-	//		{
-	//			position.y += speed;
-	//			isStuck = false;
-	//		}
-	//	}
-
-	//	if (pad.left_x > 0.0f || pad.right == true)
-	//	{
-	//		position.x += speed;
-	//		/*if (currentAnimation != &rightAnim)
-	//		{
-	//			rightAnim.Reset();
-	//			currentAnimation = &rightAnim;
-	//			currentIdleAnim = rightIdleAnim;
-	//		}*/
-	//		lastKeyPressed = SDL_SCANCODE_D;
-
-	//		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && isStuck)
-	//		{
-	//			position.y -= speed;
-	//			isStuck = false;
-	//		}
-	//		else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && isStuck)
-	//		{
-	//			position.y += speed;
-	//			isStuck = false;
-	//		}
-	//	}
-
-	//	if (pad.left_y > 0.0f || pad.down == true)
-	//	{
-	//		position.y += speed;
-	//		/*if (currentAnimation != &downAnim)
-	//		{
-	//			downAnim.Reset();
-	//			currentAnimation = &downAnim;
-	//			currentIdleAnim = downIdleAnim;
-	//		}*/
-	//		lastKeyPressed = SDL_SCANCODE_S;
-
-	//		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isStuck)
-	//		{
-	//			position.x -= speed;
-	//			isStuck = false;
-	//		}
-	//		else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isStuck)
-	//		{
-	//			position.x += speed;
-	//			isStuck = false;
-	//		}
-	//	}
-
-	//	if (pad.left_y < 0.0f || pad.up == true)
-	//	{
-	//		position.y -= speed;
-	//		/*if (currentAnimation != &upAnim)
-	//		{
-	//			upAnim.Reset();
-	//			currentAnimation = &upAnim;
-	//			currentIdleAnim = upIdleAnim;
-	//		}*/
-	//		lastKeyPressed = SDL_SCANCODE_W;
-
-	//		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isStuck)
-	//		{
-	//			position.x -= speed;
-	//			isStuck = false;
-	//		}
-	//		else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isStuck)
-	//		{
-	//			position.x += speed;
-	//			isStuck = false;
-	//		}
-	//	}
+		}
+	}
+		
+	
+	
 }
 
 List<Capybara*>& Player::GetBattleTeam()
@@ -315,14 +280,34 @@ List<Capybara*>& Player::GetTeam()
 	return team;
 }
 
-bool Player::LoadState(pugi::xml_node&)
+bool Player::LoadState(pugi::xml_node& node)
 {
+	position.x = node.child("position").attribute("x").as_float();
+	position.y = node.child("position").attribute("y").as_float();
+	
+	isBattle = node.attribute("isBattle").as_bool();
+	money = node.attribute("money").as_int();
+
+	active = node.attribute("active").as_bool();
+	renderable = node.attribute("renderable").as_bool();
+
 	return false;
 }
 
-bool Player::SaveState(pugi::xml_node&)
+bool Player::SaveState(pugi::xml_node& node)
 {
-	return false;
+	pugi::xml_node position = node.append_child("position");
+	position.append_attribute("x").set_value(this->position.x);
+	position.append_attribute("y").set_value(this->position.y);
+	
+	node.append_attribute("id").set_value(id);
+	node.append_attribute("isBattle").set_value(isBattle);
+	node.append_attribute("money").set_value(money);
+
+	node.append_attribute("active").set_value(active);
+	node.append_attribute("renderable").set_value(renderable);
+
+	return true;
 }
 
 void Player::SetCombat(bool value)
@@ -337,11 +322,11 @@ void Player::SetCombat(bool value)
 
 void Player::OnCollision(Collider* c1, Collider* c2)
 {
-	if (!app->GetDebug())
+	if (!app->GetDebug() || c2->type == Collider::NPC)
 	{
 		if (c1->type == Collider::PLAYER)
 		{
-			if (c2->type == Collider::WALL)
+			if (c2->type == Collider::WALL|| c2->type == Collider::NPC)
 			{
 				wallsDetected++;
 
@@ -407,4 +392,9 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 			
 		}
 	}
+}
+
+bool Player::CleanUp()
+{
+	return true;
 }

@@ -126,9 +126,13 @@
     <ClCompile Include="Source\Chadbara.cpp">
       <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
     </ClCompile>
+    <ClCompile Include="Source\BattleScene3.cpp">
+      <Filter>Modules\Gameplay\Scenes</Filter>
+    </ClCompile>
     <ClCompile Include="Source\NPC.cpp">
       <Filter>Modules\Gameplay\Entities\Characters</Filter>
     </ClCompile>
+    <ClCompile Include="Source\QuestManager.cpp" />
     <ClCompile Include="Source\Dialog.cpp">
       <Filter>Modules\Gameplay\Dialog</Filter>
     </ClCompile>
@@ -140,6 +144,12 @@
     </ClCompile>
     <ClCompile Include="Source\MainMenu.cpp">
       <Filter>Modules\Gameplay\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BattleScene2.cpp">
+      <Filter>Modules\Gameplay\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Pause.cpp">
+      <Filter>Modules\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -296,12 +306,17 @@
     <ClInclude Include="Source\Chadbara.h">
       <Filter>Modules\Gameplay\Entities\Capybaras</Filter>
     </ClInclude>
+    <ClInclude Include="Source\BattleScene2.h">
+      <Filter>Modules\Gameplay\Scenes</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Animation.h">
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\NPC.h">
       <Filter>Modules\Gameplay\Entities\Characters</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Quest.h" />
+    <ClInclude Include="Source\QuestManager.h" />
     <ClInclude Include="Source\DialogNode.h">
       <Filter>Modules\Gameplay\Dialog</Filter>
     </ClInclude>
@@ -315,6 +330,12 @@
       <Filter>Modules\Gameplay\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Source\MainMenu.h">
+      <Filter>Modules\Gameplay\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Pause.h">
+      <Filter>Modules\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BattleScene3.h">
       <Filter>Modules\Gameplay\Scenes</Filter>
     </ClInclude>
   </ItemGroup>

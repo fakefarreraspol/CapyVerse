@@ -7,6 +7,14 @@
 #include "SString.h"
 #include "GuiSliderBar.h"
 
+enum class BarType
+{
+	NONE = -1,
+	HEALTH,
+	MANA,
+	XP
+};
+
 class GuiBar : public GuiControl
 {
 public:
@@ -21,7 +29,7 @@ public:
 public:
 	bool drawBasic = false;
 	int value;
-
+	BarType type = BarType::NONE;
 private:
 	SDL_Rect bar;
 	bool horizontal = true;

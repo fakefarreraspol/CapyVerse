@@ -8,6 +8,7 @@
 
 #include "Capybara.h"
 
+class SDL_Texture;
 class Textures;
 class Audio;
 class Collisions;
@@ -47,7 +48,7 @@ public:
 	void OnCollision(Collider* c1, Collider* c2);
 
 	bool LoadState(pugi::xml_node& data);
-	bool SaveState(pugi::xml_node& data);
+	bool SaveState(pugi::xml_node& data) const;
 
 public:
 
@@ -63,6 +64,8 @@ public:
 	float accumulatedTime = 0.0f;
 	float updateMsCycle = 0.0f;
 	bool doLogic = false;
+
+	SDL_Texture* capyTex;
 };
 
 #endif // __ENTITY_MANAGER__
