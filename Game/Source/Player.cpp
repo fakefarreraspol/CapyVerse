@@ -11,11 +11,13 @@
 Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType::PLAYER, id, name, position)
 {
 	idle.PushBack({ 0,0,66,66 });
+	idle.speed = 0.1f;
+	idle.loop = true;
+
 	walkRight.PushBack( { 66, 0, 66 * 2, 66 });
 	walkRight.PushBack( { 66 * 2, 0, 66 * 3, 66 });
 	walkRight.PushBack( { 66 * 3, 0, 66 * 4, 66 });
 	walkRight.PushBack( { 66 * 4, 0, 66 * 5, 66 });
-
 	walkRight.loop = true;
 	walkRight.speed = 0.1f;
 	
@@ -46,7 +48,8 @@ Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType
 	walkDown.PushBack({ 66 * 6, 66, 66 * 7, 66 * 2 });
 	walkDown.PushBack({ 66 * 7, 66, 66 * 8, 66 * 2 });
 	walkDown.speed = 0.1f;
-	currentAnim = &idle;
+	walkDown.loop = true;
+	currentAnim = &walkDown;
 }
 
 Player::~Player()
@@ -63,16 +66,6 @@ bool Player::Update(float dt)
 		texture  = app->tex->Load("Assets/Textures/Sprites/characters.png");
 		load = false;
 	}
-	
-	//app->render->DrawTexture(texture, 50, 50);
-	
-	/*if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) || (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) || (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) || (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT))
-	{
-		isWalking = true;
-	}*/
-
-	
-	
 	collider->SetPos(position.x, position.y);
 	if (canMove == true)
 		UpdateInput(dt);
@@ -106,17 +99,14 @@ void Player::UpdateCamera()
 bool Player::Draw(Render* render)
 {
 	bool ret = true;
+	currentAnim->Update();
 	if (!isBattle)
 	{
 		if(app->GetDebug())
 			render->DrawRectangle({ position.x, position.y,  64 , 64 }, 255, 255, 0);
 
-		//render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
-		app->render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
-
-		
+		render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
 	}
-	currentAnim->Update();
 	return ret;
 }
 
@@ -199,8 +189,8 @@ void Player::UpdateInput(float dt)
 		}
 	}
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE
-		&& app->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && pad.left_x == 0.0f || pad.left == false
-		&& pad.left_x == 0.0f || pad.right == false && pad.left_y == 0.0f || pad.down == false && pad.left_y == 0.0f || pad.up == false)
+		&& app->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && pad.left_x == 0.0f && pad.left == false
+		&& pad.left_x == 0.0f && pad.right == false && pad.left_y == 0.0f && pad.down == false && pad.left_y == 0.0f && pad.up == false)
 	{
 		if (currentAnim != &idle)
 		{
