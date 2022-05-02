@@ -151,10 +151,10 @@ bool DialogManager::PostUpdate()
 	// si hay tiempo pues hacer animaciones cuquis.
 	if (activeDialog != nullptr)
 	{
-		app->render->DrawRectangle(bounds, 255, 255, 255, 255);
-		app->render->DrawRectangle(cBounds, 0, 0, 0, 255);
-		app->render->DrawRectangle(nBounds, 0, 0, 0, 255);
-		app->render->DrawRectangle(tBounds, 0, 0, 0, 255);
+		app->render->DrawRectangle(bounds, 255, 255, 255, 255, true, false);
+		app->render->DrawRectangle(cBounds, 0, 0, 0, 255, true, false);
+		app->render->DrawRectangle(nBounds, 0, 0, 0, 255, true, false);
+		app->render->DrawRectangle(tBounds, 0, 0, 0, 255, true, false);
 		/*SDL_Rect rect{ 0, 624,592, 163 };
 		app->render->DrawTexture(texture, bounds.x, bounds.y, &rect);*/
 
