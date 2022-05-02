@@ -281,6 +281,9 @@ bool Player::LoadState(pugi::xml_node& node)
 	active = node.attribute("active").as_bool();
 	renderable = node.attribute("renderable").as_bool();
 
+	if (collider==nullptr)
+		collider = app->colManager->AddCollider({ position.x, position.y, 64, 64 }, Collider::Type::PLAYER, (Module*)app->entMan, this);
+
 	return false;
 }
 
