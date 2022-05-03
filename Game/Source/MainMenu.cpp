@@ -131,13 +131,13 @@ bool MainMenu::PreUpdate()
 // Called each loop iteration
 bool MainMenu::Update(float dt)
 {
-	app->render->DrawTexture(background, 0, 0);
+	app->render->DrawTexture(background, 0, 0, NULL, true);
 
 	
-	app->render->DrawTexture(title, 0, 0);
+	app->render->DrawTexture(title, 0, 0, NULL, true);
 	
 	
-	app->render->DrawTexture(arrow, currentControl->data->bounds.x - 30, currentControl->data->bounds.y - 3);
+	app->render->DrawTexture(arrow, currentControl->data->bounds.x - 30, currentControl->data->bounds.y - 3, NULL, true);
 	vsyncChkbx->checked = app->render->vsync;
 	fullscreenChkbx->checked = app->win->fullscreen;
 
@@ -209,11 +209,11 @@ bool MainMenu::Update(float dt)
 	}
 	currentControl->data->state = GuiControlState::FOCUSED;
 	SDL_Rect recttt{ 0, 43, 188, 230 };
-	app->render->DrawTexture(menus, 75, 290, &recttt);
+	app->render->DrawTexture(menus, 75, 290, &recttt, true);
 	if (optionsB)
 	{
 		SDL_Rect rect{ 644, 43, 413, 258 };
-		app->render->DrawTexture(menus, 325, 250, &rect);
+		app->render->DrawTexture(menus, 325, 250, &rect, true);
 		returnPlBtn->state = GuiControlState::DISABLED;
 	}
 	else
@@ -223,7 +223,7 @@ bool MainMenu::Update(float dt)
 	if (play)
 	{
 		SDL_Rect rect{ 0, 43, 188, 230 };
-		app->render->DrawTexture(menus, 275, 290, &rect);
+		app->render->DrawTexture(menus, 275, 290, &rect, true);
 		returnOPBtn->state = GuiControlState::DISABLED;
 	}
 	else
@@ -233,12 +233,12 @@ bool MainMenu::Update(float dt)
 	if (creditsB)
 	{
 		SDL_Rect rect{ 644, 43, 413, 258 };
-		app->render->DrawTexture(menus, 400, 200, &rect);
+		app->render->DrawTexture(menus, 400, 200, &rect, true);
 	}
 	if (exit)
 	{
 		SDL_Rect rect{ 1057, 43, 327, 87 };
-		app->render->DrawTexture(menus, 450, 300, &rect);
+		app->render->DrawTexture(menus, 450, 300, &rect, true);
 
 	}
 	else
