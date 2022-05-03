@@ -1,4 +1,5 @@
 #include "App.h"
+#include "AssetsManager.h"
 #include "Render.h"
 #include "Textures.h"
 #include "Map.h"
@@ -489,8 +490,11 @@ bool Map::Load(const char* filename)
 	bool ret = true;
 	SString tmp("%s%s", folder.GetString(), filename);
 	LOG("%s", tmp.GetString());
+	char* buffer;
+	int size = app->assetsManager->LoadXML(tmp.GetString(), &buffer);
 	pugi::xml_document mapFile;
-	pugi::xml_parse_result result = mapFile.load_file(tmp.GetString());
+	pugi::xml_parse_result result = mapFile.load_buffer(buffer, size);
+	RELEASE(buffer)
 
 	if (result == NULL)
 	{

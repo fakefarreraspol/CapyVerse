@@ -155,6 +155,9 @@
     <ClCompile Include="Source\DialogManager.cpp">
       <Filter>Modules\Gameplay\Dialog</Filter>
     </ClCompile>
+    <ClCompile Include="Source\AssetsManager.cpp">
+      <Filter>Modules\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App.h">
@@ -347,6 +350,9 @@
     </ClInclude>
     <ClInclude Include="Source\DialogNode.h">
       <Filter>Modules\Gameplay\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AssetsManager.h">
+      <Filter>Modules\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

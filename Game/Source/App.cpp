@@ -5,6 +5,7 @@
 #include "Log.h"
 
 #include "App.h"
+#include "AssetsManager.h"
 #include "Window.h"
 #include "Input.h"
 #include "Render.h"
@@ -33,10 +34,10 @@
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
 {
-
 	win = new Window(true);
 	input = new Input(true);
 	render = new Render(true);
+	assetsManager = new AssetsManager(true);
 	tex = new Textures(true);
 	audio = new Audio(true);
 	mapManager = new Map(true);
@@ -61,6 +62,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	// Reverse order of CleanUp
 	AddModule(win);
 	AddModule(input);
+	AddModule(assetsManager);
 	AddModule(tex);
 	AddModule(mapManager);
 	AddModule(fonts);

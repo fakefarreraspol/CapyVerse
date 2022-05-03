@@ -36,6 +36,7 @@ class BattleScene2;
 class BattleScene3;
 class EOBScene;
 class Map;
+class AssetsManager;
 
 class App
 {
@@ -103,6 +104,7 @@ public:
 	// Settings
 	bool pause = false;
 	// Modules
+	AssetsManager* assetsManager;
 	Window* win;
 	Input* input;
 	Render* render;

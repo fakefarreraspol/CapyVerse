@@ -1,5 +1,6 @@
 #include "Fonts.h"
 #include "App.h"
+#include "AssetsManager.h"
 #include "Textures.h"
 #include "Render.h"
 #include "Log.h"
@@ -42,11 +43,12 @@ bool Fonts::Start()
 		fonts[i] = nullptr;
 
 	//This takes in the path to the font file and the point size we want to render at.
+
 	globalFont = LoadTIFF("Assets/GUI/Fonts/RobotoMedium.ttf", 18);
-	indicatorsFont = LoadTIFF("Assets/GUI/Fonts/RobotoMedium.ttf", 12);
+	/*indicatorsFont = LoadTIFF("Assets/GUI/Fonts/RobotoMedium.ttf", 12);
 	titles = LoadTIFF("Assets/GUI/Fonts/VT323-Regular.ttf",48);
 
-	menuButtonFont = LoadTIFF("Assets/GUI/Fonts/VT323-Regular.ttf", 60);
+	menuButtonFont = LoadTIFF("Assets/GUI/Fonts/VT323-Regular.ttf", 60);*/
 
 	return true;
 }
@@ -87,7 +89,8 @@ int Fonts::LoadTIFF(const char* fontPath,int fontSize)
 	}
 
 	//this opens a font style and sets a size
-	fonts[id] = TTF_OpenFont(fontPath, fontSize);
+	SDL_RWops* rw = app->assetsManager->LoadAsset(fontPath);
+	fonts[id] = TTF_OpenFontRW(rw, 1,fontSize);
 
 	if (fonts[id] == nullptr)
 	{
