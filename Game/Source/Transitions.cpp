@@ -25,7 +25,7 @@ bool Transitions::Start()
 
 	return true;
 }
-bool Transitions::Update()
+bool Transitions::Update(float dt)
 {
 	bool ret = true;
 
@@ -127,9 +127,9 @@ void Transitions::DrawTransition1()
 	Rect1.h = win_height;
 	Rect1.w = 0;
 
-	if (currentStep == Fade_Step::TRANSTITION) Rect1.w = EaseLinearInOut(timer_in_transition / 8, win_width / 64, win_width, 240);
-	if (currentStep == Fade_Step::FROM_TRANSITION) Rect1.w = EaseLinearInOut(timer_out_transition / 8, win_width / 64, win_width, 240);
-	app->render->DrawRectangle(Rect1, 255, 0, 0, 255);
+	if (currentStep == Fade_Step::TRANSTITION) Rect1.w = EaseLinearInOut(timer_in_transition, win_width / 64, win_width, 30);
+	if (currentStep == Fade_Step::FROM_TRANSITION) Rect1.w = EaseLinearInOut(timer_out_transition, win_width / 64, win_width, 30);
+	app->render->DrawRectangle(Rect1, 255, 0, 0, 255, true, false);
 
 }
 
@@ -149,23 +149,23 @@ void Transitions::DrawTransition2()
 
 	if (currentStep == Fade_Step::TRANSTITION)
 	{
-		Rect1.w = EaseLinearIn(timer_in_transition / 8, win_width / 64, win_width, 240);
-		Rect2.w = -EaseLinearIn(timer_in_transition / 8, win_width / 64, win_width, 240);
-		Rect3.w = EaseLinearIn(timer_in_transition / 8, win_width / 64, win_width, 240);
-		Rect4.w = -EaseLinearIn(timer_in_transition / 8, win_width / 64, win_width, 240);
+		Rect1.w = EaseLinearIn(timer_in_transition, win_width / 64, win_width, 30);
+		Rect2.w = -EaseLinearIn(timer_in_transition, win_width / 64, win_width, 30);
+		Rect3.w = EaseLinearIn(timer_in_transition, win_width / 64, win_width, 30);
+		Rect4.w = -EaseLinearIn(timer_in_transition, win_width / 64, win_width, 30);
 	}
 	if (currentStep == Fade_Step::FROM_TRANSITION)
 	{
-		Rect1.w = EaseLinearIn(timer_out_transition / 8, win_width / 64, win_width, 240);
-		Rect2.w = -EaseLinearIn(timer_out_transition / 8, win_width / 64, win_width, 240);
-		Rect3.w = EaseLinearIn(timer_out_transition / 8, win_width / 64, win_width, 240);
-		Rect4.w = -EaseLinearIn(timer_out_transition / 8, win_width / 64, win_width, 240);
+		Rect1.w = EaseLinearIn(timer_out_transition, win_width / 64, win_width, 30);
+		Rect2.w = -EaseLinearIn(timer_out_transition, win_width / 64, win_width, 30);
+		Rect3.w = EaseLinearIn(timer_out_transition, win_width / 64, win_width, 30);
+		Rect4.w = -EaseLinearIn(timer_out_transition, win_width / 64, win_width, 30);
 	}
 
-	app->render->DrawRectangle(Rect1, 255, 0, 0, 255);
-	app->render->DrawRectangle(Rect2, 0, 255, 0, 255);
-	app->render->DrawRectangle(Rect3, 0, 0, 255, 255);
-	app->render->DrawRectangle(Rect4, 123, 0, 122, 255);
+	app->render->DrawRectangle(Rect1, 255, 0, 0, 255, true, false);
+	app->render->DrawRectangle(Rect2, 0, 255, 0, 255, true, false);
+	app->render->DrawRectangle(Rect3, 0, 0, 255, 255, true, false);
+	app->render->DrawRectangle(Rect4, 123, 0, 122, 255, true, false);
 
 
 }

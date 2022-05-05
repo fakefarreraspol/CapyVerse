@@ -18,7 +18,7 @@ public:
 	// Called before the first frame
 	bool Start();
 
-	bool Update();
+	bool Update(float dt);
 
 	bool PostUpdate();
 	void SelectTransition(int id, int timer_in_transition, int timer_out_transition);
