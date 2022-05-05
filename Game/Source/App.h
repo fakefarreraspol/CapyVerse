@@ -36,6 +36,7 @@ class BattleScene2;
 class BattleScene3;
 class EOBScene;
 class Map;
+class Transitions;
 
 class App
 {
@@ -106,6 +107,7 @@ public:
 	Window* win;
 	Input* input;
 	Render* render;
+	Transitions* transitions;
 	Textures* tex;
 	Audio* audio;
 	Intro* intro;

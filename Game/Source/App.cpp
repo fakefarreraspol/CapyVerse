@@ -7,6 +7,7 @@
 #include "App.h"
 #include "Window.h"
 #include "Input.h"
+#include "Transitions.h"
 #include "Render.h"
 #include "Textures.h"
 #include "Audio.h"
@@ -39,6 +40,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	render = new Render(true);
 	tex = new Textures(true);
 	audio = new Audio(true);
+	transitions = new Transitions(true);
 	mapManager = new Map(true);
 	entMan = new EntityManager(true);
 	fonts = new Fonts(true);
@@ -63,6 +65,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(tex);
 	AddModule(mapManager);
+	AddModule(transitions);
 	AddModule(fonts);
 	AddModule(audio);
 	AddModule(intro);

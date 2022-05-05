@@ -103,8 +103,6 @@
     <ClCompile Include="Source\EOBScene.cpp">
       <Filter>Modules\Gameplay\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Dialog.cpp" />
-    <ClCompile Include="Source\DialogManager.cpp" />
     <ClCompile Include="Source\Map.cpp">
       <Filter>Modules\Core</Filter>
     </ClCompile>
@@ -149,6 +147,15 @@
       <Filter>Modules\Gameplay\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Source\Pause.cpp">
+      <Filter>Modules\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Dialog.cpp">
+      <Filter>Modules\Gameplay\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DialogManager.cpp">
+      <Filter>Modules\Gameplay\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Transitions.cpp">
       <Filter>Modules\Core</Filter>
     </ClCompile>
   </ItemGroup>
@@ -282,9 +289,6 @@
     <ClInclude Include="Source\EOBScene.h">
       <Filter>Modules\Gameplay\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Dialog.h" />
-    <ClInclude Include="Source\DialogNode.h" />
-    <ClInclude Include="Source\DialogManager.h" />
     <ClInclude Include="Source\Map.h">
       <Filter>Modules\Core</Filter>
     </ClInclude>
@@ -337,6 +341,21 @@
     </ClInclude>
     <ClInclude Include="Source\BattleScene3.h">
       <Filter>Modules\Gameplay\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Dialog.h">
+      <Filter>Modules\Gameplay\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DialogManager.h">
+      <Filter>Modules\Gameplay\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DialogNode.h">
+      <Filter>Modules\Gameplay\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Transitions.h">
+      <Filter>Modules\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\easings.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

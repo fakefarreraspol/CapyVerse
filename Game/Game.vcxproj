@@ -145,6 +145,7 @@
     <ClCompile Include="Source\TaskQueue.cpp" />
     <ClCompile Include="Source\Textures.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
+    <ClCompile Include="Source\Transitions.cpp" />
     <ClCompile Include="Source\Window.cpp" />
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\BattleScene1.h" />
@@ -156,6 +157,7 @@
     <ClInclude Include="Source\Collider.h" />
     <ClInclude Include="Source\Chinabara.h" />
     <ClInclude Include="Source\DialogManager.h" />
+    <ClInclude Include="Source\easings.h" />
     <ClInclude Include="Source\Egirlbara.h" />
     <ClInclude Include="Source\Emobara.h" />
     <ClInclude Include="Source\Enemy.h" />
@@ -199,6 +201,7 @@
     <ClInclude Include="Source\TaskQueue.h" />
     <ClInclude Include="Source\Textures.h" />
     <ClInclude Include="Source\Timer.h" />
+    <ClInclude Include="Source\Transitions.h" />
     <ClInclude Include="Source\Window.h" />
     <ClInclude Include="Source\Defs.h" />
     <ClInclude Include="Source\List.h" />
