@@ -91,7 +91,7 @@ public:
 	SString name;
 	EntityType type;
 	bool active = true;
-	uint32 id;            
+	uint32 id;
 
 	iPoint position;
 	iPoint speed;
