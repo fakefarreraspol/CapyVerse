@@ -11,41 +11,43 @@
 Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType::PLAYER, id, name, position)
 {
 	idle.PushBack({ 0,0,66,66 });
-	walkRight.PushBack( { 66, 0, 66 * 2, 66 });
-	walkRight.PushBack( { 66 * 2, 0, 66 * 3, 66 });
-	walkRight.PushBack( { 66 * 3, 0, 66 * 4, 66 });
-	walkRight.PushBack( { 66 * 4, 0, 66 * 5, 66 });
+	
+	walkRight.PushBack( { 66, 0, 66 , 66 });
+	walkRight.PushBack( { 66 * 2, 0, 66 , 66 });
+	walkRight.PushBack( { 66 * 3, 0, 66 , 66 });
+	walkRight.PushBack( { 66 * 4, 0, 66 , 66 });
 
 	walkRight.loop = true;
 	walkRight.speed = 0.1f;
 	
-	walkLeft.PushBack({ 66, 0, 66 * 2, 66 });
-	walkLeft.PushBack({ 66 * 2, 0, 66 * 3, 66 });
-	walkLeft.PushBack({ 66 * 3, 0, 66 * 4, 66 });
-	walkLeft.PushBack({ 66 * 4, 0, 66 * 5, 66 });
+	walkLeft.PushBack({ 66, 0, 66 , 66 });
+	walkLeft.PushBack({ 66 * 2, 0, 66 , 66 });
+	walkLeft.PushBack({ 66 * 3, 0, 66 , 66 });
+	walkLeft.PushBack({ 66 * 4, 0, 66, 66 });
 	walkLeft.loop = true;
 	walkLeft.speed = 0.1f;
 
-	walkUp.PushBack({ 0, 66, 66 , 66*2 });
-	walkUp.PushBack({ 66, 66, 66 * 2, 66*2 });
-	walkUp.PushBack({ 66*2, 66, 66 * 3, 66*2 });
-	walkUp.PushBack({ 66*3, 66, 66 * 4, 66 * 2 });
-	walkUp.PushBack({ 66*4, 66, 66 * 5, 66 * 2 });
-	walkUp.PushBack({ 66*5, 66, 66 * 6, 66 * 2 });
-	walkUp.PushBack({ 66*6, 66, 66 * 7, 66 * 2 });
-	walkUp.PushBack({ 66*7, 66, 66 * 8, 66 * 2 });
-	walkLeft.loop = true;
-	walkLeft.speed = 0.1f;
+	walkUp.PushBack({ 0, 66, 66 , 66 });
+	walkUp.PushBack({ 66, 66, 66 , 66 });
+	walkUp.PushBack({ 66*2, 66, 66 , 66 });
+	walkUp.PushBack({ 66*3, 66, 66 , 66 });
+	walkUp.PushBack({ 66*4, 66, 66 , 66 });
+	walkUp.PushBack({ 66*5, 66, 66 , 66 });
+	walkUp.PushBack({ 66*6, 66, 66 , 66 });
+	walkUp.PushBack({ 66*7, 66, 66 , 66 });
+	walkUp.loop = true;
+	walkUp.speed = 0.1f;
 	
-	walkDown.PushBack({ 0, 66, 66 , 66 * 2 });
-	walkDown.PushBack({ 66, 66, 66 * 2, 66 * 2 });
-	walkDown.PushBack({ 66 * 2, 66, 66 * 3, 66 * 2 });
-	walkDown.PushBack({ 66 * 3, 66, 66 * 4, 66 * 2 });
-	walkDown.PushBack({ 66 * 4, 66, 66 * 5, 66 * 2 });
-	walkDown.PushBack({ 66 * 5, 66, 66 * 6, 66 * 2 });
-	walkDown.PushBack({ 66 * 6, 66, 66 * 7, 66 * 2 });
-	walkDown.PushBack({ 66 * 7, 66, 66 * 8, 66 * 2 });
+	walkDown.PushBack({ 66*8, 66, 66 , 66  });
+	walkDown.PushBack({ 66*9, 66, 66 , 66 });
+	walkDown.PushBack({ 66 * 10, 66, 66 , 66  });
+	walkDown.PushBack({ 66 * 11, 66, 66 , 66});
+	walkDown.PushBack({ 66 * 12, 66, 66 , 66 });
+	walkDown.PushBack({ 66 * 13, 66, 66 , 66 });
+	walkDown.PushBack({ 66 * 14, 66, 66 , 66});
+	walkDown.PushBack({ 66 * 15, 66, 66 , 66 });
 	walkDown.speed = 0.1f;
+	walkDown.loop = true;
 	currentAnim = &idle;
 }
 
@@ -110,7 +112,16 @@ bool Player::Draw(Render* render)
 	{
 		if(app->GetDebug())
 			render->DrawRectangle({ position.x, position.y,  64 , 64 }, 255, 255, 0);
+		
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) currentAnim = &walkRight;
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) currentAnim = &walkLeft;
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) currentAnim = &walkUp;
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) currentAnim = &walkDown;
 
+		if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE) && (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE) && (app->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE) && (app->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE))
+		{
+			currentAnim = &idle;
+		}
 		//render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
 		app->render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
 
