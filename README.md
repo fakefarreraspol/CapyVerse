@@ -1,8 +1,4 @@
 # CapyVerse
-<a href="https://scan.coverity.com/projects/into-the-capyverse">
-  <img alt="Coverity Scan Build Status"
-       src="https://scan.coverity.com/projects/24942/badge.svg"/>
-</a>
 
 ## Description
 
