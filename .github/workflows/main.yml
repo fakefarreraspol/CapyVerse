@@ -25,10 +25,9 @@ jobs:
       shell: bash
       if: github.event_name == 'release' && github.event.action == 'published'
       
-      - name: Setup Solution
-      run: | 
-      Vendors\premake5.exe vs2022
-      shell: bash
+    - name: Setup Solution with premake
+      run: |
+         Vendor\premake5.exe vs2022
 
     - name: Setup Environment
       run: | 
