@@ -27,7 +27,7 @@ jobs:
       
     - name: Setup Solution with premake
       run: |
-         Vendor\premake5.exe vs2022
+         Vendors\premake5.exe vs2022
 
     - name: Setup Environment
       run: | 
