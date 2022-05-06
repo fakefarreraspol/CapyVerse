@@ -4,35 +4,20 @@ name: CD - Capyverse
 # events but only for the master branch
 on:
   push:
-    branches: [ master ]
  
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: windows-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-   
-
+  super-lint:
+    name: Linct code base
+    runs-on: ubuntu-latest
     steps:
-    # Runs a single command using the runners shell
-    - name: Run a one-line script
-      run: echo Hello, world!
-
-    - uses: marvinpinto/action-automatic-releases@v1.0.0
-      with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
-          prerelease: true
-          draft: true
-          title: "Development Build"
-          files: |
-            README.md
-            LICENSE.md
-            '**/Game/**'
-            !*.obj
-            !*.ibd
-            !*.pdb
+    - name: Checkout code
+      uses: actions/checkout@v2
+  
+    - name: Run Super-Linter
+      uses: github/super-linter@v3
+      env:
+        DEFAULT_BRANCH: main
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
