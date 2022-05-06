@@ -1,9 +1,4 @@
 # CapyVerse
-<a href="https://scan.coverity.com/projects/into-the-capyverse">
-  <img alt="Coverity Scan Build Status"
-       src="https://scan.coverity.com/projects/24942/badge.svg"/>
-</a>
-
 ## Description
 
 A new NFT game appears in a very saturated market. You, an anti-NFTs hacker, want this blockchain on fire. Your mission is to defeat 2 mods and the admin. Your only weapon: cute capybaras. Build a team of up to 3 capybaras in order to defeat anything standing between your objective of taking down the blockchain.
