@@ -1,24 +1,33 @@
-name: CD - Capyverse
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
+name: "tagged-release"
+
 on:
   push:
- 
+    tags:
+      - "v*"
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  super-lint:
-    name: Linct code base
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-  
-    - name: Super-Linter
-      uses: github/super-linter@v4.9.2
+  tagged-release:
+    name: "Tagged Release"
+    runs-on: "ubuntu-latest"
 
-      env:
-        DEFAULT_BRANCH: main
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      # ...
+      - name: "Build & test"
+        run: |
+          echo "done!"
+
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: true
+          automatic_release_tag: "latest"
+          draft: true
+          title: "Development Build"
+          files: |
+            README.md
+            LICENSE.md
+            '**/Game/**'
+            !*.obj
+            !*.ibd
+            !*.pdb
