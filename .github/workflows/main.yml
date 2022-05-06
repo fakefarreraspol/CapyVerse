@@ -12,7 +12,7 @@ jobs:
   build:
     runs-on: windows-latest
     env:
-      RELEASE_NAME: TDM-Caronte_Mandate-v1.0
+      RELEASE_NAME: CapybaraStudios-IntoTheCapyverse-v1.0
       GNUTARGET: default
 
     steps:
