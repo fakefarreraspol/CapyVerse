@@ -45,13 +45,13 @@ jobs:
     - name: Build Solution (MSVC16)
       run: |
         msbuild.exe Capyverse.sln  /property:Configuration=Release
-        copy /Y Build\Release\Game.exe Build\${{ env.RELEASE_NAME }}\Game.exe
+        copy /Y Build\Release\Capyverse.exe Build\${{ env.RELEASE_NAME }}\Capyverse.exe
       shell: cmd
       
     - name: Generate Artifacts
       run: |
         robocopy .\Output .\Build\${{ env.RELEASE_NAME }}\Output /S
-        robocopy .\Build\${{ env.RELEASE_NAME }} .\Build\${{ env.RELEASE_NAME }}\Output Game.exe /MOVE
+        robocopy .\Build\${{ env.RELEASE_NAME }} .\Build\${{ env.RELEASE_NAME }}\Output Capyverse.exe /MOVE
         copy /Y .\README.md .\Build\${{ env.RELEASE_NAME }}\README.md
         copy /Y .\LICENSE .\Build\${{ env.RELEASE_NAME }}\LICENSE
         cd Build
