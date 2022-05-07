@@ -60,13 +60,13 @@ project "Capyverse"
         buildoptions "/MDd"
         runtime "Debug"
         symbols "on"
-        libdirs { "$(ProjectDir)Source/External/Optick/lib/_debug", "$(ProjectDir)Source/External/Box2D/libx86/Debug"}
+        libdirs { "$(ProjectDir)Source/External/Optick/lib/debug", "$(ProjectDir)Source/External/Box2D/libx86/Debug"}
 
     filter {"configurations:Release"}
         buildoptions "/MD"
         runtime "Release"
         optimize "on"
-        libdirs { "$(ProjectDir)Source/External/Optick/lib/_release", "$(ProjectDir)Source/External/Box2D/libx86/Release"}
+        libdirs { "$(ProjectDir)Source/External/Optick/lib/release", "$(ProjectDir)Source/External/Box2D/libx86/Release"}
 
     vpaths{
         ["Source/App"] = {"Source/App.h", "Source/App.cpp", "Source/Main.cpp"},
@@ -82,7 +82,7 @@ project "Capyverse"
                             "Source/FadeToBlack.h","Source/FadeToBlack.cpp",
                             "Source/Pause.h","Source/Pause.cpp",
                             "Source/Fonts.h","Source/Fonts.cpp",
-                            "Source/Collisions.h", "Source/Collisions.cpp",
+                            "Source/Physics.h", "Source/Physics.cpp",
                             "Source/Transitions.h", "Source/Transitions.cpp"},
 
         ["Source/Modules/Gameplay/Dialog"] = { "Source/Dialog.h","Source/Dialog.cpp",
