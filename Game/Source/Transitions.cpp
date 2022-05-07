@@ -129,7 +129,7 @@ void Transitions::DrawTransition1()
 
 	if (currentStep == Fade_Step::TRANSTITION) Rect1.w = EaseLinearInOut(timer_in_transition, win_width / 64, win_width, 30);
 	if (currentStep == Fade_Step::FROM_TRANSITION) Rect1.w = EaseLinearInOut(timer_out_transition, win_width / 64, win_width, 30);
-	app->render->DrawRectangle(Rect1, 255, 0, 0, 255, true, false);
+	app->render->DrawRectangle(Rect1, 0, 0, 0, 255, true, false);
 
 }
 
@@ -162,16 +162,17 @@ void Transitions::DrawTransition2()
 		Rect4.w = -EaseLinearIn(timer_out_transition, win_width / 64, win_width, 30);
 	}
 
-	app->render->DrawRectangle(Rect1, 255, 0, 0, 255, true, false);
-	app->render->DrawRectangle(Rect2, 0, 255, 0, 255, true, false);
-	app->render->DrawRectangle(Rect3, 0, 0, 255, 255, true, false);
-	app->render->DrawRectangle(Rect4, 123, 0, 122, 255, true, false);
+	app->render->DrawRectangle(Rect1, 0, 0, 0, 0, true, false);
+	app->render->DrawRectangle(Rect2, 0, 0, 0, 0, true, false);
+	app->render->DrawRectangle(Rect3, 0, 0, 0, 0, true, false);
+	app->render->DrawRectangle(Rect4, 0, 0, 0, 0, true, false);
 
 
 }
 
 void Transitions::DrawTransition3()
 {
+	//Pokemon transition
 	SDL_Rect Rect1;
 	SDL_Rect Rect2;
 	SDL_Rect Rect3;
@@ -230,7 +231,7 @@ void Transitions::DrawTransition3()
 
 void Transitions::DrawTransition4()
 {
-
+	//Fade to black
 	SDL_Rect Rect1;
 	Rect1.x = 0;
 	Rect1.y = 0;
@@ -239,6 +240,4 @@ void Transitions::DrawTransition4()
 
 	if (currentStep == Fade_Step::TRANSTITION) app->render->DrawRectangle(Rect1, timer_in_transition / 10, 0, 0, 255);
 	if (currentStep == Fade_Step::FROM_TRANSITION) app->render->DrawRectangle(Rect1, timer_out_transition / 10, 0, 0, 255);
-
-
 }

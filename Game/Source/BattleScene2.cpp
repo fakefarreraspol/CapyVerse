@@ -26,7 +26,7 @@ bool BattleScene2::Awake(pugi::xml_node&)
 {
 
 
-    enemy = (Enemy*)app->entMan->CreateEntity(EntityType::ENEMY, 11, { 450, 350 }, "Enemy");
+    enemy = (Enemy*)app->entMan->CreateEntity(EntityType::ENEMY, 11, { 600, 350 }, "Enemy");
 
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 11, { 928, 305 }, "Chadbara"));
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::SUPP, 11, { 750, 443 }, "Rainbowbara"));

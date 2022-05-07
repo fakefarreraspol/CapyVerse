@@ -64,7 +64,8 @@ bool Collisions::PreUpdate()
 		// avoid checking collisions already checked
 		for (ListItem<Collider*>* k = i->next; k != nullptr; k = k->next)
 		{
-
+			if (k->data == nullptr)
+				break;
 			c2 = k->data;
 
 			if (matrix[c1->type][c2->type] && c1->Intersects(c2->rect))

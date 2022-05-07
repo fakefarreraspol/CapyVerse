@@ -83,7 +83,7 @@ bool FadeToBlack::PostUpdate()
 	return true;
 }
 
-bool FadeToBlack::MFadeToBlack(Module* moduleToDisable, Module* moduleToEnable, float frames)
+bool FadeToBlack::MFadeToBlack(Module* moduleToDisable, Module* moduleToEnable, float frames, uint16_t transitionID)
 {
 	bool ret = false;
 
@@ -96,7 +96,7 @@ bool FadeToBlack::MFadeToBlack(Module* moduleToDisable, Module* moduleToEnable, 
 
 		this->moduleToDisable = moduleToDisable;
 		this->moduleToEnable = moduleToEnable;
-		app->transitions->SelectTransition(2, 0, maxFadeFrames - 10);
+		app->transitions->SelectTransition(transitionID, 0, maxFadeFrames - 10);
 		ret = true;
 	}
 

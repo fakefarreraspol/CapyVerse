@@ -67,15 +67,15 @@ void Enemy::OnCollision(Collider* c1, Collider* c2)
 	{
 		if (id == 10)
 		{
-			app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene1, 120);
+			app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene1, 120, 2);
 		}
 		if (id == 11)
 		{
-			app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene2, 120);
+			app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene2, 120, 2);
 		}
 		if (id == 12)
 		{
-			app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene3, 120);
+			app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene3, 120, 2);
 		}
 		app->colManager->RemoveCollider(collider);
 	}

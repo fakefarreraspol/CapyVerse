@@ -78,7 +78,8 @@ project "Capyverse"
                             "Source/FadeToBlack.h","Source/FadeToBlack.cpp",
                             "Source/Pause.h","Source/Pause.cpp",
                             "Source/Fonts.h","Source/Fonts.cpp",
-                            "Source/Collisions.h", "Source/Collisions.cpp"},
+                            "Source/Collisions.h", "Source/Collisions.cpp",
+                            "Source/Transitions.h", "Source/Transitions.cpp"},
 
         ["Source/Modules/Gameplay/Dialog"] = { "Source/Dialog.h","Source/Dialog.cpp",
                                         "Source/DialogManager.h","Source/DialogManager.cpp",
@@ -126,7 +127,7 @@ project "Capyverse"
                             "Source/PerfTimer.h", "Source/PerfTimer.cpp",
                             "Source/List.h",
                             "Source/Collider.h", "Source/Collider.cpp",
-                            "Source/Queue.h"},
+                            "Source/Queue.h", "Source/easings.h"},
 
         ["Source/UI"] = {"Source/GuiManager.h", "Source/GuiManager.cpp",
                         "Source/GuiBar.h", "Source/GuiBar.cpp",
