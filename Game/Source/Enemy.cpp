@@ -18,7 +18,7 @@ Enemy::~Enemy()
 
 bool Enemy::Start()
 {
-	collider = app->colManager->CreateRectangleSensor(position.x, position.y, 128, 128, bodyType::DYNAMIC);
+	collider = app->colManager->CreateRectangleSensor(position.x - 64, position.y - 64, 128, 128, bodyType::DYNAMIC);
 	collider->listener = (Module*)app->entMan;
 	collider->eListener = this;
 	return true;

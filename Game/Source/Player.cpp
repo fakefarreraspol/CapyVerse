@@ -133,7 +133,9 @@ void Player::UpdateInput(float dt)
 	GamePad& pad = app->input->pads[0];
 	lastPos = position;
 
-	
+	position.x = METERS_TO_PIXELS(collider->body->GetPosition().x);
+	position.y = METERS_TO_PIXELS(collider->body->GetPosition().y);
+
 
 	int inputs = 0;
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
@@ -258,7 +260,28 @@ void Player::UpdateInput(float dt)
 		}
 	}
 		
-	
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	{
+		b2Vec2 vel = collider->body->GetLinearVelocity();
+		vel.x = 5;
+		collider->body->SetLinearVelocity(vel);
+		if (currentAnim != &walkLeft)
+		{
+			walkLeft.Reset();
+			currentAnim = &walkLeft;
+		}
+	}
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	{
+		b2Vec2 vel = collider->body->GetLinearVelocity();
+		vel.x = 5;
+		collider->body->SetLinearVelocity(vel);
+		if (currentAnim != &walkRight)
+		{
+			walkRight.Reset();
+			currentAnim = &walkRight;
+		}
+	}
 	
 }
 
