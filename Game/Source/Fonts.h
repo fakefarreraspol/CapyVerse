@@ -3,7 +3,7 @@
 
 #include "Module.h"
 #include "SDL\include\SDL_pixels.h"
-#include <SDL_ttf.h>
+#include "SDL_ttf/include/SDL_ttf.h"
 
 
 #define MAX_FONTS 10

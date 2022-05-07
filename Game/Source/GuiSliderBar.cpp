@@ -3,7 +3,7 @@
 #include "App.h"
 #include "Audio.h"
 
-GuiSliderBar::GuiSliderBar(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::SLIDERBAR, id)
+GuiSliderBar::GuiSliderBar(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::SLIDER, id)
 {
 	this->bounds = bounds;
 	this->text = text;
