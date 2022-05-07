@@ -13,7 +13,6 @@
 #include "Fonts.h"
 #include "Map.h"
 
-#include "Collisions.h"
 #include "GuiManager.h"
 #include "GuiButton.h"
 #include "GuiSlider.h"
@@ -125,10 +124,7 @@ bool Scene::PostUpdate()
 	return ret;
 }
 
-void Scene::OnCollision(Collider* c1, Collider* c2)
-{
-	
-}
+
 
 // Called before quitting
 bool Scene::CleanUp()

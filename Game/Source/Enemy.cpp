@@ -3,8 +3,7 @@
 #include "App.h"
 #include "Capybara.h"
 #include "DialogManager.h"
-#include "Collisions.h"
-#include "Collider.h"
+#include "Physics.h"
 #include "FadeToBlack.h"
 #include "Textures.h"
 
@@ -19,7 +18,9 @@ Enemy::~Enemy()
 
 bool Enemy::Start()
 {
-	collider = app->colManager->AddCollider({ position.x - 32, position.y - 32, 128, 128 }, Collider::Type::ENEMY, (Module*)app->entMan, this);
+	collider = app->colManager->CreateRectangleSensor(position.x, position.y, 128, 128, bodyType::DYNAMIC);
+	collider->listener = (Module*)app->entMan;
+	collider->eListener = this;
 	return true;
 }
 
@@ -59,27 +60,6 @@ void Enemy::SetCombat(bool value)
 List<Capybara*>& Enemy::GetBattleTeam()
 {
 	return battleTeam;
-}
-
-void Enemy::OnCollision(Collider* c1, Collider* c2)
-{
-	if (c2->type == Collider::PLAYER)
-	{
-		if (id == 10)
-		{
-			app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene1, 120, 2);
-		}
-		if (id == 11)
-		{
-			app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene2, 120, 2);
-		}
-		if (id == 12)
-		{
-			app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene3, 120, 2);
-		}
-		app->colManager->RemoveCollider(collider);
-	}
-
 }
 
 void Enemy::AddCapybaraToBatle(Capybara* capybara)

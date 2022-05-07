@@ -172,7 +172,7 @@ public:
 	iPoint bounds;
 
 private:
-	List<Collider*> cols;
+	List<PhysBody*> cols;
 	SString folder;
 	bool mapLoaded;
 };

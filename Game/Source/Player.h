@@ -5,7 +5,7 @@
 
 #include "Entity.h"
 #include "Capybara.h"
-#include "Collider.h"
+#include "Physics.h"
 #include "Animation.h"
 
 
@@ -43,12 +43,12 @@ public:
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&);
 
-	Collider* collider = nullptr;
+	PhysBody* collider = nullptr;
 
 	void SetCombat(bool value);
 
 	bool isWalking = false;
-	void OnCollision(Collider* c1, Collider* c2);
+	void OnCollision(PhysBody* c1, PhysBody* c2);
 	bool CleanUp();
 	
 	/*SDL_Rect playerWalkRight[4];*/

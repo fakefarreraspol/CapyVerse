@@ -8,6 +8,7 @@ project "Capyverse"
     targetdir("$(SolutionDir)Build/$(Configuration)")
     objdir("$(SolutionDir)Build/$(Configuration)/Obj/")
     links {
+        "Box2D",
         "SDL2",
         "SDL2_ttf",
         "SDL2main",
@@ -32,9 +33,9 @@ project "Capyverse"
         "$(ProjectDir)Source/External/SDL_ttf/libx86",
         "$(ProjectDir)Source/External/SDL_image/libx86",
         "$(ProjectDir)Source/External/SDL_mixer/libx86",
-        "$(ProjectDir)Source/External/Optick/lib/_debug",
-        "$(ProjectDir)Source/External/Optick/lib/release"
     }
+
+
     files {
         "Source/*.cpp",
         "Source/*.h",
@@ -48,21 +49,24 @@ project "Capyverse"
         "$(ProjectDir)Source/External/SDL_image/include",
         "$(ProjectDir)Source/External/SDL_mixer/include",
         "$(ProjectDir)Source/External/PugiXml/src",
-        "$(ProjectDir)Source/External/Optick/include"
+        "$(ProjectDir)Source/External/Optick/include",
+        "$(ProjectDir)Source/External/Box2D/Box2D"
     }
     defines {
         "WINDOWS"
     }
 
     filter {"configurations:Debug"}
-        buildoptions "/MTd"
+        buildoptions "/MDd"
         runtime "Debug"
         symbols "on"
+        libdirs { "$(ProjectDir)Source/External/Optick/lib/_debug", "$(ProjectDir)Source/External/Box2D/libx86/Debug"}
 
     filter {"configurations:Release"}
-        buildoptions "/MT"
+        buildoptions "/MD"
         runtime "Release"
         optimize "on"
+        libdirs { "$(ProjectDir)Source/External/Optick/lib/_release", "$(ProjectDir)Source/External/Box2D/libx86/Release"}
 
     vpaths{
         ["Source/App"] = {"Source/App.h", "Source/App.cpp", "Source/Main.cpp"},

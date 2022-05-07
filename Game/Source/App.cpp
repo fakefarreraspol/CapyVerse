@@ -19,7 +19,7 @@
 #include "DialogManager.h"
 #include "Pause.h"
 
-#include "Collisions.h"
+#include "Physics.h"
 #include "TaskQueue.h"
 
 #include "FadeToBlack.h"
@@ -46,7 +46,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	fonts = new Fonts(true);
 	guiManager = new GuiManager(true);
 	dialogManager = new DialogManager(true);
-	colManager = new Collisions(true);
+	colManager = new Physics(true);
 	fadeToBlack = new FadeToBlack(true);
 	intro = new Intro(true);
 	mainMenu = new MainMenu(false);

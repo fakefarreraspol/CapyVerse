@@ -248,10 +248,10 @@ bool EntityManager::Draw() {
 	return ret;
 }
 
-void EntityManager::OnCollision(Collider* c1, Collider* c2)
+void EntityManager::OnCollision(PhysBody* c1, PhysBody* c2)
 {
 
-	if (c1->entity != nullptr)
-		if (c1->entity->active == true)
-			c1->entity->OnCollision(c1, c2);
+	if (c1->eListener != nullptr)
+		if (c1->eListener->active == true)
+			c1->eListener->OnCollision(c1, c2);
 }

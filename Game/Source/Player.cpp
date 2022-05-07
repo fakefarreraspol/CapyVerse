@@ -3,7 +3,7 @@
 #include "Input.h"
 #include "Log.h"
 #include "Player.h"
-#include "Collisions.h"
+#include "Physics.h"
 #include "Timer.h"
 #include "Window.h"
 #include "Textures.h"
@@ -63,17 +63,7 @@ bool Player::Update(float dt)
 		texture  = app->tex->Load("Assets/Textures/Sprites/characters.png");
 		load = false;
 	}
-	
-	//app->render->DrawTexture(texture, 50, 50);
-	
-	/*if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) || (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) || (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) || (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT))
-	{
-		isWalking = true;
-	}*/
 
-	
-	
-	collider->SetPos(position.x, position.y);
 	if (canMove == true)
 		UpdateInput(dt);
 
@@ -122,7 +112,9 @@ bool Player::Draw(Render* render)
 
 bool Player::Start()
 {
-	collider = app->colManager->AddCollider({ position.x, position.y, 64, 64 }, Collider::Type::PLAYER, (Module*)app->entMan, this);
+	collider = app->colManager->CreateRectangle(position.x, position.y, 32, 32, bodyType::DYNAMIC);
+	collider->listener = (Module*)app->entMan;
+	collider->eListener = this;
 	return true;
 }
 
@@ -320,78 +312,9 @@ void Player::SetCombat(bool value)
 }
 
 
-void Player::OnCollision(Collider* c1, Collider* c2)
+void Player::OnCollision(PhysBody* c1, PhysBody* c2)
 {
-	if (!app->GetDebug() || c2->type == Collider::NPC)
-	{
-		if (c1->type == Collider::PLAYER)
-		{
-			if (c2->type == Collider::WALL|| c2->type == Collider::NPC)
-			{
-				wallsDetected++;
 
-				int difference = c1->rect.w;
-
-				if (c1->GetPos().x <= c2->GetPos().x)
-				{
-					if (difference > c1->rect.w - (c2->rect.x - c1->rect.x))
-					{
-						difference = c1->rect.w - (c2->rect.x - c1->rect.x);
-						lastKeyPressed = SDL_SCANCODE_D;
-					}
-				}
-				else
-				{
-					if (difference > c2->rect.w - (c1->rect.x - c2->rect.x))
-					{
-						difference = c2->rect.w - (c1->rect.x - c2->rect.x);
-						lastKeyPressed = SDL_SCANCODE_A;
-					}
-				}
-				if (c1->GetPos().y <= c2->GetPos().y)
-				{
-					if (difference > c1->rect.h - (c2->rect.y - c1->rect.y))
-					{
-						difference = c1->rect.h - (c2->rect.y - c1->rect.y);
-						lastKeyPressed = SDL_SCANCODE_S;
-					}
-				}
-				else
-				{
-					if (difference > c2->rect.h - (c1->rect.y - c2->rect.y))
-					{
-						difference = c2->rect.h - (c1->rect.y - c2->rect.y);
-						lastKeyPressed = SDL_SCANCODE_W;
-					}
-				}
-
-				switch (lastKeyPressed)
-				{
-				case SDL_SCANCODE_A:	position.x++;	break;
-				case SDL_SCANCODE_D:	position.x--;	break;
-				case SDL_SCANCODE_W:	position.y++;	break;
-				case SDL_SCANCODE_S:	position.y--;	break;
-				default:
-					break;
-				}
-				
-				
-
-				/*if (c1->GetPos().x <= c2->GetPos().x)
-					position.x--;
-				if (c1->GetPos().x >= c2->GetPos().x)
-					position.x++;
-				if (c1->GetPos().y <= c2->GetPos().y)
-					position.y--;
-				if (c1->GetPos().y >= c2->GetPos().y)
-					position.y++;*/
-
-
-
-			}
-			
-		}
-	}
 }
 
 bool Player::CleanUp()

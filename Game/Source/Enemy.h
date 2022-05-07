@@ -22,7 +22,6 @@ public:
 	void SetCombat(bool value);
 
 	List<Capybara*>& GetBattleTeam();
-	void OnCollision(Collider* c1, Collider* c2);
 	//Adds a capybara to the player battle team
 	void AddCapybaraToBatle(Capybara* capybara);
 

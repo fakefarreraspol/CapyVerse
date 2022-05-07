@@ -1,14 +1,12 @@
 #include "NPC.h"
 
 #include "App.h"
-#include "Collider.h"
-#include "Collisions.h"
 #include "Dialog.h"
 #include "Input.h"
 #include "DialogManager.h"
 #include "Textures.h"
 
-#include "Collider.h"
+#include "Physics.h"
 
 #include "Scene.h"
 
@@ -24,7 +22,9 @@ NPC::~NPC()
 
 bool NPC::Start()
 {
-	collider = app->colManager->AddCollider({ position.x - 32, position.y - 32, 128, 128 }, Collider::Type::NPC, (Module*)app->entMan, this);
+	collider = app->colManager->CreateRectangleSensor(position.x, position.y, 128, 128, bodyType::DYNAMIC);
+	collider->listener = (Module*)app->entMan;
+	collider->eListener = this;
 	return true;
 }
 
@@ -50,14 +50,9 @@ bool NPC::Draw(Render* render)
 	return true;
 }
 
-void NPC::OnCollision(Collider* c1, Collider* c2)
+void NPC::OnCollision(PhysBody* c1, PhysBody* c2)
 {
-	if (c2->type == Collider::PLAYER)
-	{
-		app->dialogManager->SetActiveDialog(dialog);
-		app->dialogManager->characterName->SetText(this->name.GetString());
-	}
-	
+
 }
 
 bool NPC::CleanUp()

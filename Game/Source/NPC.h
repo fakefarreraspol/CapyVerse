@@ -4,14 +4,9 @@
 #include "Entity.h"
 #include "Dialog.h"
 #include "SDL_image/include/SDL_image.h"
-
+class PhysBody;
 class NPC : public Entity
 {
-public:
-
-	Collider* collider = nullptr;
-	Dialog* dialog;
-	bool load = true;
 public:
 
 	NPC(iPoint position, uint32 id, const char* name);
@@ -25,9 +20,14 @@ public:
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&);
 
-	void OnCollision(Collider* c1, Collider* c2);
+	void OnCollision(PhysBody* c1, PhysBody* c2);
 
 	bool CleanUp();
+public:
+
+	PhysBody* collider = nullptr;
+	Dialog* dialog;
+	bool load = true;
 	
 };
 

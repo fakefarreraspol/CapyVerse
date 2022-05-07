@@ -26,7 +26,7 @@ class EntityManager;
 class BattleManager;
 class GuiManager;
 class DialogManager;
-class Collisions;
+class Physics;
 class Task;
 class FadeToBlack;
 class Fonts;
@@ -118,7 +118,7 @@ public:
 	GuiManager* guiManager = nullptr;
 	Map* mapManager = nullptr;
 	DialogManager* dialogManager = nullptr;
-	Collisions* colManager = nullptr;
+	Physics* colManager = nullptr;
 	Task* taskManager = nullptr;
 
 	Pause* pauseMenu = nullptr;
