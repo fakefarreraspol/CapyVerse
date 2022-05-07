@@ -16,7 +16,7 @@ struct Text
 	// The font texture
 	SDL_Texture* texture = nullptr;
 	const char* text;
-	SDL_Rect dpsRect;// to store the text texture dimensions
+	SDL_Rect dpsRect = {0, 0, 0, 0};// to store the text texture dimensions
 
 };
 
@@ -54,24 +54,24 @@ public:
 	SDL_Texture* LoadRenderedParagraph(SDL_Rect& rect, int font_id, const char* text, SDL_Color color, uint32 wrapedLength);
 	
 	//Globally used font
-	int globalFont;
+	uint16_t globalFont;
 	//Font used in menu buttons
-	int menuButtonFont;
-	int indicatorsFont;
-	int titles;
+	uint16_t menuButtonFont;
+	uint16_t indicatorsFont;
+	uint16_t titles;
 
 private:
 
 	// An array to keep track and store all loaded fonts
-	TTF_Font* fonts[MAX_FONTS];
+	TTF_Font* fonts[MAX_FONTS] = { 0 };
 
 
 	// To display text
-	SDL_Rect dpsRect;// to store the text texture dimensions
-	int mWidth;//Image dimensions
-	int mHeight;
+	SDL_Rect dpsRect = {0, 0, 0, 0};// to store the text texture dimensions
+	uint16_t mWidth = 0;//Image dimensions
+	uint16_t mHeight = 0;
 
-	SDL_Rect  dpsParagraph;
+	SDL_Rect  dpsParagraph = {0, 0, 0, 0};
 
 
 };

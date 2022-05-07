@@ -45,7 +45,7 @@ public:
 	bool GetCompletedQuest(int questID);
 
 	//Load quest files 
-	bool QuestManager::Load(const char* path);
+	bool Load(const char* path);
 
 	// Load / Save
 	/*bool LoadState(pugi::xml_node&);

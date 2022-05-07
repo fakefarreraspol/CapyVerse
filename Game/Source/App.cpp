@@ -223,7 +223,7 @@ void App::PrepareUpdate()
 	lastSecFrameCount++;
 
 	// L08: DONE 4: Calculate the dt: differential time since last frame
-	dt = frameDuration->ReadMs();
+	dt = (float)frameDuration->ReadMs();
 	frameDuration->Start();
 
 	if (fpsCap)
@@ -257,14 +257,14 @@ void App::FinishUpdate()
 		framesPerSecond, averageFps, dt, app->render->vsync ? "on" : "off");
 
 	// L08: DONE 2: Use SDL_Delay to make sure you get your capped framerate
-	float delay = float(maxFrameRate) - frameDuration->ReadMs();
+	float delay = float(maxFrameRate) - (float)frameDuration->ReadMs();
 	//LOG("F: %f Delay:%f", frameDuration->ReadMs(), delay);
 
 	// L08: DONE 3: Measure accurately the amount of time SDL_Delay() actually waits compared to what was expected
 	if (!app->render->vsync) {
 		PerfTimer* delayt = new PerfTimer();
 		delayt->Start();
-		if (maxFrameRate > 0 && delay > 0) SDL_Delay(delay);
+		if (maxFrameRate > 0 && delay > 0) SDL_Delay((Uint32)delay);
 		//LOG("Expected %f milliseconds and the real delay is % f", delay, delayt->ReadMs());
 	}
 	if (debug)

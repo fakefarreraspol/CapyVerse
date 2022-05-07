@@ -66,7 +66,7 @@ bool BattleManager::Start()
 	player->Disable();
 	player->SetCombat(true);
 
-	for (int i = 0; i < player->GetBattleTeam().Count(); i++)
+	for (uint i = 0; i < player->GetBattleTeam().Count(); i++)
 	{
 		playerTeam.Add(player->GetBattleTeam().At(i)->data);
 	}
@@ -76,7 +76,7 @@ bool BattleManager::Start()
 	currentButton = currentButtons.start;
 
 
-	for (int i = 0; i < enemy->GetBattleTeam().Count(); i++)
+	for (uint i = 0; i < enemy->GetBattleTeam().Count(); i++)
 	{
 		enemies.Add(enemy->GetBattleTeam().At(i)->data);
 	}
@@ -106,7 +106,7 @@ void BattleManager::DeleteAttackMenu()
 {
 	if (deleteAttackMenu)
 	{
-		for (int i = 0; i < attackBtns.Count(); i++)
+		for (uint i = 0; i < attackBtns.Count(); i++)
 		{
 			app->guiManager->DestroyGuiControl(attackBtns.At(i)->data);
 			app->guiManager->DestroyGuiControl(attackInfo.At(i)->data);
@@ -127,13 +127,13 @@ void BattleManager::DeleteAbilityMenu()
 {
 	if (deleteAbilityMenu)
 	{
-		for (int i = 0; i < abilityBtns.Count(); i++)
+		for (uint i = 0; i < abilityBtns.Count(); i++)
 			app->guiManager->DestroyGuiControl(abilityBtns.At(i)->data);
 
-		for (int i = 0; i < abilityBars.Count(); i++)
+		for (uint i = 0; i < abilityBars.Count(); i++)
 			app->guiManager->DestroyGuiControl(abilityBars.At(i)->data);
 
-		for (int i = 0; i < abilityInfo.Count(); i++)
+		for (uint i = 0; i < abilityInfo.Count(); i++)
 			app->guiManager->DestroyGuiControl(abilityInfo.At(i)->data);
 	
 		abilityBars.Clear();
@@ -174,12 +174,12 @@ void BattleManager::Draw()
 {
 	//app->guiManager->Draw();
 
-	int posX = currentCapybara->data->GetPosition().x + 32;
-	int posY = currentCapybara->data->GetPosition().y - 32;
+	uint posX = currentCapybara->data->GetPosition().x + 32;
+	uint posY = currentCapybara->data->GetPosition().y - 32;
 	app->render->DrawTexture(selectedArrow, posX, posY);
 
-	int btnX = currentButton->data->bounds.x - 30;
-	int btnY = currentButton->data->bounds.y;
+	uint btnX = currentButton->data->bounds.x - 30;
+	uint btnY = currentButton->data->bounds.y;
 	app->render->DrawTexture(arrow, btnX, btnY);
 	SDL_Rect info{ 0, 369, 270, 120 };
 	SDL_Rect options{ 269, 369, 185, 155 };
@@ -194,15 +194,15 @@ void BattleManager::Draw()
 
 void BattleManager::UpdatePlayerInfo()
 {
-	for (int i = 0; i < playerHealthBars.Count(); i++)
+	for (uint i = 0; i < playerHealthBars.Count(); i++)
 	{
 		playerHealthBars.At(i)->data->UpdateValues(playerTeam.At(i)->data->GetHealth(), playerTeam.At(i)->data->GetMaxHealth());
 	}
-	for (int i = 0; i < playerManaBars.Count(); i++)
+	for (uint i = 0; i < playerManaBars.Count(); i++)
 	{
 		playerManaBars.At(i)->data->UpdateValues(playerTeam.At(i)->data->GetMana(), playerTeam.At(i)->data->GetMaxMana());
 	}
-	for (int i = 0; i < playerHeathText.Count() && i < playerTeam.Count(); i++)
+	for (uint i = 0; i < playerHeathText.Count() && i < playerTeam.Count(); i++)
 	{
 		SString hp("%i/%iHP", playerTeam.At(i)->data->GetHealth(), playerTeam.At(i)->data->GetMaxHealth());
 		if (strcmp(playerHeathText.At(i)->data->GetText(), hp.GetString()))
@@ -211,7 +211,7 @@ void BattleManager::UpdatePlayerInfo()
 			printf("Updating HP\n");
 		}
 	}
-	for (int i = 0; i < playerManaText.Count() && i < playerTeam.Count(); i++)
+	for (uint i = 0; i < playerManaText.Count() && i < playerTeam.Count(); i++)
 	{
 		SString mp("%i/%iMP", playerTeam.At(i)->data->GetMana(), playerTeam.At(i)->data->GetMaxMana());
 		if (strcmp(playerManaText.At(i)->data->GetText(), mp.GetString()))
@@ -220,7 +220,7 @@ void BattleManager::UpdatePlayerInfo()
 			printf("Updating Mana \n");
 		}
 	}
-	for (int i = 0; i < playerLevels.Count() && i < playerTeam.Count(); i++)
+	for (uint i = 0; i < playerLevels.Count() && i < playerTeam.Count(); i++)
 	{
 		SString mp("LVL: %i", playerTeam.At(i)->data->GetLVL());
 		if (strcmp(playerLevels.At(i)->data->GetText(), mp.GetString()))
@@ -229,7 +229,7 @@ void BattleManager::UpdatePlayerInfo()
 			printf("Updating Level \n");
 		}
 	}
-	for (int i = 0; i < playerStatus.Count() && i < playerTeam.Count(); i++)
+	for (uint i = 0; i < playerStatus.Count() && i < playerTeam.Count(); i++)
 	{
 		SString status;
 		switch (playerTeam.At(i)->data->GetStatus())
@@ -298,7 +298,7 @@ void BattleManager::CreateAbilityMenu()
 					abilityInfo.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, i + 7, allyHealth.GetString(), { 465, i * 50 + 570, 155, 20 }, this, { 255, 255, 255, 1 }, app->fonts->indicatorsFont));
 				}
 			}
-			for (int i = 0; i < abilityBars.Count(); i++)
+			for (uint i = 0; i < abilityBars.Count(); i++)
 			{
 				abilityBars.At(i)->data->UpdateValues(playerTeam.At(i)->data->GetHealth(), playerTeam.At(i)->data->GetMaxHealth());
 			}
@@ -324,7 +324,7 @@ void BattleManager::CreateAbilityMenu()
 					abilityBars.At(i)->data->type = BarType::HEALTH;
 				}
 			}
-			for (int i = 0; i < abilityBars.Count(); i++)
+			for (uint i = 0; i < abilityBars.Count(); i++)
 			{
 				abilityBars.At(i)->data->UpdateValues(enemies.At(i)->data->GetHealth(), enemies.At(i)->data->GetMaxHealth());
 			}
@@ -470,11 +470,11 @@ void BattleManager::EndTurn()
 		turn = Turn::PLAYER;
 	
 
-	for (int i = 0; i < playerTeam.Count(); i++)
+	for (uint i = 0; i < playerTeam.Count(); i++)
 	{
 		playerTeam.At(i)->data->UpdateStatus();
 	}
-	for (int i = 0; i < enemies.Count(); i++)
+	for (uint i = 0; i < enemies.Count(); i++)
 	{
 		enemies.At(i)->data->UpdateStatus();
 	}

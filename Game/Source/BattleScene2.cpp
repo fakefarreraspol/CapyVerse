@@ -72,7 +72,7 @@ bool BattleScene2::PreUpdate()
 bool BattleScene2::Update(float dt)
 {
     bool ret = true;
-    srand(time(NULL));
+    srand((uint)time((time_t)0));
     randomNum = rand() % 2;
     //if (app->battleManager->GetTurn() == Turn::ENEMY)
     //{

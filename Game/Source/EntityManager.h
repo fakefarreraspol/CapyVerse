@@ -8,7 +8,7 @@
 
 #include "Capybara.h"
 
-class SDL_Texture;
+struct SDL_Texture;
 class Textures;
 class Audio;
 class Collisions;

@@ -19,7 +19,7 @@ public:
 	int wallsDetected;
 	int lastKeyPressed = 0;
 	bool canMove = true;
-	float speed = 0.1;
+	float speed = 0.1f;
 	//Base functions
 	bool Update(float dt);
 	void UpdateCamera();
@@ -54,7 +54,7 @@ public:
 	/*SDL_Rect playerWalkRight[4];*/
 	
 private:
-	int money;
+	uint16_t money = 0;
 
 	bool isBattle = false;
 	bool isStuck = false;

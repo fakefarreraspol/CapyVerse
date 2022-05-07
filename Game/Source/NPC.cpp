@@ -67,8 +67,8 @@ bool NPC::CleanUp()
 
 bool NPC::LoadState(pugi::xml_node& node)
 {
-	position.x = node.child("position").attribute("x").as_float();
-	position.y = node.child("position").attribute("y").as_float();
+	position.x = node.child("position").attribute("x").as_int();
+	position.y = node.child("position").attribute("y").as_int();
 
 	active = node.attribute("active").as_bool();
 	renderable = node.attribute("renderable").as_bool();

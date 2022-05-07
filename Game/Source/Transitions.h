@@ -21,7 +21,7 @@ public:
 	bool Update(float dt);
 
 	bool PostUpdate();
-	void SelectTransition(int id, int timer_in_transition, int timer_out_transition);
+	void SelectTransition(int id, float timer_in_transition, float timer_out_transition);
 	//NEED TO CREATE MORE DRAWTRANSITIONS
 	void DrawTransition1();
 	void DrawTransition2();
@@ -38,16 +38,16 @@ public:
 		FROM_TRANSITION
 	} currentStep = Fade_Step::NONE;
 
-	int animationSelected;
-	int timer_in_transition = 0;
-	int timer_out_transition = 0;
-	uint win_width;
-	uint win_height;
+	int animationSelected = 0;
+	float timer_in_transition = 0;
+	float timer_out_transition = 0;
+	uint win_width = 0;
+	uint win_height = 0;
 
 	// The rectangles of the screen, used to render the animation
 
-	SDL_Texture* pokeball;
-	SDL_Texture* texture;
+	SDL_Texture* pokeball = nullptr;
+	SDL_Texture* texture = nullptr;
 };
 
 #endif // __WINDOW_H__

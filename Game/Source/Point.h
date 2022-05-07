@@ -32,7 +32,7 @@ public:
 		this->x = x;
 		this->y = y;
 
-		return(*this);
+		return *this;
 	}
 
 	// Math ------------------------------------------------
@@ -43,7 +43,7 @@ public:
 		r.x = x - v.x;
 		r.y = y - v.y;
 
-		return(r);
+		return r;
 	}
 
 	Point operator + (const Point &v) const
@@ -53,7 +53,7 @@ public:
 		r.x = x + v.x;
 		r.y = y + v.y;
 
-		return(r);
+		return r;
 	}
 
 	const Point& operator -=(const Point &v)
@@ -61,7 +61,7 @@ public:
 		x -= v.x;
 		y -= v.y;
 
-		return(*this);
+		return *this;
 	}
 
 	const Point& operator +=(const Point &v)
@@ -69,7 +69,7 @@ public:
 		x += v.x;
 		y += v.y;
 
-		return(*this);
+		return *this;
 	}
 
 	bool operator ==(const Point& v) const

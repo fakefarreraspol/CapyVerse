@@ -8,7 +8,6 @@
 
 class Module;
 class Entity;
-
 struct Collider
 {
 	enum Type

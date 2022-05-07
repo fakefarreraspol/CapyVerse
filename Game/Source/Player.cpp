@@ -157,12 +157,12 @@ void Player::UpdateInput(float dt)
 	
 	float mov = speed * dt;
 	if (inputs > 1)
-		mov *= sqrt(2) / 2;		// sine of 45
+		mov *= sqrtf(2) / 2;		// sine of 45
 
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		position.x -= mov;
+		position.x -= (int)mov;
 		if (currentAnim != &walkLeft)
 		{
 			walkLeft.Reset();

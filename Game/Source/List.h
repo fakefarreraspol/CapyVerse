@@ -124,7 +124,7 @@ public:
 		ListItem<tdata>* pNext;
 		pData = start;
 
-		while(pData != NULL)
+		while(pData)
 		{
 			pNext = pData->next;
 			RELEASE(pData);
@@ -143,7 +143,7 @@ public:
 		pos = 0;
 		pItem = start;
 
-		while(pItem != NULL)
+		while(pItem)
 		{
 			if(pos == index)
 			{
@@ -165,7 +165,7 @@ public:
 		pos = 0;
 		pItem = start;
 
-		while(pItem != NULL)
+		while(pItem)
 		{
 			if(pos == index)
 			{
@@ -185,7 +185,7 @@ public:
 	{
 		ListItem<tdata>* pItem = other_list.start;
 
-		while(pItem != NULL)
+		while(pItem)
 		{
 			Add(pItem->data);
 			pItem = pItem->next;
@@ -199,7 +199,7 @@ public:
 		long pos = 0;
 		ListItem<tdata>* pItem = start;
 
-		while(pItem != NULL)
+		while(pItem)
 		{
 			if(pos++ == index)
 				break;
@@ -215,7 +215,7 @@ public:
 		long pos = 0;
 		ListItem<tdata>* pItem = start;
 
-		while(pItem != NULL)
+		while(pItem)
 		{
 			if(pos++ == index)
 				break;
@@ -237,7 +237,7 @@ public:
 			swapped = false;
 			ListItem<tdata>* tmp = start;
 
-			while(tmp != NULL && tmp->next != NULL)
+			while(tmp && tmp->next)
 			{
 				++ret;
 				if(tmp->data > tmp->next->data)
@@ -258,7 +258,7 @@ public:
 		ListItem<tdata>* tmp = start;
 		int index = 0;
 
-		while(tmp != NULL)
+		while(tmp)
 		{
 			if(tmp->data == data)
 				return(index);
@@ -274,20 +274,20 @@ public:
 		ListItem<tdata>* pMyList = At(position);
 		ListItem<tdata>* pOtherList = list.start;
 
-		while(pOtherList != NULL)
+		while(pOtherList)
 		{
 			ListItem<tdata>* pNewItem = new ListItem<tdata>(pOtherList->data);
 
-			pNewItem->next = (pMyList) ? pMyList->next : NULL;
+			pNewItem->next = (pMyList) ? pMyList->next : nullptr;
 
-			if(pNewItem->next != NULL)
+			if(pNewItem->next)
 				pNewItem->next->prev = pNewItem;
 			else
 				end = pNewItem;
 
 			pNewItem->prev = pMyList;
 
-			if(pNewItem->prev != NULL)
+			if(pNewItem->prev)
 				pNewItem->prev->next = pNewItem;
 			else
 				start = pNewItem;

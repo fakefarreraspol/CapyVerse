@@ -96,7 +96,7 @@ bool FadeToBlack::MFadeToBlack(Module* moduleToDisable, Module* moduleToEnable, 
 
 		this->moduleToDisable = moduleToDisable;
 		this->moduleToEnable = moduleToEnable;
-		app->transitions->SelectTransition(transitionID, 0, maxFadeFrames - 10);
+		app->transitions->SelectTransition(transitionID, 0, (float)maxFadeFrames - 10.0f);
 		ret = true;
 	}
 

@@ -104,30 +104,30 @@ public:
 	// Settings
 	bool pause = false;
 	// Modules
-	Window* win;
-	Input* input;
-	Render* render;
-	Transitions* transitions;
-	Textures* tex;
-	Audio* audio;
-	Intro* intro;
-	MainMenu* mainMenu;
-	Scene* scene;
-	EntityManager* entMan;
-	Fonts* fonts;
-	GuiManager* guiManager;
-	Map* mapManager;
-	DialogManager* dialogManager;
-	Collisions* colManager;
-	Task* taskManager;
+	Window* win = nullptr;
+	Input* input = nullptr;
+	Render* render = nullptr;
+	Transitions* transitions = nullptr;
+	Textures* tex = nullptr;
+	Audio* audio = nullptr;
+	Intro* intro = nullptr;
+	MainMenu* mainMenu = nullptr;
+	Scene* scene = nullptr;
+	EntityManager* entMan = nullptr;
+	Fonts* fonts = nullptr;
+	GuiManager* guiManager = nullptr;
+	Map* mapManager = nullptr;
+	DialogManager* dialogManager = nullptr;
+	Collisions* colManager = nullptr;
+	Task* taskManager = nullptr;
 
-	Pause* pauseMenu;
-	FadeToBlack* fadeToBlack;
-	BattleManager* battleManager;
-	BattleScene1* battleScene1;
-	BattleScene2* battleScene2;
-	BattleScene3* battleScene3;
-	EOBScene* eobScene;
+	Pause* pauseMenu = nullptr;
+	FadeToBlack* fadeToBlack = nullptr;
+	BattleManager* battleManager = nullptr;
+	BattleScene1* battleScene1 = nullptr;
+	BattleScene2* battleScene2 = nullptr;
+	BattleScene3* battleScene3 = nullptr;
+	EOBScene* eobScene = nullptr;
 
 	bool fpsCap = false;
 	float dt = 0.0f;

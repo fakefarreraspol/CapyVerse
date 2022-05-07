@@ -105,7 +105,7 @@ bool Transitions::PostUpdate()
 
 }
 
-void Transitions::SelectTransition(int id, int timer1, int timer2)
+void Transitions::SelectTransition(int id, float timer1, float timer2)
 {
 	if (currentStep == Fade_Step::NONE)
 	{
@@ -238,6 +238,6 @@ void Transitions::DrawTransition4()
 	Rect1.w = win_width;
 	Rect1.h = win_height;
 
-	if (currentStep == Fade_Step::TRANSTITION) app->render->DrawRectangle(Rect1, timer_in_transition / 10, 0, 0, 255);
-	if (currentStep == Fade_Step::FROM_TRANSITION) app->render->DrawRectangle(Rect1, timer_out_transition / 10, 0, 0, 255);
+	if (currentStep == Fade_Step::TRANSTITION) app->render->DrawRectangle(Rect1, (Uint8)timer_in_transition / 10, 0, 0, 255);
+	if (currentStep == Fade_Step::FROM_TRANSITION) app->render->DrawRectangle(Rect1, (Uint8)timer_out_transition / 10, 0, 0, 255);
 }

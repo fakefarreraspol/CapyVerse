@@ -51,23 +51,23 @@ private:
 
 	List<GuiControl*> currentControls;
 
-	GuiButton* optionsBtn;
-	GuiButton* volumeBtn;
-	GuiSlider* musicSldr;
-	GuiSlider* soundSlrd;
-	GuiCheckBox* fullscreenChkbx;
-	GuiCheckBox* vsyncChkbx;
-	GuiButton* returnOPBtn;
+	GuiButton* optionsBtn = nullptr;
+	GuiButton* volumeBtn = nullptr;
+	GuiSlider* musicSldr = nullptr;
+	GuiSlider* soundSlrd = nullptr;
+	GuiCheckBox* fullscreenChkbx = nullptr;
+	GuiCheckBox* vsyncChkbx = nullptr;
+	GuiButton* returnOPBtn = nullptr;
 
 
-	GuiButton* exitBtn;
-	GuiButton* yesBtn;
-	GuiButton* noBtn;
-	GuiText* exitText;
+	GuiButton* exitBtn = nullptr;
+	GuiButton* yesBtn = nullptr;
+	GuiButton* noBtn = nullptr;
+	GuiText* exitText = nullptr;
 
 	ListItem<GuiControl*>* currentControl;
 
-	GuiText* pauseText;
+	GuiText* pauseText = nullptr;
 
 	SDL_Texture* arrow = nullptr;
 

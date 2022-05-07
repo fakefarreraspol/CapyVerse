@@ -137,7 +137,7 @@ bool Scene::CleanUp()
 
 	app->guiManager->Disable();
 	app->pauseMenu->Disable();
-	for (int i = 0; i < NPCs.Count(); i++)
+	for (uint16_t i = 0; i < NPCs.Count(); i++)
 	{
 		NPCs.At(i)->data->Disable();
 	}
