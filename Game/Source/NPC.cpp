@@ -22,9 +22,13 @@ NPC::~NPC()
 
 bool NPC::Start()
 {
-	collider = app->colManager->CreateRectangleSensor(position.x, position.y, 128, 128, bodyType::DYNAMIC);
+	collider = app->colManager->CreateRectangle(position.x, position.y, 32, 32, bodyType::STATIC);
 	collider->listener = (Module*)app->entMan;
 	collider->eListener = this;
+
+	trigger = app->colManager->CreateRectangleSensor(position.x, position.y, 128, 128, bodyType::STATIC);
+	trigger->listener = (Module*)app->entMan;
+	trigger->eListener = this;
 	return true;
 }
 
@@ -35,15 +39,22 @@ bool NPC::Update(float dt)
 		texture = app->tex->Load("Assets/Textures/Sprites/characters.png");
 		load = false;
 	}
-	/*if (app->input->GetKey(SDL_SCANCODE_N) == KEY_REPEAT)
-		OnCollision(nullptr,nullptr);*/
+	
+	if (dialog->Finished() && triggerCounter >= 0)
+	{
+		triggerCounter--;
+		if (triggerCounter == 0)
+		{
+			triggerCounter = 120;
+			dialog->finished = false;
+		}
+	}
+
 	return true;
 }
 
 bool NPC::Draw(Render* render)
 {
-	if (app->GetDebug())
-		render->DrawRectangle({ position.x - 32, position.y - 32,  64 , 64 }, 255, 0, 0);
 	SDL_Rect rect = { 17, 198, 66, 66 };
 	render->DrawTexture(texture, position.x - 32, position.y - 32, &rect);
 
@@ -54,7 +65,7 @@ void NPC::OnCollision(PhysBody* c1, PhysBody* c2)
 {
 	if (c2->eListener)
 	{
-		if (c2->eListener->type == EntityType::PLAYER)
+		if (c2->eListener->type == EntityType::PLAYER && !dialog->Finished())
 		{
 			app->dialogManager->SetActiveDialog(dialog);
 			app->dialogManager->characterName->SetText(this->name.GetString());

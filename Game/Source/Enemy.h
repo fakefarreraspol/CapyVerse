@@ -32,6 +32,7 @@ private:
 	List<Capybara*> battleTeam;
 	bool isCombat = false;
 	bool load = true;
+	bool triggered = false;
 };
 
 

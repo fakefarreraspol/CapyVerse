@@ -8,6 +8,10 @@
 #include "Window.h"
 #include "Textures.h"
 #include "Map.h"
+#include "FadeToBlack.h"
+
+ 
+
 
 Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType::PLAYER, id, name, position)
 {
@@ -67,49 +71,43 @@ bool Player::Update(float dt)
 		load = false;
 	}
 
-	if (canMove == true)
+	if (canMove)
 		UpdateInput(dt);
+	else
+		collider->body->SetLinearVelocity({ 0.0f, 0.0f });
+
 
 	if (app->GetDebug())
-		speed = 0.2f;
+		velocity = 4.0f;
 	else
-		speed = 0.1f;
+		velocity = 2.0f;
 
 	return ret;
 }
 
 void Player::UpdateCamera()
 {
-
 	uint w, h;
 	app->win->GetWindowSize(w, h);
 	app->render->camera.x = w / 2 - position.x;
 	app->render->camera.y = h / 2 - position.y;
-	
+	//Setting the camera borders	
 	uint32_t maxX = app->mapManager->maxX;
 	uint32_t minX = app->mapManager->minX;
 	uint32_t maxY = app->mapManager->maxY;
 	uint32_t minY = app->mapManager->minY;
 
-	printf("maxX:%i, maxY%i, minX%i, minY%i \n", maxX, maxY, minX, minY);
-
 	if (position.x <= minX)
-	{
 		app->render->camera.x = w / 2 - minX;
-	}
-	if (position.y >= maxY)
-	{
+
+	if (position.y >= maxY) 
 		app->render->camera.y = h / 2 - maxY;
-	}
 
 	if (position.x >= maxX)
-	{
 		app->render->camera.x = w / 2 - maxX;
-	}
+
 	if (position.y <= minY)
-	{
 		app->render->camera.y = h / 2 - minY;
-	}
 }
 
 bool Player::Draw(Render* render)
@@ -130,6 +128,7 @@ bool Player::Start()
 	collider->listener = (Module*)app->entMan;
 	collider->eListener = this;
 	collider->body->SetFixedRotation(true);
+	
 	return true;
 }
 
@@ -201,6 +200,14 @@ void Player::UpdateInput(float dt)
 			currentAnim = &idle;
 		}
 	}
+
+	if (app->GetDebug())
+	{
+		if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		{
+			app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene1, 2);
+		}
+	}
 	
 }
 
@@ -253,10 +260,9 @@ void Player::SetCombat(bool value)
 	this->isBattle = value;
 }
 
-
 void Player::OnCollision(PhysBody* c1, PhysBody* c2)
 {
-
+	printf("Collision with player\n");
 }
 
 bool Player::CleanUp()

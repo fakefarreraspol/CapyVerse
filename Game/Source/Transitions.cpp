@@ -162,10 +162,10 @@ void Transitions::DrawTransition2()
 		Rect4.w = -EaseLinearIn(timer_out_transition, win_width / 64, win_width, 30);
 	}
 
-	app->render->DrawRectangle(Rect1, 0, 0, 0, 0, true, false);
-	app->render->DrawRectangle(Rect2, 0, 0, 0, 0, true, false);
-	app->render->DrawRectangle(Rect3, 0, 0, 0, 0, true, false);
-	app->render->DrawRectangle(Rect4, 0, 0, 0, 0, true, false);
+	app->render->DrawRectangle(Rect1, 0, 0, 0, 255, true, false);
+	app->render->DrawRectangle(Rect2, 0, 0, 0, 255, true, false);
+	app->render->DrawRectangle(Rect3, 0, 0, 0, 255, true, false);
+	app->render->DrawRectangle(Rect4, 0, 0, 0, 255, true, false);
 
 
 }

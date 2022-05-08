@@ -21,6 +21,7 @@ private:
 	GuiText* text = nullptr;
 	SString characterName;
 
+public:
 	// Whether the dialog has finished or not
 	bool finished;
 public:

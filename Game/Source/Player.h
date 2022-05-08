@@ -19,7 +19,6 @@ public:
 	int wallsDetected;
 	int lastKeyPressed = 0;
 	bool canMove = true;
-	float speed = 0.1f;
 	//Base functions
 	bool Update(float dt);
 	void UpdateCamera();
@@ -46,9 +45,8 @@ public:
 	PhysBody* collider = nullptr;
 
 	void SetCombat(bool value);
-
-	bool isWalking = false;
 	void OnCollision(PhysBody* c1, PhysBody* c2);
+	bool isWalking = false;
 	bool CleanUp();
 	
 	/*SDL_Rect playerWalkRight[4];*/
@@ -70,7 +68,7 @@ private:
 	List<Capybara*> team;
 	bool load = true;
 
-	float32 velocity = 2;
+	float32 velocity = 2.0f;
 };
 
 

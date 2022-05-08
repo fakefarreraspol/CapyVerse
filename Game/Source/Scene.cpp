@@ -50,7 +50,7 @@ bool Scene::Awake(pugi::xml_node& node)
 	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 4, { 464, 443 }, "Rainbowbara"));
 
 	player->Disable();
-	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 800,300 }, "Sara"));
+	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 800,400 }, "Sara"));
 	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 500,800 }, "Joe"));
 	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 900,700 }, "George"));
 

@@ -30,7 +30,7 @@ public:
 	// Called from another module
 	// Starts the fade process which has two steps, fade_out and fade_in
 	// After the first step, the modules should be switched
-	bool MFadeToBlack(Module* toDisable, Module* toEnable, float frames = 60, uint16_t transitionID = 1);
+	bool MFadeToBlack(Module* toDisable, Module* toEnable, uint16_t transitionID = 1, float frames = 60);
 
 private:
 

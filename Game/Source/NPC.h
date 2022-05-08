@@ -24,7 +24,9 @@ public:
 
 	bool CleanUp();
 public:
+	uint16_t triggerCounter = 120;
 
+	PhysBody* trigger = nullptr;
 	PhysBody* collider = nullptr;
 	Dialog* dialog;
 	bool load = true;

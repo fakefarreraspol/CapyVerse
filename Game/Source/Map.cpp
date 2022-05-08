@@ -248,6 +248,7 @@ bool Map::LoadColliders()
 				}
 			}
 		}
+		//Camera bounds relative to the player
 		if (mapLayerItem->data->properties.GetProperty("MaxX") != 0) maxX = mapLayerItem->data->properties.GetProperty("MaxX");
 		if (mapLayerItem->data->properties.GetProperty("MinX") != 0) minX = mapLayerItem->data->properties.GetProperty("MinX");
 		if (mapLayerItem->data->properties.GetProperty("MaxY") != 0) maxY = mapLayerItem->data->properties.GetProperty("MaxY");

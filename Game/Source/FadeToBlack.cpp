@@ -83,7 +83,7 @@ bool FadeToBlack::PostUpdate()
 	return true;
 }
 
-bool FadeToBlack::MFadeToBlack(Module* moduleToDisable, Module* moduleToEnable, float frames, uint16_t transitionID)
+bool FadeToBlack::MFadeToBlack(Module* moduleToDisable, Module* moduleToEnable, uint16_t transitionID, float frames)
 {
 	bool ret = false;
 

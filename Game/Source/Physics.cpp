@@ -53,7 +53,7 @@ bool Physics::PreUpdate()
 		{
 			PhysBody* pb1 = (PhysBody*)c->GetFixtureA()->GetBody()->GetUserData();
 			PhysBody* pb2 = (PhysBody*)c->GetFixtureB()->GetBody()->GetUserData();
-			if (pb1 && pb2 && pb1->listener && pb1->body->IsActive() && pb2->body->IsActive())
+			if (pb1 && pb2 && pb1->listener)
 				pb1->listener->OnCollision(pb1, pb2);
 		}
 	}
@@ -88,8 +88,8 @@ PhysBody* Physics::CreateRectangle(int x, int y, int width, int height, bodyType
 	PhysBody* pbody = new PhysBody();
 	pbody->body = b;
 	b->SetUserData(pbody);
-	pbody->width = width * 0.5f;
-	pbody->height = height * 0.5f;
+	pbody->width = width;
+	pbody->height = height;
 
 	return pbody;
 }
