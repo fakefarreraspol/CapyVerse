@@ -8,10 +8,10 @@
 
 #include "Capybara.h"
 
-class SDL_Texture;
+struct SDL_Texture;
 class Textures;
 class Audio;
-class Collisions;
+class PhysBody;
 class PathFinding;
 class Render;
 
@@ -45,7 +45,7 @@ public:
 	void AddEntity(Entity* entity);
 
 	bool UpdateAll(float dt, bool doLogic);
-	void OnCollision(Collider* c1, Collider* c2);
+	void OnCollision(PhysBody* c1, PhysBody* c2);
 
 	bool LoadState(pugi::xml_node& data);
 	bool SaveState(pugi::xml_node& data) const;
@@ -57,7 +57,7 @@ public:
 	Input* input;
 	Textures* tex;
 	Audio* audio;
-	Collisions* collisions;
+	PhysBody* collisions;
 	PathFinding* path;
 	Render* render;
 

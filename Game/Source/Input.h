@@ -105,13 +105,13 @@ public:
 	// Deactivates SDL device funcionallity when a gamepad has been disconnected
 	void HandleDeviceRemoval(int index);
 private:
-	bool windowEvents[WE_COUNT];
-	KeyState*	keyboard;
+	bool windowEvents[WE_COUNT] = { 0 };
+	KeyState*	keyboard = nullptr;
 	KeyState mouseButtons[NUM_MOUSE_BUTTONS];
-	int	mouseMotionX;
-	int mouseMotionY;
-	int mouseX;
-	int mouseY;
+	uint16_t mouseMotionX = 0;
+	uint16_t mouseMotionY = 0;
+	uint16_t mouseX = 0;
+	uint16_t mouseY = 0;
 };
 
 #endif // __INPUT_H__

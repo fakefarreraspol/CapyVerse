@@ -3,11 +3,13 @@ project "Capyverse"
     language "C++"
     cppdialect "C++14"
     staticruntime "on"
+    characterset ("MBCS")
 
     debugdir("$(SolutionDir)/Output")
     targetdir("$(SolutionDir)Build/$(Configuration)")
     objdir("$(SolutionDir)Build/$(Configuration)/Obj/")
     links {
+        "Box2D",
         "SDL2",
         "SDL2_ttf",
         "SDL2main",
@@ -32,9 +34,9 @@ project "Capyverse"
         "$(ProjectDir)Source/External/SDL_ttf/libx86",
         "$(ProjectDir)Source/External/SDL_image/libx86",
         "$(ProjectDir)Source/External/SDL_mixer/libx86",
-        "$(ProjectDir)Source/External/Optick/lib/_debug",
-        "$(ProjectDir)Source/External/Optick/lib/release"
     }
+
+
     files {
         "Source/*.cpp",
         "Source/*.h",
@@ -48,21 +50,24 @@ project "Capyverse"
         "$(ProjectDir)Source/External/SDL_image/include",
         "$(ProjectDir)Source/External/SDL_mixer/include",
         "$(ProjectDir)Source/External/PugiXml/src",
-        "$(ProjectDir)Source/External/Optick/include"
+        "$(ProjectDir)Source/External/Optick/include",
+        "$(ProjectDir)Source/External/Box2D/Box2D"
     }
     defines {
         "WINDOWS"
     }
 
     filter {"configurations:Debug"}
-        buildoptions "/MTd"
+        buildoptions "/MDd"
         runtime "Debug"
         symbols "on"
+        libdirs { "$(ProjectDir)Source/External/Optick/lib/debug", "$(ProjectDir)Source/External/Box2D/libx86/Debug"}
 
     filter {"configurations:Release"}
-        buildoptions "/MT"
+        buildoptions "/MD"
         runtime "Release"
         optimize "on"
+        libdirs { "$(ProjectDir)Source/External/Optick/lib/release", "$(ProjectDir)Source/External/Box2D/libx86/Release"}
 
     vpaths{
         ["Source/App"] = {"Source/App.h", "Source/App.cpp", "Source/Main.cpp"},
@@ -78,7 +83,8 @@ project "Capyverse"
                             "Source/FadeToBlack.h","Source/FadeToBlack.cpp",
                             "Source/Pause.h","Source/Pause.cpp",
                             "Source/Fonts.h","Source/Fonts.cpp",
-                            "Source/Collisions.h", "Source/Collisions.cpp"},
+                            "Source/Physics.h", "Source/Physics.cpp",
+                            "Source/Transitions.h", "Source/Transitions.cpp"},
 
         ["Source/Modules/Gameplay/Dialog"] = { "Source/Dialog.h","Source/Dialog.cpp",
                                         "Source/DialogManager.h","Source/DialogManager.cpp",
@@ -126,7 +132,7 @@ project "Capyverse"
                             "Source/PerfTimer.h", "Source/PerfTimer.cpp",
                             "Source/List.h",
                             "Source/Collider.h", "Source/Collider.cpp",
-                            "Source/Queue.h"},
+                            "Source/Queue.h", "Source/easings.h"},
 
         ["Source/UI"] = {"Source/GuiManager.h", "Source/GuiManager.cpp",
                         "Source/GuiBar.h", "Source/GuiBar.cpp",

@@ -26,7 +26,7 @@ private:
 
 	Dialog* activeDialog = nullptr;
 
-	int option;
+	uint option;
 	SDL_Rect bounds, cBounds, nBounds, tBounds, bBounds;
 	GuiControl* text;
 	GuiControl* button;

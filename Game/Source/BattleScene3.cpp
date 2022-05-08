@@ -24,7 +24,7 @@ bool BattleScene3::Awake(pugi::xml_node&)
 {
 
 
-    enemy = (Enemy*)app->entMan->CreateEntity(EntityType::ENEMY, 12, { 300, 300 }, "Enemy");
+    enemy = (Enemy*)app->entMan->CreateEntity(EntityType::ENEMY, 12, { 400, 300 }, "Enemy");
 
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 11, { 928, 305 }, "Chinabara"));
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::SUPP, 11, { 750, 443 }, "Rainbowbara"));
@@ -70,7 +70,7 @@ bool BattleScene3::PreUpdate()
 bool BattleScene3::Update(float dt)
 {
     bool ret = true;
-    srand(time(NULL));
+    srand((uint)time((time_t)0));
     randomNum = rand() % 2;
     //if (app->battleManager->GetTurn() == Turn::ENEMY)
     //{

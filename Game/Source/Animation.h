@@ -42,7 +42,7 @@ public:
 		currentFrame += speed;
 		if (currentFrame >= totalFrames)
 		{
-			currentFrame = (loop || pingpong) ? 0.0f : totalFrames - 1;
+			currentFrame = (loop || pingpong) ? 0.0f : (float)(totalFrames - 1);
 			++loopCount;
 
 			if (pingpong)
@@ -52,9 +52,9 @@ public:
 
 	const SDL_Rect& GetCurrentFrame() const
 	{
-		int actualFrame = currentFrame;
+		int actualFrame = (int)currentFrame;
 		if (pingpongDirection == -1)
-			actualFrame = totalFrames - currentFrame;
+			actualFrame = totalFrames - (int)currentFrame;
 
 		return frames[actualFrame];
 	}

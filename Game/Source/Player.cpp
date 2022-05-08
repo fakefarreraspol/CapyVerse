@@ -3,10 +3,15 @@
 #include "Input.h"
 #include "Log.h"
 #include "Player.h"
-#include "Collisions.h"
+#include "Physics.h"
 #include "Timer.h"
 #include "Window.h"
 #include "Textures.h"
+#include "Map.h"
+#include "FadeToBlack.h"
+
+ 
+
 
 Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType::PLAYER, id, name, position)
 {
@@ -57,50 +62,52 @@ bool Player::Update(float dt)
 {
 	bool ret = true;
 	
+	printf("x:%i y:%i\n", position.x, position.y);
+
 	UpdateCamera();
 	if (load)
 	{
 		texture  = app->tex->Load("Assets/Textures/Sprites/characters.png");
 		load = false;
 	}
-	
-	//app->render->DrawTexture(texture, 50, 50);
-	
-	/*if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) || (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) || (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) || (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT))
-	{
-		isWalking = true;
-	}*/
 
-	
-	
-	collider->SetPos(position.x, position.y);
-	if (canMove == true)
+	if (canMove)
 		UpdateInput(dt);
+	else
+		collider->body->SetLinearVelocity({ 0.0f, 0.0f });
+
 
 	if (app->GetDebug())
-		speed = 0.2f;
+		velocity = 4.0f;
 	else
-		speed = 0.1f;
+		velocity = 2.0f;
 
 	return ret;
 }
 
 void Player::UpdateCamera()
 {
-
 	uint w, h;
 	app->win->GetWindowSize(w, h);
 	app->render->camera.x = w / 2 - position.x;
 	app->render->camera.y = h / 2 - position.y;
-	if (w / 2 - position.x < 0)
-	{
-		app->render->camera.y = 0;
-	}
-	if (h / 2 - position.y < 0)
-	{
-		app->render->camera.x = 0;
-	}
+	//Setting the camera borders	
+	uint32_t maxX = app->mapManager->maxX;
+	uint32_t minX = app->mapManager->minX;
+	uint32_t maxY = app->mapManager->maxY;
+	uint32_t minY = app->mapManager->minY;
 
+	if (position.x <= minX)
+		app->render->camera.x = w / 2 - minX;
+
+	if (position.y >= maxY) 
+		app->render->camera.y = h / 2 - maxY;
+
+	if (position.x >= maxX)
+		app->render->camera.x = w / 2 - maxX;
+
+	if (position.y <= minY)
+		app->render->camera.y = h / 2 - minY;
 }
 
 bool Player::Draw(Render* render)
@@ -108,13 +115,8 @@ bool Player::Draw(Render* render)
 	bool ret = true;
 	if (!isBattle)
 	{
-		if(app->GetDebug())
-			render->DrawRectangle({ position.x, position.y,  64 , 64 }, 255, 255, 0);
-
 		//render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
-		app->render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
-
-		
+		app->render->DrawTexture(texture, position.x - 32, position.y - 48, &currentAnim->GetCurrentFrame());
 	}
 	currentAnim->Update();
 	return ret;
@@ -122,7 +124,11 @@ bool Player::Draw(Render* render)
 
 bool Player::Start()
 {
-	collider = app->colManager->AddCollider({ position.x, position.y, 64, 64 }, Collider::Type::PLAYER, (Module*)app->entMan, this);
+	collider = app->colManager->CreateRectangle(position.x, position.y, 32, 32, bodyType::DYNAMIC);
+	collider->listener = (Module*)app->entMan;
+	collider->eListener = this;
+	collider->body->SetFixedRotation(true);
+	
 	return true;
 }
 
@@ -141,132 +147,67 @@ void Player::UpdateInput(float dt)
 	GamePad& pad = app->input->pads[0];
 	lastPos = position;
 
-	
+	position.x = METERS_TO_PIXELS(collider->body->GetPosition().x);
+	position.y = METERS_TO_PIXELS(collider->body->GetPosition().y);
 
-	int inputs = 0;
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-		inputs++;
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-		inputs++;
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-		inputs++;
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-		inputs++;
-
-	
-	
-	float mov = speed * dt;
-	if (inputs > 1)
-		mov *= sqrt(2) / 2;		// sine of 45
-
-
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		position.x -= mov;
+		collider->body->SetLinearVelocity({ velocity, 0.0f });
 		if (currentAnim != &walkLeft)
 		{
 			walkLeft.Reset();
 			currentAnim = &walkLeft;
 		}
 	}
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		position.x += mov;
+		collider->body->SetLinearVelocity({ -velocity, 0.0f });
 		if (currentAnim != &walkRight)
 		{
 			walkRight.Reset();
 			currentAnim = &walkRight;
-
 		}
 	}
+
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
-		position.y -= mov;
+		collider->body->SetLinearVelocity({ 0.0f, -velocity });
 		if (currentAnim != &walkUp)
 		{
 			walkUp.Reset();
 			currentAnim = &walkUp;
-
 		}
 	}
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
-		position.y += mov;
+		collider->body->SetLinearVelocity({ 0.0f, velocity });
 		if (currentAnim != &walkDown)
 		{
 			walkDown.Reset();
 			currentAnim = &walkDown;
 		}
 	}
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE
-		&& app->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && pad.left_x == 0.0f || pad.left == false
-		&& pad.left_x == 0.0f || pad.right == false && pad.left_y == 0.0f || pad.down == false && pad.left_y == 0.0f || pad.up == false)
+
+	if (app->input->GetKey(SDL_SCANCODE_S) == KeyState::KEY_IDLE
+		&& app->input->GetKey(SDL_SCANCODE_W) == KeyState::KEY_IDLE
+		&& app->input->GetKey(SDL_SCANCODE_A) == KeyState::KEY_IDLE
+		&& app->input->GetKey(SDL_SCANCODE_D) == KeyState::KEY_IDLE)
 	{
-		if (currentAnim != &idle)
+		collider->body->SetLinearVelocity({ 0.0f,0.0f });
+		if (currentAnim != &idle) 
 		{
 			idle.Reset();
 			currentAnim = &idle;
 		}
 	}
 
-	//// GAMEPAD SUPPORT
-
-
-	//	// GAMEPAD SUPPORT
-
-	//	// Debug key for gamepad rumble testing purposes
-	//	if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-	//	{
-	//		app->input->ShakeController(0, 12, 0.33f);
-	//	}
-
-		// Implement gamepad support
-	
-		
-	LOG("%2.2f", pad.left_x);
-	LOG("%2.2f", pad.left_y);
-	if (pad.left_x < 0.0f || pad.left == true)
+	if (app->GetDebug())
 	{
-		position.x -= speed * dt * -pad.left_x;
-		if (currentAnim != &walkLeft)
+		if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		{
-			walkLeft.Reset();
-			currentAnim = &walkLeft;
-
+			app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene1, 2);
 		}
 	}
-	if (pad.left_x > 0.0f || pad.right == true)
-	{
-		position.x += speed * dt * pad.left_x;
-		if (currentAnim != &walkRight)
-		{
-			walkRight.Reset();
-			currentAnim = &walkRight;
-
-		}
-	}
-	if (pad.left_y > 0.0f || pad.down == true)
-	{
-		position.y += speed * dt * pad.left_y;
-		if (currentAnim != &walkDown)
-		{
-			walkDown.Reset();
-			currentAnim = &walkDown;
-		}
-	}
-
-	if (pad.left_y < 0.0f || pad.up == true)
-	{
-		position.y -= speed * dt * -pad.left_y;
-		if (currentAnim != &walkUp)
-		{
-			walkUp.Reset();
-			currentAnim = &walkUp;
-
-		}
-	}
-		
-	
 	
 }
 
@@ -319,79 +260,9 @@ void Player::SetCombat(bool value)
 	this->isBattle = value;
 }
 
-
-void Player::OnCollision(Collider* c1, Collider* c2)
+void Player::OnCollision(PhysBody* c1, PhysBody* c2)
 {
-	if (!app->GetDebug() || c2->type == Collider::NPC)
-	{
-		if (c1->type == Collider::PLAYER)
-		{
-			if (c2->type == Collider::WALL|| c2->type == Collider::NPC)
-			{
-				wallsDetected++;
-
-				int difference = c1->rect.w;
-
-				if (c1->GetPos().x <= c2->GetPos().x)
-				{
-					if (difference > c1->rect.w - (c2->rect.x - c1->rect.x))
-					{
-						difference = c1->rect.w - (c2->rect.x - c1->rect.x);
-						lastKeyPressed = SDL_SCANCODE_D;
-					}
-				}
-				else
-				{
-					if (difference > c2->rect.w - (c1->rect.x - c2->rect.x))
-					{
-						difference = c2->rect.w - (c1->rect.x - c2->rect.x);
-						lastKeyPressed = SDL_SCANCODE_A;
-					}
-				}
-				if (c1->GetPos().y <= c2->GetPos().y)
-				{
-					if (difference > c1->rect.h - (c2->rect.y - c1->rect.y))
-					{
-						difference = c1->rect.h - (c2->rect.y - c1->rect.y);
-						lastKeyPressed = SDL_SCANCODE_S;
-					}
-				}
-				else
-				{
-					if (difference > c2->rect.h - (c1->rect.y - c2->rect.y))
-					{
-						difference = c2->rect.h - (c1->rect.y - c2->rect.y);
-						lastKeyPressed = SDL_SCANCODE_W;
-					}
-				}
-
-				switch (lastKeyPressed)
-				{
-				case SDL_SCANCODE_A:	position.x++;	break;
-				case SDL_SCANCODE_D:	position.x--;	break;
-				case SDL_SCANCODE_W:	position.y++;	break;
-				case SDL_SCANCODE_S:	position.y--;	break;
-				default:
-					break;
-				}
-				
-				
-
-				/*if (c1->GetPos().x <= c2->GetPos().x)
-					position.x--;
-				if (c1->GetPos().x >= c2->GetPos().x)
-					position.x++;
-				if (c1->GetPos().y <= c2->GetPos().y)
-					position.y--;
-				if (c1->GetPos().y >= c2->GetPos().y)
-					position.y++;*/
-
-
-
-			}
-			
-		}
-	}
+	printf("Collision with player\n");
 }
 
 bool Player::CleanUp()

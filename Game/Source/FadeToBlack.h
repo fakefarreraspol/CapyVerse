@@ -30,7 +30,7 @@ public:
 	// Called from another module
 	// Starts the fade process which has two steps, fade_out and fade_in
 	// After the first step, the modules should be switched
-	bool MFadeToBlack(Module* toDisable, Module* toEnable, float frames = 60);
+	bool MFadeToBlack(Module* toDisable, Module* toEnable, uint16_t transitionID = 1, float frames = 60);
 
 private:
 
@@ -47,13 +47,13 @@ private:
 	Uint32 maxFadeFrames = 0;
 
 	// The rectangle of the screen, used to render the black rectangle
-	SDL_Rect screenRect;
+	SDL_Rect screenRect = {0, 0, 0, 0};
 
 	// The modules that should be switched after the first step
 	Module* moduleToEnable = nullptr;
 	Module* moduleToDisable = nullptr;
 
-	Uint32 h, w;
+	Uint32 h = 0, w = 0;
 };
 
 #endif //__MODULEFADETOBLACK_H__

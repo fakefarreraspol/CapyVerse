@@ -3,6 +3,7 @@
 #include "App.h"
 #include "Render.h"
 #include "Window.h"
+#include "Transitions.h"
 
 #include "SDL/include/SDL_render.h"
 
@@ -71,16 +72,18 @@ bool FadeToBlack::PostUpdate()
 	// Exit this function if we are not performing a fade
 	if (currentStep == FadeStep::NONE) return true;
 
-	float fadeRatio = (float)frameCount / (float)maxFadeFrames;
 
-	// Render the black square with alpha on the screen
-	SDL_SetRenderDrawColor(app->render->renderer, 0, 0, 0, (Uint8)(fadeRatio * 255.0f));
-	SDL_RenderFillRect(app->render->renderer, &screenRect);
+	
+	//float fadeRatio = (float)frameCount / (float)maxFadeFrames;
+
+	//// Render the black square with alpha on the screen
+	//SDL_SetRenderDrawColor(app->render->renderer, 0, 0, 0, (Uint8)(fadeRatio * 255.0f));
+	//SDL_RenderFillRect(app->render->renderer, &screenRect);
 
 	return true;
 }
 
-bool FadeToBlack::MFadeToBlack(Module* moduleToDisable, Module* moduleToEnable, float frames)
+bool FadeToBlack::MFadeToBlack(Module* moduleToDisable, Module* moduleToEnable, uint16_t transitionID, float frames)
 {
 	bool ret = false;
 
@@ -93,7 +96,7 @@ bool FadeToBlack::MFadeToBlack(Module* moduleToDisable, Module* moduleToEnable, 
 
 		this->moduleToDisable = moduleToDisable;
 		this->moduleToEnable = moduleToEnable;
-
+		app->transitions->SelectTransition(transitionID, 0, (float)maxFadeFrames - 10.0f);
 		ret = true;
 	}
 

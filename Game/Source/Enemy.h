@@ -22,16 +22,17 @@ public:
 	void SetCombat(bool value);
 
 	List<Capybara*>& GetBattleTeam();
-	void OnCollision(Collider* c1, Collider* c2);
 	//Adds a capybara to the player battle team
 	void AddCapybaraToBatle(Capybara* capybara);
 
+	void OnCollision(PhysBody* c1, PhysBody* c2);
 
 	bool CleanUp();
 private:
 	List<Capybara*> battleTeam;
 	bool isCombat = false;
 	bool load = true;
+	bool triggered = false;
 };
 
 

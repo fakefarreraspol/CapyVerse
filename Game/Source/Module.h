@@ -8,7 +8,7 @@
 
 class App;
 class GuiControl;
-class Collider;
+class PhysBody;
 
 class Module
 {
@@ -66,7 +66,7 @@ public:
 	{
 		return true;
 	}
-	virtual void OnCollision(Collider* c1, Collider* c2)
+	virtual void OnCollision(PhysBody* c1, PhysBody* c2)
 	{
 		return;
 	}

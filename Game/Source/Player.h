@@ -5,7 +5,7 @@
 
 #include "Entity.h"
 #include "Capybara.h"
-#include "Collider.h"
+#include "Physics.h"
 #include "Animation.h"
 
 
@@ -19,7 +19,6 @@ public:
 	int wallsDetected;
 	int lastKeyPressed = 0;
 	bool canMove = true;
-	float speed = 0.1;
 	//Base functions
 	bool Update(float dt);
 	void UpdateCamera();
@@ -43,18 +42,17 @@ public:
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&);
 
-	Collider* collider = nullptr;
+	PhysBody* collider = nullptr;
 
 	void SetCombat(bool value);
-
+	void OnCollision(PhysBody* c1, PhysBody* c2);
 	bool isWalking = false;
-	void OnCollision(Collider* c1, Collider* c2);
 	bool CleanUp();
 	
 	/*SDL_Rect playerWalkRight[4];*/
 	
 private:
-	int money;
+	uint16_t money = 0;
 
 	bool isBattle = false;
 	bool isStuck = false;
@@ -69,6 +67,8 @@ private:
 	List<Capybara*> battleTeam;
 	List<Capybara*> team;
 	bool load = true;
+
+	float32 velocity = 2.0f;
 };
 
 

@@ -7,6 +7,7 @@
 #include "App.h"
 #include "Window.h"
 #include "Input.h"
+#include "Transitions.h"
 #include "Render.h"
 #include "Textures.h"
 #include "Audio.h"
@@ -18,7 +19,7 @@
 #include "DialogManager.h"
 #include "Pause.h"
 
-#include "Collisions.h"
+#include "Physics.h"
 #include "TaskQueue.h"
 
 #include "FadeToBlack.h"
@@ -39,12 +40,13 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	render = new Render(true);
 	tex = new Textures(true);
 	audio = new Audio(true);
+	transitions = new Transitions(true);
 	mapManager = new Map(true);
 	entMan = new EntityManager(true);
 	fonts = new Fonts(true);
 	guiManager = new GuiManager(true);
 	dialogManager = new DialogManager(true);
-	colManager = new Collisions(true);
+	colManager = new Physics(true);
 	fadeToBlack = new FadeToBlack(true);
 	intro = new Intro(true);
 	mainMenu = new MainMenu(false);
@@ -78,6 +80,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(pauseMenu);
 	AddModule(colManager);
 	AddModule(guiManager);
+	AddModule(transitions);
 	AddModule(fadeToBlack);
 	
 	// Render last to swap buffer
@@ -220,7 +223,7 @@ void App::PrepareUpdate()
 	lastSecFrameCount++;
 
 	// L08: DONE 4: Calculate the dt: differential time since last frame
-	dt = frameDuration->ReadMs();
+	dt = (float)frameDuration->ReadMs();
 	frameDuration->Start();
 
 	if (fpsCap)
@@ -254,14 +257,14 @@ void App::FinishUpdate()
 		framesPerSecond, averageFps, dt, app->render->vsync ? "on" : "off");
 
 	// L08: DONE 2: Use SDL_Delay to make sure you get your capped framerate
-	float delay = float(maxFrameRate) - frameDuration->ReadMs();
+	float delay = float(maxFrameRate) - (float)frameDuration->ReadMs();
 	//LOG("F: %f Delay:%f", frameDuration->ReadMs(), delay);
 
 	// L08: DONE 3: Measure accurately the amount of time SDL_Delay() actually waits compared to what was expected
 	if (!app->render->vsync) {
 		PerfTimer* delayt = new PerfTimer();
 		delayt->Start();
-		if (maxFrameRate > 0 && delay > 0) SDL_Delay(delay);
+		if (maxFrameRate > 0 && delay > 0) SDL_Delay((Uint32)delay);
 		//LOG("Expected %f milliseconds and the real delay is % f", delay, delayt->ReadMs());
 	}
 	if (debug)

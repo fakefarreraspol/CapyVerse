@@ -64,7 +64,7 @@ public:
 		return true;
 	}
 
-	void Entity::Enable()
+	void Enable()
 	{
 		if (!active)
 		{
@@ -73,7 +73,7 @@ public:
 		}
 	}
 
-	void Entity::Disable()
+	void Disable()
 	{
 		if (active)
 		{
@@ -82,7 +82,7 @@ public:
 		}
 	}
 
-	virtual void OnCollision(Collider* c1, Collider* c2) {
+	virtual void OnCollision(PhysBody* c1, PhysBody* c2) {
 
 	};
 

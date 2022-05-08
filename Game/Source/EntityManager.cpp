@@ -60,8 +60,8 @@ bool EntityManager::CleanUp()
 Entity* EntityManager::CreateEntity(EntityType type, uint32 id, iPoint position, const char* name)
 {
 	Entity* entity = nullptr;
-
-	id = entities.Count();
+	if(id == 0)
+		id = entities.Count();
 
 	switch (type)
 	{
@@ -248,10 +248,14 @@ bool EntityManager::Draw() {
 	return ret;
 }
 
-void EntityManager::OnCollision(Collider* c1, Collider* c2)
+void EntityManager::OnCollision(PhysBody* c1, PhysBody* c2)
 {
 
-	if (c1->entity != nullptr)
-		if (c1->entity->active == true)
-			c1->entity->OnCollision(c1, c2);
+	if (c1->eListener != nullptr)
+		if (c1->eListener->active == true)
+			c1->eListener->OnCollision(c1, c2);
+
+	if (c2->eListener != nullptr)
+		if (c2->eListener->active == true)
+			c2->eListener->OnCollision(c2, c1);
 }

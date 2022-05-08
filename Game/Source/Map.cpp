@@ -5,7 +5,7 @@
 #include "Player.h"
 #include "Defs.h"
 #include "Log.h"
-#include "Collisions.h"
+#include "Physics.h"
 #include "EntityManager.h"
 
 #include "Window.h"
@@ -237,18 +237,22 @@ bool Map::LoadColliders()
 
 						SDL_Rect r = tileset->GetTileRect(gid);
 						iPoint pos = MapToWorld(x, y);
-						Collider* col = app->colManager->AddCollider({ pos.x, pos.y, r.w, r.h }, Collider::WALL, this);
+						pos.x += r.w / 2;
+						pos.y += r.h / 2;
+						PhysBody* col = new PhysBody();
+						col->listener = this;
+						col = app->colManager->CreateRectangle(pos.x, pos.y, r.w, r.h, STATIC);
 						cols.Add(col);
-
 					}
 
 				}
 			}
 		}
-		if (mapLayerItem->data->properties.GetProperty("BoundX") != 0)
-			bounds.x = mapLayerItem->data->properties.GetProperty("BoundX");
-		if (mapLayerItem->data->properties.GetProperty("BoundY") != 0)
-			bounds.y = mapLayerItem->data->properties.GetProperty("BoundY");
+		//Camera bounds relative to the player
+		if (mapLayerItem->data->properties.GetProperty("MaxX") != 0) maxX = mapLayerItem->data->properties.GetProperty("MaxX");
+		if (mapLayerItem->data->properties.GetProperty("MinX") != 0) minX = mapLayerItem->data->properties.GetProperty("MinX");
+		if (mapLayerItem->data->properties.GetProperty("MaxY") != 0) maxY = mapLayerItem->data->properties.GetProperty("MaxY");
+		if (mapLayerItem->data->properties.GetProperty("MinY") != 0) minY = mapLayerItem->data->properties.GetProperty("MinY");
 		mapLayerItem = mapLayerItem->next;
 	}
 
@@ -580,11 +584,11 @@ bool Map::Load(const char* filename)
 bool Map::Unload()
 {
 	bool ret = true;
-	ListItem<Collider*>* c = cols.start;
+	ListItem<PhysBody*>* c = cols.start;
 
 	while (c != NULL)
 	{
-		app->colManager->RemoveCollider(c->data);
+		app->colManager->world->DestroyBody(c->data->body);
 
 		c = c->next;
 	}

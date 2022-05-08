@@ -3,8 +3,7 @@
 #include "App.h"
 #include "Capybara.h"
 #include "DialogManager.h"
-#include "Collisions.h"
-#include "Collider.h"
+#include "Physics.h"
 #include "FadeToBlack.h"
 #include "Textures.h"
 
@@ -19,7 +18,13 @@ Enemy::~Enemy()
 
 bool Enemy::Start()
 {
-	collider = app->colManager->AddCollider({ position.x - 32, position.y - 32, 128, 128 }, Collider::Type::ENEMY, (Module*)app->entMan, this);
+	collider = app->colManager->CreateRectangle(position.x, position.y, 32, 32, bodyType::STATIC);
+	collider->listener = (Module*)app->entMan;
+	collider->eListener = this;
+
+	trigger = app->colManager->CreateRectangleSensor(position.x, position.y, 128, 128, bodyType::STATIC);
+	trigger->listener = (Module*)app->entMan;
+	trigger->eListener = this;
 	return true;
 }
 
@@ -39,10 +44,8 @@ bool Enemy::Draw(Render* render)
 	bool ret = true;
 	if (!isCombat)
 	{
-		if (app->GetDebug())
-			render->DrawRectangle({ position.x, position.y,  64 , 64 }, 255, 0, 0);
 		SDL_Rect rect = { 17, 132, 66, 66 };
-		render->DrawTexture(texture, position.x, position.y, &rect);
+		render->DrawTexture(texture, position.x - 32, position.y - 32, &rect);
 	}
 	return ret;
 }
@@ -61,30 +64,29 @@ List<Capybara*>& Enemy::GetBattleTeam()
 	return battleTeam;
 }
 
-void Enemy::OnCollision(Collider* c1, Collider* c2)
-{
-	if (c2->type == Collider::PLAYER)
-	{
-		if (id == 10)
-		{
-			app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene1, 120);
-		}
-		if (id == 11)
-		{
-			app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene2, 120);
-		}
-		if (id == 12)
-		{
-			app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene3, 120);
-		}
-		app->colManager->RemoveCollider(collider);
-	}
-
-}
-
 void Enemy::AddCapybaraToBatle(Capybara* capybara)
 {
 	battleTeam.Add(capybara);
+}
+
+void Enemy::OnCollision(PhysBody* c1, PhysBody* c2)
+{
+	if (c2->eListener)
+	{
+		if (c2->eListener->type == EntityType::PLAYER && !triggered)
+		{
+			triggered = true;
+
+			if (this->id == 10)
+				app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene1, 2);
+			if (this->id == 11)
+				app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene2, 2);
+			if (this->id == 12)
+				app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene3, 2);
+
+		
+		}
+	}
 }
 
 bool Enemy::CleanUp()

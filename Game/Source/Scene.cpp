@@ -13,7 +13,6 @@
 #include "Fonts.h"
 #include "Map.h"
 
-#include "Collisions.h"
 #include "GuiManager.h"
 #include "GuiButton.h"
 #include "GuiSlider.h"
@@ -44,14 +43,14 @@ bool Scene::Awake(pugi::xml_node& node)
 	LOG("Loading Scene");
 	bool ret = true;
 	
-	player = (Player*)app->entMan->CreateEntity(EntityType::PLAYER, 1, { 640, 400 }, "Player");
+	player = (Player*)app->entMan->CreateEntity(EntityType::PLAYER, 1, { 650, 1440 }, "Player");
 
 	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 2, { 291, 297 }, "Chinabara"));
 	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 3, { 101, 435 }, "Punkibara"));
 	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 4, { 464, 443 }, "Rainbowbara"));
 
 	player->Disable();
-	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 800,300 }, "Sara"));
+	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 800,400 }, "Sara"));
 	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 500,800 }, "Joe"));
 	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 900,700 }, "George"));
 
@@ -125,10 +124,7 @@ bool Scene::PostUpdate()
 	return ret;
 }
 
-void Scene::OnCollision(Collider* c1, Collider* c2)
-{
-	
-}
+
 
 // Called before quitting
 bool Scene::CleanUp()
@@ -137,7 +133,7 @@ bool Scene::CleanUp()
 
 	app->guiManager->Disable();
 	app->pauseMenu->Disable();
-	for (int i = 0; i < NPCs.Count(); i++)
+	for (uint16_t i = 0; i < NPCs.Count(); i++)
 	{
 		NPCs.At(i)->data->Disable();
 	}
