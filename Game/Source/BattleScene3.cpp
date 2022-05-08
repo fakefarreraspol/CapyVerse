@@ -27,7 +27,7 @@ bool BattleScene3::Awake(pugi::xml_node&)
     enemy = (Enemy*)app->entMan->CreateEntity(EntityType::ENEMY, 12, { 300, 300 }, "Enemy");
 
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 11, { 928, 305 }, "Chinabara"));
-    enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::SUPP, 11, { 750, 443 }, "Rainbowbara"));
+    enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::SUPP, 11, { 750, 443 }, "Pinkbara"));
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::DPS, 11, { 1115, 444 }, "Punkibara"));
     for (int i = 0; i < enemy->GetBattleTeam().Count(); i++)
     {
@@ -90,7 +90,16 @@ bool BattleScene3::Update(float dt)
        
 
 
-
+        for (int i = 0; i < 3; i++)
+        {
+            if (app->battleManager->GetPlayer()->GetBattleTeam().At(i) != nullptr)
+            {
+                enemy->GetBattleTeam().At(2)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data);
+                enemy->GetBattleTeam().At(1)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data);
+                enemy->GetBattleTeam().At(0)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data);
+                break;
+            }
+        }
 
         app->battleManager->EndTurn();
     }

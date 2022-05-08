@@ -85,16 +85,96 @@ bool BattleScene2::Update(float dt)
     //    app->battleManager->EndTurn();
     //}
 
-
+    
     //enemy Turn
     if (app->battleManager->GetTurn() == Turn::ENEMY)
     {
+        for (int i = 0; i < 3; i++)
+        {
+            enemy->GetBattleTeam().At(i)->data->SetAttack(true);
+        }
+        //tank
+        if (enemy->GetBattleTeam().At(0) != nullptr)
+        {
+            
+            for (int i = 0; i < 3; i++)
+            {
+                if (app->battleManager->GetPlayer()->GetBattleTeam().At(i) != nullptr)
+                {
+                    if (app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data->GetHealth() > 0)
+                    {
+                        enemy->GetBattleTeam().At(0)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data);
+                        enemy->GetBattleTeam().At(0)->data->UseAbility(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data);
+                        break;
+                    }
+
+                }
+            }
+        }
+        
+        //supp
+        if (enemy->GetBattleTeam().At(1) != nullptr)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (enemy->GetBattleTeam().At(1)->data->GetMana() <= enemy->GetBattleTeam().At(1)->data->GetMaxMana()/2)
+                {
+                    if (enemy->GetBattleTeam().At(1)->data->UseAbility(enemy->GetBattleTeam().At(1)->data) == true)
+                    {
+                        enemy->GetBattleTeam().At(1)->data->SetAttack(false);
+                    }
+                    
+                }
+
+            }
+            if (enemy->GetBattleTeam().At(1)->data->CanAttack())
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    if (app->battleManager->GetPlayer()->GetBattleTeam().At(j) != nullptr)
+                    {
+                        if (app->battleManager->GetPlayer()->GetBattleTeam().At(j)->data->GetHealth() > 0)
+                        {
+                            enemy->GetBattleTeam().At(1)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(j)->data);
+                            break;
+                        }
+
+                    }
+                }
+            }
+        }
         
 
 
-
-
-       
+        //damage
+        if (enemy->GetBattleTeam().At(2) != nullptr)
+        {
+            if (enemy->GetBattleTeam().At(2)->data->UseAbility(enemy->GetBattleTeam().At(2)->data) == false)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    if (app->battleManager->GetPlayer()->GetBattleTeam().At(i) != nullptr)
+                    {
+                        if (app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data->GetHealth() > 0)
+                        {
+                            enemy->GetBattleTeam().At(2)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data);
+                            break;
+                        }
+                        
+                    }
+                }
+            }
+        }
+        /*for (int i = 0; i < 3; i++)
+        {
+            if (app->battleManager->GetPlayer()->GetBattleTeam().At(i) != nullptr)
+            {
+                enemy->GetBattleTeam().At(2)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data);
+                enemy->GetBattleTeam().At(1)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data);
+                enemy->GetBattleTeam().At(0)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data);
+                break;
+            }
+        }*/
 
         app->battleManager->EndTurn();
     }

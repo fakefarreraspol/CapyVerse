@@ -86,16 +86,7 @@ bool BattleScene1::Update(float dt)
     //    }
     //    app->battleManager->EndTurn();
     //}
-    for (int i = 0; i < 3; i++)
-    {
-        if (app->battleManager->GetPlayer()->GetBattleTeam().At(i) != nullptr)
-        {
-            enemy->GetBattleTeam().At(2)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data);
-            enemy->GetBattleTeam().At(1)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data);
-            enemy->GetBattleTeam().At(0)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data);
-            break;
-        }
-    }
+    
 
     //enemy Turn
     if (app->battleManager->GetTurn() == Turn::ENEMY)
