@@ -87,10 +87,68 @@ bool BattleScene3::Update(float dt)
     //enemy Turn
     if (app->battleManager->GetTurn() == Turn::ENEMY)
     {
-       
+
+        //tank
+        if (enemy->GetBattleTeam().At(0) != nullptr)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+
+                if (app->battleManager->GetPlayer()->GetBattleTeam().At(i) != nullptr)
+                {
+                    if (enemy->GetBattleTeam().At(0)->data->UseAbility(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data) == false)
+                    {
+                        if (app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data->GetHealth() > 0)
+                        {
+                            enemy->GetBattleTeam().At(0)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data);
+                            break;
+                        }
+                    }
 
 
-        for (int i = 0; i < 3; i++)
+                }
+            }
+        }
+        //supp
+        if (enemy->GetBattleTeam().At(1) != nullptr)
+        {
+            if (enemy->GetBattleTeam().At(1)->data->UseAbility(enemy->GetBattleTeam().At(1)->data) == false)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    if (app->battleManager->GetPlayer()->GetBattleTeam().At(i) != nullptr)
+                    {
+                        if (app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data->GetHealth() > 0)
+                        {
+                            enemy->GetBattleTeam().At(1)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data);
+                            break;
+                        }
+
+                    }
+                }
+            }
+        }
+        //damage
+        if (enemy->GetBattleTeam().At(2) != nullptr)
+        {
+            if (enemy->GetBattleTeam().At(2)->data->UseAbility(enemy->GetBattleTeam().At(2)->data) == false)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    if (app->battleManager->GetPlayer()->GetBattleTeam().At(i) != nullptr)
+                    {
+                        if (app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data->GetHealth() > 0)
+                        {
+                            enemy->GetBattleTeam().At(2)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data);
+                            break;
+                        }
+
+                    }
+                }
+            }
+        }
+
+        /*for (int i = 0; i < 3; i++)
         {
             if (app->battleManager->GetPlayer()->GetBattleTeam().At(i) != nullptr)
             {
@@ -99,7 +157,7 @@ bool BattleScene3::Update(float dt)
                 enemy->GetBattleTeam().At(0)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data);
                 break;
             }
-        }
+        }*/
 
         app->battleManager->EndTurn();
     }
