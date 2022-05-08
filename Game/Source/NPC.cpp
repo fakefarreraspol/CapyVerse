@@ -43,9 +43,9 @@ bool NPC::Update(float dt)
 bool NPC::Draw(Render* render)
 {
 	if (app->GetDebug())
-		render->DrawRectangle({ position.x - 64, position.y - 64,  64 , 64 }, 255, 0, 0);
+		render->DrawRectangle({ position.x - 32, position.y - 32,  64 , 64 }, 255, 0, 0);
 	SDL_Rect rect = { 17, 198, 66, 66 };
-	render->DrawTexture(texture, position.x, position.y, &rect);
+	render->DrawTexture(texture, position.x - 32, position.y - 32, &rect);
 
 	return true;
 }

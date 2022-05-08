@@ -3,6 +3,7 @@ project "Capyverse"
     language "C++"
     cppdialect "C++14"
     staticruntime "on"
+    characterset ("MBCS")
 
     debugdir("$(SolutionDir)/Output")
     targetdir("$(SolutionDir)Build/$(Configuration)")

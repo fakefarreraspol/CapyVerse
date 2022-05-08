@@ -98,13 +98,8 @@ bool Player::Draw(Render* render)
 	bool ret = true;
 	if (!isBattle)
 	{
-		if(app->GetDebug())
-			render->DrawRectangle({ position.x, position.y,  64 , 64 }, 255, 255, 0);
-
 		//render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
-		app->render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
-
-		
+		app->render->DrawTexture(texture, position.x - 32, position.y - 48, &currentAnim->GetCurrentFrame());
 	}
 	currentAnim->Update();
 	return ret;
@@ -115,6 +110,7 @@ bool Player::Start()
 	collider = app->colManager->CreateRectangle(position.x, position.y, 32, 32, bodyType::DYNAMIC);
 	collider->listener = (Module*)app->entMan;
 	collider->eListener = this;
+	collider->body->SetFixedRotation(true);
 	return true;
 }
 
@@ -136,150 +132,54 @@ void Player::UpdateInput(float dt)
 	position.x = METERS_TO_PIXELS(collider->body->GetPosition().x);
 	position.y = METERS_TO_PIXELS(collider->body->GetPosition().y);
 
-
-	int inputs = 0;
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-		inputs++;
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-		inputs++;
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-		inputs++;
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-		inputs++;
-
-	
-	
-	float mov = speed * dt;
-	if (inputs > 1)
-		mov *= sqrtf(2) / 2;		// sine of 45
-
-
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		position.x -= (int)mov;
+		collider->body->SetLinearVelocity({ velocity, 0.0f });
 		if (currentAnim != &walkLeft)
 		{
 			walkLeft.Reset();
 			currentAnim = &walkLeft;
 		}
 	}
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		position.x += mov;
+		collider->body->SetLinearVelocity({ -velocity, 0.0f });
 		if (currentAnim != &walkRight)
 		{
 			walkRight.Reset();
 			currentAnim = &walkRight;
-
 		}
 	}
+
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
-		position.y -= mov;
+		collider->body->SetLinearVelocity({ 0.0f, -velocity });
 		if (currentAnim != &walkUp)
 		{
 			walkUp.Reset();
 			currentAnim = &walkUp;
-
 		}
 	}
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
-		position.y += mov;
+		collider->body->SetLinearVelocity({ 0.0f, velocity });
 		if (currentAnim != &walkDown)
 		{
 			walkDown.Reset();
 			currentAnim = &walkDown;
 		}
 	}
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE
-		&& app->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && pad.left_x == 0.0f || pad.left == false
-		&& pad.left_x == 0.0f || pad.right == false && pad.left_y == 0.0f || pad.down == false && pad.left_y == 0.0f || pad.up == false)
+
+	if (app->input->GetKey(SDL_SCANCODE_S) == KeyState::KEY_IDLE
+		&& app->input->GetKey(SDL_SCANCODE_W) == KeyState::KEY_IDLE
+		&& app->input->GetKey(SDL_SCANCODE_A) == KeyState::KEY_IDLE
+		&& app->input->GetKey(SDL_SCANCODE_D) == KeyState::KEY_IDLE)
 	{
-		if (currentAnim != &idle)
+		collider->body->SetLinearVelocity({ 0.0f,0.0f });
+		if (currentAnim != &idle) 
 		{
 			idle.Reset();
 			currentAnim = &idle;
-		}
-	}
-
-	//// GAMEPAD SUPPORT
-
-
-	//	// GAMEPAD SUPPORT
-
-	//	// Debug key for gamepad rumble testing purposes
-	//	if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-	//	{
-	//		app->input->ShakeController(0, 12, 0.33f);
-	//	}
-
-		// Implement gamepad support
-	
-		
-	LOG("%2.2f", pad.left_x);
-	LOG("%2.2f", pad.left_y);
-	if (pad.left_x < 0.0f || pad.left == true)
-	{
-		position.x -= speed * dt * -pad.left_x;
-		if (currentAnim != &walkLeft)
-		{
-			walkLeft.Reset();
-			currentAnim = &walkLeft;
-
-		}
-	}
-	if (pad.left_x > 0.0f || pad.right == true)
-	{
-		position.x += speed * dt * pad.left_x;
-		if (currentAnim != &walkRight)
-		{
-			walkRight.Reset();
-			currentAnim = &walkRight;
-
-		}
-	}
-	if (pad.left_y > 0.0f || pad.down == true)
-	{
-		position.y += speed * dt * pad.left_y;
-		if (currentAnim != &walkDown)
-		{
-			walkDown.Reset();
-			currentAnim = &walkDown;
-		}
-	}
-
-	if (pad.left_y < 0.0f || pad.up == true)
-	{
-		position.y -= speed * dt * -pad.left_y;
-		if (currentAnim != &walkUp)
-		{
-			walkUp.Reset();
-			currentAnim = &walkUp;
-
-		}
-	}
-		
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-	{
-		b2Vec2 vel = collider->body->GetLinearVelocity();
-		vel.x = 5;
-		collider->body->SetLinearVelocity(vel);
-		if (currentAnim != &walkLeft)
-		{
-			walkLeft.Reset();
-			currentAnim = &walkLeft;
-		}
-	}
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-	{
-		b2Vec2 vel = collider->body->GetLinearVelocity();
-		vel.x = 5;
-		collider->body->SetLinearVelocity(vel);
-		if (currentAnim != &walkRight)
-		{
-			walkRight.Reset();
-			currentAnim = &walkRight;
 		}
 	}
 	

@@ -18,7 +18,7 @@ Enemy::~Enemy()
 
 bool Enemy::Start()
 {
-	collider = app->colManager->CreateRectangleSensor(position.x - 64, position.y - 64, 128, 128, bodyType::DYNAMIC);
+	collider = app->colManager->CreateRectangleSensor(position.x, position.y, 128, 128, bodyType::DYNAMIC);
 	collider->listener = (Module*)app->entMan;
 	collider->eListener = this;
 	return true;
@@ -41,9 +41,9 @@ bool Enemy::Draw(Render* render)
 	if (!isCombat)
 	{
 		if (app->GetDebug())
-			render->DrawRectangle({ position.x, position.y,  64 , 64 }, 255, 0, 0);
+			render->DrawRectangle({ position.x - 32, position.y - 32,  64 , 64 }, 255, 0, 0);
 		SDL_Rect rect = { 17, 132, 66, 66 };
-		render->DrawTexture(texture, position.x, position.y, &rect);
+		render->DrawTexture(texture, position.x - 32, position.y - 32, &rect);
 	}
 	return ret;
 }

@@ -69,6 +69,8 @@ private:
 	List<Capybara*> battleTeam;
 	List<Capybara*> team;
 	bool load = true;
+
+	float32 velocity = 2;
 };
 
 

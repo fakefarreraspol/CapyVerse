@@ -45,7 +45,7 @@ bool Physics::Start()
 bool Physics::PreUpdate()
 {
 	bool ret = true;
-	world->Step(app->dt / 1000, 6, 2);
+	world->Step(app->dt / 1000, 8, 3);
 
 	for (b2Contact* c = world->GetContactList(); c; c = c->GetNext())
 	{
