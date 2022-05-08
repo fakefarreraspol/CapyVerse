@@ -169,7 +169,10 @@ public:
 
 	// L03: DONE 1: Add your struct for map info
 	MapData mapData;
-	iPoint bounds;
+	uint32_t maxX = 0;
+	uint32_t minX = 0;
+	uint32_t maxY = 0;
+	uint32_t minY = 0;
 
 private:
 	List<PhysBody*> cols;

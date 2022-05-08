@@ -67,6 +67,10 @@ void Enemy::AddCapybaraToBatle(Capybara* capybara)
 	battleTeam.Add(capybara);
 }
 
+void Enemy::OnCollision(PhysBody* c1, PhysBody* c2)
+{
+}
+
 bool Enemy::CleanUp()
 {
 	

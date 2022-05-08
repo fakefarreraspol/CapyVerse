@@ -52,7 +52,14 @@ bool NPC::Draw(Render* render)
 
 void NPC::OnCollision(PhysBody* c1, PhysBody* c2)
 {
-
+	if (c2->eListener)
+	{
+		if (c2->eListener->type == EntityType::PLAYER)
+		{
+			app->dialogManager->SetActiveDialog(dialog);
+			app->dialogManager->characterName->SetText(this->name.GetString());
+		}
+	}
 }
 
 bool NPC::CleanUp()

@@ -248,10 +248,10 @@ bool Map::LoadColliders()
 				}
 			}
 		}
-		if (mapLayerItem->data->properties.GetProperty("BoundX") != 0)
-			bounds.x = mapLayerItem->data->properties.GetProperty("BoundX");
-		if (mapLayerItem->data->properties.GetProperty("BoundY") != 0)
-			bounds.y = mapLayerItem->data->properties.GetProperty("BoundY");
+		if (mapLayerItem->data->properties.GetProperty("MaxX") != 0) maxX = mapLayerItem->data->properties.GetProperty("MaxX");
+		if (mapLayerItem->data->properties.GetProperty("MinX") != 0) minX = mapLayerItem->data->properties.GetProperty("MinX");
+		if (mapLayerItem->data->properties.GetProperty("MaxY") != 0) maxY = mapLayerItem->data->properties.GetProperty("MaxY");
+		if (mapLayerItem->data->properties.GetProperty("MinY") != 0) minY = mapLayerItem->data->properties.GetProperty("MinY");
 		mapLayerItem = mapLayerItem->next;
 	}
 

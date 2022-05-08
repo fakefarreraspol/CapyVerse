@@ -30034,6 +30034,10 @@
   <properties>
    <property name="Collider" type="int" value="1"/>
    <property name="Draw" type="int" value="0"/>
+   <property name="MaxX" type="int" value="1917"/>
+   <property name="MaxY" type="int" value="1424"/>
+   <property name="MinX" type="int" value="645"/>
+   <property name="MinY" type="int" value="363"/>
   </properties>
   <data>
    <tile/>

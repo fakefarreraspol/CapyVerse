@@ -7,6 +7,7 @@
 #include "Timer.h"
 #include "Window.h"
 #include "Textures.h"
+#include "Map.h"
 
 Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType::PLAYER, id, name, position)
 {
@@ -57,6 +58,8 @@ bool Player::Update(float dt)
 {
 	bool ret = true;
 	
+	printf("x:%i y:%i\n", position.x, position.y);
+
 	UpdateCamera();
 	if (load)
 	{
@@ -82,15 +85,31 @@ void Player::UpdateCamera()
 	app->win->GetWindowSize(w, h);
 	app->render->camera.x = w / 2 - position.x;
 	app->render->camera.y = h / 2 - position.y;
-	if (w / 2 - position.x < 0)
+	
+	uint32_t maxX = app->mapManager->maxX;
+	uint32_t minX = app->mapManager->minX;
+	uint32_t maxY = app->mapManager->maxY;
+	uint32_t minY = app->mapManager->minY;
+
+	printf("maxX:%i, maxY%i, minX%i, minY%i \n", maxX, maxY, minX, minY);
+
+	if (position.x <= minX)
 	{
-		app->render->camera.y = 0;
+		app->render->camera.x = w / 2 - minX;
 	}
-	if (h / 2 - position.y < 0)
+	if (position.y >= maxY)
 	{
-		app->render->camera.x = 0;
+		app->render->camera.y = h / 2 - maxY;
 	}
 
+	if (position.x >= maxX)
+	{
+		app->render->camera.x = w / 2 - maxX;
+	}
+	if (position.y <= minY)
+	{
+		app->render->camera.y = h / 2 - minY;
+	}
 }
 
 bool Player::Draw(Render* render)

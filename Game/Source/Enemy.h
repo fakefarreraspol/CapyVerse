@@ -25,6 +25,7 @@ public:
 	//Adds a capybara to the player battle team
 	void AddCapybaraToBatle(Capybara* capybara);
 
+	void OnCollision(PhysBody* c1, PhysBody* c2);
 
 	bool CleanUp();
 private:

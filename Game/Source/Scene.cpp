@@ -43,7 +43,7 @@ bool Scene::Awake(pugi::xml_node& node)
 	LOG("Loading Scene");
 	bool ret = true;
 	
-	player = (Player*)app->entMan->CreateEntity(EntityType::PLAYER, 1, { 640, 400 }, "Player");
+	player = (Player*)app->entMan->CreateEntity(EntityType::PLAYER, 1, { 650, 1440 }, "Player");
 
 	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 2, { 291, 297 }, "Chinabara"));
 	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 3, { 101, 435 }, "Punkibara"));
