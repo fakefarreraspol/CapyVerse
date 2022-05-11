@@ -100,9 +100,13 @@ protected:
 	void UpdateStats();
 	//Initialize all the stats and update them
 	void InitStats();
+
+public:
+
+	CapybaraStats capybaraStats;
+
 protected:
 	//Capybara stats
-	CapybaraStats capybaraStats;
 
 	//Health variables
 	int health;		//The current health
