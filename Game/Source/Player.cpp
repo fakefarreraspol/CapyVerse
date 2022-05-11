@@ -118,10 +118,7 @@ bool Player::Draw(Render* render)
 		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) currentAnim = &walkUp;
 		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) currentAnim = &walkDown;*/
 
-		if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE) && (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE) && (app->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE) && (app->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE))
-		{
-			currentAnim = &idle;
-		}
+		
 		//render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
 		if (isWalkingLeft == true) app->render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame(), false, 1.0f, SDL_FLIP_HORIZONTAL);
 		else app->render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame(),false, 1.0f, SDL_FLIP_NONE);
@@ -228,6 +225,8 @@ void Player::UpdateInput(float dt)
 	if (pad.left_y < 0.0f || pad.up == true)
 	{
 		position.y -= speed * dt * -pad.left_y;
+		isWalkingLeft = false;
+		currentAnim = &walkUp;
 
 	}
 
@@ -275,12 +274,60 @@ void Player::UpdateInput(float dt)
 			currentAnim = &walkLeft;
 			isWalkingLeft = true;
 		}
-		
-		
-		
+						
 	}
-	
-	
+	if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE) && (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE) && (app->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE) && (app->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE))
+	{
+		currentAnim = &idle;
+	}
+
+	if (pad.left_x < 0.0f || pad.left == true)
+	{
+		if (pad.left_y < 0.0f || pad.up == true)
+		{
+			currentAnim = &walkUp;
+			isWalkingLeft = false;
+		}
+		else if (pad.left_y > 0.0f || pad.down == true)
+		{
+			currentAnim = &walkDown;
+			isWalkingLeft = false;
+		}
+		else
+		{
+			currentAnim = &walkLeft;
+			isWalkingLeft = true;
+		}
+		
+
+	}
+	if (pad.left_x > 0.0f || pad.right == true)
+	{
+		isWalkingLeft = false;
+		if (pad.left_y < 0.0f || pad.up == true)
+			currentAnim = &walkUp;
+
+		else if (pad.left_y > 0.0f || pad.down == true) currentAnim = &walkDown;
+		else
+		{
+			currentAnim = &walkRight;
+
+		}
+
+	}
+	if (pad.left_y > 0.0f || pad.down == true)
+	{
+		isWalkingLeft = false;
+		currentAnim = &walkDown;
+
+	}
+
+	if (pad.left_y < 0.0f || pad.up == true)
+	{
+		isWalkingLeft = false;
+		currentAnim = &walkUp;
+
+	}
 	
 }
 
