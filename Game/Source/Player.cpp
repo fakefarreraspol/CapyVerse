@@ -204,8 +204,8 @@ void Player::UpdateInput(float dt)
 		// Implement gamepad support
 
 
-	LOG("%2.2f", pad.left_x);
-	LOG("%2.2f", pad.left_y);
+	LOG(" PAD X %2.2f", pad.left_x);
+	LOG("PAD Y %2.2f", pad.left_y);
 	if (pad.left_x < 0.0f || pad.left == true)
 	{
 		position.x -= speed * dt * -pad.left_x;
@@ -281,52 +281,25 @@ void Player::UpdateInput(float dt)
 		currentAnim = &idle;
 	}
 
-	if (pad.left_x < 0.0f || pad.left == true)
+	if (pad.left_x > 0.50f )
 	{
-		if (pad.left_y < 0.0f || pad.up == true)
-		{
-			currentAnim = &walkUp;
-			isWalkingLeft = false;
-		}
-		else if (pad.left_y > 0.0f || pad.down == true)
-		{
-			currentAnim = &walkDown;
-			isWalkingLeft = false;
-		}
-		else
-		{
-			currentAnim = &walkLeft;
-			isWalkingLeft = true;
-		}
-		
-
-	}
-	if (pad.left_x > 0.0f || pad.right == true)
-	{
+		currentAnim = &walkRight;
 		isWalkingLeft = false;
-		if (pad.left_y < 0.0f || pad.up == true)
-			currentAnim = &walkUp;
-
-		else if (pad.left_y > 0.0f || pad.down == true) currentAnim = &walkDown;
-		else
-		{
-			currentAnim = &walkRight;
-
-		}
-
 	}
-	if (pad.left_y > 0.0f || pad.down == true)
+	if (pad.left_x < -0.50f)
 	{
-		isWalkingLeft = false;
+		currentAnim = &walkLeft;
+		isWalkingLeft = true;
+	}
+	if (pad.left_y > 0.50f)
+	{
 		currentAnim = &walkDown;
-
-	}
-
-	if (pad.left_y < 0.0f || pad.up == true)
-	{
 		isWalkingLeft = false;
+	}
+	if (pad.left_y < -0.50f)
+	{
 		currentAnim = &walkUp;
-
+		isWalkingLeft = false;
 	}
 	
 }
