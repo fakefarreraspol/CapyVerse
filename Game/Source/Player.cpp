@@ -113,17 +113,18 @@ bool Player::Draw(Render* render)
 		if(app->GetDebug())
 			render->DrawRectangle({ position.x, position.y,  64 , 64 }, 255, 255, 0);
 		
-		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) currentAnim = &walkRight;
+		/*if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) currentAnim = &walkRight;
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) currentAnim = &walkLeft;
 		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) currentAnim = &walkUp;
-		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) currentAnim = &walkDown;
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) currentAnim = &walkDown;*/
 
 		if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE) && (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE) && (app->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE) && (app->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE))
 		{
 			currentAnim = &idle;
 		}
 		//render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
-		app->render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
+		if (isWalkingLeft == true) app->render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame(), false, 1.0f, SDL_FLIP_HORIZONTAL);
+		else app->render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame(),false, 1.0f, SDL_FLIP_NONE);
 
 		
 	}
@@ -152,7 +153,7 @@ void Player::UpdateInput(float dt)
 	GamePad& pad = app->input->pads[0];
 	lastPos = position;
 
-	
+
 
 	int inputs = 0;
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
@@ -164,8 +165,8 @@ void Player::UpdateInput(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 		inputs++;
 
-	
-	
+
+
 	float mov = speed * dt;
 	if (inputs > 1)
 		mov *= sqrt(2) / 2;		// sine of 45
@@ -174,51 +175,23 @@ void Player::UpdateInput(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		position.x -= mov;
-		if (currentAnim != &walkLeft)
-		{
-			walkLeft.Reset();
-			currentAnim = &walkLeft;
-		}
+
 	}
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		position.x += mov;
-		if (currentAnim != &walkRight)
-		{
-			walkRight.Reset();
-			currentAnim = &walkRight;
 
-		}
 	}
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		position.y -= mov;
-		if (currentAnim != &walkUp)
-		{
-			walkUp.Reset();
-			currentAnim = &walkUp;
-
-		}
 	}
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
 		position.y += mov;
-		if (currentAnim != &walkDown)
-		{
-			walkDown.Reset();
-			currentAnim = &walkDown;
-		}
+
 	}
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE
-		&& app->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && pad.left_x == 0.0f || pad.left == false
-		&& pad.left_x == 0.0f || pad.right == false && pad.left_y == 0.0f || pad.down == false && pad.left_y == 0.0f || pad.up == false)
-	{
-		if (currentAnim != &idle)
-		{
-			idle.Reset();
-			currentAnim = &idle;
-		}
-	}
+
 
 	//// GAMEPAD SUPPORT
 
@@ -232,51 +205,81 @@ void Player::UpdateInput(float dt)
 	//	}
 
 		// Implement gamepad support
-	
-		
+
+
 	LOG("%2.2f", pad.left_x);
 	LOG("%2.2f", pad.left_y);
 	if (pad.left_x < 0.0f || pad.left == true)
 	{
 		position.x -= speed * dt * -pad.left_x;
-		if (currentAnim != &walkLeft)
-		{
-			walkLeft.Reset();
-			currentAnim = &walkLeft;
 
-		}
 	}
 	if (pad.left_x > 0.0f || pad.right == true)
 	{
 		position.x += speed * dt * pad.left_x;
-		if (currentAnim != &walkRight)
-		{
-			walkRight.Reset();
-			currentAnim = &walkRight;
 
-		}
 	}
 	if (pad.left_y > 0.0f || pad.down == true)
 	{
 		position.y += speed * dt * pad.left_y;
-		if (currentAnim != &walkDown)
-		{
-			walkDown.Reset();
-			currentAnim = &walkDown;
-		}
+
 	}
 
 	if (pad.left_y < 0.0f || pad.up == true)
 	{
 		position.y -= speed * dt * -pad.left_y;
-		if (currentAnim != &walkUp)
-		{
-			walkUp.Reset();
+
+	}
+
+
+	//ANIMATIONS
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	{
+
+		isWalkingLeft = false;
+		currentAnim = &walkUp;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	{
+		currentAnim = &walkDown;
+		isWalkingLeft = false;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	{
+		isWalkingLeft = false;
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 			currentAnim = &walkUp;
 
+		else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) currentAnim = &walkDown;
+		else
+		{
+			currentAnim = &walkRight;
+			
 		}
-	}
 		
+	}
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) 
+	{
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		{
+			currentAnim = &walkUp;
+			isWalkingLeft = false;
+		}
+		else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		{
+			currentAnim = &walkDown;
+			isWalkingLeft = false;
+		}
+		else
+		{
+			currentAnim = &walkLeft;
+			isWalkingLeft = true;
+		}
+		
+		
+		
+	}
+	
 	
 	
 }

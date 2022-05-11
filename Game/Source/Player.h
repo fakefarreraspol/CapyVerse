@@ -47,7 +47,7 @@ public:
 
 	void SetCombat(bool value);
 
-	bool isWalking = false;
+	bool isWalkingLeft = false;
 	void OnCollision(Collider* c1, Collider* c2);
 	bool CleanUp();
 	
