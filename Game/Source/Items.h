@@ -36,6 +36,7 @@ public:
 
 class Revive : public Item
 {
+public:
 	Revive(uint32 id, iPoint bounds, const char name) : Item(id, bounds, name, ItemType::REVIVE) {}
 	~Revive() {}
 
@@ -46,6 +47,18 @@ class Revive : public Item
 		active = false;
 	}
 
+};
+
+class Antidote : public Item
+{
+public:
+	Antidote(uint32 id, iPoint bounds, const char name) : Item(id, bounds, name, ItemType::ANTIDOTE) {}
+	~Antidote() {}
+
+	void Use(Capybara* capy)
+	{
+		capy->SetStatus(CapybaraStatus::NONE);
+	}
 };
 
 class ElixirPotion : public Item
@@ -66,9 +79,77 @@ public:
 	}
 };
 
+class Spinach : public Item
+{
+public:
+	Spinach	(uint32 id, iPoint bounds, const char* name) : Item(id, bounds, name, ItemType::SPINACH) {}
+	~Spinach() {}
 
+	void Use(Capybara* capy)
+	{
+		capy->capybaraStats.strenght += 2;
+		beingUsed = true;
+		this->capy = capy;
+	}
+	bool Update(float dt)
+	{
+		if (beingUsed && !capy->IsOnCombat())
+		{
+			capy->capybaraStats.strenght -= 2;
+			capy = nullptr;
+			beingUsed = false;
+		}
+		return true;
+	}
+};
 
+class Orange : public Item
+{
+public:
+	Orange(uint32 id, iPoint bounds, const char* name) : Item(id, bounds, name, ItemType::ORANGE) {}
+	~Orange() {}
 
+	void Use(Capybara* capy)
+	{
+		capy->capybaraStats.intelligence += 2;
+		beingUsed = true;
+		this->capy = capy;
+	}
+	bool Update(float dt)
+	{
+		if (beingUsed && !capy->IsOnCombat())
+		{
+			capy->capybaraStats.intelligence -= 2;
+			capy = nullptr;
+			beingUsed = false;
+		}
+		return true;
+	}
+};
+
+class Spid : public Item
+{
+public:
+	Spid(uint32 id, iPoint bounds, const char* name) : Item(id, bounds, name, ItemType::SPID) {}
+	~Spid() {} 
+
+	void Use(Capybara* capy)
+	{
+		capy->capybaraStats.speed += 2;
+		beingUsed = true;
+		this->capy = capy;
+	}
+	bool Update(float dt)
+	{
+		if (beingUsed && !capy->IsOnCombat())
+		{
+			capy->capybaraStats.speed -= 2;
+			capy = nullptr;
+			beingUsed = false;
+		}
+		return true;
+	}
+};
 
 
 
