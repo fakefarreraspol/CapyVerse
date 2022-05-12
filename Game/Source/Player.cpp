@@ -221,6 +221,11 @@ List<Capybara*>& Player::GetTeam()
 	return team;
 }
 
+Inventory& Player::GetInventory()
+{
+	return inventory;
+}
+
 bool Player::LoadState(pugi::xml_node& node)
 {
 	position.x = node.child("position").attribute("x").as_float();

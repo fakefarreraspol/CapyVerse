@@ -7,7 +7,7 @@
 #include "Capybara.h"
 #include "Physics.h"
 #include "Animation.h"
-
+#include "Inventory.h"
 
 class Player : public Entity
 {
@@ -38,6 +38,7 @@ public:
 	//Getters for the teams
 	List<Capybara*>& GetBattleTeam();
 	List<Capybara*>& GetTeam();
+	Inventory& GetInventory();
 
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&);
@@ -69,6 +70,7 @@ private:
 	bool load = true;
 
 	float32 velocity = 2.0f;
+	Inventory inventory;
 };
 
 
