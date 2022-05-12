@@ -81,6 +81,7 @@ public:
 	void SetStatus(CapybaraStatus status);
 	void SetAttack(bool isAbleToAttac); //Sets the capy canAttack to true
 	bool CanAttack();
+	bool IsOnCombat() { return isCombat; }
 
 	void UpdateStatus();
 
