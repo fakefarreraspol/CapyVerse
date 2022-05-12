@@ -46,7 +46,7 @@ public:
 
 	void SetCombat(bool value);
 	void OnCollision(PhysBody* c1, PhysBody* c2);
-	bool isWalking = false;
+	bool isWalkingLeft = false;
 	bool CleanUp();
 	
 	/*SDL_Rect playerWalkRight[4];*/

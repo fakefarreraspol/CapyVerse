@@ -120,15 +120,9 @@ bool Player::Draw(Render* render)
 		if(app->GetDebug())
 			render->DrawRectangle({ position.x - 32, position.y - 32,  64 , 64 }, 255, 255, 0);
 		
-		/*if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) currentAnim = &walkRight;
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) currentAnim = &walkLeft;
-		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) currentAnim = &walkUp;
-		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) currentAnim = &walkDown;*/
-
-		
-		//render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
-		if (isWalkingLeft == true) app->render->DrawTexture(texture, position.x - 32, position.y - 32, &currentAnim->GetCurrentFrame(), false, 1.0f, SDL_FLIP_HORIZONTAL);
-		else app->render->DrawTexture(texture, position.x - 32, position.y - 32, &currentAnim->GetCurrentFrame(),false, 1.0f, SDL_FLIP_NONE);
+		SDL_RendererFlip flip = isWalkingLeft ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
+	
+		app->render->DrawTexture(texture, position.x - 32, position.y - 32, &currentAnim->GetCurrentFrame(), false, 1.0f, flip);
 
 		
 	}
@@ -166,6 +160,7 @@ void Player::UpdateInput(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
+		isWalkingLeft = true;
 		collider->body->SetLinearVelocity({ velocity, 0.0f });
 		if (currentAnim != &walkLeft)
 		{
@@ -175,6 +170,7 @@ void Player::UpdateInput(float dt)
 	}
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
+		isWalkingLeft = false;
 		collider->body->SetLinearVelocity({ -velocity, 0.0f });
 		if (currentAnim != &walkRight)
 		{
