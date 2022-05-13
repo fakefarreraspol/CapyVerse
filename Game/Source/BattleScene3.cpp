@@ -162,9 +162,9 @@ bool BattleScene3::Update(float dt)
         app->battleManager->EndTurn();
     }
 
-    if (enemy->GetBattleTeam().Count() == 0 || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+    if (enemy->GetBattleTeam().Count() == 0 || (app->GetDebug() && app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN))
     {
-        app->fadeToBlack->MFadeToBlack(this, (Module*)app->eobScene, 120);
+        app->fadeToBlack->MFadeToBlack(this, (Module*)app->eobScene, 2);
     }
     app->render->DrawTexture(background, 0, 0);
     return ret;

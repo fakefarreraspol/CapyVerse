@@ -138,6 +138,7 @@ bool Scene::CleanUp()
 		NPCs.At(i)->data->Disable();
 	}
 	app->mapManager->Disable();
-	app->colManager->Disable();
+	//app->colManager->Disable();
+	LOG("Succesfully unloaded scene");
 	return true;
 }

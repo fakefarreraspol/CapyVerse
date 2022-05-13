@@ -483,7 +483,7 @@ bool Map::CleanUp()
 		item2 = item2->next;
 	}
 	mapData.layers.Clear();
-
+	LOG("Succesfully unloaded Map");
 	return true;
 }
 

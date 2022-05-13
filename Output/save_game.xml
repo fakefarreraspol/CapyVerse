@@ -16,8 +16,8 @@
 	<BattleManager />
 	<eob_scene />
 	<entitymanager>
-		<Player id="0" isBattle="false" money="0" active="true" renderable="false">
-			<position x="496" y="360" />
+		<Player id="1" isBattle="false" money="0" active="true" renderable="false">
+			<position x="650" y="879" />
 		</Player>
 		<Chinabara id="1" level="1" health="60" xp="0" mana="21" type="0" target="2" active="true" renderable="false" id="16" level="8" health="180" xp="0" mana="63" type="0" target="2" active="true" renderable="false">
 			<position x="291" y="297" />
@@ -27,24 +27,23 @@
 			<position x="101" y="435" />
 			<position x="1115" y="444" />
 		</Punkibara>
-		<Rainbowbara id="3" level="1" health="30" xp="0" mana="35" type="2" target="1" active="true" renderable="false" id="13" level="6" health="70" xp="0" mana="91" type="2" target="1" active="true" renderable="false" id="17" level="8" health="90" xp="0" mana="119" type="2" target="1" active="true" renderable="false">
+		<Rainbowbara id="3" level="1" health="30" xp="0" mana="35" type="2" target="1" active="true" renderable="false" id="13" level="6" health="70" xp="0" mana="91" type="2" target="1" active="true" renderable="false">
 			<position x="464" y="443" />
 			<position x="750" y="443" />
-			<position x="750" y="443" />
 		</Rainbowbara>
-		<Sara id="4" active="true" renderable="false">
-			<position x="800" y="300" />
+		<Sara id="10" active="true" renderable="false">
+			<position x="800" y="400" />
 		</Sara>
-		<Joe id="5" active="true" renderable="false">
+		<Joe id="10" active="true" renderable="false">
 			<position x="500" y="800" />
 		</Joe>
-		<George id="6" active="true" renderable="false">
+		<George id="10" active="true" renderable="false">
 			<position x="900" y="700" />
 		</George>
-		<Enemy id="7" active="true" renderable="false" id="11" active="true" renderable="false" id="15" active="true" renderable="false">
-			<position x="400" y="400" />
-			<position x="450" y="350" />
-			<position x="300" y="300" />
+		<Enemy id="10" active="true" renderable="false" id="11" active="true" renderable="false" id="12" active="true" renderable="false">
+			<position x="300" y="900" />
+			<position x="600" y="350" />
+			<position x="400" y="300" />
 		</Enemy>
 		<Retrobara id="8" level="3" health="90" xp="0" mana="21" type="0" target="2" active="true" renderable="false">
 			<position x="928" y="305" />
@@ -65,14 +64,17 @@
 		</Emobara>
 		<Enemy />
 		<Chinabara />
-		<Rainbowbara />
+		<Pinkbara id="17" level="8" health="90" xp="0" mana="126" type="2" target="1" active="true" renderable="false">
+			<position x="750" y="443" />
+		</Pinkbara>
 		<Punkibara />
 	</entitymanager>
 	<pause />
-	<CollisionsManager />
+	<physics />
 	<guiManager />
+	<battle_transitions />
 	<fadetoblack />
 	<renderer>
-		<camera x="144" y="0" />
+		<camera x="-10" y="-519" />
 	</renderer>
 </game_state>

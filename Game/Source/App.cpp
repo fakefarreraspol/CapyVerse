@@ -291,6 +291,8 @@ bool App::PreUpdate()
 		}
 		if (item->data->IsEnabled())
 			ret = item->data->PreUpdate();
+		if (!ret)
+			LOG("Module %s, has exited the app, during the preupdate", item->data->name.GetString());
 	}
 
 	return ret;
@@ -314,6 +316,8 @@ bool App::DoUpdate()
 		}
 		if (item->data->IsEnabled())
 			ret = item->data->Update(dt);
+		if (!ret)
+			LOG("Module %s, has exited the app, during the update", item->data->name.GetString());
 	}
 	return ret;
 }
@@ -335,6 +339,8 @@ bool App::PostUpdate()
 		}
 		if (item->data->IsEnabled())
 			ret = item->data->PostUpdate();
+		if (!ret)
+			LOG("Module %s, has exited the app, during the post update", item->data->name.GetString());
 	}
 
 	return ret;

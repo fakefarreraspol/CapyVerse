@@ -59,6 +59,15 @@ Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType
 Player::~Player()
 {
 }
+bool Player::Start()
+{
+	collider = app->colManager->CreateRectangle(position.x, position.y, 32, 32, bodyType::DYNAMIC);
+	collider->listener = (Module*)app->entMan;
+	collider->eListener = this;
+	collider->body->SetFixedRotation(true);
+	
+	return true;
+}
 
 bool Player::Update(float dt)
 {
@@ -78,38 +87,60 @@ bool Player::Update(float dt)
 	else
 		collider->body->SetLinearVelocity({ 0.0f, 0.0f });
 
-
-	if (app->GetDebug())
-		velocity = 4.0f;
-	else
-		velocity = 2.0f;
+	if (initDebug)
+	{
+		Debug();
+		initDebug = false;
+	}
 
 	return ret;
 }
 
+void Player::Debug()
+{
+	if (!app->GetDebug())
+	{
+		velocity = 10.0f;
+		app->colManager->world->DestroyBody(collider->body);
+		collider = app->colManager->CreateRectangleSensor(position.x, position.y, 32, 32, bodyType::DYNAMIC);
+	}
+	else
+	{
+		app->colManager->world->DestroyBody(collider->body);
+		collider = app->colManager->CreateRectangle(position.x, position.y, 32, 32, bodyType::DYNAMIC);
+		collider->listener = (Module*)app->entMan;
+		collider->eListener = this;
+		collider->body->SetFixedRotation(true);
+		velocity = 2.0f;
+	}
+}
+
 void Player::UpdateCamera()
 {
-	uint w, h;
-	app->win->GetWindowSize(w, h);
-	app->render->camera.x = w / 2 - position.x;
-	app->render->camera.y = h / 2 - position.y;
-	//Setting the camera borders	
-	uint32_t maxX = app->mapManager->maxX;
-	uint32_t minX = app->mapManager->minX;
-	uint32_t maxY = app->mapManager->maxY;
-	uint32_t minY = app->mapManager->minY;
+		uint w, h;
+		app->win->GetWindowSize(w, h);
+		app->render->camera.x = w / 2 - position.x;
+		app->render->camera.y = h / 2 - position.y;
+	if (!app->GetDebug())
+	{
+		//Setting the camera borders	
+		uint32_t maxX = app->mapManager->maxX;
+		uint32_t minX = app->mapManager->minX;
+		uint32_t maxY = app->mapManager->maxY;
+		uint32_t minY = app->mapManager->minY;
 
-	if (position.x <= minX)
-		app->render->camera.x = w / 2 - minX;
+		if (position.x <= minX)
+			app->render->camera.x = w / 2 - minX;
 
-	if (position.y >= maxY) 
-		app->render->camera.y = h / 2 - maxY;
+		if (position.y >= maxY)
+			app->render->camera.y = h / 2 - maxY;
 
-	if (position.x >= maxX)
-		app->render->camera.x = w / 2 - maxX;
+		if (position.x >= maxX)
+			app->render->camera.x = w / 2 - maxX;
 
-	if (position.y <= minY)
-		app->render->camera.y = h / 2 - minY;
+		if (position.y <= minY)
+			app->render->camera.y = h / 2 - minY;
+	}
 }
 
 bool Player::Draw(Render* render)
@@ -130,15 +161,6 @@ bool Player::Draw(Render* render)
 	return ret;
 }
 
-bool Player::Start()
-{
-	collider = app->colManager->CreateRectangle(position.x, position.y, 32, 32, bodyType::DYNAMIC);
-	collider->listener = (Module*)app->entMan;
-	collider->eListener = this;
-	collider->body->SetFixedRotation(true);
-	
-	return true;
-}
 
 void Player::AddCapybara(Capybara* capybara)
 {
@@ -154,6 +176,10 @@ void Player::UpdateInput(float dt)
 {
 	GamePad& pad = app->input->pads[0];
 	lastPos = position;
+
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+		initDebug = true;
+
 
 	position.x = METERS_TO_PIXELS(collider->body->GetPosition().x);
 	position.y = METERS_TO_PIXELS(collider->body->GetPosition().y);
@@ -217,6 +243,14 @@ void Player::UpdateInput(float dt)
 		{
 			app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene1, 2);
 		}
+		if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		{
+			app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene2, 2);
+		}
+		if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		{
+			app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene3, 2);
+		}
 	}
 	
 }
@@ -277,5 +311,7 @@ void Player::OnCollision(PhysBody* c1, PhysBody* c2)
 
 bool Player::CleanUp()
 {
+
+
 	return true;
 }

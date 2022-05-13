@@ -220,14 +220,14 @@ bool Pause::PostUpdate()
 // Called before quitting
 bool Pause::CleanUp()
 {
-	LOG("Freeing scene");
+	LOG("Unloading Pause");
 	app->guiManager->Disable();
 
 	app->tex->UnLoad(arrow);
 	menuBtns.Clear();
 	optionsBtns.Clear();
 	exitBtns.Clear();
-
+	LOG("Succesfully unloaded Pause");
 
 	return true;
 }

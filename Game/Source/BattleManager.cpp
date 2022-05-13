@@ -18,7 +18,7 @@
 #include "Player.h"
 #include "Pause.h"
 #include "Fonts.h"
-
+#include "Log.h"
 #include "Audio.h"
 
 BattleManager::BattleManager(bool startEnabled) : Module(startEnabled)
@@ -42,7 +42,7 @@ bool BattleManager::Awake(pugi::xml_node&)
 bool BattleManager::Start()
 {
 	bool ret = true;
-
+	LOG("Starting battle manager");
 	app->guiManager->Enable();
 	battlewonSFX = app->audio->LoadFx("Assets/Audio/Fx/battle-won.wav");
 	app->pauseMenu->Enable();
@@ -86,6 +86,9 @@ bool BattleManager::Start()
 	selectedArrow = app->tex->Load("Assets/Menus/selectedarrow.png");
 	arrow = app->tex->Load("Assets/Menus/arrow.png");
 	capyinfo = app->tex->Load("Assets/Menus/menus.png");
+
+	if (ret) LOG("Succesfully started battle manager");
+	else LOG("Error while starting the battle manager");
 
 	return ret;
 }
@@ -425,10 +428,13 @@ bool BattleManager::CleanUp()
 	playerHeathText.Clear();
 	playerManaText.Clear();
 	
-	for (ListItem<GuiButton*>* b = currentButtons.start; b != nullptr; b = b->next)
+	/*if (menuBtns.Count() > 0)
 	{
-		menuBtns.Del(b);
-	}
+		for (ListItem<GuiButton*>* b = currentButtons.start; b != nullptr; b = b->next)
+		{
+			menuBtns.Del(b);
+		}
+	}*/
 
 	menuBtns.Clear();
 	app->tex->UnLoad(capyinfo);

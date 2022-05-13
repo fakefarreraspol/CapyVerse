@@ -21,6 +21,7 @@ public:
 	bool canMove = true;
 	//Base functions
 	bool Update(float dt);
+	void Debug();
 	void UpdateCamera();
 	bool Draw(Render* render);
 	bool Start();
@@ -69,6 +70,8 @@ private:
 	bool load = true;
 
 	float32 velocity = 2.0f;
+
+	bool initDebug = false;
 };
 
 
