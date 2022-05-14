@@ -9,7 +9,8 @@
 #include "Textures.h"
 #include "Map.h"
 #include "FadeToBlack.h"
-
+#include "Inventory.h"
+#include "StatsMenu.h"
  
 
 
@@ -24,6 +25,7 @@ Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType
 	walkRight.loop = true;
 	walkRight.speed = 0.1f;
 	
+	walkLeft.PushBack({ 66, 0, 66 * 2, 66 });
 	walkLeft.PushBack({ 66, 0, 66 * 2, 66 });
 	walkLeft.PushBack({ 66 * 2, 0, 66 * 3, 66 });
 	walkLeft.PushBack({ 66 * 3, 0, 66 * 4, 66 });
@@ -56,6 +58,7 @@ Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType
 
 Player::~Player()
 {
+	inventory->CleanUp();
 }
 
 bool Player::Update(float dt)
@@ -63,6 +66,8 @@ bool Player::Update(float dt)
 	bool ret = true;
 	
 	printf("x:%i y:%i\n", position.x, position.y);
+
+	inventory->DeleteEmpty();
 
 	UpdateCamera();
 	if (load)
@@ -128,6 +133,18 @@ bool Player::Start()
 	collider->listener = (Module*)app->entMan;
 	collider->eListener = this;
 	collider->body->SetFixedRotation(true);
+
+	inventory = new Inventory();
+
+
+	// inventory test
+	Item* uwu01 = (Item*)app->entMan->CreateEntity(ItemType::HP_POTION, 0, { 0,0 }, "HP POTION");
+	Item* uwu02 = (Item*)app->entMan->CreateEntity(ItemType::MP_POTION, 0, { 0,0 }, "MP POTION");
+	Item* uwu03 = (Item*)app->entMan->CreateEntity(ItemType::REVIVE, 0, { 0,0 }, "REVIVE");
+
+	inventory->AddItem(uwu01, 1);
+	inventory->AddItem(uwu02, 2);
+	inventory->AddItem(uwu03, 3);
 	
 	return true;
 }
@@ -208,6 +225,15 @@ void Player::UpdateInput(float dt)
 			app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene1, 2);
 		}
 	}
+
+	if (app->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
+	{
+		if (!app->statsMenu->IsEnabled())
+			app->statsMenu->Enable();
+		else
+			app->statsMenu->ActivateMenu();
+		
+	}
 	
 }
 
@@ -219,11 +245,6 @@ List<Capybara*>& Player::GetBattleTeam()
 List<Capybara*>& Player::GetTeam()
 {
 	return team;
-}
-
-Inventory& Player::GetInventory()
-{
-	return inventory;
 }
 
 bool Player::LoadState(pugi::xml_node& node)
@@ -272,5 +293,7 @@ void Player::OnCollision(PhysBody* c1, PhysBody* c2)
 
 bool Player::CleanUp()
 {
-	return true;
+	bool ret;
+	ret = true;
+	return ret;
 }

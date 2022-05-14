@@ -7,6 +7,7 @@
 
 enum ItemType
 {
+	NONE = -1,
 	HP_POTION,
 	MP_POTION,
 	REVIVE,

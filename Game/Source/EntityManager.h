@@ -7,6 +7,7 @@
 #include "List.h"
 
 #include "Capybara.h"
+#include "Item.h"
 
 struct SDL_Texture;
 class Textures;
@@ -14,6 +15,7 @@ class Audio;
 class PhysBody;
 class PathFinding;
 class Render;
+
 
 class EntityManager : public Module
 {
@@ -38,6 +40,7 @@ public:
 
 	// Additional methods
 	Entity* CreateEntity(EntityType entityType, uint32 id, iPoint position, const char* name);
+	Item* CreateEntity(ItemType itemtype, uint32 id, iPoint position, const char* name);
 	Capybara* CreateEntity(CapybaraType capybaraType, uint32 id, iPoint position, const char* name);
 
 	void DestroyEntity(Entity* entity);

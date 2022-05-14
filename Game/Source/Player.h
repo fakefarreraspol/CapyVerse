@@ -38,7 +38,6 @@ public:
 	//Getters for the teams
 	List<Capybara*>& GetBattleTeam();
 	List<Capybara*>& GetTeam();
-	Inventory& GetInventory();
 
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&);
@@ -52,6 +51,9 @@ public:
 	
 	/*SDL_Rect playerWalkRight[4];*/
 	
+public:
+	Inventory* inventory;
+
 private:
 	uint16_t money = 0;
 
@@ -70,7 +72,8 @@ private:
 	bool load = true;
 
 	float32 velocity = 2.0f;
-	Inventory inventory;
+
+
 };
 
 

@@ -2,13 +2,14 @@
 #define __ITEMS_H__
 
 #include "Item.h"
+#include "Entity.h"
 
 //CONSUMABLES
 
 class HpPotion : public Item
 {
 public:
-	HpPotion(uint32 id, iPoint bounds, const char name) :Item(id, bounds, name, ItemType::HP_POTION) {}
+	HpPotion(uint32 id, iPoint bounds, const char* name) :Item(id, bounds, name, ItemType::HP_POTION) {}
 	~HpPotion() {}
 	void Use(Capybara* capy)
 	{
@@ -21,7 +22,7 @@ public:
 class MpPotion : public Item
 {
 public:
-	MpPotion(uint32 id, iPoint bounds, const char name) : Item(id, bounds, name, ItemType::MP_POTION) {}
+	MpPotion(uint32 id, iPoint bounds, const char* name) : Item(id, bounds, name, ItemType::MP_POTION) {}
 
 	~MpPotion() {}
 
@@ -37,7 +38,7 @@ public:
 class Revive : public Item
 {
 public:
-	Revive(uint32 id, iPoint bounds, const char name) : Item(id, bounds, name, ItemType::REVIVE) {}
+	Revive(uint32 id, iPoint bounds, const char* name) : Item(id, bounds, name, ItemType::REVIVE) {}
 	~Revive() {}
 
 	void Use(Capybara* capy)
@@ -52,7 +53,7 @@ public:
 class Antidote : public Item
 {
 public:
-	Antidote(uint32 id, iPoint bounds, const char name) : Item(id, bounds, name, ItemType::ANTIDOTE) {}
+	Antidote(uint32 id, iPoint bounds, const char* name) : Item(id, bounds, name, ItemType::ANTIDOTE) {}
 	~Antidote() {}
 
 	void Use(Capybara* capy)
@@ -64,7 +65,7 @@ public:
 class ElixirPotion : public Item
 {
 public:
-	ElixirPotion(uint32 id, iPoint bounds, const char name) : Item(id, bounds, name, ItemType::ELIXIR_POTION) {}
+	ElixirPotion(uint32 id, iPoint bounds, const char* name) : Item(id, bounds, name, ItemType::ELIXIR_POTION) {}
 
 	~ElixirPotion() {}
 
@@ -158,7 +159,7 @@ public:
 class FreeRunersArmor : public Item
 {
 public:
-	FreeRunersArmor(uint32 id, iPoint bounds, const char name) : Item(id, bounds, name, ItemType::FREERUNERS_ARMOR)
+	FreeRunersArmor(uint32 id, iPoint bounds, const char* name) : Item(id, bounds, name, ItemType::FREERUNERS_ARMOR)
 	{
 
 	}
@@ -188,7 +189,7 @@ public:
 class BowSpellDrinker : public Item
 {
 public:
-	BowSpellDrinker(uint32 id, iPoint bounds, const char name) : Item(id, bounds, name, ItemType::BOW_SPELLDRINKER)
+	BowSpellDrinker(uint32 id, iPoint bounds, const char* name) : Item(id, bounds, name, ItemType::BOW_SPELLDRINKER)
 	{
 
 	}
@@ -218,7 +219,7 @@ public:
 class ArmorVulnerability : public Item
 {
 public:
-	ArmorVulnerability(uint32 id, iPoint bounds, const char name) : Item(id, bounds, name, ItemType::ARMOR_VULNERABILITY)
+	ArmorVulnerability(uint32 id, iPoint bounds, const char* name) : Item(id, bounds, name, ItemType::ARMOR_VULNERABILITY)
 	{
 
 	}
@@ -250,7 +251,7 @@ public:
 class ScholarNecklace : public Item
 {
 public:
-	ScholarNecklace(uint32 id, iPoint bounds, const char name) : Item(id, bounds, name, ItemType::SCHOLAR_NECKLACE)
+	ScholarNecklace(uint32 id, iPoint bounds, const char* name) : Item(id, bounds, name, ItemType::SCHOLAR_NECKLACE)
 	{
 
 	}
@@ -281,7 +282,7 @@ public:
 class HeavySword : public Item
 {
 public:
-	HeavySword(uint32 id, iPoint bounds, const char name) : Item(id, bounds, name, ItemType::HEAVY_SWORD)
+	HeavySword(uint32 id, iPoint bounds, const char* name) : Item(id, bounds, name, ItemType::HEAVY_SWORD)
 	{
 
 	}
@@ -313,7 +314,7 @@ public:
 class BambuArmor : public Item
 {
 public:
-	BambuArmor(uint32 id, iPoint bounds, const char name) : Item(id, bounds, name, ItemType::BAMBU_ARMOR)
+	BambuArmor(uint32 id, iPoint bounds, const char* name) : Item(id, bounds, name, ItemType::BAMBU_ARMOR)
 	{
 
 	}
@@ -347,7 +348,7 @@ public:
 class MysteryArmor : public Item
 {
 public:
-	MysteryArmor(uint32 id, iPoint bounds, const char name) : Item(id, bounds, name, ItemType::MYSTERY_ARMOR)
+	MysteryArmor(uint32 id, iPoint bounds, const char* name) : Item(id, bounds, name, ItemType::MYSTERY_ARMOR)
 	{
 
 	}
@@ -382,7 +383,7 @@ public:
 class HealthNecklace : public Item
 {
 public:
-	HealthNecklace(uint32 id, iPoint bounds, const char name) : Item(id, bounds, name, ItemType::HEALTH_NECKLACE)
+	HealthNecklace(uint32 id, iPoint bounds, const char* name) : Item(id, bounds, name, ItemType::HEALTH_NECKLACE)
 	{
 
 	}
@@ -417,7 +418,7 @@ public:
 class PowerNecklace : public Item
 {
 public:
-	PowerNecklace(uint32 id, iPoint bounds, const char name) : Item(id, bounds, name, ItemType::POWER_NECKLACE)
+	PowerNecklace(uint32 id, iPoint bounds, const char* name) : Item(id, bounds, name, ItemType::POWER_NECKLACE)
 	{
 
 	}
@@ -447,7 +448,7 @@ public:
 class LightNecklace : public Item
 {
 public:
-	LightNecklace(uint32 id, iPoint bounds, const char name) : Item(id, bounds, name, ItemType::LIGHT_NECKLACE)
+	LightNecklace(uint32 id, iPoint bounds, const char* name) : Item(id, bounds, name, ItemType::LIGHT_NECKLACE)
 	{
 
 	}

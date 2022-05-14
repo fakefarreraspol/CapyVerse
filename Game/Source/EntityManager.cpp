@@ -19,6 +19,9 @@
 #include "Chadbara.h"
 #include "Textures.h"
 #include "Pause.h"
+#include "Item.h"
+#include "Items.h"
+
 EntityManager::EntityManager(bool startEnabled) : Module(startEnabled)
 {
 	name.Create("entitymanager");
@@ -70,8 +73,6 @@ Entity* EntityManager::CreateEntity(EntityType type, uint32 id, iPoint position,
 	case EntityType::PLAYER:
 		entity = new Player(position, id, name);
 		break;
-	case EntityType::ITEM:
-		break;
 	case EntityType::EQUIPMENT:
 		break;
 	case EntityType::ENEMY:
@@ -90,6 +91,25 @@ Entity* EntityManager::CreateEntity(EntityType type, uint32 id, iPoint position,
 		AddEntity(entity);
 
 	return entity;
+}
+
+Item* EntityManager::CreateEntity(ItemType type, uint32 id, iPoint position, const char* name)
+{
+	Item* item = nullptr;
+	switch (type)
+	{
+	case HP_POTION:		item = new Item(id, position, "HP POTION", type);		break;
+	case MP_POTION:		item = new Item(id, position, "MP POTION", type);		break;
+	case REVIVE:		item = new Item(id, position, "REVIVE", type);			break;
+	}
+
+	if (!item)
+	{
+		AddEntity(item);
+		item->Start();
+	}
+		
+	return item;
 }
 
 Capybara* EntityManager::CreateEntity(CapybaraType capybaraType, uint32 id, iPoint position, const char* name)

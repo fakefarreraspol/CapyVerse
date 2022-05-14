@@ -82,6 +82,7 @@ project "Capyverse"
                             "Source/Textures.h","Source/Textures.cpp",
                             "Source/FadeToBlack.h","Source/FadeToBlack.cpp",
                             "Source/Pause.h","Source/Pause.cpp",
+                            "Source/StatsMenu.h", "Source/StatsMenu.cpp",
                             "Source/Fonts.h","Source/Fonts.cpp",
                             "Source/Physics.h", "Source/Physics.cpp",
                             "Source/Transitions.h", "Source/Transitions.cpp"},
@@ -107,8 +108,9 @@ project "Capyverse"
                                                     "Source/NPC.h", "Source/NPC.cpp",
                                                     "Source/Enemy.h", "Source/Enemy.cpp"},
 
-        ["Source/Modules/Gameplay/Entities/Items"] = {"Source/Item.h", "Source/Item.cpp",
-                                                      "Source/Items.h", "Source/Inventory.h"},
+        ["Source/Modules/Gameplay/Entities/Items"] = {"Source/Item.h", "Source/Items.h",
+                                                      "Source/Inventory.h", "Source/Inventory.cpp",
+                                                      "Source/ItemHolder.h"},
 
         ["Source/Modules/Gameplay/Scenes"] = {"Source/Intro.h", "Source/Intro.cpp",
                                               "Source/MainMenu.h", "Source/MainMenu.cpp",
