@@ -12,7 +12,7 @@
 #include "Audio.h"
 #include "EOBScene.h"
 
-
+#include "QuestManager.h"
 
 BattleScene2::BattleScene2(bool startEnabled) : Module(startEnabled)
 {
@@ -197,7 +197,6 @@ bool BattleScene2::CleanUp()
     enemy->Disable();
     app->eobScene->SetXP(90);
     app->tex->UnLoad(background);
-    app->entMan->DestroyEntity(enemy);
    
     return ret;
 }

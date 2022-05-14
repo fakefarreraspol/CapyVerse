@@ -1,6 +1,8 @@
 #include "QuestManager.h"
 #include "Log.h"
 #include "Fonts.h"
+#include "GuiManager.h"
+#include "Input.h"
 
 QuestManager::QuestManager(bool isActive) : Module(isActive)
 {
@@ -27,6 +29,7 @@ bool QuestManager::Awake(pugi::xml_node& config)
 	folder = "Assets/";
 	questFile = QUEST_FILE;
 
+
 	return ret;
 }
 
@@ -34,94 +37,121 @@ bool QuestManager::Start()
 {
 	//Load the quest file, this can be for the hole game or
 	// foreach level load quest file. 
+	missionName = (GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 1, "Mission name", { 600, 50, 10, 100 }, this);
+	description = (GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 2, "This is a description hehe", { 500, 100, 10, 100 }, this);
+	statusText = (GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 3, "Compleated", { 600, 150, 10, 100 }, this);
+
+	missionName->state = GuiControlState::DISABLED;
+	description->state = GuiControlState::DISABLED;
+	statusText->state = GuiControlState::DISABLED;
+
 	Load(questFile.GetString());
 
-
-	
 	return true;
 }
 
-
-
-void QuestManager::ActivateQuest(int questID)
+Quest* QuestManager::ActiveQuest(uint32_t questID)
 {
-	Quest* q = questList->At(questID)->data;
+	Quest* q = questList.At(questID)->data;
+	if (q->progress != QuestProgress::AVAILABLE)
+		return nullptr;
 
-	if (q != nullptr)
-		q->progress = QuestProgress::ACTIVE;
+
+	q->progress = QuestProgress::ACTIVE;
+	missionName->SetText(q->title.GetString());
+	description->SetText(q->description.GetString());
+	statusText->SetText("New quest");
+
+	updateCounter = 600;
+	return q;
 }
 
-void QuestManager::CancelQuest(int questID)
+Quest* QuestManager::CompleteQuest(uint32_t questID)
 {
-	Quest* q = questList->At(questID)->data;
+	Quest* q = questList.At(questID)->data;
+	if (q->progress == QuestProgress::COMPLETE)
+		return q;
+	q->progress = QuestProgress::COMPLETE;
 
-	if (q!=nullptr)
-		q->progress = QuestProgress::NOT_AVAILABLE;
-}
-
-void QuestManager::CompleteQuest(int questID)
-{
-	Quest* q = questList->At(questID)->data;
-
-	if (q != nullptr)
-		q->progress = QuestProgress::COMPLETE;
-}
-
-void QuestManager::FinishQuest(int questID)
-{
-	Quest* q = questList->At(questID)->data;
-
-	if (q != nullptr)
-		q->progress = QuestProgress::REWARDED;
-}
-
-void QuestManager::AddItem(int id, SString title, SString description, int objective)
-{
-	Quest* q = new Quest(id, title, description, objective);
-	questList->Add(q);
-}
-
-bool QuestManager::GetAvailableQuest(int questID)
-{
-	bool ret = false;
-	Quest* q = questList->At(questID)->data;
-
-	if (q != nullptr)
+	if (q->nextQuest != 0)
 	{
-		if (q->progress == QuestProgress::AVAILABLE)
-			ret = true;
+		ActiveQuest(q->nextQuest);
+		return q;
 	}
+
+	missionName->SetText(q->title.GetString());
+	description->SetText(q->description.GetString());
+	statusText->SetText("Quest compleated");
+	updateCounter = 400;
+	return q;
+}
+
+Quest* QuestManager::UpdateQuest(uint32_t questID)
+{
+	Quest* q = questList.At(questID)->data;
 	
-	return ret;
-}
+	q->objective--;
 
-bool QuestManager::GetActiveQuest(int questID)
-{
-	bool ret = false;
-	Quest* q = questList->At(questID)->data;
-
-	if (q != nullptr)
+	if (q->objective <= 0)
 	{
-		if (q->progress == QuestProgress::ACTIVE)
-			ret = true;
+		CompleteQuest(questID);
+		return q;
 	}
 
-	return ret;
+	missionName->SetText(q->title.GetString());
+	description->SetText(q->description.GetString());
+	SString t("Objective compleated %i/%i", q->maxObjective - q->objective, q->maxObjective);
+	statusText->SetText(t.GetString());
+	updateCounter = 300;
+	return q;
 }
 
-bool QuestManager::GetCompletedQuest(int questID)
+bool QuestManager::Update(float dt)
 {
-	bool ret = false;
-	Quest* q = questList->At(questID)->data;
-
-	if (q != nullptr)
+	if (app->GetDebug())
 	{
-		if (q->progress == QuestProgress::COMPLETE)
-			ret = true;
+		if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		{
+			ActiveQuest(0);
+		}
+		if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		{
+			ActiveQuest(2);
+		}
+		if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+		{
+			UpdateQuest(1);
+		}
+		if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
+		{
+			CompleteQuest(1);
+		}
+	}
+	if (updateCounter >= 0)
+	{
+		updateCounter -= dt / 10;
+		missionName->state = GuiControlState::NORMAL;
+		description->state = GuiControlState::NORMAL;
+		statusText->state = GuiControlState::NORMAL;
+	}
+	else
+	{
+		missionName->state = GuiControlState::DISABLED;
+		description->state = GuiControlState::DISABLED;
+		statusText->state = GuiControlState::DISABLED;
 	}
 
-	return ret;
+	return true;
 }
+
+bool QuestManager::IsCompleated(uint32_t questID)
+{
+	if (questList.At(questID)->data->progress == QuestProgress::COMPLETE)
+		return true;
+	return false;
+}
+
+
 
 bool QuestManager::Load(const char* path) 
 {
@@ -142,7 +172,7 @@ bool QuestManager::Load(const char* path)
 	else {
 
 		currentQuest = questsFile.child("quests_list").first_child();
-		ListItem<Quest*>* quest = questList->start;
+		ListItem<Quest*>* quest = questList.start;
 
 		while (currentQuest != NULL)
 		{
@@ -151,14 +181,14 @@ bool QuestManager::Load(const char* path)
 			//laod properties
 			quest->id = currentQuest.attribute("id").as_int();
 			quest->progress = (QuestProgress)currentQuest.attribute("progress").as_int();
+			quest->nextQuest = currentQuest.attribute("nextQuest").as_int();
+			quest->reward = currentQuest.attribute("reward").as_bool();
 			quest->title = currentQuest.attribute("title").as_string();
 			quest->description = currentQuest.child("description").child_value();
-			
-			//generate text textures
-			quest->titleTex = app->fonts->LoadRenderedText(quest->rTitle, app->fonts->titles,quest->title.GetString(), SDL_Color{ 32,27,46 });
-			quest->descriptionTex = app->fonts->LoadRenderedParagraph(quest->rDescription, 0, quest->description.GetString(), SDL_Color{ 32,27,46 },500);
+			quest->objective = currentQuest.attribute("objective").as_int();
+			quest->maxObjective = currentQuest.attribute("maxObjective").as_int();
 
-			questList->Add(quest);
+			questList.Add(quest);
 
 			currentQuest = currentQuest.next_sibling();
 		}
@@ -167,12 +197,32 @@ bool QuestManager::Load(const char* path)
 	return ret;
 }
 
-bool QuestManager::LoadState(pugi::xml_node&)
+bool QuestManager::LoadState(pugi::xml_node&data)
 {
+	pugi::xml_node currentQuest = data.child("quests_list").first_child();
+	ListItem<Quest*>* quest = questList.start;
+
+	while (currentQuest != NULL)
+	{
+		Quest* quest = new Quest();
+
+		//laod properties
+		quest->id = currentQuest.attribute("id").as_int();
+		quest->progress = (QuestProgress)currentQuest.attribute("progress").as_int();
+		quest->nextQuest = currentQuest.attribute("nextQuest").as_int();
+		quest->reward = currentQuest.attribute("reward").as_bool();
+		quest->title = currentQuest.attribute("title").as_string();
+		quest->description = currentQuest.child("description").child_value();
+
+		questList.Add(quest);
+
+		currentQuest = currentQuest.next_sibling();
+	}
 	return true;
 }
 
 bool QuestManager::SaveState(pugi::xml_node&) const
 {
+
 	return true;
 }

@@ -10,6 +10,7 @@
 
 #include "Player.h"
 #include "Audio.h"
+#include "QuestManager.h"
 
 EOBScene::EOBScene(bool startEnabled) : Module(startEnabled)
 {
@@ -29,8 +30,8 @@ bool EOBScene::Awake(pugi::xml_node&)
 bool EOBScene::Start()
 {
 	bool ret = true;
-
 	app->guiManager->Enable();
+	app->questManager->Enable();
 
 	player = app->battleManager->GetPlayer();
 	for (int i = 0; i < player->GetBattleTeam().Count(); i++)
@@ -46,6 +47,11 @@ bool EOBScene::Start()
 	}
 	background = app->tex->Load("Assets/Textures/Sprites/battleback.png");
 	app->audio->PlayFx(app->battleManager->battlewonSFX);
+
+	if (!app->questManager->IsCompleated(1))
+	{
+		app->questManager->UpdateQuest(1);
+	}
 	return ret;
 }
 
@@ -92,7 +98,7 @@ bool EOBScene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
 		
-		app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene, 120);
+		app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene, 2);
 	}
 	app->render->DrawTexture(background, 0, 0);
 	return ret;
@@ -113,7 +119,7 @@ bool EOBScene::CleanUp()
 {
 	bool ret = true;
 	app->guiManager->Disable();
-
+	app->questManager->Disable();
 	app->tex->UnLoad(background);
 	lvls.Clear();
 	texts.Clear();

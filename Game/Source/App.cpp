@@ -44,10 +44,10 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	transitions = new Transitions(true);
 	mapManager = new Map(true);
 	entMan = new EntityManager(true);
-	questManager = new QuestManager(true);
+	questManager = new QuestManager(false);
 	fonts = new Fonts(true);
 	guiManager = new GuiManager(true);
-	dialogManager = new DialogManager(true);
+	dialogManager = new DialogManager(false);
 	colManager = new Physics(true);
 	fadeToBlack = new FadeToBlack(true);
 	intro = new Intro(true);
@@ -67,11 +67,11 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(tex);
 	AddModule(mapManager);
-	AddModule(questManager);
 	AddModule(fonts);
 	AddModule(audio);
 	AddModule(intro);
 	AddModule(mainMenu);
+	AddModule(questManager);
 	AddModule(dialogManager);
 	AddModule(scene);
 	AddModule(battleScene1);

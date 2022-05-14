@@ -10,6 +10,7 @@
 #include "FadeToBlack.h"
 #include "Scene.h"
 #include "EOBScene.h"
+#include "QuestManager.h"
 #include "Audio.h"
 
 
@@ -106,7 +107,6 @@ bool BattleScene1::CleanUp()
     bool ret = true;
     app->battleManager->Disable();
     app->eobScene->SetXP(60);
-    app->entMan->DestroyEntity(enemy);
     enemy->SetCombat(false);
     enemy->Disable();
     app->tex->UnLoad(background);

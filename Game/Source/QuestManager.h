@@ -3,8 +3,10 @@
 #include "Quest.h"
 #include "PugiXml/src/pugixml.hpp"
 #include "App.h"
+#include "GuiText.h"
 
 #define QUEST_FILE "quests.xml"
+
 
 class QuestManager : public Module 
 {
@@ -18,32 +20,17 @@ public:
 
 public: 
 
-	List<Quest*>* questList = new List<Quest*>();
-	List<Quest*>* sideQuestList = new List<Quest*>();
+	List<Quest*> questList;
 
-	//Activate Quest
-	void ActivateQuest(int questID);
+	Quest* ActiveQuest(uint32_t questID);
 
-	//Cancel Quest
-	void CancelQuest(int questID);
+	Quest* UpdateQuest(uint32_t questID);
 
-	//Complete Quest
-	void CompleteQuest(int questID);
+	Quest* CompleteQuest(uint32_t questID);
 
-	//Finish Quest
-	void FinishQuest(int questID);
+	bool IsCompleated(uint32_t questID);
 
-	//Add item
-	void AddItem(int id, SString title, SString description, int objective);
-
-	//Get available quest 
-	bool GetAvailableQuest(int questID);
-
-	//Get active quest
-	bool GetActiveQuest(int questID);
-
-	//Get complete quest but not Done (get rewards etc)
-	bool GetCompletedQuest(int questID);
+	bool Update(float dt);
 
 	//Load quest files 
 	bool Load(const char* path);
@@ -52,6 +39,11 @@ public:
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;
 
+	GuiText* statusText;
+	GuiText* missionName;
+	GuiText* description;
+
+	int updateCounter;
 
 	SString folder;
 	SString questFile;

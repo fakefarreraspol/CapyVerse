@@ -20,12 +20,13 @@ private:
 	DialogNode* activeNode = nullptr;
 	GuiText* text = nullptr;
 	SString characterName;
-
 public:
 	// Whether the dialog has finished or not
+	uint32_t questID;
 	bool finished;
 public:
 	Dialog();
+	Dialog(uint32_t questID);
 	~Dialog();
 
 	// Add a node and return its ID

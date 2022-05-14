@@ -1,17 +1,14 @@
 <quests_list>
-	<quest title ="Intro" id="0" progress = "2"> 
-		<description>
-This is the begining of your quests manager.
-		</description>
+	<quest title ="First steps" id="0" progress = "0" reward ="true"> 
+		<description>Talk to Sara located into in the forest</description>
 	</quest>
-	<quest title ="First" id="1" progress = "0">
-		<description >
-This quest is only available after completing the tutorial.
-		</description>
+  
+	<quest title ="I must use them" id="1" progress = "0" objective ="3" maxObjective="3">
+		<description>Defeat all the enemies on the forest</description>
 	</quest>
-	<quest title ="Second" id="2" progress = "0">
-		<description >
-This quest is only available after completing the first mission.
-		</description>
+	
+  <quest title ="Second" id="2" progress = "0">
+		<description>This quest is only available after completing the first mission.</description>
 	</quest>
+
 </quests_list>

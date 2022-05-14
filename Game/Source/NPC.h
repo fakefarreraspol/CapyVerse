@@ -30,7 +30,7 @@ public:
 	PhysBody* collider = nullptr;
 	Dialog* dialog;
 	bool load = true;
-	
+	int questID;
 };
 
 #endif

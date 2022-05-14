@@ -11,6 +11,7 @@
 #include "Scene.h"
 #include "Audio.h"
 #include "EOBScene.h"
+#include "QuestManager.h"
 
 BattleScene3::BattleScene3(bool startEnabled) : Module(startEnabled)
 {
@@ -178,7 +179,6 @@ bool BattleScene3::CleanUp()
     enemy->SetCombat(false);
     enemy->Disable();
     app->eobScene->SetXP(150);
-    app->entMan->DestroyEntity(enemy);
     
     return ret;
 }
