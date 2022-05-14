@@ -3,12 +3,19 @@
 		<description>Talk to Sara located into in the forest</description>
 	</quest>
   
-	<quest title ="I must use them" id="1" progress = "0" objective ="3" maxObjective="3">
+	<quest title ="I must use them" id="1" progress = "0" objective ="3" maxObjective="3" nextQuest="2">
 		<description>Defeat all the enemies on the forest</description>
 	</quest>
-	
-  <quest title ="Second" id="2" progress = "0">
-		<description>This quest is only available after completing the first mission.</description>
+  <quest title ="AntiModerator.exe" id="2" progress = "0" objective ="3">
+		<description>Defeat the moderator of the zone 1</description>
 	</quest>
-
+  <quest title ="Anti bullying" id="3" progress = "0" objective="2">
+    <description>Make those bullies pay for it</description>
+  </quest>
+  <quest title ="Where are they?" id="4" progress = "0" objective="3">
+    <description>Find the lost capybaras and save them</description>
+  </quest>
+  <quest title ="Capygod" id="5" progress = "0">
+    <description>???</description>
+  </quest>
 </quests_list>
