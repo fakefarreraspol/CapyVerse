@@ -15,6 +15,7 @@ public:
 
 	bool Update(float dt);
 	bool Draw(Render* render);
+	bool SetText(const char* text);
 
 	int mouseX, mouseY;
 	unsigned int click;
@@ -24,6 +25,7 @@ public:
 private:
 	SDL_Texture* texture = nullptr;
 	int sfx;
+	int textID;
 };
 
 #endif // GUIBUTTON_H

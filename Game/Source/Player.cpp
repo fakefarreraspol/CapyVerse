@@ -138,9 +138,10 @@ bool Player::Start()
 
 
 	// inventory test
-	Item* uwu01 = (Item*)app->entMan->CreateEntity(ItemType::HP_POTION, 0, { 0,0 }, "HP POTION");
-	Item* uwu02 = (Item*)app->entMan->CreateEntity(ItemType::MP_POTION, 0, { 0,0 }, "MP POTION");
-	Item* uwu03 = (Item*)app->entMan->CreateEntity(ItemType::REVIVE, 0, { 0,0 }, "REVIVE");
+	Item* uwu01 = app->entMan->CreateEntity(0, { 0,0 }, "", ItemType::HP_POTION);
+	Item* uwu02 = app->entMan->CreateEntity(0, { 0,0 }, "", ItemType::MP_POTION);
+	Item* uwu03 = app->entMan->CreateEntity(0, { 0,0 }, "", ItemType::REVIVE);
+
 
 	inventory->AddItem(uwu01, 1);
 	inventory->AddItem(uwu02, 2);

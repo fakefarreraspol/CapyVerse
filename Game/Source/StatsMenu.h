@@ -32,26 +32,33 @@ public:
 
 	bool ActivateMenu();
 
+public:
+	List<GuiControl*> menuBtns;
+
 private:
 
-	List<GuiControl*> menuBtns;
 	List<GuiControl*> itemsBtns;
 	List<GuiControl*> capyBtns;
 	List<GuiControl*> teamBtns;
 
-	List<GuiControl*> currentControls;
+	List<GuiControl*> &currentControls;
 
 	int selectorOffset;
 
 	SDL_Rect menuBounds = {75,290,188,230};
-	SDL_Rect itemsBounds = {338, 200, 500, 500};
-	SDL_Rect capyBounds;
-	SDL_Rect teamBounds;
+	SDL_Rect subBounds;
+	SDL_Rect optionsBounds;
+	SDL_Rect detailsBounds;
 
 	ListItem<GuiControl*>* currentControl;
 	SDL_Texture* arrow = nullptr;
 	SDL_Texture* menus = nullptr;
 	SDL_Texture* title = nullptr;
+	SDL_Texture* entityImg = nullptr;		// 128*128
+
+	GuiControl* entityDescription;
+	
+
 
 };
 

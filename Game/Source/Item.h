@@ -5,7 +5,7 @@
 #include "Point.h"
 #include "Capybara.h"
 
-enum ItemType
+enum class ItemType
 {
 	NONE = -1,
 	HP_POTION,
@@ -35,9 +35,9 @@ public:
 
 	Item(uint32 id, iPoint bounds, const char* name, ItemType type): Entity(EntityType::ITEM,id,name,bounds)
 	{
-
+		this->type = type;
 	};
-	~Item(){}
+	~Item() {};
 
 	virtual bool Update(float dt) { return true; }
 
@@ -55,7 +55,8 @@ public:
 public:
 	ItemType type = ItemType::NONE;
 	Capybara* capy = nullptr;
-	bool beingUsed = false;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+	bool beingUsed = false;   
+	SString description;
 
 };
 

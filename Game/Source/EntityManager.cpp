@@ -93,17 +93,17 @@ Entity* EntityManager::CreateEntity(EntityType type, uint32 id, iPoint position,
 	return entity;
 }
 
-Item* EntityManager::CreateEntity(ItemType type, uint32 id, iPoint position, const char* name)
+Item* EntityManager::CreateEntity(uint32 id, iPoint bounds, const char* name, ItemType type)
 {
 	Item* item = nullptr;
 	switch (type)
 	{
-	case HP_POTION:		item = new Item(id, position, "HP POTION", type);		break;
-	case MP_POTION:		item = new Item(id, position, "MP POTION", type);		break;
-	case REVIVE:		item = new Item(id, position, "REVIVE", type);			break;
+	case ItemType::HP_POTION:		item = (Item*) new HpPotion(id, bounds, "HP POTION");		break;
+	case ItemType::MP_POTION:		item = (Item*) new MpPotion(id, bounds, "MP POTION");		break;
+	case ItemType::REVIVE:			item = (Item*) new Revive(id, bounds, "REVIVE");			break;
 	}
 
-	if (!item)
+	if (item!=nullptr)
 	{
 		AddEntity(item);
 		item->Start();

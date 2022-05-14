@@ -40,7 +40,7 @@ public:
 
 	// Additional methods
 	Entity* CreateEntity(EntityType entityType, uint32 id, iPoint position, const char* name);
-	Item* CreateEntity(ItemType itemtype, uint32 id, iPoint position, const char* name);
+	Item* CreateEntity(uint32 id, iPoint bounds, const char* name, ItemType type);
 	Capybara* CreateEntity(CapybaraType capybaraType, uint32 id, iPoint position, const char* name);
 
 	void DestroyEntity(Entity* entity);

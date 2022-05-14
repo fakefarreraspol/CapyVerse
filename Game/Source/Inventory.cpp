@@ -32,6 +32,12 @@ void Inventory::AddItem(Item* item, int n)
 {
 	ListItem<ItemHolder*>* i = slots.start;
 
+	if (i == nullptr)
+	{
+		ItemHolder* newItem = new ItemHolder(item, n);
+		slots.Add(newItem);
+	}
+
 	while (i)
 	{
 		if (i->data->item->type == item->type)

@@ -83,8 +83,6 @@ bool DialogManager::Start()
 
 bool DialogManager::Update(float dt)
 {
-	
-
 	if (activeDialog != nullptr)
 	{
 		if (activeDialog->Finished() == true)

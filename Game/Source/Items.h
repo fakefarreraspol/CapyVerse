@@ -9,7 +9,9 @@
 class HpPotion : public Item
 {
 public:
-	HpPotion(uint32 id, iPoint bounds, const char* name) :Item(id, bounds, name, ItemType::HP_POTION) {}
+	HpPotion(uint32 id, iPoint bounds, const char* name) :Item(id, bounds, name, ItemType::HP_POTION){
+		description.Create("HP potion");
+	}
 	~HpPotion() {}
 	void Use(Capybara* capy)
 	{
@@ -22,7 +24,9 @@ public:
 class MpPotion : public Item
 {
 public:
-	MpPotion(uint32 id, iPoint bounds, const char* name) : Item(id, bounds, name, ItemType::MP_POTION) {}
+	MpPotion(uint32 id, iPoint bounds, const char* name) : Item(id, bounds, name, ItemType::MP_POTION) {
+		description.Create("MP potion");
+	}
 
 	~MpPotion() {}
 
@@ -38,7 +42,9 @@ public:
 class Revive : public Item
 {
 public:
-	Revive(uint32 id, iPoint bounds, const char* name) : Item(id, bounds, name, ItemType::REVIVE) {}
+	Revive(uint32 id, iPoint bounds, const char* name) : Item(id, bounds, name, ItemType::REVIVE) {
+		description.Create("Revive Potion");
+	}
 	~Revive() {}
 
 	void Use(Capybara* capy)

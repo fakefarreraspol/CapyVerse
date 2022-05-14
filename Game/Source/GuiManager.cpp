@@ -11,6 +11,8 @@
 #include "GuiText.h"
 #include "GuiBar.h"
 
+#include "StatsMenu.h"
+
 #include "Audio.h"
 
 GuiManager::GuiManager(bool startEnabled) :Module(startEnabled)
@@ -61,7 +63,12 @@ void GuiManager::DestroyGuiControl(GuiControl* entity)
 
 	for (item = controls.start; item != nullptr; item = item->next)
 	{
-		if (item->data == entity) controls.Del(item);
+		if (item->data == entity)
+		{
+			controls.Del(item);
+			break;
+		}
+
 	}
 
 	return;
@@ -81,6 +88,7 @@ bool GuiManager::Update(float dt)
 		doLogic = false;
 	}
 
+
 	return ret;
 }
 
@@ -95,7 +103,7 @@ bool GuiManager::UpdateAll(float dt, bool doLogic) {
 			/*if (activeControl == nullptr)
 				ret = control->data->Update(dt);
 			else if (activeControl == control->data)*/
-				ret = control->data->Update(dt);
+			ret = control->data->Update(dt);
 			control = control->next;
 		}
 
