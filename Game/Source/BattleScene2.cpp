@@ -91,7 +91,7 @@ bool BattleScene2::Update(float dt)
     {
         for (int i = 0; i < 3; i++)
         {
-            enemy->GetBattleTeam().At(i)->data->SetAttack(true);
+            if (enemy->GetBattleTeam().At(i) != nullptr) enemy->GetBattleTeam().At(i)->data->SetAttack(true);
         }
         //tank
         if (enemy->GetBattleTeam().At(0) != nullptr)
@@ -117,14 +117,19 @@ bool BattleScene2::Update(float dt)
         {
             for (int i = 0; i < 3; i++)
             {
-                if (enemy->GetBattleTeam().At(1)->data->GetMana() <= enemy->GetBattleTeam().At(1)->data->GetMaxMana()/2)
+                if (enemy->GetBattleTeam().At(i) != nullptr)
                 {
-                    if (enemy->GetBattleTeam().At(1)->data->UseAbility(enemy->GetBattleTeam().At(1)->data) == true)
+                    if (enemy->GetBattleTeam().At(1)->data->GetMana() <= enemy->GetBattleTeam().At(1)->data->GetMaxMana() / 2)
                     {
-                        enemy->GetBattleTeam().At(1)->data->SetAttack(false);
+                        if (enemy->GetBattleTeam().At(1)->data->UseAbility(enemy->GetBattleTeam().At(1)->data) == true)
+                        {
+                            enemy->GetBattleTeam().At(1)->data->SetAttack(false);
+                        }
+
                     }
-                    
                 }
+
+               
 
             }
             if (enemy->GetBattleTeam().At(1)->data->CanAttack())

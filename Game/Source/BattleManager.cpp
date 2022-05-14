@@ -396,6 +396,7 @@ bool BattleManager::PostUpdate()
 		if(e->data->GetHealth() <= 0)
 		{
 			enemies.Del(e);
+			break;
 		}
 	}
 	for (ListItem<Capybara*>* e = playerTeam.start; e != nullptr; e = e->next)
