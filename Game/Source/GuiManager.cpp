@@ -61,7 +61,11 @@ void GuiManager::DestroyGuiControl(GuiControl* entity)
 
 	for (item = controls.start; item != nullptr; item = item->next)
 	{
-		if (item->data == entity) controls.Del(item);
+		if (item->data == entity)
+		{
+			controls.Del(item);
+			break;
+		}
 	}
 
 	return;
