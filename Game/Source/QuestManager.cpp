@@ -1,5 +1,6 @@
 #include "QuestManager.h"
 #include "Log.h"
+#include "Fonts.h"
 
 QuestManager::QuestManager(bool isActive) : Module(isActive)
 {
@@ -16,15 +17,15 @@ bool QuestManager::Awake(pugi::xml_node& config)
 	LOG("Loading quests file");
 	bool ret = true;
 
-	/*folder.Create(config.child("folder").child_value());*/
+	folder.Create(config.child("folder").child_value());
 
-	/*LOG(folder.GetString());*/
-	/*if (folder == NULL)
+	LOG(folder.GetString());
+	if (folder == NULL)
 	{
 		LOG("Could not load quest folder");
 	}
-	folder = "Assets/";*/
-	/*questFile = "quests.xml";*/
+	folder = "Assets/";
+	questFile = QUEST_FILE;
 
 	return ret;
 }
@@ -33,7 +34,7 @@ bool QuestManager::Start()
 {
 	//Load the quest file, this can be for the hole game or
 	// foreach level load quest file. 
-	/*Load(questFile.GetString());*/
+	Load(questFile.GetString());
 
 
 	
@@ -50,7 +51,7 @@ void QuestManager::ActivateQuest(int questID)
 		q->progress = QuestProgress::ACTIVE;
 }
 
-void QuestManager::CanelQuest(int questID)
+void QuestManager::CancelQuest(int questID)
 {
 	Quest* q = questList->At(questID)->data;
 
@@ -122,56 +123,56 @@ bool QuestManager::GetCompletedQuest(int questID)
 	return ret;
 }
 
-//bool QuestManager::Load(const char* path) 
-//{
-//	bool ret = true;
-//	SString tmp("%s%s", folder.GetString(), path);
-//
-//	LOG("File path: %s", tmp.GetString());
-//
-//	pugi::xml_document questsFile;
-//	pugi::xml_parse_result result = questsFile.load_file(tmp.GetString());
-//	pugi::xml_node currentQuest;
-//
-//	if (result == NULL)
-//	{
-//		LOG("Could not load map xml file %s. pugi error: %s", path, result.description());
-//		ret = false;
-//	}
-//	else {
-//
-//		currentQuest = questsFile.child("quests_list").first_child();
-//		ListItem<Quest*>* quest = questList->start;
-//
-//		while (currentQuest != NULL)
-//		{
-//			Quest* quest = new Quest();
-//
-//			//laod properties
-//			quest->id = currentQuest.attribute("id").as_int();
-//			quest->progress = Quest::NOT_AVAILABLE;
-//			quest->title = currentQuest.attribute("title").as_string();
-//			quest->description = currentQuest.child("description").child_value();
-//			
-//			//generate text textures
-//			quest->titleTex = app->fonts->LoadRenderedText(quest->rTitle, app->fonts->titles,quest->title.GetString(), SDL_Color{ 32,27,46 });
-//			quest->descriptionTex = app->fonts->LoadRenderedParagraph(quest->rDescription, 0, quest->description.GetString(), SDL_Color{ 32,27,46 },500);
-//
-//			questList->add(quest);
-//
-//			currentQuest = currentQuest.next_sibling();
-//		}
-//	}
-//
-//	return ret;
-//}
+bool QuestManager::Load(const char* path) 
+{
+	bool ret = true;
+	SString tmp("%s%s", folder.GetString(), path);
 
-//bool QuestManager::LoadState(pugi::xml_node&)
-//{
-//	return false;
-//}
-//
-//bool QuestManager::SaveState(pugi::xml_node&) const
-//{
-//	return false;
-//}
+	LOG("File path: %s", tmp.GetString());
+
+	pugi::xml_document questsFile;
+	pugi::xml_parse_result result = questsFile.load_file(tmp.GetString());
+	pugi::xml_node currentQuest;
+
+	if (result == NULL)
+	{
+		LOG("Could not load map xml file %s. pugi error: %s", path, result.description());
+		ret = false;
+	}
+	else {
+
+		currentQuest = questsFile.child("quests_list").first_child();
+		ListItem<Quest*>* quest = questList->start;
+
+		while (currentQuest != NULL)
+		{
+			Quest* quest = new Quest();
+
+			//laod properties
+			quest->id = currentQuest.attribute("id").as_int();
+			quest->progress = (QuestProgress)currentQuest.attribute("progress").as_int();
+			quest->title = currentQuest.attribute("title").as_string();
+			quest->description = currentQuest.child("description").child_value();
+			
+			//generate text textures
+			quest->titleTex = app->fonts->LoadRenderedText(quest->rTitle, app->fonts->titles,quest->title.GetString(), SDL_Color{ 32,27,46 });
+			quest->descriptionTex = app->fonts->LoadRenderedParagraph(quest->rDescription, 0, quest->description.GetString(), SDL_Color{ 32,27,46 },500);
+
+			questList->Add(quest);
+
+			currentQuest = currentQuest.next_sibling();
+		}
+	}
+
+	return ret;
+}
+
+bool QuestManager::LoadState(pugi::xml_node&)
+{
+	return true;
+}
+
+bool QuestManager::SaveState(pugi::xml_node&) const
+{
+	return true;
+}

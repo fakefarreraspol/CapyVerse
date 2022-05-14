@@ -21,7 +21,7 @@
 #include "Pause.h"
 EntityManager::EntityManager(bool startEnabled) : Module(startEnabled)
 {
-	name.Create("entitymanager");
+	name.Create("entity_manager");
 }
 
 // Destructor
@@ -60,8 +60,8 @@ bool EntityManager::CleanUp()
 Entity* EntityManager::CreateEntity(EntityType type, uint32 id, iPoint position, const char* name)
 {
 	Entity* entity = nullptr;
-	if(id == 0)
-		id = entities.Count();
+	
+	id = entities.Count();
 
 	switch (type)
 	{
@@ -195,16 +195,8 @@ bool EntityManager::LoadState(pugi::xml_node& data)
 	{
 		int entityId = entityNode.attribute("id").as_int();
 		ret = entities.At(entityId)->data->LoadState(entityNode);
+		printf("Succesfully loaded entity %s\n", entities.At(entityId)->data->name.GetString());
 	}
-
-	/*ListItem<Entity*>* item;
-	item = entities.start;
-
-	while (item != NULL && ret == true)
-	{
-		ret = item->data->LoadState(data.child(item->data->name.GetString()));
-		item = item->next;
-	}*/
 
 	return ret;
 }

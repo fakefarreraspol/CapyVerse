@@ -9,6 +9,7 @@
 #include "Window.h"
 #include "Render.h"
 #include "Audio.h"
+#include "Scene.h"
 #include "Pause.h"
 
 #include "Log.h"
@@ -341,7 +342,7 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control)
 	{
 		//CONTINUE
 		app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene);
-		app->LoadGameRequest();
+		app->scene->load = true;
 	}
 	if (control->id == 7)
 	{

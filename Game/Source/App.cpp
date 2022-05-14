@@ -29,6 +29,7 @@
 #include "BattleScene2.h"
 #include "BattleScene3.h"
 #include "EOBScene.h"
+#include "QuestManager.h"
 #include "Map.h"
 
 // Constructor
@@ -43,6 +44,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	transitions = new Transitions(true);
 	mapManager = new Map(true);
 	entMan = new EntityManager(true);
+	questManager = new QuestManager(true);
 	fonts = new Fonts(true);
 	guiManager = new GuiManager(true);
 	dialogManager = new DialogManager(true);
@@ -65,6 +67,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(tex);
 	AddModule(mapManager);
+	AddModule(questManager);
 	AddModule(fonts);
 	AddModule(audio);
 	AddModule(intro);
@@ -439,6 +442,7 @@ bool App::LoadGame()
 	while (item != NULL && ret == true)
 	{
 		ret = item->data->LoadState(gameStateFile.child("game_state").child(item->data->name.GetString()));
+		printf("Module %s has returned false and quit the loading\n", item->data->name.GetString());
 		item = item->next;
 	}
 

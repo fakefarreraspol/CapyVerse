@@ -137,7 +137,7 @@ bool DialogManager::Update(float dt)
 		button->state = GuiControlState::DISABLED;
 		characterName->state = GuiControlState::DISABLED;
 		text->state = GuiControlState::DISABLED;
-		app->scene->player->canMove = true;
+		//app->scene->player->canMove = true;
 	}
 
 

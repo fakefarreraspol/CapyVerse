@@ -54,6 +54,11 @@ Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType
 	walkDown.speed = 0.1f;
 	walkDown.loop = true;
 	currentAnim = &idle;
+
+	collider = app->colManager->CreateRectangle(position.x, position.y, 32, 32, bodyType::DYNAMIC);
+	collider->listener = (Module*)app->entMan;
+	collider->eListener = this;
+	collider->body->SetFixedRotation(true);
 }
 
 Player::~Player()
@@ -61,11 +66,13 @@ Player::~Player()
 }
 bool Player::Start()
 {
-	collider = app->colManager->CreateRectangle(position.x, position.y, 32, 32, bodyType::DYNAMIC);
-	collider->listener = (Module*)app->entMan;
-	collider->eListener = this;
-	collider->body->SetFixedRotation(true);
-	
+	if (!collider)
+	{
+		collider = app->colManager->CreateRectangle(position.x, position.y, 32, 32, bodyType::DYNAMIC);
+		collider->listener = (Module*)app->entMan;
+		collider->eListener = this;
+		collider->body->SetFixedRotation(true);
+	}
 	return true;
 }
 
@@ -73,7 +80,7 @@ bool Player::Update(float dt)
 {
 	bool ret = true;
 	
-	printf("x:%i y:%i\n", position.x, position.y);
+	//printf("x:%i y:%i\n", position.x, position.y);
 
 	UpdateCamera();
 	if (load)
@@ -269,7 +276,8 @@ bool Player::LoadState(pugi::xml_node& node)
 {
 	position.x = node.child("position").attribute("x").as_float();
 	position.y = node.child("position").attribute("y").as_float();
-	
+
+	collider->body->SetTransform({ PIXEL_TO_METERS(position.x), PIXEL_TO_METERS(position.y) }, 0.0f);
 	isBattle = node.attribute("isBattle").as_bool();
 	money = node.attribute("money").as_int();
 
@@ -284,7 +292,6 @@ bool Player::SaveState(pugi::xml_node& node)
 	pugi::xml_node position = node.append_child("position");
 	position.append_attribute("x").set_value(this->position.x);
 	position.append_attribute("y").set_value(this->position.y);
-	
 	node.append_attribute("id").set_value(id);
 	node.append_attribute("isBattle").set_value(isBattle);
 	node.append_attribute("money").set_value(money);

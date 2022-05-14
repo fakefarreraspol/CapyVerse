@@ -6,7 +6,8 @@
 
 #define QUEST_FILE "quests.xml"
 
-class QuestManager : public Module {
+class QuestManager : public Module 
+{
 
 public:
 	QuestManager(bool isActive);
@@ -18,13 +19,13 @@ public:
 public: 
 
 	List<Quest*>* questList = new List<Quest*>();
-	//List<Quest*>* sideQuestList = new List<Quest*>();
+	List<Quest*>* sideQuestList = new List<Quest*>();
 
 	//Activate Quest
 	void ActivateQuest(int questID);
 
 	//Cancel Quest
-	void CanelQuest(int questID);
+	void CancelQuest(int questID);
 
 	//Complete Quest
 	void CompleteQuest(int questID);
@@ -48,10 +49,10 @@ public:
 	bool Load(const char* path);
 
 	// Load / Save
-	/*bool LoadState(pugi::xml_node&);
-	bool SaveState(pugi::xml_node&) const;*/
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&) const;
 
 
-	/*SString folder;
-	SString questFile;*/
+	SString folder;
+	SString questFile;
 };

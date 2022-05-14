@@ -255,7 +255,7 @@ bool Map::LoadColliders()
 		if (mapLayerItem->data->properties.GetProperty("MinY") != 0) minY = mapLayerItem->data->properties.GetProperty("MinY");
 		mapLayerItem = mapLayerItem->next;
 	}
-
+	printf("Succesfully loaded colliders\n");
 	return ret;
 }
 
@@ -435,7 +435,7 @@ bool Map::LoadProps()
 		mapLayerItem = mapLayerItem->next;
 
 	}
-	printf("Succesfully loaded props");
+	printf("Succesfully loaded props\n");
 	return ret;
 }
 

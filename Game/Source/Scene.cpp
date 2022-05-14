@@ -43,13 +43,6 @@ bool Scene::Awake(pugi::xml_node& node)
 	LOG("Loading Scene");
 	bool ret = true;
 	
-	player = (Player*)app->entMan->CreateEntity(EntityType::PLAYER, 1, { 650, 1440 }, "Player");
-
-	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 2, { 291, 297 }, "Chinabara"));
-	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 3, { 101, 435 }, "Punkibara"));
-	player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 4, { 464, 443 }, "Rainbowbara"));
-
-	player->Disable();
 	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 800,400 }, "Sara"));
 	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 500,800 }, "Joe"));
 	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 900,700 }, "George"));
@@ -84,9 +77,17 @@ bool Scene::Awake(pugi::xml_node& node)
 // Called before the first frame
 bool Scene::Start()
 {
+	if (!player)
+	{
+		player = (Player*)app->entMan->CreateEntity(EntityType::PLAYER, 1, { 650, 1440 }, "Player");
+
+		player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 2, { 291, 297 }, "Chinabara"));
+		player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 3, { 101, 435 }, "Punkibara"));
+		player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 4, { 464, 443 }, "Rainbowbara"));
+	}
+	player->Enable();
 	app->pauseMenu->Enable();
 	app->colManager->Enable();
-	player->Enable();
 	player->SetCombat(false);
 	app->battleManager->SetPlayer(player);
 
@@ -97,6 +98,12 @@ bool Scene::Start()
 	app->mapManager->Load("1-1.tmx");
 	
 	app->audio->ChangeMusic(2);
+
+	if (load)
+	{
+		app->LoadGameRequest();
+		load = false;
+	}
 	return true;
 }
 
