@@ -37,24 +37,24 @@ public:
 	{
 
 	};
-	~Item();
+	~Item(){}
 
-	virtual bool Update(float dt);
+	virtual bool Update(float dt) { return true; }
 
-	virtual bool Draw(Render* render);
+	virtual bool Draw(Render* render) { return true; }
 
-	bool CleanUp();
+	virtual bool CleanUp() { return true; }
 	
-	virtual bool GetPicked(Capybara* capy);
+	virtual bool GetPicked(Capybara* capy) { return true; }
 
-	virtual void UnPick();
+	virtual void UnPick() {}
 
-	virtual void Use(Capybara* capy);
+	virtual void Use(Capybara* capy) {}
 	
-	virtual void Disable();
+	virtual void Disable() {}
 public:
-	ItemType type;
-	Capybara* capy;
+	ItemType type = ItemType::NONE;
+	Capybara* capy = nullptr;
 	bool beingUsed = false;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
 
 };
