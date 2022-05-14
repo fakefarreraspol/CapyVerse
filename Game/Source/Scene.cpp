@@ -109,6 +109,12 @@ bool Scene::Start()
 		load = false;
 	}
 	app->dialogManager->Enable();
+
+	if (app->questManager->IsCompleated(1))
+	{
+		app->questManager->ActiveQuest(2);
+	}
+
 	return true;
 }
 
