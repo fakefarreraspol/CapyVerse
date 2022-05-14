@@ -95,6 +95,7 @@ public:
 	bool CleanUp();
 
 	bool enemy = false;
+	SString capyName;
 protected:
 	//Update the stats by the lvl
 	void UpdateStats();
@@ -135,7 +136,6 @@ protected:
 	CapybaraStatus capybaraStatus = CapybaraStatus::NONE;	//The current status of the capybara
 	int statusCounter = 0;									//To remove status and apply them
 	CapybaraTarget capybaraTarget = CapybaraTarget::NONE;	//The type of target of the ability
-
 
 	Animation* currentAnim;
 	Animation anim;
