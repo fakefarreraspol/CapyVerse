@@ -34,7 +34,7 @@ bool BattleScene2::Awake(pugi::xml_node&)
     for (int i = 0; i < enemy->GetBattleTeam().Count(); i++)
     {
         enemy->GetBattleTeam().At(i)->data->enemy = true;
-        enemy->GetBattleTeam().At(i)->data->SetLevel(10);
+        enemy->GetBattleTeam().At(i)->data->SetLevel(1);
     }
     app->scene->NPCs.Add(enemy);
     enemy->Disable();

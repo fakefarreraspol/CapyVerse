@@ -111,6 +111,7 @@ void BattleManager::DeleteAttackMenu()
 	{
 		for (uint i = 0; i < attackBtns.Count(); i++)
 		{
+			
 			app->guiManager->DestroyGuiControl(attackBtns.At(i)->data);
 			app->guiManager->DestroyGuiControl(attackInfo.At(i)->data);
 			app->guiManager->DestroyGuiControl(attackBars.At(i)->data);
