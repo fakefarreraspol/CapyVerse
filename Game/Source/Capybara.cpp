@@ -14,7 +14,7 @@
 Capybara::Capybara(CapybaraType capyType, uint32 id, iPoint position, const char* name) : Entity(EntityType::CAPYBARA, id, name, position), capybaraType(capyType)
 {
 	level = 1;
-
+	capyName.Create(name);
 	//Change this values in order to balance the game progression
 	xpNext = 50;
 	healthXLvl = 10;
