@@ -52,10 +52,10 @@ bool GuiText::Draw(Render* render)
 		if (blink)
 		{
 			if ((counter / 30) % 2 == 0)
-				render->DrawTexture(textTex, cBounds.x, cBounds.y);
+				render->DrawTexture(textTex, cBounds.x, cBounds.y, NULL, useCamera);
 		}
 		else
-			render->DrawTexture(textTex, cBounds.x, cBounds.y);
+			render->DrawTexture(textTex, cBounds.x, cBounds.y, NULL, useCamera);
 	}
 	return true;
 }

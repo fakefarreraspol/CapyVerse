@@ -33,17 +33,17 @@ public:
 	void SetFullscreen(bool value);
 public:
 	// The window we'll be rendering to
-	SDL_Window* window;
+	SDL_Window* window = nullptr;
 
 	// The surface contained by the window
-	SDL_Surface* screenSurface;
+	SDL_Surface* screenSurface = nullptr;
 
-	bool fullscreen;
+	bool fullscreen = false;
 private:
 	SString title;
-	uint width;
-	uint height;
-	uint scale;
+	uint width = 0;
+	uint height = 0;
+	uint scale = 1;
 };
 
 #endif // __WINDOW_H__

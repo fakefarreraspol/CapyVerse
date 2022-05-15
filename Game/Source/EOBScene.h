@@ -38,14 +38,19 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	bool playerWin = false;
 private:
+	int counter = 100;
 	Player* player = nullptr;
 	List<GuiBar*> bars;
 	List<GuiText*> texts;
 	List<GuiText*> lvls;
 	List<GuiText*> lvlUp;
 	int XP = 0;
+
 	SDL_Texture* background;
+	SDL_Texture* win;
+	SDL_Texture* lose;
 };
 
 #endif // !__EOB_SECENE_H__

@@ -48,6 +48,9 @@ public:
 	void EndTurn();
 
 	int battlewonSFX;
+	int attack01SFX;
+	int attack02SFX;
+	int attack03SFX;
 private:
 
 	void UpdateCurrentName();

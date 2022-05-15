@@ -36,6 +36,10 @@ public:
 	// Called each loop iteration
 	bool Update(float dt);
 
+	void DrawMenu();
+
+	void UpdateInput();
+
 	// Called before all Updates
 	bool PostUpdate();
 
@@ -89,5 +93,11 @@ private:
 	bool exit = false;
 	bool play = false;
 	int titleSFX;
+
+	int currentTime = 0;
+	int duration = 200;
+	int startPositionY = -150;
+	int finalPositionY = 0;
+	int currentPositionY = startPositionY;
 };
 #endif // __MAINMENU_H__

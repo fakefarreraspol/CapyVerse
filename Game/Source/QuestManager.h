@@ -1,12 +1,18 @@
+#ifndef __QUESTMANAGER_H__
+#define __QUESTMANAGER_H__
+
 #include "Module.h"
 #include "List.h"
 #include "Quest.h"
 #include "PugiXml/src/pugixml.hpp"
 #include "App.h"
+#include "GuiText.h"
 
 #define QUEST_FILE "quests.xml"
 
-class QuestManager : public Module {
+
+class QuestManager : public Module 
+{
 
 public:
 	QuestManager(bool isActive);
@@ -17,41 +23,32 @@ public:
 
 public: 
 
-	List<Quest*>* questList = new List<Quest*>();
-	//List<Quest*>* sideQuestList = new List<Quest*>();
+	List<Quest*> questList;
 
-	//Activate Quest
-	void ActivateQuest(int questID);
+	Quest* ActiveQuest(uint32_t questID);
 
-	//Cancel Quest
-	void CanelQuest(int questID);
+	Quest* UpdateQuest(uint32_t questID);
 
-	//Complete Quest
-	void CompleteQuest(int questID);
+	Quest* CompleteQuest(uint32_t questID);
 
-	//Finish Quest
-	void FinishQuest(int questID);
+	bool IsCompleated(uint32_t questID);
 
-	//Add item
-	void AddItem(int id, SString title, SString description, int objective);
-
-	//Get available quest 
-	bool GetAvailableQuest(int questID);
-
-	//Get active quest
-	bool GetActiveQuest(int questID);
-
-	//Get complete quest but not Done (get rewards etc)
-	bool GetCompletedQuest(int questID);
+	bool Update(float dt);
 
 	//Load quest files 
-	bool QuestManager::Load(const char* path);
+	bool Load(const char* path);
 
 	// Load / Save
-	/*bool LoadState(pugi::xml_node&);
-	bool SaveState(pugi::xml_node&) const;*/
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&) const;
 
+	GuiText* statusText;
+	GuiText* missionName;
+	GuiText* description;
 
-	/*SString folder;
-	SString questFile;*/
+	int updateCounter;
+
+	SString folder;
+	SString questFile;
 };
+#endif

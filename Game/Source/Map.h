@@ -45,7 +45,7 @@ struct Properties
 	{
 		//...
 		SString name;
-		int value;
+		int value = 0;
 	};
 
 	~Properties()
@@ -73,9 +73,9 @@ struct Properties
 struct MapLayer
 {
 	SString	name;
-	int width;
-	int height;
-	uint* data;
+	int width = 0;
+	int height = 0;
+	uint* data = nullptr;
 
 	// L06: DONE 1: Support custom properties
 	Properties properties;
@@ -98,10 +98,10 @@ struct MapLayer
 // L03: DONE 1: Create a struct needed to hold the information to Map node
 struct MapData
 {
-	int width;
-	int	height;
-	int	tileWidth;
-	int	tileHeight;
+	uint32_t width = 0;
+	uint32_t height = 0;
+	uint32_t tileWidth = 0;
+	uint32_t tileHeight = 0;
 
 	SDL_Color backgroundColor;
 	MapTypes type;
@@ -169,10 +169,13 @@ public:
 
 	// L03: DONE 1: Add your struct for map info
 	MapData mapData;
-	iPoint bounds;
+	uint32_t maxX = 0;
+	uint32_t minX = 0;
+	uint32_t maxY = 0;
+	uint32_t minY = 0;
 
 private:
-	List<Collider*> cols;
+	List<PhysBody*> cols;
 	SString folder;
 	bool mapLoaded;
 };

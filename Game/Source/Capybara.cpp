@@ -14,7 +14,7 @@
 Capybara::Capybara(CapybaraType capyType, uint32 id, iPoint position, const char* name) : Entity(EntityType::CAPYBARA, id, name, position), capybaraType(capyType)
 {
 	level = 1;
-
+	capyName.Create(name);
 	//Change this values in order to balance the game progression
 	xpNext = 50;
 	healthXLvl = 10;
@@ -204,11 +204,11 @@ void Capybara::Attack(Capybara* target)
 	//A -- Character armor
 	if (target == nullptr)
 		return;
-	int finalDamage = this->damage* (this->damage + 100) * 0.08 / (target->armor + 8);
+	int finalDamage = this->damage * (int)((this->damage + 100) * 0.08f)/ (target->armor + 8);
 	target->Damage(finalDamage);
 	app->audio->PlayFx(attackSFX);
 	canAttack = false;
-	printf("%s id: %i DMG: %i to %s id: %i\n", this->name.GetString(), this->id, finalDamage, target->name.GetString(), target->id);
+	printf("%s id: %i DMG: %i to %s id: %i\n", this->capyName.GetString(), this->id, finalDamage, target->capyName.GetString(), target->id);
 }
 
 void Capybara::SetStatus(CapybaraStatus status)
@@ -269,11 +269,11 @@ void Capybara::UpdateStatus()
 
 		case CapybaraStatus::BLOATED:
 		{
-			capybaraStats.speed += (int)capybaraStats.speed * 0.2;
+			capybaraStats.speed += (int)(capybaraStats.speed * 0.2f);
 		}break;
 		case CapybaraStatus::STUNED:
 		{
-			capybaraStats.intelligence += (int)capybaraStats.intelligence * 0.5;
+			capybaraStats.intelligence += (int)(capybaraStats.intelligence * 0.5f);
 		}break;
 		case CapybaraStatus::DEFENSIVE:
 		{
@@ -345,14 +345,14 @@ void Capybara::LevelUp()
 	}
 	
 	//Healing a proporitonal amount after lvlup
-	Heal(0.5 * maxHealth);
-	RestoreMana(0.5 * maxMana);
+	Heal(0.5f * maxHealth);
+	RestoreMana(0.5f * maxMana);
 	//Updating all the stats 
 	UpdateStats();
 
 	//Debug log
 	LOG("");
-	LOG("%s stats LVL: %i", name.GetString(), level);
+	LOG("%s stats LVL: %i", capyName.GetString(), level);
 	LOG("HP: %i MXHP: %i HPLVL: %i", health, maxHealth, capybaraStats.hp);
 	LOG("MP: %i MXMP: %i MPLVL: %i", mana, maxMana, capybaraStats.mp);
 	LOG("DMG: %i STRLVL: %i", damage, capybaraStats.strenght);
@@ -372,8 +372,8 @@ void Capybara::AddXp(int value)
 
 bool Capybara::LoadState(pugi::xml_node& node)
 {
-	position.x = node.child("position").attribute("x").as_float();
-	position.y = node.child("position").attribute("y").as_float();
+	position.x = node.child("position").attribute("x").as_int();
+	position.y = node.child("position").attribute("y").as_int();
 
 	level = node.attribute("level").as_int();
 	health = node.attribute("health").as_int();
@@ -411,6 +411,11 @@ bool Capybara::SaveState(pugi::xml_node& node)
 void Capybara::SetCombat(bool value)
 {
 	isCombat = value;
+}
+
+bool Capybara::GetCombat()
+{
+	return isCombat;
 }
 
 bool Capybara::CleanUp()

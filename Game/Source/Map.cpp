@@ -5,7 +5,7 @@
 #include "Player.h"
 #include "Defs.h"
 #include "Log.h"
-#include "Collisions.h"
+#include "Physics.h"
 #include "EntityManager.h"
 
 #include "Window.h"
@@ -237,21 +237,25 @@ bool Map::LoadColliders()
 
 						SDL_Rect r = tileset->GetTileRect(gid);
 						iPoint pos = MapToWorld(x, y);
-						Collider* col = app->colManager->AddCollider({ pos.x, pos.y, r.w, r.h }, Collider::WALL, this);
+						pos.x += r.w / 2;
+						pos.y += r.h / 2;
+						PhysBody* col = new PhysBody();
+						col->listener = this;
+						col = app->colManager->CreateRectangle(pos.x, pos.y, r.w, r.h, STATIC);
 						cols.Add(col);
-
 					}
 
 				}
 			}
 		}
-		if (mapLayerItem->data->properties.GetProperty("BoundX") != 0)
-			bounds.x = mapLayerItem->data->properties.GetProperty("BoundX");
-		if (mapLayerItem->data->properties.GetProperty("BoundY") != 0)
-			bounds.y = mapLayerItem->data->properties.GetProperty("BoundY");
+		//Camera bounds relative to the player
+		if (mapLayerItem->data->properties.GetProperty("MaxX") != 0) maxX = mapLayerItem->data->properties.GetProperty("MaxX");
+		if (mapLayerItem->data->properties.GetProperty("MinX") != 0) minX = mapLayerItem->data->properties.GetProperty("MinX");
+		if (mapLayerItem->data->properties.GetProperty("MaxY") != 0) maxY = mapLayerItem->data->properties.GetProperty("MaxY");
+		if (mapLayerItem->data->properties.GetProperty("MinY") != 0) minY = mapLayerItem->data->properties.GetProperty("MinY");
 		mapLayerItem = mapLayerItem->next;
 	}
-
+	printf("Succesfully loaded colliders\n");
 	return ret;
 }
 
@@ -265,173 +269,10 @@ bool Map::LoadProps()
 	int* chain = new int[mapLayerItem->data->width * mapLayerItem->data->height];
 	mapLayerItem = mapData.layers.start;
 	while (mapLayerItem != NULL) {
-		/*if (mapLayerItem->data->properties.GetProperty("Check") == 1)
-		{
-			for (int x = 0; x < mapLayerItem->data->width; x++)
-			{
-				for (int y = 0; y < mapLayerItem->data->height; y++)
-				{
-					int gid = mapLayerItem->data->Get(x, y);
-
-					if (gid > 0) {
-
-						TileSet* tileset = GetTilesetFromTileId(gid);
-
-						SDL_Rect r = tileset->GetTileRect(gid);
-						iPoint pos = MapToWorld(x, y);
-						pos.x += r.w / 2;
-						pos.y += r.h / 2;
-						app->entman->CreateEntity(CHECKPOINT, pos);
-
-					}
-
-				}
-			}
-		}
-		if (mapLayerItem->data->properties.GetProperty("Door") == 1)
-		{
-			for (int x = 0; x < mapLayerItem->data->width; x++)
-			{
-				for (int y = 0; y < mapLayerItem->data->height; y++)
-				{
-					int gid = mapLayerItem->data->Get(x, y);
-
-					if (gid > 0) {
-
-						TileSet* tileset = GetTilesetFromTileId(gid);
-
-						SDL_Rect r = tileset->GetTileRect(gid);
-						iPoint pos = MapToWorld(x, y);
-						pos.x += r.w / 2;
-						pos.y += r.h / 2;
-						app->entman->CreateEntity(DOOR, pos);
-
-					}
-
-				}
-			}
-		}
-
-		if (mapLayerItem->data->properties.GetProperty("Gems") == 1)
-		{
-			for (int x = 0; x < mapLayerItem->data->width; x++)
-			{
-				for (int y = 0; y < mapLayerItem->data->height; y++)
-				{
-					int gid = mapLayerItem->data->Get(x, y);
-
-					if (gid > 0) {
-
-						TileSet* tileset = GetTilesetFromTileId(gid);
-
-						SDL_Rect r = tileset->GetTileRect(gid);
-						iPoint pos = MapToWorld(x, y);
-						pos.x += r.w / 2;
-						pos.y += r.h / 2;
-						app->entman->CreateEntity(GEM, pos);
-
-					}
-
-				}
-			}
-		}
-		if (mapLayerItem->data->properties.GetProperty("Cherrys") == 1)
-		{
-			for (int x = 0; x < mapLayerItem->data->width; x++)
-			{
-				for (int y = 0; y < mapLayerItem->data->height; y++)
-				{
-					int gid = mapLayerItem->data->Get(x, y);
-
-					if (gid > 0) {
-
-						TileSet* tileset = GetTilesetFromTileId(gid);
-
-						SDL_Rect r = tileset->GetTileRect(gid);
-						iPoint pos = MapToWorld(x, y);
-						pos.x += r.w / 2;
-						pos.y += r.h / 2;
-						app->entman->CreateEntity(CHERRY, pos);
-
-					}
-
-				}
-			}
-		}
-		if (mapLayerItem->data->properties.GetProperty("Eagle") == 1)
-		{
-			for (int x = 0; x < mapLayerItem->data->width; x++)
-			{
-				for (int y = 0; y < mapLayerItem->data->height; y++)
-				{
-					int gid = mapLayerItem->data->Get(x, y);
-
-					if (gid > 0) {
-
-						TileSet* tileset = GetTilesetFromTileId(gid);
-
-						SDL_Rect r = tileset->GetTileRect(gid);
-						iPoint pos = MapToWorld(x, y);
-						pos.x += r.w / 2;
-						pos.y += r.h / 2;
-						app->entman->CreateEntity(ENEMY_EAGLE, pos);
-
-					}
-
-				}
-			}
-		}
-		if (mapLayerItem->data->properties.GetProperty("Rat") == 1)
-		{
-			for (int x = 0; x < mapLayerItem->data->width; x++)
-			{
-				for (int y = 0; y < mapLayerItem->data->height; y++)
-				{
-					int gid = mapLayerItem->data->Get(x, y);
-
-					if (gid > 0) {
-
-						TileSet* tileset = GetTilesetFromTileId(gid);
-
-						SDL_Rect r = tileset->GetTileRect(gid);
-						iPoint pos = MapToWorld(x, y);
-						pos.x += r.w / 2;
-						pos.y += r.h / 2;
-						app->entman->CreateEntity(ENEMY_RAT, pos);
-
-					}
-
-				}
-			}
-		}
-
-		if (mapLayerItem->data->properties.GetProperty("Door") == 1)
-		{
-			for (int x = 0; x < mapLayerItem->data->width; x++)
-			{
-				for (int y = 0; y < mapLayerItem->data->height; y++)
-				{
-					int gid = mapLayerItem->data->Get(x, y);
-
-					if (gid > 0) {
-
-						TileSet* tileset = GetTilesetFromTileId(gid);
-
-						SDL_Rect r = tileset->GetTileRect(gid);
-						iPoint pos = MapToWorld(x, y);
-						pos.x += r.w / 2;
-						pos.y += r.h / 2;
-						app->entman->CreateEntity(DOOR, pos);
-
-					}
-
-				}
-			}
-		}*/
 		mapLayerItem = mapLayerItem->next;
 
 	}
-	printf("Succesfully loaded props");
+	printf("Succesfully loaded props\n");
 	return ret;
 }
 
@@ -479,7 +320,7 @@ bool Map::CleanUp()
 		item2 = item2->next;
 	}
 	mapData.layers.Clear();
-
+	LOG("Succesfully unloaded Map");
 	return true;
 }
 
@@ -580,17 +421,12 @@ bool Map::Load(const char* filename)
 bool Map::Unload()
 {
 	bool ret = true;
-	ListItem<Collider*>* c = cols.start;
 
-	while (c != NULL)
+	for (int i = 0; i < cols.Count(); i++)
 	{
-		app->colManager->RemoveCollider(c->data);
-
-		c = c->next;
+		app->colManager->world->DestroyBody(cols.At(i)->data->body);
 	}
 	cols.Clear();
-	delete c;
-
 	return ret;
 }
 

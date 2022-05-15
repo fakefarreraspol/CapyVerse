@@ -3,104 +3,152 @@
 #include "Input.h"
 #include "Log.h"
 #include "Player.h"
-#include "Collisions.h"
+#include "Physics.h"
 #include "Timer.h"
 #include "Window.h"
 #include "Textures.h"
+#include "Map.h"
+#include "FadeToBlack.h"
+
+ 
+
 
 Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType::PLAYER, id, name, position)
 {
 	idle.PushBack({ 0,0,66,66 });
-	walkRight.PushBack( { 66, 0, 66 * 2, 66 });
-	walkRight.PushBack( { 66 * 2, 0, 66 * 3, 66 });
-	walkRight.PushBack( { 66 * 3, 0, 66 * 4, 66 });
-	walkRight.PushBack( { 66 * 4, 0, 66 * 5, 66 });
+	
+	walkRight.PushBack( { 66, 0, 66 , 66 });
+	walkRight.PushBack( { 66 * 2, 0, 66 , 66 });
+	walkRight.PushBack( { 66 * 3, 0, 66 , 66 });
+	walkRight.PushBack( { 66 * 4, 0, 66 , 66 });
 
 	walkRight.loop = true;
 	walkRight.speed = 0.1f;
 	
-	walkLeft.PushBack({ 66, 0, 66 * 2, 66 });
-	walkLeft.PushBack({ 66 * 2, 0, 66 * 3, 66 });
-	walkLeft.PushBack({ 66 * 3, 0, 66 * 4, 66 });
-	walkLeft.PushBack({ 66 * 4, 0, 66 * 5, 66 });
+	walkLeft.PushBack({ 66, 0, 66 , 66 });
+	walkLeft.PushBack({ 66 * 2, 0, 66 , 66 });
+	walkLeft.PushBack({ 66 * 3, 0, 66 , 66 });
+	walkLeft.PushBack({ 66 * 4, 0, 66, 66 });
 	walkLeft.loop = true;
 	walkLeft.speed = 0.1f;
 
-	walkUp.PushBack({ 0, 66, 66 , 66*2 });
-	walkUp.PushBack({ 66, 66, 66 * 2, 66*2 });
-	walkUp.PushBack({ 66*2, 66, 66 * 3, 66*2 });
-	walkUp.PushBack({ 66*3, 66, 66 * 4, 66 * 2 });
-	walkUp.PushBack({ 66*4, 66, 66 * 5, 66 * 2 });
-	walkUp.PushBack({ 66*5, 66, 66 * 6, 66 * 2 });
-	walkUp.PushBack({ 66*6, 66, 66 * 7, 66 * 2 });
-	walkUp.PushBack({ 66*7, 66, 66 * 8, 66 * 2 });
-	walkLeft.loop = true;
-	walkLeft.speed = 0.1f;
+	walkUp.PushBack({ 0, 66, 66 , 66 });
+	walkUp.PushBack({ 66, 66, 66 , 66 });
+	walkUp.PushBack({ 66*2, 66, 66 , 66 });
+	walkUp.PushBack({ 66*3, 66, 66 , 66 });
+	walkUp.PushBack({ 66*4, 66, 66 , 66 });
+	walkUp.PushBack({ 66*5, 66, 66 , 66 });
+	walkUp.PushBack({ 66*6, 66, 66 , 66 });
+	walkUp.PushBack({ 66*7, 66, 66 , 66 });
+	walkUp.loop = true;
+	walkUp.speed = 0.1f;
 	
-	walkDown.PushBack({ 0, 66, 66 , 66 * 2 });
-	walkDown.PushBack({ 66, 66, 66 * 2, 66 * 2 });
-	walkDown.PushBack({ 66 * 2, 66, 66 * 3, 66 * 2 });
-	walkDown.PushBack({ 66 * 3, 66, 66 * 4, 66 * 2 });
-	walkDown.PushBack({ 66 * 4, 66, 66 * 5, 66 * 2 });
-	walkDown.PushBack({ 66 * 5, 66, 66 * 6, 66 * 2 });
-	walkDown.PushBack({ 66 * 6, 66, 66 * 7, 66 * 2 });
-	walkDown.PushBack({ 66 * 7, 66, 66 * 8, 66 * 2 });
+	walkDown.PushBack({ 66*8, 66, 66 , 66  });
+	walkDown.PushBack({ 66*9, 66, 66 , 66 });
+	walkDown.PushBack({ 66 * 10, 66, 66 , 66  });
+	walkDown.PushBack({ 66 * 11, 66, 66 , 66});
+	walkDown.PushBack({ 66 * 12, 66, 66 , 66 });
+	walkDown.PushBack({ 66 * 13, 66, 66 , 66 });
+	walkDown.PushBack({ 66 * 14, 66, 66 , 66});
+	walkDown.PushBack({ 66 * 15, 66, 66 , 66 });
 	walkDown.speed = 0.1f;
+	walkDown.loop = true;
 	currentAnim = &idle;
+
+	collider = app->colManager->CreateRectangle(position.x, position.y, 32, 32, bodyType::DYNAMIC);
+	collider->listener = (Module*)app->entMan;
+	collider->eListener = this;
+	collider->body->SetFixedRotation(true);
 }
 
 Player::~Player()
 {
 }
+bool Player::Start()
+{
+	if (!collider)
+	{
+		collider = app->colManager->CreateRectangle(position.x, position.y, 32, 32, bodyType::DYNAMIC);
+		collider->listener = (Module*)app->entMan;
+		collider->eListener = this;
+		collider->body->SetFixedRotation(true);
+	}
+	//texture = app->tex->Load("Assets/Textures/Sprites/characters.png");
+	return true;
+}
 
 bool Player::Update(float dt)
 {
 	bool ret = true;
-	
+	if(app->GetDebug())
+		printf("x:%i y:%i\n", position.x, position.y);
+
 	UpdateCamera();
 	if (load)
 	{
 		texture  = app->tex->Load("Assets/Textures/Sprites/characters.png");
 		load = false;
 	}
-	
-	//app->render->DrawTexture(texture, 50, 50);
-	
-	/*if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) || (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) || (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) || (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT))
-	{
-		isWalking = true;
-	}*/
 
-	
-	
-	collider->SetPos(position.x, position.y);
-	if (canMove == true)
+	if (canMove)
 		UpdateInput(dt);
-
-	if (app->GetDebug())
-		speed = 0.2f;
 	else
-		speed = 0.1f;
+		collider->body->SetLinearVelocity({ 0.0f, 0.0f });
+
+	if (initDebug)
+	{
+		Debug();
+		initDebug = false;
+	}
 
 	return ret;
 }
 
+void Player::Debug()
+{
+	if (!app->GetDebug())
+	{
+		velocity = 10.0f;
+		app->colManager->world->DestroyBody(collider->body);
+		collider = app->colManager->CreateRectangleSensor(position.x, position.y, 32, 32, bodyType::DYNAMIC);
+	}
+	else
+	{
+		app->colManager->world->DestroyBody(collider->body);
+		collider = app->colManager->CreateRectangle(position.x, position.y, 32, 32, bodyType::DYNAMIC);
+		collider->listener = (Module*)app->entMan;
+		collider->eListener = this;
+		collider->body->SetFixedRotation(true);
+		velocity = 2.0f;
+	}
+}
+
 void Player::UpdateCamera()
 {
-
-	uint w, h;
-	app->win->GetWindowSize(w, h);
-	app->render->camera.x = w / 2 - position.x;
-	app->render->camera.y = h / 2 - position.y;
-	if (w / 2 - position.x < 0)
+		uint w, h;
+		app->win->GetWindowSize(w, h);
+		app->render->camera.x = w / 2 - position.x;
+		app->render->camera.y = h / 2 - position.y;
+	if (!app->GetDebug())
 	{
-		app->render->camera.y = 0;
-	}
-	if (h / 2 - position.y < 0)
-	{
-		app->render->camera.x = 0;
-	}
+		//Setting the camera borders	
+		uint32_t maxX = app->mapManager->maxX;
+		uint32_t minX = app->mapManager->minX;
+		uint32_t maxY = app->mapManager->maxY;
+		uint32_t minY = app->mapManager->minY;
 
+		if (position.x <= minX)
+			app->render->camera.x = w / 2 - minX;
+
+		if (position.y >= maxY)
+			app->render->camera.y = h / 2 - maxY;
+
+		if (position.x >= maxX)
+			app->render->camera.x = w / 2 - maxX;
+
+		if (position.y <= minY)
+			app->render->camera.y = h / 2 - minY;
+	}
 }
 
 bool Player::Draw(Render* render)
@@ -109,10 +157,11 @@ bool Player::Draw(Render* render)
 	if (!isBattle)
 	{
 		if(app->GetDebug())
-			render->DrawRectangle({ position.x, position.y,  64 , 64 }, 255, 255, 0);
-
-		//render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
-		app->render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
+			render->DrawRectangle({ position.x - 32, position.y - 32,  64 , 64 }, 255, 255, 0);
+		
+		SDL_RendererFlip flip = isWalkingLeft ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
+	
+		app->render->DrawTexture(texture, position.x - 32, position.y - 32, &currentAnim->GetCurrentFrame(), false, 1.0f, flip);
 
 		
 	}
@@ -120,11 +169,6 @@ bool Player::Draw(Render* render)
 	return ret;
 }
 
-bool Player::Start()
-{
-	collider = app->colManager->AddCollider({ position.x, position.y, 64, 64 }, Collider::Type::PLAYER, (Module*)app->entMan, this);
-	return true;
-}
 
 void Player::AddCapybara(Capybara* capybara)
 {
@@ -141,132 +185,81 @@ void Player::UpdateInput(float dt)
 	GamePad& pad = app->input->pads[0];
 	lastPos = position;
 
-	
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+		initDebug = true;
 
-	int inputs = 0;
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-		inputs++;
+
+	position.x = METERS_TO_PIXELS(collider->body->GetPosition().x);
+	position.y = METERS_TO_PIXELS(collider->body->GetPosition().y);
+
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-		inputs++;
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-		inputs++;
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-		inputs++;
-
-	
-	
-	float mov = speed * dt;
-	if (inputs > 1)
-		mov *= sqrt(2) / 2;		// sine of 45
-
-
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		position.x -= mov;
+		isWalkingLeft = true;
+		collider->body->SetLinearVelocity({ velocity, 0.0f });
 		if (currentAnim != &walkLeft)
 		{
 			walkLeft.Reset();
 			currentAnim = &walkLeft;
 		}
 	}
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		position.x += mov;
+		isWalkingLeft = false;
+		collider->body->SetLinearVelocity({ -velocity, 0.0f });
 		if (currentAnim != &walkRight)
 		{
 			walkRight.Reset();
 			currentAnim = &walkRight;
-
 		}
 	}
+
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
-		position.y -= mov;
+		collider->body->SetLinearVelocity({ 0.0f, -velocity });
 		if (currentAnim != &walkUp)
 		{
 			walkUp.Reset();
 			currentAnim = &walkUp;
-
 		}
 	}
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
-		position.y += mov;
+		collider->body->SetLinearVelocity({ 0.0f, velocity });
 		if (currentAnim != &walkDown)
 		{
 			walkDown.Reset();
 			currentAnim = &walkDown;
 		}
 	}
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE
-		&& app->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && pad.left_x == 0.0f || pad.left == false
-		&& pad.left_x == 0.0f || pad.right == false && pad.left_y == 0.0f || pad.down == false && pad.left_y == 0.0f || pad.up == false)
+
+	if (app->input->GetKey(SDL_SCANCODE_S) == KeyState::KEY_IDLE
+		&& app->input->GetKey(SDL_SCANCODE_W) == KeyState::KEY_IDLE
+		&& app->input->GetKey(SDL_SCANCODE_A) == KeyState::KEY_IDLE
+		&& app->input->GetKey(SDL_SCANCODE_D) == KeyState::KEY_IDLE)
 	{
-		if (currentAnim != &idle)
+		collider->body->SetLinearVelocity({ 0.0f,0.0f });
+		if (currentAnim != &idle) 
 		{
 			idle.Reset();
 			currentAnim = &idle;
 		}
 	}
 
-	//// GAMEPAD SUPPORT
-
-
-	//	// GAMEPAD SUPPORT
-
-	//	// Debug key for gamepad rumble testing purposes
-	//	if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-	//	{
-	//		app->input->ShakeController(0, 12, 0.33f);
-	//	}
-
-		// Implement gamepad support
-	
-		
-	LOG("%2.2f", pad.left_x);
-	LOG("%2.2f", pad.left_y);
-	if (pad.left_x < 0.0f || pad.left == true)
+	if (app->GetDebug())
 	{
-		position.x -= speed * dt * -pad.left_x;
-		if (currentAnim != &walkLeft)
+		if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		{
-			walkLeft.Reset();
-			currentAnim = &walkLeft;
-
+			app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene1, 2);
+		}
+		if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		{
+			app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene2, 2);
+		}
+		if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		{
+			app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene3, 2);
 		}
 	}
-	if (pad.left_x > 0.0f || pad.right == true)
-	{
-		position.x += speed * dt * pad.left_x;
-		if (currentAnim != &walkRight)
-		{
-			walkRight.Reset();
-			currentAnim = &walkRight;
-
-		}
-	}
-	if (pad.left_y > 0.0f || pad.down == true)
-	{
-		position.y += speed * dt * pad.left_y;
-		if (currentAnim != &walkDown)
-		{
-			walkDown.Reset();
-			currentAnim = &walkDown;
-		}
-	}
-
-	if (pad.left_y < 0.0f || pad.up == true)
-	{
-		position.y -= speed * dt * -pad.left_y;
-		if (currentAnim != &walkUp)
-		{
-			walkUp.Reset();
-			currentAnim = &walkUp;
-
-		}
-	}
-		
-	
 	
 }
 
@@ -284,7 +277,8 @@ bool Player::LoadState(pugi::xml_node& node)
 {
 	position.x = node.child("position").attribute("x").as_float();
 	position.y = node.child("position").attribute("y").as_float();
-	
+
+	collider->body->SetTransform({ PIXEL_TO_METERS(position.x), PIXEL_TO_METERS(position.y) }, 0.0f);
 	isBattle = node.attribute("isBattle").as_bool();
 	money = node.attribute("money").as_int();
 
@@ -299,7 +293,6 @@ bool Player::SaveState(pugi::xml_node& node)
 	pugi::xml_node position = node.append_child("position");
 	position.append_attribute("x").set_value(this->position.x);
 	position.append_attribute("y").set_value(this->position.y);
-	
 	node.append_attribute("id").set_value(id);
 	node.append_attribute("isBattle").set_value(isBattle);
 	node.append_attribute("money").set_value(money);
@@ -319,82 +312,16 @@ void Player::SetCombat(bool value)
 	this->isBattle = value;
 }
 
-
-void Player::OnCollision(Collider* c1, Collider* c2)
+void Player::OnCollision(PhysBody* c1, PhysBody* c2)
 {
-	if (!app->GetDebug() || c2->type == Collider::NPC)
-	{
-		if (c1->type == Collider::PLAYER)
-		{
-			if (c2->type == Collider::WALL|| c2->type == Collider::NPC)
-			{
-				wallsDetected++;
-
-				int difference = c1->rect.w;
-
-				if (c1->GetPos().x <= c2->GetPos().x)
-				{
-					if (difference > c1->rect.w - (c2->rect.x - c1->rect.x))
-					{
-						difference = c1->rect.w - (c2->rect.x - c1->rect.x);
-						lastKeyPressed = SDL_SCANCODE_D;
-					}
-				}
-				else
-				{
-					if (difference > c2->rect.w - (c1->rect.x - c2->rect.x))
-					{
-						difference = c2->rect.w - (c1->rect.x - c2->rect.x);
-						lastKeyPressed = SDL_SCANCODE_A;
-					}
-				}
-				if (c1->GetPos().y <= c2->GetPos().y)
-				{
-					if (difference > c1->rect.h - (c2->rect.y - c1->rect.y))
-					{
-						difference = c1->rect.h - (c2->rect.y - c1->rect.y);
-						lastKeyPressed = SDL_SCANCODE_S;
-					}
-				}
-				else
-				{
-					if (difference > c2->rect.h - (c1->rect.y - c2->rect.y))
-					{
-						difference = c2->rect.h - (c1->rect.y - c2->rect.y);
-						lastKeyPressed = SDL_SCANCODE_W;
-					}
-				}
-
-				switch (lastKeyPressed)
-				{
-				case SDL_SCANCODE_A:	position.x++;	break;
-				case SDL_SCANCODE_D:	position.x--;	break;
-				case SDL_SCANCODE_W:	position.y++;	break;
-				case SDL_SCANCODE_S:	position.y--;	break;
-				default:
-					break;
-				}
-				
-				
-
-				/*if (c1->GetPos().x <= c2->GetPos().x)
-					position.x--;
-				if (c1->GetPos().x >= c2->GetPos().x)
-					position.x++;
-				if (c1->GetPos().y <= c2->GetPos().y)
-					position.y--;
-				if (c1->GetPos().y >= c2->GetPos().y)
-					position.y++;*/
-
-
-
-			}
-			
-		}
-	}
+	printf("Collision with player\n");
 }
 
 bool Player::CleanUp()
 {
+	app->tex->UnLoad(texture);
+	//app->colManager->world->DestroyBody(collider->body);
+	load = true;
+
 	return true;
 }

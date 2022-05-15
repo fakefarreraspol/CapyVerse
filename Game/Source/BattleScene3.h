@@ -27,6 +27,7 @@ private:
 public:
 	int randomNum = 0;
 	SDL_Texture* background;
+	int SFXchirp;
 };
 
 

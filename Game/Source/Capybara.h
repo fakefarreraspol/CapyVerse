@@ -92,9 +92,13 @@ public:
 	bool SaveState(pugi::xml_node&);
 
 	void SetCombat(bool value);
+	bool GetCombat();
 	bool CleanUp();
 
 	bool enemy = false;
+	Animation anim;
+	SString capyName;
+	Animation side;
 protected:
 	//Update the stats by the lvl
 	void UpdateStats();
@@ -136,9 +140,7 @@ protected:
 	int statusCounter = 0;									//To remove status and apply them
 	CapybaraTarget capybaraTarget = CapybaraTarget::NONE;	//The type of target of the ability
 
-
 	Animation* currentAnim;
-	Animation anim;
 	bool load = true;
 	int attackSFX;
 	int abilitySFX;

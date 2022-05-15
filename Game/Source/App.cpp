@@ -7,6 +7,7 @@
 #include "App.h"
 #include "Window.h"
 #include "Input.h"
+#include "Transitions.h"
 #include "Render.h"
 #include "Textures.h"
 #include "Audio.h"
@@ -18,7 +19,7 @@
 #include "DialogManager.h"
 #include "Pause.h"
 
-#include "Collisions.h"
+#include "Physics.h"
 #include "TaskQueue.h"
 
 #include "FadeToBlack.h"
@@ -27,8 +28,14 @@
 #include "BattleScene1.h"
 #include "BattleScene2.h"
 #include "BattleScene3.h"
+#include "BattleScene4.h"
+#include "BattleScene5.h"
+#include "BattleScene6.h"
+#include "BattleScene7.h"
 #include "EOBScene.h"
+#include "QuestManager.h"
 #include "Map.h"
+#include "End.h"
 
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
@@ -39,12 +46,14 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	render = new Render(true);
 	tex = new Textures(true);
 	audio = new Audio(true);
+	transitions = new Transitions(true);
 	mapManager = new Map(true);
 	entMan = new EntityManager(true);
+	questManager = new QuestManager(false);
 	fonts = new Fonts(true);
 	guiManager = new GuiManager(true);
-	dialogManager = new DialogManager(true);
-	colManager = new Collisions(true);
+	dialogManager = new DialogManager(false);
+	colManager = new Physics(true);
 	fadeToBlack = new FadeToBlack(true);
 	intro = new Intro(true);
 	mainMenu = new MainMenu(false);
@@ -53,6 +62,11 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	battleScene1 = new BattleScene1(false);
 	battleScene2 = new BattleScene2(false);
 	battleScene3 = new BattleScene3(false);
+	battleScene4 = new BattleScene4(false);
+	battleScene5 = new BattleScene5(false);
+	battleScene6 = new BattleScene6(false);
+	battleScene7 = new BattleScene7(false);
+	end = new End(false);
 	eobScene = new EOBScene(false);
 	pauseMenu = new Pause(false);
 	
@@ -67,17 +81,24 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(intro);
 	AddModule(mainMenu);
+	AddModule(questManager);
 	AddModule(dialogManager);
 	AddModule(scene);
 	AddModule(battleScene1);
 	AddModule(battleScene2);
 	AddModule(battleScene3);
+	AddModule(battleScene4);
+	AddModule(battleScene5);
+	AddModule(battleScene6);
+	AddModule(battleScene7);
 	AddModule(battleManager);
+	AddModule(end);
 	AddModule(eobScene);
 	AddModule(entMan);
 	AddModule(pauseMenu);
 	AddModule(colManager);
 	AddModule(guiManager);
+	AddModule(transitions);
 	AddModule(fadeToBlack);
 	
 	// Render last to swap buffer
@@ -220,7 +241,7 @@ void App::PrepareUpdate()
 	lastSecFrameCount++;
 
 	// L08: DONE 4: Calculate the dt: differential time since last frame
-	dt = frameDuration->ReadMs();
+	dt = (float)frameDuration->ReadMs();
 	frameDuration->Start();
 
 	if (fpsCap)
@@ -254,14 +275,14 @@ void App::FinishUpdate()
 		framesPerSecond, averageFps, dt, app->render->vsync ? "on" : "off");
 
 	// L08: DONE 2: Use SDL_Delay to make sure you get your capped framerate
-	float delay = float(maxFrameRate) - frameDuration->ReadMs();
+	float delay = float(maxFrameRate) - (float)frameDuration->ReadMs();
 	//LOG("F: %f Delay:%f", frameDuration->ReadMs(), delay);
 
 	// L08: DONE 3: Measure accurately the amount of time SDL_Delay() actually waits compared to what was expected
 	if (!app->render->vsync) {
 		PerfTimer* delayt = new PerfTimer();
 		delayt->Start();
-		if (maxFrameRate > 0 && delay > 0) SDL_Delay(delay);
+		if (maxFrameRate > 0 && delay > 0) SDL_Delay((Uint32)delay);
 		//LOG("Expected %f milliseconds and the real delay is % f", delay, delayt->ReadMs());
 	}
 	if (debug)
@@ -288,6 +309,8 @@ bool App::PreUpdate()
 		}
 		if (item->data->IsEnabled())
 			ret = item->data->PreUpdate();
+		if (!ret)
+			LOG("Module %s, has exited the app, during the preupdate", item->data->name.GetString());
 	}
 
 	return ret;
@@ -311,6 +334,8 @@ bool App::DoUpdate()
 		}
 		if (item->data->IsEnabled())
 			ret = item->data->Update(dt);
+		if (!ret)
+			LOG("Module %s, has exited the app, during the update", item->data->name.GetString());
 	}
 	return ret;
 }
@@ -332,6 +357,8 @@ bool App::PostUpdate()
 		}
 		if (item->data->IsEnabled())
 			ret = item->data->PostUpdate();
+		if (!ret)
+			LOG("Module %s, has exited the app, during the post update", item->data->name.GetString());
 	}
 
 	return ret;
@@ -430,6 +457,7 @@ bool App::LoadGame()
 	while (item != NULL && ret == true)
 	{
 		ret = item->data->LoadState(gameStateFile.child("game_state").child(item->data->name.GetString()));
+		printf("Module %s has returned false and quit the loading\n", item->data->name.GetString());
 		item = item->next;
 	}
 

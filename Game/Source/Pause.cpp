@@ -181,8 +181,8 @@ bool Pause::Update(float dt)
 			}
 		}
 		currentControl->data->state = GuiControlState::FOCUSED;
-		app->render->DrawRectangle({ 540, 210, 195, 300 }, 170, 170, 170, 120);
-		app->render->DrawTexture(arrow, currentControl->data->bounds.x - 30, currentControl->data->bounds.y - 3);
+		app->render->DrawRectangle({ 540, 210, 195, 300 }, 170, 170, 170, 120, true, false);
+		app->render->DrawTexture(arrow, currentControl->data->bounds.x - 30, currentControl->data->bounds.y - 3, NULL, true);
 	}
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || pad.start)
 	{
@@ -197,7 +197,13 @@ bool Pause::Update(float dt)
 		app->audio->volFX = 10;
 		app->audio->volMusic = 10;
 	}
-	
+	if (!app->pause)
+	{
+		for (int i = 0; i < menuBtns.Count(); i++)
+		{
+			menuBtns.At(i)->data->state = GuiControlState::DISABLED;
+		}
+	}
 
 	return true;
 }
@@ -214,14 +220,14 @@ bool Pause::PostUpdate()
 // Called before quitting
 bool Pause::CleanUp()
 {
-	LOG("Freeing scene");
+	LOG("Unloading Pause");
 	app->guiManager->Disable();
 
 	app->tex->UnLoad(arrow);
 	menuBtns.Clear();
 	optionsBtns.Clear();
 	exitBtns.Clear();
-
+	LOG("Succesfully unloaded Pause");
 
 	return true;
 }

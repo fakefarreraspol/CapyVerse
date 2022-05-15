@@ -26,7 +26,7 @@ class EntityManager;
 class BattleManager;
 class GuiManager;
 class DialogManager;
-class Collisions;
+class Physics;
 class Task;
 class FadeToBlack;
 class Fonts;
@@ -34,8 +34,15 @@ class Pause;
 class BattleScene1;
 class BattleScene2;
 class BattleScene3;
+class BattleScene4;
+class BattleScene5;
+class BattleScene6;
+class BattleScene7;
+class End;
 class EOBScene;
 class Map;
+class Transitions;
+class QuestManager;
 
 class App
 {
@@ -103,29 +110,35 @@ public:
 	// Settings
 	bool pause = false;
 	// Modules
-	Window* win;
-	Input* input;
-	Render* render;
-	Textures* tex;
-	Audio* audio;
-	Intro* intro;
-	MainMenu* mainMenu;
-	Scene* scene;
-	EntityManager* entMan;
-	Fonts* fonts;
-	GuiManager* guiManager;
-	Map* mapManager;
-	DialogManager* dialogManager;
-	Collisions* colManager;
-	Task* taskManager;
-
-	Pause* pauseMenu;
-	FadeToBlack* fadeToBlack;
-	BattleManager* battleManager;
-	BattleScene1* battleScene1;
-	BattleScene2* battleScene2;
-	BattleScene3* battleScene3;
-	EOBScene* eobScene;
+	Window* win = nullptr;
+	Input* input = nullptr;
+	Render* render = nullptr;
+	Transitions* transitions = nullptr;
+	Textures* tex = nullptr;
+	Audio* audio = nullptr;
+	Intro* intro = nullptr;
+	MainMenu* mainMenu = nullptr;
+	Scene* scene = nullptr;
+	EntityManager* entMan = nullptr;
+	Fonts* fonts = nullptr;
+	GuiManager* guiManager = nullptr;
+	Map* mapManager = nullptr;
+	DialogManager* dialogManager = nullptr;
+	Physics* colManager = nullptr;
+	Task* taskManager = nullptr;
+	QuestManager* questManager = nullptr;
+	Pause* pauseMenu = nullptr;
+	FadeToBlack* fadeToBlack = nullptr;
+	BattleManager* battleManager = nullptr;
+	BattleScene1* battleScene1 = nullptr;
+	BattleScene2* battleScene2 = nullptr;
+	BattleScene3* battleScene3 = nullptr;
+	BattleScene4* battleScene4 = nullptr;
+	BattleScene5* battleScene5 = nullptr;
+	BattleScene6* battleScene6 = nullptr;
+	BattleScene7* battleScene7 = nullptr;
+	End* end = nullptr;
+	EOBScene* eobScene = nullptr;
 
 	bool fpsCap = false;
 	float dt = 0.0f;

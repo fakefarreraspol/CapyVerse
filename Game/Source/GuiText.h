@@ -19,6 +19,8 @@ public:
 
 	const char* GetText();
 
+
+	bool useCamera = false;
 private:
 	bool blink = false;
 	int font;

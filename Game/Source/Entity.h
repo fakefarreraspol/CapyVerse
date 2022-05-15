@@ -16,7 +16,9 @@ enum class EntityType
 	ITEM,
 	EQUIPMENT,
 	ENEMY,
-	NPC
+	NPC,
+	LEVER,
+	BRIDGE
 };
 
 class Entity
@@ -25,7 +27,7 @@ public:
 
 	Entity(EntityType type, uint32 id, const char* name, iPoint position) : type(type), active(true), id(id), position(position)
 	{
-		this->name.Create(name);
+		this->capyName.Create("%s_%i", name, id);
 	}
 	
 	iPoint& GetPosition() 
@@ -64,7 +66,7 @@ public:
 		return true;
 	}
 
-	void Entity::Enable()
+	void Enable()
 	{
 		if (!active)
 		{
@@ -73,7 +75,7 @@ public:
 		}
 	}
 
-	void Entity::Disable()
+	void Disable()
 	{
 		if (active)
 		{
@@ -82,13 +84,13 @@ public:
 		}
 	}
 
-	virtual void OnCollision(Collider* c1, Collider* c2) {
+	virtual void OnCollision(PhysBody* c1, PhysBody* c2) {
 
 	};
 
 public:
 
-	SString name;
+	SString capyName;
 	EntityType type;
 	bool active = true;
 	uint32 id;            
