@@ -156,11 +156,11 @@ bool MainMenu::Update(float dt)
 
 void MainMenu::DrawMenu()
 {
-	SDL_Rect recttt{ 0, 43, 188, 230 };
-	app->render->DrawTexture(menus, 75, 290, &recttt, true);
+	SDL_Rect recttt{ 0, 0, 188, 230 };
+	app->render->DrawTexture(menus, 75, 285, &recttt, true);
 	if (optionsB)
 	{
-		SDL_Rect rect{ 644, 43, 413, 258 };
+		SDL_Rect rect{ 270, 257, 411, 152 };
 		app->render->DrawTexture(menus, 325, 250, &rect, true);
 		returnPlBtn->state = GuiControlState::DISABLED;
 	}
@@ -170,8 +170,8 @@ void MainMenu::DrawMenu()
 	}
 	if (play)
 	{
-		SDL_Rect rect{ 0, 43, 188, 230 };
-		app->render->DrawTexture(menus, 275, 290, &rect, true);
+		SDL_Rect rect{ 0, 0, 188, 230 };
+		app->render->DrawTexture(menus, 290, 285, &rect, true);
 		returnOPBtn->state = GuiControlState::DISABLED;
 	}
 	else
@@ -180,14 +180,13 @@ void MainMenu::DrawMenu()
 	}
 	if (creditsB)
 	{
-		SDL_Rect rect{ 644, 43, 413, 258 };
+		SDL_Rect rect{ 643, 0, 413, 257 };
 		app->render->DrawTexture(menus, 400, 200, &rect, true);
 	}
 	if (exit)
 	{
-		SDL_Rect rect{ 1057, 43, 327, 87 };
+		SDL_Rect rect{ 1056, 0, 328, 87 };
 		app->render->DrawTexture(menus, 450, 300, &rect, true);
-
 	}
 	else
 	{
