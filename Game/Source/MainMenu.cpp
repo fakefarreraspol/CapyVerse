@@ -11,7 +11,7 @@
 #include "Audio.h"
 #include "Scene.h"
 #include "Pause.h"
-
+#include "easings.h"
 #include "Log.h"
 
 MainMenu::MainMenu(bool startEnabled) : Module(startEnabled)
@@ -134,8 +134,12 @@ bool MainMenu::Update(float dt)
 {
 	app->render->DrawTexture(background, 0, 0, NULL, true);
 
-	
-	app->render->DrawTexture(title, 0, 0, NULL, true);
+	if (currentPositionY < finalPositionY)
+	{
+		currentPositionY = EaseBounceInOut(currentTime, startPositionY, finalPositionY - startPositionY, duration);
+		currentTime++;
+	}
+	app->render->DrawTexture(title, 0, currentPositionY, NULL, true);
 	
 	
 	app->render->DrawTexture(arrow, currentControl->data->bounds.x - 30, currentControl->data->bounds.y - 3, NULL, true);
@@ -145,6 +149,54 @@ bool MainMenu::Update(float dt)
 	app->audio->volFX = soundSlrd->value;
 	app->audio->volMusic = musicSldr->value;
 
+	UpdateInput();
+	DrawMenu();
+	return true;
+}
+
+void MainMenu::DrawMenu()
+{
+	SDL_Rect recttt{ 0, 43, 188, 230 };
+	app->render->DrawTexture(menus, 75, 290, &recttt, true);
+	if (optionsB)
+	{
+		SDL_Rect rect{ 644, 43, 413, 258 };
+		app->render->DrawTexture(menus, 325, 250, &rect, true);
+		returnPlBtn->state = GuiControlState::DISABLED;
+	}
+	else
+	{
+		returnOPBtn->state = GuiControlState::DISABLED;
+	}
+	if (play)
+	{
+		SDL_Rect rect{ 0, 43, 188, 230 };
+		app->render->DrawTexture(menus, 275, 290, &rect, true);
+		returnOPBtn->state = GuiControlState::DISABLED;
+	}
+	else
+	{
+		returnPlBtn->state = GuiControlState::DISABLED;
+	}
+	if (creditsB)
+	{
+		SDL_Rect rect{ 644, 43, 413, 258 };
+		app->render->DrawTexture(menus, 400, 200, &rect, true);
+	}
+	if (exit)
+	{
+		SDL_Rect rect{ 1057, 43, 327, 87 };
+		app->render->DrawTexture(menus, 450, 300, &rect, true);
+
+	}
+	else
+	{
+		noBtn->state = GuiControlState::DISABLED;
+	}
+}
+
+void MainMenu::UpdateInput()
+{
 	GamePad& pad = app->input->pads[0];
 	if (yesBtn->state == GuiControlState::DISABLED)
 	{
@@ -209,44 +261,6 @@ bool MainMenu::Update(float dt)
 		}
 	}
 	currentControl->data->state = GuiControlState::FOCUSED;
-	SDL_Rect recttt{ 0, 43, 188, 230 };
-	app->render->DrawTexture(menus, 75, 290, &recttt, true);
-	if (optionsB)
-	{
-		SDL_Rect rect{ 644, 43, 413, 258 };
-		app->render->DrawTexture(menus, 325, 250, &rect, true);
-		returnPlBtn->state = GuiControlState::DISABLED;
-	}
-	else
-	{
-		returnOPBtn->state = GuiControlState::DISABLED;
-	}
-	if (play)
-	{
-		SDL_Rect rect{ 0, 43, 188, 230 };
-		app->render->DrawTexture(menus, 275, 290, &rect, true);
-		returnOPBtn->state = GuiControlState::DISABLED;
-	}
-	else
-	{
-		returnPlBtn->state = GuiControlState::DISABLED;
-	}
-	if (creditsB)
-	{
-		SDL_Rect rect{ 644, 43, 413, 258 };
-		app->render->DrawTexture(menus, 400, 200, &rect, true);
-	}
-	if (exit)
-	{
-		SDL_Rect rect{ 1057, 43, 327, 87 };
-		app->render->DrawTexture(menus, 450, 300, &rect, true);
-
-	}
-	else
-	{
-		noBtn->state = GuiControlState::DISABLED;
-	}
-	return true;
 }
 
 // Called each loop iteration
