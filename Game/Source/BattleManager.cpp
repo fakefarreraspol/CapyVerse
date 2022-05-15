@@ -45,6 +45,9 @@ bool BattleManager::Start()
 	LOG("Starting battle manager");
 	app->guiManager->Enable();
 	battlewonSFX = app->audio->LoadFx("Assets/Audio/Fx/battle-won.wav");
+	attack01SFX = app->audio->LoadFx("Assets/Audio/Fx/capybara-attack1.wav");
+	attack02SFX = app->audio->LoadFx("Assets/Audio/Fx/capybara-attack2.wav");
+	attack03SFX = app->audio->LoadFx("Assets/Audio/Fx/capybara-attack3.wav");
 	app->pauseMenu->Enable();
 	attackBtn =	(GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 0, "Attack", { 135, 585, 75, 21 }, this);
 	abilityBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Ability", { 135, 615, 75, 21 }, this);
@@ -561,16 +564,19 @@ bool BattleManager::OnGuiMouseClickEvent(GuiControl* control)
 		if (control->id == 4)
 		{
 			currentCapybara->data->Attack(enemies.At(0)->data);
+			app->audio->PlayFx(app->battleManager->attack01SFX);
 			
 		}
 		if (control->id == 5)
 		{
 			currentCapybara->data->Attack(enemies.At(1)->data);
+			app->audio->PlayFx(app->battleManager->attack02SFX);
 		
 		}
 		if (control->id == 6)
 		{
 			currentCapybara->data->Attack(enemies.At(2)->data);
+			app->audio->PlayFx(app->battleManager->attack03SFX);
 		
 		}
 		if (control->id >= 4 && control->id <= 6)

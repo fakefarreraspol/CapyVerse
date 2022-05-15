@@ -24,7 +24,7 @@ BattleScene3::~BattleScene3()
 bool BattleScene3::Awake(pugi::xml_node&)
 {
 
-
+    SFXchirp = app->audio->LoadFx("Assets/Audio/Fx/capybara-chirp.wav");
     enemy = (Enemy*)app->entMan->CreateEntity(EntityType::ENEMY, 12, { 400, 300 }, "Erin");
 
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 11, { 928, 305 }, "Chinabara"));
@@ -159,7 +159,7 @@ bool BattleScene3::Update(float dt)
                 break;
             }
         }*/
-
+        app->audio->PlayFx(SFXchirp);
         app->battleManager->EndTurn();
     }
 
@@ -167,6 +167,7 @@ bool BattleScene3::Update(float dt)
     {
         app->fadeToBlack->MFadeToBlack(this, (Module*)app->eobScene, 2);
     }
+    
     app->render->DrawTexture(background, 0, 0);
     return ret;
 }
