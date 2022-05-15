@@ -92,10 +92,12 @@ bool Scene::Start()
 		PhysBody* end= app->colManager->CreateRectangleSensor(2600, 870, 32, 128, bodyType::STATIC);
 		end->listener = this;
 	}
+	bridge->Enable();
 	for (int i = 0; i < levers.Count(); i++)
 	{
 		levers.At(i)->data->SetQuest(6);
 		levers.At(i)->data->SetListener(bridge);
+		levers.At(i)->data->Enable();
 	}
 	
 	if (!player)
