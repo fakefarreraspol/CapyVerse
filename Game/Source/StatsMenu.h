@@ -41,7 +41,7 @@ private:
 	List<GuiControl*> capyBtns;
 	List<GuiControl*> teamBtns;
 
-	List<GuiControl*> &currentControls;
+	List<GuiControl*> currentControls;
 
 	int selectorOffset;
 

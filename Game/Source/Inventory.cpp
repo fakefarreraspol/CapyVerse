@@ -16,10 +16,14 @@ void Inventory:: DeleteEmpty()
 	ListItem<ItemHolder*>* slot = slots.start;
 	while (slot)
 	{
-		if (slot->data->cuantity == 0)
+		if (slot->data->cuantity <= 0)
 		{
 			ListItem<ItemHolder*>* del = slot;
 			slot = del->next;
+
+			if (slot->data->item->beingUsed)
+				del->data->item = nullptr;
+
 			slots.Del(del);
 			continue;
 		}
@@ -54,6 +58,17 @@ void Inventory::AddItem(Item* item, int n)
 	}
 
 
+}
+
+void Inventory::DelItem(Item* item, int n)
+{
+	ListItem<ItemHolder*>* i = slots.start;
+	while (i)
+	{
+		if (i->data->item->type == item->type)
+			i->data->cuantity -= n;
+		i = i->next;
+	}
 }
 
 bool Inventory::CleanUp()

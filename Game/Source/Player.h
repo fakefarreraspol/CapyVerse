@@ -50,9 +50,7 @@ public:
 	bool CleanUp();
 	
 	/*SDL_Rect playerWalkRight[4];*/
-	
-public:
-	Inventory* inventory;
+
 
 private:
 	uint16_t money = 0;

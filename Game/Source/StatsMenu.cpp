@@ -148,7 +148,7 @@ bool StatsMenu::Update(float dt)
 		bounds = { optionsBounds.x - cBounds.x,optionsBounds.y - cBounds.y,optionsBounds.w,optionsBounds.h };
 		app->render->DrawRectangle(bounds, 0, 0, 0, 255, true, true);
 
-		Inventory* inventory = app->scene->player->inventory;
+		Inventory* inventory = app->entMan->inventory;
 		Item* currentItem = nullptr;
 
 		if (inventory->slots.Count() == 0)
@@ -217,7 +217,8 @@ bool StatsMenu::Update(float dt)
 		
 	}
 
-	app->render->DrawTexture(arrow, currentControl->data->bounds.x - 30, currentControl->data->bounds.y - 3, NULL, true);
+	if(currentControl)
+		app->render->DrawTexture(arrow, currentControl->data->bounds.x - 30, currentControl->data->bounds.y - 3, NULL, true);
 
 	// stats menu
 
@@ -266,7 +267,7 @@ bool StatsMenu::OnGuiMouseClickEvent(GuiControl* control)
 		int offset = 10;
 		SDL_Rect initialBounds = { subBounds.x + 33,subBounds.y + 10, subBounds.w - 60-detailsBounds.w,20 };
 
-		Inventory* inventory = app->scene->player->inventory;
+		Inventory* inventory = app->entMan->inventory;
 
 		int items = 20;
 		if (items > inventory->slots.Count())

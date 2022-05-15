@@ -3,7 +3,18 @@
 
 #include "Entity.h"
 #include "Point.h"
-#include "Capybara.h"
+
+class Capybara;
+
+struct ItemStats
+{
+	int hp = 1;
+	int mp = 1;
+	int strenght = 1;
+	int speed = 1;
+	int armor = 1;
+	int intelligence = 1;
+};
 
 enum class ItemType
 {
@@ -29,15 +40,24 @@ enum class ItemType
 	LIGHT_NECKLACE
 };
 
+enum class ItemCategory
+{
+	OBJECT,
+	CONSUMABLE,
+	ARMOR,
+	WEAPON,
+	NECKLACE
+};
+
 class Item : public Entity
 {
 public:
-
-	Item(uint32 id, iPoint bounds, const char* name, ItemType type): Entity(EntityType::ITEM,id,name,bounds)
+	
+	Item::Item(uint32 id, iPoint bounds, const char* name, ItemType type) : Entity(EntityType::ITEM, id, name, bounds), type(type)
 	{
 		this->type = type;
-	};
-	~Item() {};
+	}
+	~Item() {}
 
 	virtual bool Update(float dt) { return true; }
 
@@ -45,19 +65,16 @@ public:
 
 	virtual bool CleanUp() { return true; }
 	
-	virtual bool GetPicked(Capybara* capy) { return true; }
-
-	virtual void UnPick() {}
-
 	virtual void Use(Capybara* capy) {}
 	
 	virtual void Disable() {}
+
 public:
 	ItemType type = ItemType::NONE;
-	Capybara* capy = nullptr;
 	bool beingUsed = false;   
 	SString description;
-
+	ItemStats stats;
+	ItemCategory category;
 };
 
 

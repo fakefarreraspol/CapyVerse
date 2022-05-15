@@ -18,8 +18,7 @@ struct ItemHolder
 	}
 	~ItemHolder()
 	{
-		app->entMan->DestroyEntity(item);
-		item = nullptr;
+		CleanUp();
 	}
 	bool use(Capybara* capy)
 	{
@@ -31,7 +30,11 @@ struct ItemHolder
 		}
 		return true;
 	}
-
+	void CleanUp()
+	{
+		app->entMan->DestroyEntity((Entity*)item);
+		item = nullptr;
+	}
 
 };
 
@@ -43,7 +46,8 @@ public:
 	Inventory();
 	~Inventory();
 	void DeleteEmpty();
-	void AddItem(Item* item, int n);
+	void AddItem(Item* item, int n=1);
+	void DelItem(Item* item, int n=1);
 	bool CleanUp();
 
 	

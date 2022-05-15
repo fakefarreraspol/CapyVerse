@@ -58,7 +58,6 @@ Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType
 
 Player::~Player()
 {
-	inventory->CleanUp();
 }
 
 bool Player::Update(float dt)
@@ -67,7 +66,6 @@ bool Player::Update(float dt)
 	
 	printf("x:%i y:%i\n", position.x, position.y);
 
-	inventory->DeleteEmpty();
 
 	UpdateCamera();
 	if (load)
@@ -134,18 +132,16 @@ bool Player::Start()
 	collider->eListener = this;
 	collider->body->SetFixedRotation(true);
 
-	inventory = new Inventory();
-
 
 	// inventory test
-	Item* uwu01 = app->entMan->CreateEntity(0, { 0,0 }, "", ItemType::HP_POTION);
+	/*Item* uwu01 = app->entMan->CreateEntity(0, { 0,0 }, "", ItemType::HP_POTION);
 	Item* uwu02 = app->entMan->CreateEntity(0, { 0,0 }, "", ItemType::MP_POTION);
 	Item* uwu03 = app->entMan->CreateEntity(0, { 0,0 }, "", ItemType::REVIVE);
 
 
 	inventory->AddItem(uwu01, 1);
 	inventory->AddItem(uwu02, 2);
-	inventory->AddItem(uwu03, 3);
+	inventory->AddItem(uwu03, 3);*/
 	
 	return true;
 }

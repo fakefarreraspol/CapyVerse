@@ -108,7 +108,8 @@ project "Capyverse"
                                                     "Source/NPC.h", "Source/NPC.cpp",
                                                     "Source/Enemy.h", "Source/Enemy.cpp"},
 
-        ["Source/Modules/Gameplay/Entities/Items"] = {"Source/Item.h", "Source/Items.h",
+        ["Source/Modules/Gameplay/Entities/Items"] = {"Source/Item.h",
+                                                      "Source/Items.h", "Source/Items.cpp",
                                                       "Source/Inventory.h", "Source/Inventory.cpp",
                                                       "Source/ItemHolder.h"},
 

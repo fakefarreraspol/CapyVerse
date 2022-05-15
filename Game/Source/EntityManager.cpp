@@ -21,6 +21,7 @@
 #include "Pause.h"
 #include "Item.h"
 #include "Items.h"
+#include "Inventory.h"
 
 EntityManager::EntityManager(bool startEnabled) : Module(startEnabled)
 {
@@ -37,6 +38,7 @@ bool EntityManager::Awake(pugi::xml_node& config)
 	LOG("Loading Entity Manager");
 	bool ret = true;
 
+	inventory = new Inventory();
 	//L13: TODO 6: Initialize Entities from XML 
 	
 	return ret;
@@ -54,6 +56,8 @@ bool EntityManager::CleanUp()
 		ret = item->data->CleanUp();
 		item = item->prev;
 	}
+
+	delete inventory;
 
 	entities.Clear();
 
@@ -204,6 +208,8 @@ bool EntityManager::UpdateAll(float dt, bool doLogic)
 		}
 	}
 
+	inventory->DeleteEmpty();
+
 	return ret;
 }
 
@@ -278,4 +284,11 @@ void EntityManager::OnCollision(PhysBody* c1, PhysBody* c2)
 	if (c2->eListener != nullptr)
 		if (c2->eListener->active == true)
 			c2->eListener->OnCollision(c2, c1);
+}
+
+Entity* EntityManager::CloneItem(Item* item)
+{
+	Entity* ret = CreateEntity(item->id, item->position, item->name.GetString(), item->type);
+
+	return ret;
 }
