@@ -17,6 +17,8 @@
 #include "Pinkbara.h"
 #include "Simpbara.h"
 #include "Chadbara.h"
+#include "Lever.h"
+
 #include "Textures.h"
 #include "Pause.h"
 EntityManager::EntityManager(bool startEnabled) : Module(startEnabled)
@@ -79,6 +81,9 @@ Entity* EntityManager::CreateEntity(EntityType type, uint32 id, iPoint position,
 		break;
 	case EntityType::NPC:
 		entity = new NPC(position, id, name);
+		break;
+	case EntityType::LEVER:
+		entity = new Lever(position, id);
 		break;
 	default:
 	{

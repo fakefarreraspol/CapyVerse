@@ -16,7 +16,9 @@ enum class EntityType
 	ITEM,
 	EQUIPMENT,
 	ENEMY,
-	NPC
+	NPC,
+	LEVER,
+	DOOR
 };
 
 class Entity

@@ -28,6 +28,7 @@
 #include "Defs.h"
 #include "Log.h"
 #include "NPC.h"
+#include "Lever.h"
 
 Scene::Scene(bool startEnabled) : Module(startEnabled)
 {
@@ -47,6 +48,7 @@ bool Scene::Awake(pugi::xml_node& node)
 	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 800,400 }, "Sara"));
 	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 500,800 }, "Joe"));
 	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 900,700 }, "George"));
+
 
 	for (int i = 0; i < NPCs.Count(); i++)
 	{
@@ -78,7 +80,11 @@ bool Scene::Awake(pugi::xml_node& node)
 // Called before the first frame
 bool Scene::Start()
 {
+
 	app->questManager->Enable();
+	Lever* lever = (Lever*)app->entMan->CreateEntity(EntityType::LEVER, 0, { 500, 500 }, "");
+	lever->Enable();
+	lever->SetQuest(6);
 	if (!player)
 	{
 		player = (Player*)app->entMan->CreateEntity(EntityType::PLAYER, 1, { 650, 1440 }, "Player");

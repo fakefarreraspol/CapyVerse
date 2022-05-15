@@ -71,7 +71,6 @@ void NPC::OnCollision(PhysBody* c1, PhysBody* c2)
 		{
 			app->dialogManager->SetActiveDialog(dialog);
 			app->dialogManager->characterName->SetText(NPCname.GetString());
-			
 		}
 	}
 }

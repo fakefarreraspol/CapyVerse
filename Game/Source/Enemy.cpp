@@ -6,6 +6,7 @@
 #include "Physics.h"
 #include "FadeToBlack.h"
 #include "Textures.h"
+#include "QuestManager.h"
 
 Enemy::Enemy(iPoint position, uint32 id, const char* name) : NPC(position, id, name)
 {
@@ -73,7 +74,7 @@ void Enemy::OnCollision(PhysBody* c1, PhysBody* c2)
 {
 	if (c2->eListener)
 	{
-		if (c2->eListener->type == EntityType::PLAYER && !triggered)
+		if (c2->eListener->type == EntityType::PLAYER && !triggered && app->questManager->IsCompleated(0))
 		{
 			triggered = true;
 

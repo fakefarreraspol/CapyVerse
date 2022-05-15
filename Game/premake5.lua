@@ -109,6 +109,9 @@ project "Capyverse"
 
         ["Source/Modules/Gameplay/Entities/Items"] = {"Source/Item.h", "Source/Item.cpp"},
 
+        ["Source/Modules/Gameplay/Entities/Props"] = {"Source/Lever.h", "Source/Lever.cpp",
+                                                     "Source/Door.h", "Source/Door.cpp"},
+
         ["Source/Modules/Gameplay/Scenes"] = {"Source/Intro.h", "Source/Intro.cpp",
                                               "Source/MainMenu.h", "Source/MainMenu.cpp",
                                               "Source/Scene.h", "Source/Scene.cpp"},
