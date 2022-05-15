@@ -35,9 +35,15 @@ class Pause;
 class BattleScene1;
 class BattleScene2;
 class BattleScene3;
+class BattleScene4;
+class BattleScene5;
+class BattleScene6;
+class BattleScene7;
+class End;
 class EOBScene;
 class Map;
 class Transitions;
+class QuestManager;
 
 class App
 {
@@ -122,13 +128,18 @@ public:
 	DialogManager* dialogManager = nullptr;
 	Physics* colManager = nullptr;
 	Task* taskManager = nullptr;
-
+	QuestManager* questManager = nullptr;
 	Pause* pauseMenu = nullptr;
 	FadeToBlack* fadeToBlack = nullptr;
 	BattleManager* battleManager = nullptr;
 	BattleScene1* battleScene1 = nullptr;
 	BattleScene2* battleScene2 = nullptr;
 	BattleScene3* battleScene3 = nullptr;
+	BattleScene4* battleScene4 = nullptr;
+	BattleScene5* battleScene5 = nullptr;
+	BattleScene6* battleScene6 = nullptr;
+	BattleScene7* battleScene7 = nullptr;
+	End* end = nullptr;
 	EOBScene* eobScene = nullptr;
 
 	bool fpsCap = false;

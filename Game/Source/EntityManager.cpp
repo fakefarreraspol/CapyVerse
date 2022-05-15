@@ -17,6 +17,10 @@
 #include "Pinkbara.h"
 #include "Simpbara.h"
 #include "Chadbara.h"
+#include "Lever.h"
+#include "Bridge.h"
+
+
 #include "Textures.h"
 #include "Pause.h"
 #include "Item.h"
@@ -25,7 +29,7 @@
 
 EntityManager::EntityManager(bool startEnabled) : Module(startEnabled)
 {
-	name.Create("entitymanager");
+	name.Create("entity_manager");
 }
 
 // Destructor
@@ -67,8 +71,8 @@ bool EntityManager::CleanUp()
 Entity* EntityManager::CreateEntity(EntityType type, uint32 id, iPoint position, const char* name)
 {
 	Entity* entity = nullptr;
-	if(id == 0)
-		id = entities.Count();
+	
+	id = entities.Count();
 
 	switch (type)
 	{
@@ -84,6 +88,12 @@ Entity* EntityManager::CreateEntity(EntityType type, uint32 id, iPoint position,
 		break;
 	case EntityType::NPC:
 		entity = new NPC(position, id, name);
+		break;
+	case EntityType::LEVER:
+		entity = new Lever(position, id);
+		break;
+	case EntityType::BRIDGE:
+		entity = new Bridge(position, id);
 		break;
 	default:
 	{
@@ -221,16 +231,8 @@ bool EntityManager::LoadState(pugi::xml_node& data)
 	{
 		int entityId = entityNode.attribute("id").as_int();
 		ret = entities.At(entityId)->data->LoadState(entityNode);
+		printf("Succesfully loaded entity %s\n", entities.At(entityId)->data->capyName.GetString());
 	}
-
-	/*ListItem<Entity*>* item;
-	item = entities.start;
-
-	while (item != NULL && ret == true)
-	{
-		ret = item->data->LoadState(data.child(item->data->name.GetString()));
-		item = item->next;
-	}*/
 
 	return ret;
 }
@@ -243,10 +245,10 @@ bool EntityManager::SaveState(pugi::xml_node& data) const
 
 	while (item != NULL)
 	{
-		data.append_child(item->data->name.GetString());
+		data.append_child(item->data->capyName.GetString());
 		// = item->data->SaveState(data.child(item->data->name.GetString()));
 
-		ret = item->data->SaveState(data.child(item->data->name.GetString()));
+		ret = item->data->SaveState(data.child(item->data->capyName.GetString()));
 		item = item->next;
 	}
 

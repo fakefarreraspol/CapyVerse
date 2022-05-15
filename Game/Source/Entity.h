@@ -16,7 +16,9 @@ enum class EntityType
 	ITEM,
 	EQUIPMENT,
 	ENEMY,
-	NPC
+	NPC,
+	LEVER,
+	BRIDGE
 };
 
 class Entity
@@ -25,7 +27,7 @@ public:
 	Entity() {}
 	Entity(EntityType type, uint32 id, const char* name, iPoint position) : type(type), active(true), id(id), position(position)
 	{
-		this->name.Create(name);
+		this->capyName.Create("%s_%i", name, id);
 	}
 	
 	iPoint& GetPosition() 
@@ -88,7 +90,7 @@ public:
 
 public:
 
-	SString name;
+	SString capyName;
 	EntityType type;
 	bool active = true;
 	uint32 id;            

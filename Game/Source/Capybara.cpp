@@ -14,7 +14,7 @@
 Capybara::Capybara(CapybaraType capyType, uint32 id, iPoint position, const char* name) : Entity(EntityType::CAPYBARA, id, name, position), capybaraType(capyType)
 {
 	level = 1;
-
+	capyName.Create(name);
 	//Change this values in order to balance the game progression
 	xpNext = 50;
 	healthXLvl = 10;
@@ -209,7 +209,7 @@ void Capybara::Attack(Capybara* target)
 	target->Damage(finalDamage);
 	app->audio->PlayFx(attackSFX);
 	canAttack = false;
-	printf("%s id: %i DMG: %i to %s id: %i\n", this->name.GetString(), this->id, finalDamage, target->name.GetString(), target->id);
+	printf("%s id: %i DMG: %i to %s id: %i\n", this->capyName.GetString(), this->id, finalDamage, target->capyName.GetString(), target->id);
 }
 
 void Capybara::SetStatus(CapybaraStatus status)
@@ -355,7 +355,7 @@ void Capybara::LevelUp()
 
 	//Debug log
 	LOG("");
-	LOG("%s stats LVL: %i", name.GetString(), level);
+	LOG("%s stats LVL: %i", capyName.GetString(), level);
 	LOG("HP: %i MXHP: %i HPLVL: %i", health, maxHealth, capybaraStats.hp);
 	LOG("MP: %i MXMP: %i MPLVL: %i", mana, maxMana, capybaraStats.mp);
 	LOG("DMG: %i STRLVL: %i", damage, capybaraStats.strenght);
@@ -414,6 +414,11 @@ bool Capybara::SaveState(pugi::xml_node& node)
 void Capybara::SetCombat(bool value)
 {
 	isCombat = value;
+}
+
+bool Capybara::GetCombat()
+{
+	return isCombat;
 }
 
 bool Capybara::CleanUp()

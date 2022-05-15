@@ -171,11 +171,7 @@ bool Input::PreUpdate()
 			
 		}
 	}
-	GamePad& pad = pads[0];
-	if (pad.a)
-	{
-		for (int i = 0; i < 8; i++) LOG("chupapimuñaño");
-	}
+
 
 	//LOG("inputTimer %2.2f", inputTimer.ReadSec());
 	if ((isInputEnabled == false) && (inputSwitch == true))

@@ -37,10 +37,31 @@ public:
 
 
 private:
-	SDL_Texture* background = nullptr;
+	SDL_Texture* logo = nullptr;
+	SDL_Texture* upc = nullptr;
+	SDL_Texture * phrase = nullptr;
 	Timer counter;
 	int introSFX;
 	bool sound = true;
+
+	int upcCurrentTime = 0;
+	int upcDuration = 300;
+	int upcStartPositionX = -300;
+	int upcFinalPositionX = 0;
+	int upcCurrentPositionX = upcStartPositionX;
+
+
+	int logoCurrentTime = 0;
+	int logoDuration = 200;
+	int logoStartPositionY = 500;
+	int logoFinalPositionY = 0;
+	int logoCurrentPositionY = logoStartPositionY;
+
+	int phraseCurrentTime = 0;
+	int phraseDuration = 200;
+	int phraseStartPositionY = 500;
+	int phraseFinalPositionY = 0;
+	int phraseCurrentPositionY = phraseStartPositionY;
 };
 
 #endif // __INTRO_H__
