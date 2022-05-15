@@ -13,6 +13,7 @@
 #include "Audio.h"
 #include "Intro.h"
 #include "MainMenu.h"
+#include "StatsMenu.h"
 #include "Scene.h"
 #include "EntityManager.h"
 #include "GuiManager.h"
@@ -56,6 +57,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	colManager = new Physics(true);
 	fadeToBlack = new FadeToBlack(true);
 	intro = new Intro(true);
+	statsMenu = new StatsMenu(false);
 	mainMenu = new MainMenu(false);
 	scene = new Scene(false);
 	battleManager = new BattleManager(false);
@@ -95,6 +97,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(end);
 	AddModule(eobScene);
 	AddModule(entMan);
+	AddModule(statsMenu);
 	AddModule(pauseMenu);
 	AddModule(colManager);
 	AddModule(guiManager);

@@ -23,6 +23,10 @@
 
 #include "Textures.h"
 #include "Pause.h"
+#include "Item.h"
+#include "Items.h"
+#include "Inventory.h"
+
 EntityManager::EntityManager(bool startEnabled) : Module(startEnabled)
 {
 	name.Create("entity_manager");
@@ -38,6 +42,7 @@ bool EntityManager::Awake(pugi::xml_node& config)
 	LOG("Loading Entity Manager");
 	bool ret = true;
 
+	inventory = new Inventory();
 	//L13: TODO 6: Initialize Entities from XML 
 	
 	return ret;
@@ -56,6 +61,8 @@ bool EntityManager::CleanUp()
 		item = item->prev;
 	}
 
+	delete inventory;
+
 	entities.Clear();
 
 	return ret;
@@ -73,8 +80,6 @@ Entity* EntityManager::CreateEntity(EntityType type, uint32 id, iPoint position,
 		break;
 	case EntityType::PLAYER:
 		entity = new Player(position, id, name);
-		break;
-	case EntityType::ITEM:
 		break;
 	case EntityType::EQUIPMENT:
 		break;
@@ -100,6 +105,30 @@ Entity* EntityManager::CreateEntity(EntityType type, uint32 id, iPoint position,
 		AddEntity(entity);
 
 	return entity;
+}
+
+Item* EntityManager::CreateEntity(uint32 id, iPoint bounds, const char* name, ItemType type)
+{
+	Item* item = nullptr;
+	switch (type)
+	{
+	case ItemType::HP_POTION:		item = (Item*) new HpPotion(id, bounds, "HP POTION");		break;
+	case ItemType::MP_POTION:		item = (Item*) new MpPotion(id, bounds, "MP POTION");		break;
+	case ItemType::REVIVE:			item = (Item*) new Revive(id, bounds, "REVIVE");			break;
+
+
+	case ItemType::FREERUNERS_ARMOR:			item = (Item*) new FreeRunersArmor(id, bounds, "FREE RUNER'S ARMOR");			break;
+	case ItemType::BOW_SPELLDRINKER:			item = (Item*) new BowSpellDrinker(id, bounds, "BOW SPELLDRINKER");			break;
+	case ItemType::ARMOR_VULNERABILITY:			item = (Item*) new ArmorVulnerability(id, bounds, "ARMOR OF VULNERABILITY");			break;
+	}
+
+	if (item!=nullptr)
+	{
+		AddEntity(item);
+		item->Start();
+	}
+		
+	return item;
 }
 
 Capybara* EntityManager::CreateEntity(CapybaraType capybaraType, uint32 id, iPoint position, const char* name)
@@ -154,7 +183,22 @@ void EntityManager::AddEntity(Entity* entity)
 
 bool EntityManager::Start()
 {
-	
+	// inventory test
+	Item* uwu01 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::HP_POTION);
+	Item* uwu02 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::MP_POTION);
+	Item* uwu03 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::REVIVE);
+	Item* uwu04 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::FREERUNERS_ARMOR);
+	Item* uwu05 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::BOW_SPELLDRINKER);
+	Item* uwu06 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::ARMOR_VULNERABILITY);
+
+
+	inventory->AddItem(uwu01, 1);
+	inventory->AddItem(uwu02, 2);
+	inventory->AddItem(uwu03, 3);
+	inventory->AddItem(uwu04, 3);
+	inventory->AddItem(uwu05, 3);
+	inventory->AddItem(uwu06, 3);
+
 	return true;
 }
 
@@ -193,6 +237,8 @@ bool EntityManager::UpdateAll(float dt, bool doLogic)
 			ret = item->data->Update(dt);
 		}
 	}
+
+	inventory->DeleteEmpty();
 
 	return ret;
 }
@@ -260,4 +306,11 @@ void EntityManager::OnCollision(PhysBody* c1, PhysBody* c2)
 	if (c2->eListener != nullptr)
 		if (c2->eListener->active == true)
 			c2->eListener->OnCollision(c2, c1);
+}
+
+Entity* EntityManager::CloneItem(Item* item)
+{
+	Entity* ret = CreateEntity(item->id, item->position, item->capyName.GetString(), item->type);
+
+	return ret;
 }

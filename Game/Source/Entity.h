@@ -24,7 +24,7 @@ enum class EntityType
 class Entity
 {
 public:
-
+	Entity() {}
 	Entity(EntityType type, uint32 id, const char* name, iPoint position) : type(type), active(true), id(id), position(position)
 	{
 		this->capyName.Create("%s_%i", name, id);
