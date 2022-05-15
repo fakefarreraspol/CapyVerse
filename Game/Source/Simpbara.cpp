@@ -11,6 +11,7 @@ Simpbara::Simpbara(uint32 id, iPoint position) : Capybara(CapybaraType::SUPP, id
 	this->capybaraTarget = CapybaraTarget::ALLIES;
 	InitStats();
 	anim.PushBack({ 64, 517, 60, 59 });
+	anim.PushBack({ 0, 517, 60, 59 });
 	currentAnim = &anim;
 }
 

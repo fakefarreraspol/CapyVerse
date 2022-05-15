@@ -10,6 +10,8 @@
 #include "Point.h"
 #include "SString.h"
 
+
+class GuiPanel;
 enum class GuiControlType
 {
 	NONE = -1,
@@ -67,13 +69,20 @@ public:
 	{
 		observer = module;
 	}
-
+	void SetParent(GuiPanel* panel)
+	{
+		parent = panel;
+	}
 	bool NotifyObserver()
 	{
 		return observer->OnGuiMouseClickEvent(this);
 	}
 
 	virtual bool SetText(const char* text)
+	{
+		return true;
+	}
+	virtual bool CleanUp()
 	{
 		return true;
 	}
@@ -95,6 +104,7 @@ public:
 	//Font font;              // Text font
 
 	Module* observer = nullptr;        // Observer module (it should probably be an array/list)
+	GuiPanel* parent;		//Panel where the element is located
 };
 
 

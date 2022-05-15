@@ -27,6 +27,7 @@ private:
 
 public: 
 	int randomNum = 0;
+	int SFXchirp;
 };
 
 

@@ -68,7 +68,6 @@ void GuiManager::DestroyGuiControl(GuiControl* entity)
 			controls.Del(item);
 			break;
 		}
-
 	}
 
 	return;

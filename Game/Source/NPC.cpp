@@ -5,6 +5,7 @@
 #include "Input.h"
 #include "DialogManager.h"
 #include "Textures.h"
+#include "QuestManager.h"
 
 #include "Physics.h"
 
@@ -13,6 +14,7 @@
 NPC::NPC(iPoint position, uint32 id, const char* name) : Entity(EntityType::NPC, id, name, position)
 {
 	dialog = nullptr;
+	NPCname.Create(name);
 }
 
 NPC::~NPC()
@@ -29,16 +31,18 @@ bool NPC::Start()
 	trigger = app->colManager->CreateRectangleSensor(position.x, position.y, 128, 128, bodyType::STATIC);
 	trigger->listener = (Module*)app->entMan;
 	trigger->eListener = this;
+
+	texture = app->tex->Load("Assets/Textures/Sprites/characters.png");
 	return true;
 }
 
 bool NPC::Update(float dt)
 {
-	if (load)
+	/*if (load)
 	{
 		texture = app->tex->Load("Assets/Textures/Sprites/characters.png");
 		load = false;
-	}
+	}*/
 	
 	if (dialog->Finished() && triggerCounter >= 0)
 	{
@@ -55,8 +59,8 @@ bool NPC::Update(float dt)
 
 bool NPC::Draw(Render* render)
 {
-	SDL_Rect rect = { 17, 198, 66, 66 };
-	render->DrawTexture(texture, position.x - 32, position.y - 32, &rect);
+	SDL_Rect rect = { 83, 134, 32, 66 };
+	render->DrawTexture(texture, position.x - 16, position.y - 32, &rect);
 
 	return true;
 }
@@ -68,21 +72,27 @@ void NPC::OnCollision(PhysBody* c1, PhysBody* c2)
 		if (c2->eListener->type == EntityType::PLAYER && !dialog->Finished())
 		{
 			app->dialogManager->SetActiveDialog(dialog);
-			app->dialogManager->characterName->SetText(this->name.GetString());
+			app->dialogManager->characterName->SetText(NPCname.GetString());
 		}
 	}
 }
 
 bool NPC::CleanUp()
 {
+	if(collider)
+		app->colManager->world->DestroyBody(collider->body);
+	if(trigger)
+		app->colManager->world->DestroyBody(trigger->body);
+	app->tex->UnLoad(texture);
 	return true;
 }
 
 bool NPC::LoadState(pugi::xml_node& node)
 {
-	position.x = node.child("position").attribute("x").as_int();
+	/*position.x = node.child("position").attribute("x").as_int();
 	position.y = node.child("position").attribute("y").as_int();
-
+	collider->body->SetTransform({ PIXEL_TO_METERS(position.x), PIXEL_TO_METERS(position.y) }, 0.0f);
+	trigger->body->SetTransform({ PIXEL_TO_METERS(position.x), PIXEL_TO_METERS(position.y) }, 0.0f);*/
 	active = node.attribute("active").as_bool();
 	renderable = node.attribute("renderable").as_bool();
 
@@ -90,9 +100,9 @@ bool NPC::LoadState(pugi::xml_node& node)
 }
 bool NPC::SaveState(pugi::xml_node& node)
 {
-	pugi::xml_node position = node.append_child("position");
+	/*pugi::xml_node position = node.append_child("position");
 	position.append_attribute("x").set_value(this->position.x);
-	position.append_attribute("y").set_value(this->position.y);
+	position.append_attribute("y").set_value(this->position.y);*/
 
 	node.append_attribute("id").set_value(id);
 	node.append_attribute("active").set_value(active);
