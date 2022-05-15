@@ -73,14 +73,15 @@ bool Player::Start()
 		collider->eListener = this;
 		collider->body->SetFixedRotation(true);
 	}
+	//texture = app->tex->Load("Assets/Textures/Sprites/characters.png");
 	return true;
 }
 
 bool Player::Update(float dt)
 {
 	bool ret = true;
-	
-	//printf("x:%i y:%i\n", position.x, position.y);
+	if(app->GetDebug())
+		printf("x:%i y:%i\n", position.x, position.y);
 
 	UpdateCamera();
 	if (load)
@@ -318,7 +319,9 @@ void Player::OnCollision(PhysBody* c1, PhysBody* c2)
 
 bool Player::CleanUp()
 {
-
+	app->tex->UnLoad(texture);
+	//app->colManager->world->DestroyBody(collider->body);
+	load = true;
 
 	return true;
 }

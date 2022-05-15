@@ -28,6 +28,8 @@
 #include "Defs.h"
 #include "Log.h"
 #include "NPC.h"
+#include "Lever.h"
+#include "Bridge.h"
 
 Scene::Scene(bool startEnabled) : Module(startEnabled)
 {
@@ -44,9 +46,10 @@ bool Scene::Awake(pugi::xml_node& node)
 	LOG("Loading Scene");
 	bool ret = true;
 	
-	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 800,400 }, "Sara"));
-	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 500,800 }, "Joe"));
-	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 900,700 }, "George"));
+	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 512,1266 }, "Sara"));
+	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 1969,878 }, "Joe"));
+	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 1200,700 }, "George"));
+
 
 	for (int i = 0; i < NPCs.Count(); i++)
 	{
@@ -79,17 +82,34 @@ bool Scene::Awake(pugi::xml_node& node)
 bool Scene::Start()
 {
 	app->questManager->Enable();
+	if (!bridge)
+	{
+		bridge = (Bridge*)app->entMan->CreateEntity(EntityType::BRIDGE, 0, { 2478, 870 }, "Bridge");
+		bridge->Start();
+		levers.Add((Lever*)app->entMan->CreateEntity(EntityType::LEVER, 0, { 2016, 350 }, ""));
+		levers.Add((Lever*)app->entMan->CreateEntity(EntityType::LEVER, 0, { 2388, 1451 }, ""));
+		levers.Add((Lever*)app->entMan->CreateEntity(EntityType::LEVER, 0, { 1649, 1251 }, ""));
+		PhysBody* end= app->colManager->CreateRectangleSensor(2600, 870, 32, 128, bodyType::STATIC);
+		end->listener = this;
+	}
+	for (int i = 0; i < levers.Count(); i++)
+	{
+		levers.At(i)->data->SetQuest(6);
+		levers.At(i)->data->SetListener(bridge);
+	}
+	
 	if (!player)
 	{
 		player = (Player*)app->entMan->CreateEntity(EntityType::PLAYER, 1, { 650, 1440 }, "Player");
 
-		player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 2, { 291, 297 }, "Chinabara"));
-		player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 3, { 101, 435 }, "Punkibara"));
+		player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 2, { 291, 443 }, "Chinabara"));
+		player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 3, { 101, 443 }, "Punkibara"));
 		player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 4, { 464, 443 }, "Rainbowbara"));
 
 		app->questManager->ActiveQuest(0);
 	}
 	player->Enable();
+	player->canMove = true;
 	app->pauseMenu->Enable();
 	app->colManager->Enable();
 	player->SetCombat(false);
@@ -98,6 +118,10 @@ bool Scene::Start()
 	for (int i = 0; i < NPCs.Count(); i++)
 	{
 		NPCs.At(i)->data->Enable();
+	}
+	for (int i = 0; i < levers.Count(); i++)
+	{
+		levers.At(i)->data->Enable();
 	}
 	app->mapManager->Load("1-1.tmx");
 	
@@ -113,6 +137,10 @@ bool Scene::Start()
 	if (app->questManager->IsCompleated(1))
 	{
 		app->questManager->ActiveQuest(2);
+	}
+	if (app->questManager->IsCompleated(2))
+	{
+		app->questManager->ActiveQuest(6);
 	}
 
 	return true;
@@ -135,6 +163,16 @@ bool Scene::Update(float dt)
 	}
 
 	return true;
+}
+
+void Scene::OnCollision(PhysBody* c1, PhysBody* c2)
+{
+	if (c2->eListener->type == EntityType::PLAYER && end)
+	{
+		app->fadeToBlack->MFadeToBlack(this, (Module*)app->end, 1);
+		end = false;
+	}
+
 }
 
 // Called each loop iteration
@@ -161,8 +199,15 @@ bool Scene::CleanUp()
 	{
 		NPCs.At(i)->data->Disable();
 	}
-	app->mapManager->Disable();
+	for (int i = 0; i < levers.Count(); i++)
+	{
+		levers.At(i)->data->Disable();
+	}
+	player->Disable();
+	bridge->Disable();
+	//app->mapManager->Unload();
 	//app->colManager->Disable();
+
 	LOG("Succesfully unloaded scene");
 	return true;
 }

@@ -52,7 +52,7 @@ bool QuestManager::Start()
 
 Quest* QuestManager::ActiveQuest(uint32_t questID)
 {
-	if (questID > 0)
+	if (questID < 0 || questID > questList.Count() - 1)
 		return nullptr;
 	Quest* q = questList.At(questID)->data;
 	if (q->progress != QuestProgress::AVAILABLE)
@@ -70,7 +70,7 @@ Quest* QuestManager::ActiveQuest(uint32_t questID)
 
 Quest* QuestManager::CompleteQuest(uint32_t questID)
 {
-	if (questID > 0)
+	if (questID < 0 || questID > questList.Count() - 1)
 		return nullptr;
 	Quest* q = questList.At(questID)->data;
 	if (q->progress == QuestProgress::COMPLETE)
@@ -92,7 +92,7 @@ Quest* QuestManager::CompleteQuest(uint32_t questID)
 
 Quest* QuestManager::UpdateQuest(uint32_t questID)
 {
-	if (questID > 0)
+	if (questID < 0 || questID > questList.Count() - 1)
 		return nullptr;
 	Quest* q = questList.At(questID)->data;
 	

@@ -1,4 +1,4 @@
-#include "BattleScene1.h"
+#include "BattleScene4.h"
 
 #include "Enemy.h"
 #include "Player.h"
@@ -14,26 +14,28 @@
 #include "Audio.h"
 
 
-BattleScene1::BattleScene1(bool startEnabled) : Module(startEnabled)
+BattleScene4::BattleScene4(bool startEnabled) : Module(startEnabled)
 {
-    name.Create("battle_scene1");
+    name.Create("battle_scene4");
 }
-BattleScene1::~BattleScene1()
+BattleScene4::~BattleScene4()
 {
 }
 
-bool BattleScene1::Awake(pugi::xml_node&)
+bool BattleScene4::Awake(pugi::xml_node&)
 {
-    SFXchirp = app->audio->LoadFx("Assets/Audio/Fx/capybara-attack4.wav");
-    enemy = (Enemy*)app->entMan->CreateEntity(EntityType::ENEMY, 10, { 300, 900 }, "Evie");
+    enemy = (Enemy*)app->entMan->CreateEntity(EntityType::ENEMY, 10, { 1732, 1220 }, "Mills");
 
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 11, { 928, 443 }, "Retrobara"));
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::SUPP, 11, { 750, 443 }, "Simpbara"));
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::DPS, 11, { 1115, 444 }, "Egirlbara"));
     enemy->Disable();
+
     enemy->dialog = new Dialog(1);
-    DialogNode* fst0 = new DialogNode("Hey listen. You seem new here want to take a fight?");
+    DialogNode* fst0 = new DialogNode("You look like an old friend. She stole my capybaras and traded them for capycoins.");
+    DialogNode* sec0 = enemy->dialog->AddOption(fst0, "You look like him... I'm not gonna risk it and destroy you here now!", "");
     enemy->dialog->AddFirstNode(fst0);
+
     for (int i = 0; i < enemy->GetBattleTeam().Count(); i++)
     {
         enemy->GetBattleTeam().At(i)->data->enemy = true;
@@ -44,7 +46,7 @@ bool BattleScene1::Awake(pugi::xml_node&)
     return true;
 }
 
-bool BattleScene1::Start()
+bool BattleScene4::Start()
 {
     bool ret = true;
     app->battleManager->SetTurn(Turn::PLAYER);
@@ -60,7 +62,7 @@ bool BattleScene1::Start()
     return ret;
 }
 
-bool BattleScene1::PreUpdate()
+bool BattleScene4::PreUpdate()
 {
     bool ret = true;
     for (int i = 0; i < enemy->GetBattleTeam().Count(); i++)
@@ -74,7 +76,7 @@ bool BattleScene1::PreUpdate()
     return ret;
 }
 
-bool BattleScene1::Update(float dt)
+bool BattleScene4::Update(float dt)
 {
     bool ret = true;
     srand((uint)time((time_t)0));
@@ -173,7 +175,7 @@ bool BattleScene1::Update(float dt)
                 }
             }
         }
-        app->audio->PlayFx(SFXchirp);
+        
         app->battleManager->EndTurn();
     }
 
@@ -198,11 +200,10 @@ bool BattleScene1::Update(float dt)
     }
 
     app->render->DrawTexture(background, 0, 0);
-    
     return ret;
 }
 
-bool BattleScene1::CleanUp()
+bool BattleScene4::CleanUp()
 {
     bool ret = true;
     app->battleManager->Disable();

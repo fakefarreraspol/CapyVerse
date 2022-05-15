@@ -109,14 +109,22 @@ project "Capyverse"
 
         ["Source/Modules/Gameplay/Entities/Items"] = {"Source/Item.h", "Source/Item.cpp"},
 
+        ["Source/Modules/Gameplay/Entities/Props"] = {"Source/Lever.h", "Source/Lever.cpp",
+                                                     "Source/Bridge.h"},
+
         ["Source/Modules/Gameplay/Scenes"] = {"Source/Intro.h", "Source/Intro.cpp",
                                               "Source/MainMenu.h", "Source/MainMenu.cpp",
+                                              "Source/End.h", "Source/End.cpp",
                                               "Source/Scene.h", "Source/Scene.cpp"},
         
         ["Source/Modules/Gameplay/Scenes/Battle"] = {"Source/BattleManager.h", "Source/BattleManager.cpp",
                                                      "Source/BattleScene1.h", "Source/BattleScene1.cpp",
                                                      "Source/BattleScene2.h", "Source/BattleScene2.cpp",
                                                      "Source/BattleScene3.h", "Source/BattleScene3.cpp",
+                                                     "Source/BattleScene4.h", "Source/BattleScene4.cpp",
+                                                     "Source/BattleScene5.h", "Source/BattleScene5.cpp",
+                                                     "Source/BattleScene6.h", "Source/BattleScene6.cpp",
+                                                     "Source/BattleScene7.h", "Source/BattleScene7.cpp",
                                                      "Source/EOBScene.h", "Source/EOBScene.cpp"},
 
         ["Source/Modules/Gameplay/Quest"] = {"Source/Quest.h", "Source/QuestManager.h", "Source/QuestManager.cpp"},

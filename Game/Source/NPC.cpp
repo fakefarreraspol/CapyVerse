@@ -31,16 +31,18 @@ bool NPC::Start()
 	trigger = app->colManager->CreateRectangleSensor(position.x, position.y, 128, 128, bodyType::STATIC);
 	trigger->listener = (Module*)app->entMan;
 	trigger->eListener = this;
+
+	texture = app->tex->Load("Assets/Textures/Sprites/characters.png");
 	return true;
 }
 
 bool NPC::Update(float dt)
 {
-	if (load)
+	/*if (load)
 	{
 		texture = app->tex->Load("Assets/Textures/Sprites/characters.png");
 		load = false;
-	}
+	}*/
 	
 	if (dialog->Finished() && triggerCounter >= 0)
 	{
@@ -57,8 +59,8 @@ bool NPC::Update(float dt)
 
 bool NPC::Draw(Render* render)
 {
-	SDL_Rect rect = { 17, 198, 66, 66 };
-	render->DrawTexture(texture, position.x - 32, position.y - 32, &rect);
+	SDL_Rect rect = { 83, 134, 32, 66 };
+	render->DrawTexture(texture, position.x - 16, position.y - 32, &rect);
 
 	return true;
 }
@@ -71,13 +73,17 @@ void NPC::OnCollision(PhysBody* c1, PhysBody* c2)
 		{
 			app->dialogManager->SetActiveDialog(dialog);
 			app->dialogManager->characterName->SetText(NPCname.GetString());
-			
 		}
 	}
 }
 
 bool NPC::CleanUp()
 {
+	if(collider)
+		app->colManager->world->DestroyBody(collider->body);
+	if(trigger)
+		app->colManager->world->DestroyBody(trigger->body);
+	app->tex->UnLoad(texture);
 	return true;
 }
 

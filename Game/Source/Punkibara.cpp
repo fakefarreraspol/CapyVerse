@@ -10,6 +10,7 @@ Punkibara::Punkibara(uint32 id, iPoint position) : Capybara(CapybaraType::DPS, i
 	this->capybaraTarget = CapybaraTarget::HIMSELF;
 	InitStats();
 	anim.PushBack({ 64, 192, 60, 62 });
+	anim.PushBack({ 0, 192, 60, 62 });
 	currentAnim = &anim;
 }
 

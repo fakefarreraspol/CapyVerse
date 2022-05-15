@@ -17,6 +17,10 @@
 #include "Pinkbara.h"
 #include "Simpbara.h"
 #include "Chadbara.h"
+#include "Lever.h"
+#include "Bridge.h"
+
+
 #include "Textures.h"
 #include "Pause.h"
 EntityManager::EntityManager(bool startEnabled) : Module(startEnabled)
@@ -79,6 +83,12 @@ Entity* EntityManager::CreateEntity(EntityType type, uint32 id, iPoint position,
 		break;
 	case EntityType::NPC:
 		entity = new NPC(position, id, name);
+		break;
+	case EntityType::LEVER:
+		entity = new Lever(position, id);
+		break;
+	case EntityType::BRIDGE:
+		entity = new Bridge(position, id);
 		break;
 	default:
 	{
@@ -195,7 +205,7 @@ bool EntityManager::LoadState(pugi::xml_node& data)
 	{
 		int entityId = entityNode.attribute("id").as_int();
 		ret = entities.At(entityId)->data->LoadState(entityNode);
-		printf("Succesfully loaded entity %s\n", entities.At(entityId)->data->name.GetString());
+		printf("Succesfully loaded entity %s\n", entities.At(entityId)->data->capyName.GetString());
 	}
 
 	return ret;
@@ -209,10 +219,10 @@ bool EntityManager::SaveState(pugi::xml_node& data) const
 
 	while (item != NULL)
 	{
-		data.append_child(item->data->name.GetString());
+		data.append_child(item->data->capyName.GetString());
 		// = item->data->SaveState(data.child(item->data->name.GetString()));
 
-		ret = item->data->SaveState(data.child(item->data->name.GetString()));
+		ret = item->data->SaveState(data.child(item->data->capyName.GetString()));
 		item = item->next;
 	}
 

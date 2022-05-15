@@ -16,7 +16,7 @@
 
 BattleScene2::BattleScene2(bool startEnabled) : Module(startEnabled)
 {
-    name.Create("battle_scene1");
+    name.Create("battle_scene2");
 }
 BattleScene2::~BattleScene2()
 {
@@ -28,9 +28,13 @@ bool BattleScene2::Awake(pugi::xml_node&)
     SFXchirp = app->audio->LoadFx("Assets/Audio/Fx/capybara-chirp.wav");
     enemy = (Enemy*)app->entMan->CreateEntity(EntityType::ENEMY, 11, { 600, 350 }, "Morgan");
 
-    enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 11, { 928, 305 }, "Chadbara"));
+    enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 11, { 928, 443 }, "Chadbara"));
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::SUPP, 11, { 750, 443 }, "Rainbowbara"));
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::DPS, 11, { 1115, 444 }, "Emobara"));
+    enemy->dialog = new Dialog(1);
+    DialogNode* fst0 = new DialogNode("Yoo bro, you r in my territory, don't be a coward.");
+    DialogNode* sec0 = enemy->dialog->AddOption(fst0, "YOU WON'T ESCAPE MY CAPYBARAS", "");
+    enemy->dialog->AddFirstNode(fst0);
     for (int i = 0; i < enemy->GetBattleTeam().Count(); i++)
     {
         enemy->GetBattleTeam().At(i)->data->enemy = true;
@@ -187,6 +191,21 @@ bool BattleScene2::Update(float dt)
     if (enemy->GetBattleTeam().Count() == 0 || (app->GetDebug() && app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN))
     {
         app->fadeToBlack->MFadeToBlack(this, (Module*)app->eobScene, 2);
+        app->eobScene->playerWin = true;
+    }
+
+    for (int i = 0, j = 0; i < app->battleManager->GetPlayer()->GetBattleTeam().Count(); i++)
+    {
+        if (app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data->GetHealth() <= 0)
+        {
+            app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data->SetCombat(false);
+            j++;
+        }
+        if (j == app->battleManager->GetPlayer()->GetBattleTeam().Count())
+        {
+            app->fadeToBlack->MFadeToBlack(this, (Module*)app->eobScene, 2);
+            app->eobScene->playerWin = false;
+        }
     }
    
     app->render->DrawTexture(background, 0, 0);

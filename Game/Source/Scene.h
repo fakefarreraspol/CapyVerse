@@ -11,8 +11,10 @@
 
 struct SDL_Texture;
 
+class Bridge;
 class Capybara;
 class Player;
+class Lever;
 class NPC;
 
 class Scene : public Module
@@ -36,6 +38,7 @@ public:
 	// Called each loop iteration
 	bool Update(float dt);
 
+	void OnCollision(PhysBody* c1, PhysBody* c2);
 	// Called before all Updates
 	bool PostUpdate();
 	// Called before quitting
@@ -43,9 +46,11 @@ public:
 
 public:
 	List<NPC*> NPCs;
+	List<Lever*> levers;
+	Bridge* bridge = nullptr;
 	Player* player = nullptr;
 	bool load = false;
-
+	bool end = true;
 };
 
 #endif // __SCENE_H__
