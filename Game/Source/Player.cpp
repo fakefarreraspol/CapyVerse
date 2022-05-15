@@ -133,15 +133,7 @@ bool Player::Start()
 	collider->body->SetFixedRotation(true);
 
 
-	// inventory test
-	/*Item* uwu01 = app->entMan->CreateEntity(0, { 0,0 }, "", ItemType::HP_POTION);
-	Item* uwu02 = app->entMan->CreateEntity(0, { 0,0 }, "", ItemType::MP_POTION);
-	Item* uwu03 = app->entMan->CreateEntity(0, { 0,0 }, "", ItemType::REVIVE);
-
-
-	inventory->AddItem(uwu01, 1);
-	inventory->AddItem(uwu02, 2);
-	inventory->AddItem(uwu03, 3);*/
+	
 	
 	return true;
 }

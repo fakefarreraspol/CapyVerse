@@ -16,7 +16,7 @@ struct ItemStats
 	int intelligence = 1;
 };
 
-enum class ItemType
+enum ItemType
 {
 	NONE = -1,
 	HP_POTION,
@@ -42,6 +42,7 @@ enum class ItemType
 
 enum class ItemCategory
 {
+	NONE=-1,
 	OBJECT,
 	CONSUMABLE,
 	ARMOR,
@@ -53,9 +54,8 @@ class Item : public Entity
 {
 public:
 	
-	Item::Item(uint32 id, iPoint bounds, const char* name, ItemType type) : Entity(EntityType::ITEM, id, name, bounds), type(type)
+	Item(uint32 id, iPoint bounds, const char* name, ItemType type) : Entity(EntityType::ITEM, id, name, bounds), type(type)
 	{
-		this->type = type;
 	}
 	~Item() {}
 

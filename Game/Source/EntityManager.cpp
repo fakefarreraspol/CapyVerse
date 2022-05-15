@@ -105,6 +105,11 @@ Item* EntityManager::CreateEntity(uint32 id, iPoint bounds, const char* name, It
 	case ItemType::HP_POTION:		item = (Item*) new HpPotion(id, bounds, "HP POTION");		break;
 	case ItemType::MP_POTION:		item = (Item*) new MpPotion(id, bounds, "MP POTION");		break;
 	case ItemType::REVIVE:			item = (Item*) new Revive(id, bounds, "REVIVE");			break;
+
+
+	case ItemType::FREERUNERS_ARMOR:			item = (Item*) new FreeRunersArmor(id, bounds, "FREE RUNER'S ARMOR");			break;
+	case ItemType::BOW_SPELLDRINKER:			item = (Item*) new BowSpellDrinker(id, bounds, "BOW SPELLDRINKER");			break;
+	case ItemType::ARMOR_VULNERABILITY:			item = (Item*) new ArmorVulnerability(id, bounds, "ARMOR OF VULNERABILITY");			break;
 	}
 
 	if (item!=nullptr)
@@ -168,7 +173,22 @@ void EntityManager::AddEntity(Entity* entity)
 
 bool EntityManager::Start()
 {
-	
+	// inventory test
+	Item* uwu01 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::HP_POTION);
+	Item* uwu02 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::MP_POTION);
+	Item* uwu03 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::REVIVE);
+	Item* uwu04 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::FREERUNERS_ARMOR);
+	Item* uwu05 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::BOW_SPELLDRINKER);
+	Item* uwu06 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::ARMOR_VULNERABILITY);
+
+
+	inventory->AddItem(uwu01, 1);
+	inventory->AddItem(uwu02, 2);
+	inventory->AddItem(uwu03, 3);
+	inventory->AddItem(uwu04, 3);
+	inventory->AddItem(uwu05, 3);
+	inventory->AddItem(uwu06, 3);
+
 	return true;
 }
 

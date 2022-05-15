@@ -4,6 +4,7 @@
 #include "Item.h"
 #include "Entity.h"
 #include "Capybara.h"
+#include "SString.h"
 
 //CONSUMABLES
 
@@ -11,7 +12,7 @@ class HpPotion : public Item
 {
 public:
 	HpPotion(uint32 id, iPoint bounds, const char* name) :Item(id, bounds, name, ItemType::HP_POTION){
-		description.Create("+30% HP of maxHP");
+		description.Create("30/100 of maxHP");
 		category = ItemCategory::CONSUMABLE;
 	}
 	~HpPotion() {}
@@ -22,7 +23,7 @@ class MpPotion : public Item
 {
 public:
 	MpPotion(uint32 id, iPoint bounds, const char* name) : Item(id, bounds, name, ItemType::MP_POTION) {
-		description.Create("+30% HP of maxMP");
+		description.Create("+30/100 HP of maxMP");
 		category = ItemCategory::CONSUMABLE;
 	}
 

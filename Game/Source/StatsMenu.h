@@ -11,6 +11,18 @@
 #include "Timer.h"
 #include "List.h"
 
+enum Menus
+{
+	MENU,
+	ITEMS_INVENTORY,
+	ITEMS_ACTIONS,
+	ITEMS_OPTION_SELECTION,
+	CAPY_INVENTORY,
+	CAPY_ACTIONS,
+	CAPY_OPTION_SEELCTION,
+	TEAM
+};
+
 class StatsMenu : public Module
 {
 public:
@@ -27,10 +39,13 @@ public:
 	bool PostUpdate();
 
 	bool CleanUp();
+	bool LoadCapys(List<GuiControl*> menu, SDL_Rect bounds);
 
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
 	bool ActivateMenu();
+
+
 
 public:
 	List<GuiControl*> menuBtns;
@@ -41,7 +56,17 @@ private:
 	List<GuiControl*> capyBtns;
 	List<GuiControl*> teamBtns;
 
+	List<GuiControl*> selectorBtns;
+
+
+	/*List<GuiControl*> actionsBtns;
+	GuiControl* useBtn;
+	GuiControl* equipBtn;*/
+
 	List<GuiControl*> currentControls;
+
+	List<GuiControl*> stats;
+	List<GuiControl*> statsValue;
 
 	int selectorOffset;
 
@@ -57,8 +82,14 @@ private:
 	SDL_Texture* entityImg = nullptr;		// 128*128
 
 	GuiControl* entityDescription;
+	GuiControl* entityNum;
 	
+	int mainMenuOption;
+	int subMenuOption;
+	int actionOption;
+	int selectorOption;
 
+	Menus activeMenu;
 
 };
 
