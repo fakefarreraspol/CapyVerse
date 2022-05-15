@@ -269,169 +269,6 @@ bool Map::LoadProps()
 	int* chain = new int[mapLayerItem->data->width * mapLayerItem->data->height];
 	mapLayerItem = mapData.layers.start;
 	while (mapLayerItem != NULL) {
-		/*if (mapLayerItem->data->properties.GetProperty("Check") == 1)
-		{
-			for (int x = 0; x < mapLayerItem->data->width; x++)
-			{
-				for (int y = 0; y < mapLayerItem->data->height; y++)
-				{
-					int gid = mapLayerItem->data->Get(x, y);
-
-					if (gid > 0) {
-
-						TileSet* tileset = GetTilesetFromTileId(gid);
-
-						SDL_Rect r = tileset->GetTileRect(gid);
-						iPoint pos = MapToWorld(x, y);
-						pos.x += r.w / 2;
-						pos.y += r.h / 2;
-						app->entman->CreateEntity(CHECKPOINT, pos);
-
-					}
-
-				}
-			}
-		}
-		if (mapLayerItem->data->properties.GetProperty("Door") == 1)
-		{
-			for (int x = 0; x < mapLayerItem->data->width; x++)
-			{
-				for (int y = 0; y < mapLayerItem->data->height; y++)
-				{
-					int gid = mapLayerItem->data->Get(x, y);
-
-					if (gid > 0) {
-
-						TileSet* tileset = GetTilesetFromTileId(gid);
-
-						SDL_Rect r = tileset->GetTileRect(gid);
-						iPoint pos = MapToWorld(x, y);
-						pos.x += r.w / 2;
-						pos.y += r.h / 2;
-						app->entman->CreateEntity(DOOR, pos);
-
-					}
-
-				}
-			}
-		}
-
-		if (mapLayerItem->data->properties.GetProperty("Gems") == 1)
-		{
-			for (int x = 0; x < mapLayerItem->data->width; x++)
-			{
-				for (int y = 0; y < mapLayerItem->data->height; y++)
-				{
-					int gid = mapLayerItem->data->Get(x, y);
-
-					if (gid > 0) {
-
-						TileSet* tileset = GetTilesetFromTileId(gid);
-
-						SDL_Rect r = tileset->GetTileRect(gid);
-						iPoint pos = MapToWorld(x, y);
-						pos.x += r.w / 2;
-						pos.y += r.h / 2;
-						app->entman->CreateEntity(GEM, pos);
-
-					}
-
-				}
-			}
-		}
-		if (mapLayerItem->data->properties.GetProperty("Cherrys") == 1)
-		{
-			for (int x = 0; x < mapLayerItem->data->width; x++)
-			{
-				for (int y = 0; y < mapLayerItem->data->height; y++)
-				{
-					int gid = mapLayerItem->data->Get(x, y);
-
-					if (gid > 0) {
-
-						TileSet* tileset = GetTilesetFromTileId(gid);
-
-						SDL_Rect r = tileset->GetTileRect(gid);
-						iPoint pos = MapToWorld(x, y);
-						pos.x += r.w / 2;
-						pos.y += r.h / 2;
-						app->entman->CreateEntity(CHERRY, pos);
-
-					}
-
-				}
-			}
-		}
-		if (mapLayerItem->data->properties.GetProperty("Eagle") == 1)
-		{
-			for (int x = 0; x < mapLayerItem->data->width; x++)
-			{
-				for (int y = 0; y < mapLayerItem->data->height; y++)
-				{
-					int gid = mapLayerItem->data->Get(x, y);
-
-					if (gid > 0) {
-
-						TileSet* tileset = GetTilesetFromTileId(gid);
-
-						SDL_Rect r = tileset->GetTileRect(gid);
-						iPoint pos = MapToWorld(x, y);
-						pos.x += r.w / 2;
-						pos.y += r.h / 2;
-						app->entman->CreateEntity(ENEMY_EAGLE, pos);
-
-					}
-
-				}
-			}
-		}
-		if (mapLayerItem->data->properties.GetProperty("Rat") == 1)
-		{
-			for (int x = 0; x < mapLayerItem->data->width; x++)
-			{
-				for (int y = 0; y < mapLayerItem->data->height; y++)
-				{
-					int gid = mapLayerItem->data->Get(x, y);
-
-					if (gid > 0) {
-
-						TileSet* tileset = GetTilesetFromTileId(gid);
-
-						SDL_Rect r = tileset->GetTileRect(gid);
-						iPoint pos = MapToWorld(x, y);
-						pos.x += r.w / 2;
-						pos.y += r.h / 2;
-						app->entman->CreateEntity(ENEMY_RAT, pos);
-
-					}
-
-				}
-			}
-		}
-
-		if (mapLayerItem->data->properties.GetProperty("Door") == 1)
-		{
-			for (int x = 0; x < mapLayerItem->data->width; x++)
-			{
-				for (int y = 0; y < mapLayerItem->data->height; y++)
-				{
-					int gid = mapLayerItem->data->Get(x, y);
-
-					if (gid > 0) {
-
-						TileSet* tileset = GetTilesetFromTileId(gid);
-
-						SDL_Rect r = tileset->GetTileRect(gid);
-						iPoint pos = MapToWorld(x, y);
-						pos.x += r.w / 2;
-						pos.y += r.h / 2;
-						app->entman->CreateEntity(DOOR, pos);
-
-					}
-
-				}
-			}
-		}*/
 		mapLayerItem = mapLayerItem->next;
 
 	}
@@ -584,17 +421,12 @@ bool Map::Load(const char* filename)
 bool Map::Unload()
 {
 	bool ret = true;
-	ListItem<PhysBody*>* c = cols.start;
 
-	while (c != NULL)
+	for (int i = 0; i < cols.Count(); i++)
 	{
-		app->colManager->world->DestroyBody(c->data->body);
-
-		c = c->next;
+		app->colManager->world->DestroyBody(cols.At(i)->data->body);
 	}
 	cols.Clear();
-	delete c;
-
 	return ret;
 }
 

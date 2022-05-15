@@ -16,7 +16,7 @@
 
 BattleScene2::BattleScene2(bool startEnabled) : Module(startEnabled)
 {
-    name.Create("battle_scene1");
+    name.Create("battle_scene2");
 }
 BattleScene2::~BattleScene2()
 {
@@ -31,6 +31,10 @@ bool BattleScene2::Awake(pugi::xml_node&)
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 11, { 928, 443 }, "Chadbara"));
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::SUPP, 11, { 750, 443 }, "Rainbowbara"));
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::DPS, 11, { 1115, 444 }, "Emobara"));
+    enemy->dialog = new Dialog(1);
+    DialogNode* fst0 = new DialogNode("Yoo bro, you r in my territory, don't be a coward.");
+    DialogNode* sec0 = enemy->dialog->AddOption(fst0, "YOU WON'T ESCAPE MY CAPYBARAS", "");
+    enemy->dialog->AddFirstNode(fst0);
     for (int i = 0; i < enemy->GetBattleTeam().Count(); i++)
     {
         enemy->GetBattleTeam().At(i)->data->enemy = true;

@@ -59,8 +59,8 @@ bool NPC::Update(float dt)
 
 bool NPC::Draw(Render* render)
 {
-	SDL_Rect rect = { 17, 198, 66, 66 };
-	render->DrawTexture(texture, position.x - 32, position.y - 32, &rect);
+	SDL_Rect rect = { 83, 134, 32, 66 };
+	render->DrawTexture(texture, position.x - 16, position.y - 32, &rect);
 
 	return true;
 }

@@ -15,7 +15,7 @@
 
 BattleScene3::BattleScene3(bool startEnabled) : Module(startEnabled)
 {
-    name.Create("battle_scene1");
+    name.Create("battle_scene3");
 }
 BattleScene3::~BattleScene3()
 {
@@ -30,6 +30,9 @@ bool BattleScene3::Awake(pugi::xml_node&)
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 11, { 928, 443 }, "Chinabara"));
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::SUPP, 11, { 750, 443 }, "Pinkbara"));
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::DPS, 11, { 1115, 444 }, "Punkibara"));
+    enemy->dialog = new Dialog(1);
+    DialogNode* fst0 = new DialogNode("Why aRe You Looking at me?");
+    enemy->dialog->AddFirstNode(fst0);
     for (int i = 0; i < enemy->GetBattleTeam().Count(); i++)
     {
         enemy->GetBattleTeam().At(i)->data->enemy = true;

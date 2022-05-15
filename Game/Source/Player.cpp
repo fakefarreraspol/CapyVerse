@@ -320,7 +320,7 @@ void Player::OnCollision(PhysBody* c1, PhysBody* c2)
 bool Player::CleanUp()
 {
 	app->tex->UnLoad(texture);
-	app->colManager->world->DestroyBody(collider->body);
+	//app->colManager->world->DestroyBody(collider->body);
 	load = true;
 
 	return true;

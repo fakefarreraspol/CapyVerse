@@ -46,9 +46,9 @@ bool Scene::Awake(pugi::xml_node& node)
 	LOG("Loading Scene");
 	bool ret = true;
 	
-	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 800,400 }, "Sara"));
-	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 500,800 }, "Joe"));
-	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 900,700 }, "George"));
+	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 512,1266 }, "Sara"));
+	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 1969,878 }, "Joe"));
+	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 1200,700 }, "George"));
 
 
 	for (int i = 0; i < NPCs.Count(); i++)
@@ -82,13 +82,14 @@ bool Scene::Awake(pugi::xml_node& node)
 bool Scene::Start()
 {
 	app->questManager->Enable();
-
-	bridge = (Bridge*)app->entMan->CreateEntity(EntityType::BRIDGE, 0, {2478, 870}, "Bridge");
-	bridge->Start();
-	levers.Add((Lever*)app->entMan->CreateEntity(EntityType::LEVER, 0, { 2016, 350 }, ""));
-	levers.Add((Lever*)app->entMan->CreateEntity(EntityType::LEVER, 0, { 2388, 1451 }, ""));
-	levers.Add((Lever*)app->entMan->CreateEntity(EntityType::LEVER, 0, { 1649, 1251 }, ""));
-	
+	if (!bridge)
+	{
+		bridge = (Bridge*)app->entMan->CreateEntity(EntityType::BRIDGE, 0, { 2478, 870 }, "Bridge");
+		bridge->Start();
+		levers.Add((Lever*)app->entMan->CreateEntity(EntityType::LEVER, 0, { 2016, 350 }, ""));
+		levers.Add((Lever*)app->entMan->CreateEntity(EntityType::LEVER, 0, { 2388, 1451 }, ""));
+		levers.Add((Lever*)app->entMan->CreateEntity(EntityType::LEVER, 0, { 1649, 1251 }, ""));
+	}
 	for (int i = 0; i < levers.Count(); i++)
 	{
 		levers.At(i)->data->SetQuest(6);
@@ -190,7 +191,7 @@ bool Scene::CleanUp()
 	{
 		levers.At(i)->data->Disable();
 	}
-	app->mapManager->Unload();
+	//app->mapManager->Unload();
 	//app->colManager->Disable();
 
 	LOG("Succesfully unloaded scene");

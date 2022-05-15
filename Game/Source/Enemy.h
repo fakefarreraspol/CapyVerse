@@ -28,6 +28,7 @@ public:
 	void OnCollision(PhysBody* c1, PhysBody* c2);
 
 	bool CleanUp();
+	bool isBoss = false;
 private:
 	List<Capybara*> battleTeam;
 	bool isCombat = false;

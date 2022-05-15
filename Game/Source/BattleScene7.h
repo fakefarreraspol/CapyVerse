@@ -1,15 +1,15 @@
-#ifndef __BATTLESCENE2_H__
-#define __BATTLESCENE2_H__
+#ifndef __BATTLESCENE7_H__
+#define __BATTLESCENE7_H__
 
 #include "Module.h"
 #include "Textures.h"
 class Enemy;
 
-class BattleScene2 : public Module
+class BattleScene7 : public Module
 {
 public:
-	BattleScene2(bool startEnabled);
-	virtual ~BattleScene2();
+	BattleScene7(bool startEnabled);
+	virtual ~BattleScene7();
 
 	bool Awake(pugi::xml_node&);
 

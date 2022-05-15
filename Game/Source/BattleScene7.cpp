@@ -1,4 +1,4 @@
-#include "BattleScene2.h"
+#include "BattleScene7.h"
 
 #include "Enemy.h"
 #include "Player.h"
@@ -14,34 +14,39 @@
 
 #include "QuestManager.h"
 
-BattleScene2::BattleScene2(bool startEnabled) : Module(startEnabled)
+BattleScene7::BattleScene7(bool startEnabled) : Module(startEnabled)
 {
-    name.Create("battle_scene1");
+    name.Create("battle_scene7");
 }
-BattleScene2::~BattleScene2()
+BattleScene7::~BattleScene7()
 {
 }
 
-bool BattleScene2::Awake(pugi::xml_node&)
+bool BattleScene7::Awake(pugi::xml_node&)
 {
-
-
-    enemy = (Enemy*)app->entMan->CreateEntity(EntityType::ENEMY, 11, { 600, 350 }, "Morgan");
-
+    enemy = (Enemy*)app->entMan->CreateEntity(EntityType::ENEMY, 11, { 2400, 850 }, "Hugh");
+    enemy->isBoss = true;
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 11, { 928, 443 }, "Chadbara"));
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::SUPP, 11, { 750, 443 }, "Rainbowbara"));
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::DPS, 11, { 1115, 444 }, "Emobara"));
+    enemy->dialog = new Dialog(1);
+    DialogNode* fst0 = new DialogNode("Hey you! You're new here, and those capys are expensive.");
+    DialogNode* sec0 = enemy->dialog->AddOption(fst0, "Where did you get them from!", "");
+    DialogNode* thr0 = enemy->dialog->AddOption(sec0, "Oh, ok! ", "");
+    DialogNode* for0 = enemy->dialog->AddOption(thr0, "So you want to pass the bridge, first you'll need to beat me!", "");
+    enemy->dialog->AddFirstNode(fst0);
+    
     for (int i = 0; i < enemy->GetBattleTeam().Count(); i++)
     {
         enemy->GetBattleTeam().At(i)->data->enemy = true;
-        enemy->GetBattleTeam().At(i)->data->SetLevel(1);
+        enemy->GetBattleTeam().At(i)->data->SetLevel(10);
     }
     app->scene->NPCs.Add(enemy);
     enemy->Disable();
     return true;
 }
 
-bool BattleScene2::Start()
+bool BattleScene7::Start()
 {
     bool ret = true;
     app->battleManager->SetTurn(Turn::PLAYER);
@@ -55,7 +60,7 @@ bool BattleScene2::Start()
     return ret;
 }
 
-bool BattleScene2::PreUpdate()
+bool BattleScene7::PreUpdate()
 {
     bool ret = true;
     for (int i = 0; i < enemy->GetBattleTeam().Count(); i++)
@@ -69,7 +74,7 @@ bool BattleScene2::PreUpdate()
     return ret;
 }
 
-bool BattleScene2::Update(float dt)
+bool BattleScene7::Update(float dt)
 {
     bool ret = true;
     srand((uint)time((time_t)0));
@@ -208,7 +213,7 @@ bool BattleScene2::Update(float dt)
     return ret;
 }
 
-bool BattleScene2::CleanUp()
+bool BattleScene7::CleanUp()
 {
     bool ret = true;
     app->battleManager->Disable();

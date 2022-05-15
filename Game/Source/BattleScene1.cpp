@@ -30,6 +30,9 @@ bool BattleScene1::Awake(pugi::xml_node&)
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::SUPP, 11, { 750, 443 }, "Simpbara"));
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::DPS, 11, { 1115, 444 }, "Egirlbara"));
     enemy->Disable();
+    enemy->dialog = new Dialog(1);
+    DialogNode* fst0 = new DialogNode("Hey listen. You seem new here want to take a fight?");
+    enemy->dialog->AddFirstNode(fst0);
     for (int i = 0; i < enemy->GetBattleTeam().Count(); i++)
     {
         enemy->GetBattleTeam().At(i)->data->enemy = true;

@@ -1,4 +1,4 @@
-#include "BattleScene3.h"
+#include "BattleScene6.h"
 
 #include "Enemy.h"
 #include "Player.h"
@@ -13,23 +13,28 @@
 #include "EOBScene.h"
 #include "QuestManager.h"
 
-BattleScene3::BattleScene3(bool startEnabled) : Module(startEnabled)
+BattleScene6::BattleScene6(bool startEnabled) : Module(startEnabled)
 {
-    name.Create("battle_scene1");
+    name.Create("battle_scene6");
 }
-BattleScene3::~BattleScene3()
+BattleScene6::~BattleScene6()
 {
 }
 
-bool BattleScene3::Awake(pugi::xml_node&)
+bool BattleScene6::Awake(pugi::xml_node&)
 {
 
 
-    enemy = (Enemy*)app->entMan->CreateEntity(EntityType::ENEMY, 12, { 400, 300 }, "Erin");
+    enemy = (Enemy*)app->entMan->CreateEntity(EntityType::ENEMY, 12, { 2057, 369 }, "Darcy");
 
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 11, { 928, 443 }, "Chinabara"));
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::SUPP, 11, { 750, 443 }, "Pinkbara"));
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::DPS, 11, { 1115, 444 }, "Punkibara"));
+    enemy->dialog = new Dialog(1);
+    DialogNode* fst0 = new DialogNode("You, strong, You enemy.");
+
+    enemy->dialog->AddFirstNode(fst0);
+    
     for (int i = 0; i < enemy->GetBattleTeam().Count(); i++)
     {
         enemy->GetBattleTeam().At(i)->data->enemy = true;
@@ -40,7 +45,7 @@ bool BattleScene3::Awake(pugi::xml_node&)
     return true;
 }
 
-bool BattleScene3::Start()
+bool BattleScene6::Start()
 {
     bool ret = true;
     app->battleManager->SetTurn(Turn::PLAYER);
@@ -54,7 +59,7 @@ bool BattleScene3::Start()
     return ret;
 }
 
-bool BattleScene3::PreUpdate()
+bool BattleScene6::PreUpdate()
 {
     bool ret = true;
     for (int i = 0; i < enemy->GetBattleTeam().Count(); i++)
@@ -68,7 +73,7 @@ bool BattleScene3::PreUpdate()
     return ret;
 }
 
-bool BattleScene3::Update(float dt)
+bool BattleScene6::Update(float dt)
 {
     bool ret = true;
     srand((uint)time((time_t)0));
@@ -186,7 +191,7 @@ bool BattleScene3::Update(float dt)
     return ret;
 }
 
-bool BattleScene3::CleanUp()
+bool BattleScene6::CleanUp()
 {
     bool ret = true;
     app->battleManager->Disable();
