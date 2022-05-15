@@ -2,11 +2,10 @@
 	<quest title ="First steps" id="0" progress = "0" reward ="true"> 
 		<description>Talk to Sara located into in the forest</description>
 	</quest>
-  
 	<quest title ="I must use them" id="1" progress = "0" objective ="3" maxObjective="3" nextQuest="2">
 		<description>Defeat all the enemies on the forest</description>
 	</quest>
-  <quest title ="AntiModerator.exe" id="2" progress = "0" objective ="3">
+  <quest title ="AntiModerator.exe" id="2" progress = "0">
 		<description>Defeat the moderator of the zone 1</description>
 	</quest>
   <quest title ="Anti bullying" id="3" progress = "0" objective="2">
@@ -18,7 +17,7 @@
   <quest title ="Capygod" id="5" progress = "0">
     <description>???</description>
   </quest>
-  <quest title ="To the boss" id="6" progress = "0"  maxObjective ="2" objective ="2">
-    <description>Push the levers</description>
+  <quest title ="Open the bridge" id="6" progress = "0"  maxObjective ="3" objective ="3">
+    <description>Push the levers 0/3</description>
   </quest>
 </quests_list>
