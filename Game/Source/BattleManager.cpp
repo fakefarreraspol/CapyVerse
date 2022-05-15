@@ -300,13 +300,13 @@ void BattleManager::CreateAbilityMenu()
 		{
 			for (int i = 0; i < playerTeam.Count(); i++)
 			{
-				if (playerTeam.At(i)->data->GetHealth() > 0)
+				if ((playerTeam.At(i)->data->GetHealth() > 0) && (playerTeam.At(i)!=nullptr))
 				{
 					abilityBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, i + 7, playerTeam.At(i)->data->capyName.GetString(), { 350, i * 50 + 550, 112, 20 }, this));
 
 					SString allyHealth("%i/%i HP", playerTeam.At(i)->data->GetHealth(), playerTeam.At(i)->data->GetMaxHealth());
 					abilityBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::BAR, i + 7, "AllyBar", { 350, i * 50 + 570, 112, 9 }, this));
-					abilityBars.At(i)->data->type = BarType::HEALTH;
+					if (abilityBars.At(i)!=nullptr) abilityBars.At(i)->data->type = BarType::HEALTH;
 					abilityInfo.Add((GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, i + 7, allyHealth.GetString(), { 465, i * 50 + 570, 155, 20 }, this, { 255, 255, 255, 1 }, app->fonts->indicatorsFont));
 				}
 			}
