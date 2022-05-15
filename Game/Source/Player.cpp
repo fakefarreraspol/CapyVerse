@@ -171,18 +171,18 @@ bool Player::Draw(Render* render)
 	return ret;
 }
 
-bool Player::Start()
-{
-	collider = app->colManager->CreateRectangle(position.x, position.y, 32, 32, bodyType::DYNAMIC);
-	collider->listener = (Module*)app->entMan;
-	collider->eListener = this;
-	collider->body->SetFixedRotation(true);
-
-
-	
-	
-	return true;
-}
+//bool Player::Start()
+//{
+//	collider = app->colManager->CreateRectangle(position.x, position.y, 32, 32, bodyType::DYNAMIC);
+//	collider->listener = (Module*)app->entMan;
+//	collider->eListener = this;
+//	collider->body->SetFixedRotation(true);
+//
+//
+//	
+//	
+//	return true;
+//}
 
 void Player::AddCapybara(Capybara* capybara)
 {

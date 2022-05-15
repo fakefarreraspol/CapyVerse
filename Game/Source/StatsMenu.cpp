@@ -225,7 +225,7 @@ bool StatsMenu::Update(float dt)
 		else for (int i = 0; i < itemsBtns.Count(); i++)
 		{
 			int at = i;
-			itemsBtns.At(i)->data->SetText(inventory->slots.At(at)->data->item->name.GetString());
+			itemsBtns.At(i)->data->SetText(inventory->slots.At(at)->data->item->capyName.GetString());
 			if (at == currentControl->data->id - 10)
 			{
 				currentItem = inventory->slots.At(at)->data->item;
@@ -297,7 +297,7 @@ bool StatsMenu::Update(float dt)
 		else for (int i = 0; i < selectorBtns.Count(); i++)
 		{
 			int at = i;
-			//selectorBtns.At(i)->data->SetText(app->scene->player->GetBattleTeam().At(at)->data->capyName.GetString());
+			selectorBtns.At(i)->data->SetText(app->scene->player->GetBattleTeam().At(at)->data->capyName.GetString());
 
 			if (at == currentControl->data->id - 50)
 			{
@@ -346,11 +346,11 @@ bool StatsMenu::Update(float dt)
 			for (int i = 0; i < capyBtns.Count(); i++)
 			{
 				int at = i;
-				capyBtns.At(i)->data->SetText(team.At(at)->data->name.GetString());
+				capyBtns.At(i)->data->SetText(team.At(at)->data->capyName.GetString());
 				if (at == currentControl->data->id - 30)
 				{
 					currentCapy = team.At(at)->data;
-					entityDescription->SetText(currentCapy->name.GetString());
+					entityDescription->SetText(currentCapy->capyName.GetString());
 
 				}
 				//int at = (i + selectorOffset) % inventory->slots.Count();

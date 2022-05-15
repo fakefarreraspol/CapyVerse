@@ -310,7 +310,7 @@ void EntityManager::OnCollision(PhysBody* c1, PhysBody* c2)
 
 Entity* EntityManager::CloneItem(Item* item)
 {
-	Entity* ret = CreateEntity(item->id, item->position, item->name.GetString(), item->type);
+	Entity* ret = CreateEntity(item->id, item->position, item->capyName.GetString(), item->type);
 
 	return ret;
 }
