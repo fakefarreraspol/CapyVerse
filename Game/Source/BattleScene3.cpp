@@ -27,7 +27,7 @@ bool BattleScene3::Awake(pugi::xml_node&)
 
     enemy = (Enemy*)app->entMan->CreateEntity(EntityType::ENEMY, 12, { 400, 300 }, "Erin");
 
-    enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 11, { 928, 305 }, "Chinabara"));
+    enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 11, { 928, 443 }, "Chinabara"));
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::SUPP, 11, { 750, 443 }, "Pinkbara"));
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::DPS, 11, { 1115, 444 }, "Punkibara"));
     for (int i = 0; i < enemy->GetBattleTeam().Count(); i++)
@@ -166,6 +166,21 @@ bool BattleScene3::Update(float dt)
     if (enemy->GetBattleTeam().Count() == 0 || (app->GetDebug() && app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN))
     {
         app->fadeToBlack->MFadeToBlack(this, (Module*)app->eobScene, 2);
+        app->eobScene->playerWin = true;
+    }
+
+    for (int i = 0, j = 0; i < app->battleManager->GetPlayer()->GetBattleTeam().Count(); i++)
+    {
+        if (app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data->GetHealth() <= 0)
+        {
+            app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data->SetCombat(false);
+            j++;
+        }
+        if (j == app->battleManager->GetPlayer()->GetBattleTeam().Count())
+        {
+            app->fadeToBlack->MFadeToBlack(this, (Module*)app->eobScene, 2);
+            app->eobScene->playerWin = false;
+        }
     }
     app->render->DrawTexture(background, 0, 0);
     return ret;

@@ -26,16 +26,13 @@ bool Enemy::Start()
 	trigger = app->colManager->CreateRectangleSensor(position.x, position.y, 128, 128, bodyType::STATIC);
 	trigger->listener = (Module*)app->entMan;
 	trigger->eListener = this;
+
+	texture = app->tex->Load("Assets/Textures/Sprites/characters.png");
 	return true;
 }
 
 bool Enemy::Update(float dt)
 {
-	if (load)
-	{
-		texture = app->tex->Load("Assets/Textures/Sprites/characters.png");
-		load = false;
-	}
 	bool ret = true;
 	return ret;
 }
@@ -78,7 +75,7 @@ void Enemy::OnCollision(PhysBody* c1, PhysBody* c2)
 		{
 			triggered = true;
 
-			if (strcmp( this->NPCname.GetString(), "Evie"))
+			if (strcmp(this->NPCname.GetString(), "Evie"))
 				app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene1, 2);
 			if (strcmp(this->NPCname.GetString(), "Morgan"))
 				app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene2, 2);
@@ -92,6 +89,11 @@ void Enemy::OnCollision(PhysBody* c1, PhysBody* c2)
 
 bool Enemy::CleanUp()
 {
+	if(collider)
+		app->colManager->world->DestroyBody(collider->body);
 	
+	if(trigger)
+		app->colManager->world->DestroyBody(trigger->body);
+	app->tex->UnLoad(texture);
 	return true;
 }

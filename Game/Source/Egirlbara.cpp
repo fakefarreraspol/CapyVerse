@@ -11,6 +11,7 @@ Egirlbara::Egirlbara(uint32 id, iPoint position) : Capybara(CapybaraType::DPS, i
 	this->capybaraTarget = CapybaraTarget::HIMSELF;
 	InitStats();
 	anim.PushBack({ 64, 324, 60, 60 });
+	anim.PushBack({ 0, 324, 60, 60 });
 	currentAnim = &anim;
 }
 

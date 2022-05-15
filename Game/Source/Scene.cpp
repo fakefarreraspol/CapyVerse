@@ -82,20 +82,20 @@ bool Scene::Start()
 {
 
 	app->questManager->Enable();
-	Lever* lever = (Lever*)app->entMan->CreateEntity(EntityType::LEVER, 0, { 500, 500 }, "");
-	lever->Enable();
-	lever->SetQuest(6);
+	levers.Add((Lever*)app->entMan->CreateEntity(EntityType::LEVER, 0, { 400, 500 }, ""));
+	levers.At(0)->data->SetQuest(6);
 	if (!player)
 	{
 		player = (Player*)app->entMan->CreateEntity(EntityType::PLAYER, 1, { 650, 1440 }, "Player");
 
-		player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 2, { 291, 297 }, "Chinabara"));
-		player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 3, { 101, 435 }, "Punkibara"));
+		player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 2, { 291, 443 }, "Chinabara"));
+		player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 3, { 101, 443 }, "Punkibara"));
 		player->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 4, { 464, 443 }, "Rainbowbara"));
 
 		app->questManager->ActiveQuest(0);
 	}
 	player->Enable();
+	player->canMove = true;
 	app->pauseMenu->Enable();
 	app->colManager->Enable();
 	player->SetCombat(false);
@@ -104,6 +104,10 @@ bool Scene::Start()
 	for (int i = 0; i < NPCs.Count(); i++)
 	{
 		NPCs.At(i)->data->Enable();
+	}
+	for (int i = 0; i < levers.Count(); i++)
+	{
+		levers.At(i)->data->Enable();
 	}
 	app->mapManager->Load("1-1.tmx");
 	
@@ -119,6 +123,10 @@ bool Scene::Start()
 	if (app->questManager->IsCompleated(1))
 	{
 		app->questManager->ActiveQuest(2);
+	}
+	if (app->questManager->IsCompleated(2))
+	{
+		app->questManager->ActiveQuest(6);
 	}
 
 	return true;
@@ -167,8 +175,13 @@ bool Scene::CleanUp()
 	{
 		NPCs.At(i)->data->Disable();
 	}
-	app->mapManager->Disable();
+	for (int i = 0; i < levers.Count(); i++)
+	{
+		levers.At(i)->data->Disable();
+	}
+	app->mapManager->Unload();
 	//app->colManager->Disable();
+
 	LOG("Succesfully unloaded scene");
 	return true;
 }

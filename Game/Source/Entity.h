@@ -27,7 +27,7 @@ public:
 
 	Entity(EntityType type, uint32 id, const char* name, iPoint position) : type(type), active(true), id(id), position(position)
 	{
-		this->name.Create("%s_%i", name, id);
+		this->capyName.Create("%s_%i", name, id);
 	}
 	
 	iPoint& GetPosition() 
@@ -90,7 +90,7 @@ public:
 
 public:
 
-	SString name;
+	SString capyName;
 	EntityType type;
 	bool active = true;
 	uint32 id;            

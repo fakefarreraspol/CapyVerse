@@ -13,6 +13,7 @@ struct SDL_Texture;
 
 class Capybara;
 class Player;
+class Lever;
 class NPC;
 
 class Scene : public Module
@@ -43,6 +44,7 @@ public:
 
 public:
 	List<NPC*> NPCs;
+	List<Lever*> levers;
 	Player* player = nullptr;
 	bool load = false;
 

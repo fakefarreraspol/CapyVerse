@@ -11,6 +11,7 @@ Chadbara::Chadbara(uint32 id, iPoint position) : Capybara(CapybaraType::TANK, id
 	this->capybaraTarget = CapybaraTarget::ENEMIES;
 	InitStats();
 	anim.PushBack({ 64, 584, 62, 56 });
+	side.PushBack({ 0, 584, 62, 56 });
 	currentAnim = &anim;
 }
 

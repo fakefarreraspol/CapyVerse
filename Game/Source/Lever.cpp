@@ -29,8 +29,10 @@ bool Lever::Start()
 		trigger->eListener = this;
 		trigger->listener = (Module*)app->entMan;
 	}
-	if(!collider)
+	if (!collider)
+	{
 		collider = app->colManager->CreateRectangle(position.x, position.y, 32, 32, bodyType::STATIC);
+	}
 	if(!text)
 		text = (GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 0, "Press E to switch", { position.x - 50, position.y + 32, 100, 100 }, nullptr, { 255, 255, 255, 1 }, app->fonts->indicatorsFont);
 	text->state = GuiControlState::DISABLED;
