@@ -193,15 +193,15 @@ void BattleManager::Draw()
 	uint btnX = currentButton->data->bounds.x - 30;
 	uint btnY = currentButton->data->bounds.y;
 	app->render->DrawTexture(arrow, btnX, btnY);
-	SDL_Rect info{ 0, 369, 270, 120 };
-	SDL_Rect options{ 269, 369, 185, 155 };
-	SDL_Rect enemy{ 455, 369, 226, 155 };
+	SDL_Rect info{ 0, 255, 270, 122 };
+	SDL_Rect options{ 270, 255, 185, 155 };
+	SDL_Rect enemy{ 821, 257, 234, 177 };
 	app->render->DrawTexture(capyinfo, 0, 0, &info);
 	app->render->DrawTexture(capyinfo, 440, 0, &info);
 	app->render->DrawTexture(capyinfo, 890, 0, &info);
 	app->render->DrawTexture(capyinfo, 75, 530, &options);
 	if(showMenu)
-		app->render->DrawTexture(capyinfo, 340, 540, &enemy);
+		app->render->DrawTexture(capyinfo, 340, 530, &enemy);
 }
 
 void BattleManager::UpdatePlayerInfo()

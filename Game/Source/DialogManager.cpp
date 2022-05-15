@@ -158,7 +158,7 @@ bool DialogManager::PostUpdate()
 		//app->render->DrawRectangle(nBounds, 0, 0, 0, 255, true, false);
 		//app->render->DrawRectangle(tBounds, 0, 0, 0, 255, true, false);
 		SDL_Rect rect{ 0, 434, 1080, 241 };
-		app->render->DrawTexture(texture, bounds.x + 10, bounds.y + 430, &rect);
+		app->render->DrawTexture(texture, 100, 455, &rect, true);
 
 		text->Draw(app->render);
 		characterName->Draw(app->render);
