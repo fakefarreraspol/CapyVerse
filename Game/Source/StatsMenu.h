@@ -11,6 +11,9 @@
 #include "Timer.h"
 #include "List.h"
 
+class Capybara;
+class Item;
+
 enum Menus
 {
 	MENU,
@@ -39,7 +42,7 @@ public:
 	bool PostUpdate();
 
 	bool CleanUp();
-	bool LoadCapys(List<GuiControl*> menu, SDL_Rect bounds);
+	bool LoadCapys(List<GuiControl*>* menu, SDL_Rect bounds);
 
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
@@ -90,7 +93,8 @@ private:
 	int selectorOption;
 
 	Menus activeMenu;
-
+	Capybara* currentCapy = nullptr;
+	Item* currentItem = nullptr;
 };
 
 

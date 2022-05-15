@@ -11,6 +11,7 @@
 #include "Player.h"
 #include "Inventory.h"
 #include "EntityManager.h"
+#include "Capybara.h"
 
 #include "Log.h"
 #include "SString.h"
@@ -212,7 +213,6 @@ bool StatsMenu::Update(float dt)
 		//app->render->DrawRectangle(bounds, 0, 0, 0, 255, true, true);
 
 		Inventory* inventory = app->entMan->inventory;
-		Item* currentItem = nullptr;
 
 		if (inventory->slots.Count() == 0)
 		{
@@ -287,21 +287,24 @@ bool StatsMenu::Update(float dt)
 		bounds = { optionsBounds.x - cBounds.x,optionsBounds.y - cBounds.y,optionsBounds.w,optionsBounds.h };
 		app->render->DrawRectangle(bounds, 0, 0, 0, 255, true, true);
 
-		if (app->scene->player->GetBattleTeam().Count() == 0)
+		if (selectorBtns.Count() <= 1)
 		{
 			if (selectorBtns.start != nullptr)
 				selectorBtns.start->data->state = GuiControlState::NORMAL;
+			if (!currentControl)
+				currentControl = selectorBtns.start;
 		}
 
 		// loading button info
-		else for (int i = 0; i < selectorBtns.Count(); i++)
+		else
+			for (int i = 0; i < selectorBtns.Count(); i++)
 		{
 			int at = i;
 			selectorBtns.At(i)->data->SetText(app->scene->player->GetBattleTeam().At(at)->data->capyName.GetString());
 
 			if (at == currentControl->data->id - 50)
 			{
-				Capybara* currentCapy = app->scene->player->GetBattleTeam().At(at)->data;
+				currentCapy = app->scene->player->GetBattleTeam().At(at)->data;
 				
 				
 
@@ -332,7 +335,6 @@ bool StatsMenu::Update(float dt)
 		app->render->DrawRectangle(bounds, 0, 0, 0, 255, true, true);
 
 		List<Capybara*> team = app->scene->player->GetTeam();
-		Capybara* currentCapy = nullptr;
 
 		if (team.Count() == 0)
 		{
@@ -522,7 +524,7 @@ bool StatsMenu::OnGuiMouseClickEvent(GuiControl* control)
 
 			if (itemHolder->item->category == ItemCategory::CONSUMABLE)
 			{
-				LoadCapys(selectorBtns, optionsBounds);
+				LoadCapys(&selectorBtns, optionsBounds);
 				currentControls = selectorBtns;
 				currentControl = selectorBtns.start;
 				if (currentControl)
@@ -538,7 +540,11 @@ bool StatsMenu::OnGuiMouseClickEvent(GuiControl* control)
 		}
 	}
 
-
+	if (control->id >= 50 && control->id <= 69)
+	{
+		currentCapy->UseItem(currentItem);
+		int uwu;
+	}
 	return true;
 }
 
@@ -554,7 +560,7 @@ bool StatsMenu::ActivateMenu()
 	return true;
 }
 
-bool StatsMenu::LoadCapys(List<GuiControl*> menu, SDL_Rect bounds)
+bool StatsMenu::LoadCapys(List<GuiControl*> *menu, SDL_Rect bounds)
 {
 	int offset = 10;
 	SDL_Rect initialBounds = { bounds.x + 10, bounds.y + 10, bounds.w - 20,20 };
@@ -568,16 +574,16 @@ bool StatsMenu::LoadCapys(List<GuiControl*> menu, SDL_Rect bounds)
 
 	if (btns == 0)
 	{
-		GuiButton* c = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 30, "NO CAPYBARAS", initialBounds, this, { 255, 255, 255 });
-		capyBtns.Add(c);
+		GuiButton* c = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 50, "NO CAPYBARAS", initialBounds, this, { 255, 255, 255 });
+		menu->Add(c);
 	}
 	else for (int i = 0; i < btns; i++)
 	{
 		SDL_Rect bounds = initialBounds;
 		bounds.y += i * (offset + bounds.h);
 
-		GuiButton* c = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, i + 30, "CAPYBARA", bounds, this, { 255, 255, 255 });
-		capyBtns.Add(c);
+		GuiButton* c = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, i + 50, "CAPYBARA", bounds, this, { 255, 255, 255 });
+		menu->Add(c);
 	}
 
 
