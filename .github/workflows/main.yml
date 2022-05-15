@@ -23,7 +23,6 @@ jobs:
       run: |
         echo "RELEASE_NAME=TDM-Into_The_Capyverse-v0.8_${{ github.event.release.tag_name }}" >> $GITHUB_ENV
       shell: bash
-      if: github.event_name == 'release' && github.event.action == 'published'
       
     - name: Setup Solution with premake
       run: |
@@ -74,4 +73,3 @@ jobs:
           asset_path: ./Build/${{ env.RELEASE_NAME }}.zip
           asset_name: ${{ env.RELEASE_NAME }}.zip
           asset_content_type: application/zip
-      if: github.event_name == 'release' && github.event.action == 'published'
