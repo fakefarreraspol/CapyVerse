@@ -1,3 +1,6 @@
+#ifndef __QUESTMANAGER_H__
+#define __QUESTMANAGER_H__
+
 #include "Module.h"
 #include "List.h"
 #include "Quest.h"
@@ -48,3 +51,4 @@ public:
 	SString folder;
 	SString questFile;
 };
+#endif

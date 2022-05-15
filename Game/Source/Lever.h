@@ -2,10 +2,10 @@
 #define __LEVER_H__
 
 #include "Entity.h"
-
+#include "Animation.h"
 #include "GuiText.h"
 
-class Door;
+class Bridge;
 
 class Lever : public Entity
 {
@@ -18,7 +18,7 @@ public:
 
 	bool CleanUp();
 
-	void SetListener(Door* listener);
+	void SetListener(Bridge* listener);
 	void SetQuest(uint32_t questID);
 	bool Update(float dt);
 
@@ -29,9 +29,13 @@ public:
 private:
 	PhysBody* trigger = nullptr;
 	PhysBody* collider = nullptr;
-	Door* listener = nullptr;
+	Bridge* listener = nullptr;
 
 	uint32_t questID;
+
+	Animation* anim;
+	Animation open;
+	Animation closed;
 
 	bool activated = false;
 	bool questTrigger = false;

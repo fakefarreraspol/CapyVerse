@@ -80,8 +80,8 @@ bool Player::Start()
 bool Player::Update(float dt)
 {
 	bool ret = true;
-	
-	//printf("x:%i y:%i\n", position.x, position.y);
+	if(app->GetDebug())
+		printf("x:%i y:%i\n", position.x, position.y);
 
 	UpdateCamera();
 	if (load)

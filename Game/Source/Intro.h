@@ -45,7 +45,7 @@ private:
 	bool sound = true;
 
 	int upcCurrentTime = 0;
-	int upcDuration = 600;
+	int upcDuration = 300;
 	int upcStartPositionX = -300;
 	int upcFinalPositionX = 0;
 	int upcCurrentPositionX = upcStartPositionX;

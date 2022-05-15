@@ -57,6 +57,7 @@ bool EOBScene::Start()
 	}
 	win = app->tex->Load("Assets/Menus/victory.png");
 	lose = app->tex->Load("Assets/Menus/defeat.png");
+	background = app->tex->Load("Assets/Textures/Sprites/battleback.png");
 	app->audio->PlayFx(app->battleManager->battlewonSFX);
 
 	if (!app->questManager->IsCompleated(1) && playerWin)
@@ -116,7 +117,7 @@ bool EOBScene::Update(float dt)
 		
 		app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene, 2);
 	}
-	
+	app->render->DrawTexture(background, 0, 0);
 	if (counter > 0)
 	{
 		if (playerWin)

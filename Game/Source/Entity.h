@@ -18,7 +18,7 @@ enum class EntityType
 	ENEMY,
 	NPC,
 	LEVER,
-	DOOR
+	BRIDGE
 };
 
 class Entity

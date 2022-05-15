@@ -11,6 +11,7 @@
 
 struct SDL_Texture;
 
+class Bridge;
 class Capybara;
 class Player;
 class Lever;
@@ -45,6 +46,7 @@ public:
 public:
 	List<NPC*> NPCs;
 	List<Lever*> levers;
+	Bridge* bridge = nullptr;
 	Player* player = nullptr;
 	bool load = false;
 

@@ -48,7 +48,7 @@ private:
 	List<GuiText*> lvlUp;
 	int XP = 0;
 
-	SDL_Texture* capybaras;
+	SDL_Texture* background;
 	SDL_Texture* win;
 	SDL_Texture* lose;
 };

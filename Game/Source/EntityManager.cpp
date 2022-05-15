@@ -18,6 +18,8 @@
 #include "Simpbara.h"
 #include "Chadbara.h"
 #include "Lever.h"
+#include "Bridge.h"
+
 
 #include "Textures.h"
 #include "Pause.h"
@@ -84,6 +86,9 @@ Entity* EntityManager::CreateEntity(EntityType type, uint32 id, iPoint position,
 		break;
 	case EntityType::LEVER:
 		entity = new Lever(position, id);
+		break;
+	case EntityType::BRIDGE:
+		entity = new Bridge(position, id);
 		break;
 	default:
 	{

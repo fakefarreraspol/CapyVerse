@@ -29,6 +29,7 @@
 #include "Log.h"
 #include "NPC.h"
 #include "Lever.h"
+#include "Bridge.h"
 
 Scene::Scene(bool startEnabled) : Module(startEnabled)
 {
@@ -80,10 +81,20 @@ bool Scene::Awake(pugi::xml_node& node)
 // Called before the first frame
 bool Scene::Start()
 {
-
 	app->questManager->Enable();
-	levers.Add((Lever*)app->entMan->CreateEntity(EntityType::LEVER, 0, { 400, 500 }, ""));
-	levers.At(0)->data->SetQuest(6);
+
+	bridge = (Bridge*)app->entMan->CreateEntity(EntityType::BRIDGE, 0, {2478, 870}, "Bridge");
+	bridge->Start();
+	levers.Add((Lever*)app->entMan->CreateEntity(EntityType::LEVER, 0, { 2016, 350 }, ""));
+	levers.Add((Lever*)app->entMan->CreateEntity(EntityType::LEVER, 0, { 2388, 1451 }, ""));
+	levers.Add((Lever*)app->entMan->CreateEntity(EntityType::LEVER, 0, { 1649, 1251 }, ""));
+	
+	for (int i = 0; i < levers.Count(); i++)
+	{
+		levers.At(i)->data->SetQuest(6);
+		levers.At(i)->data->SetListener(bridge);
+	}
+	
 	if (!player)
 	{
 		player = (Player*)app->entMan->CreateEntity(EntityType::PLAYER, 1, { 650, 1440 }, "Player");
