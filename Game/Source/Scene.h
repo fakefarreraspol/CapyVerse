@@ -38,6 +38,7 @@ public:
 	// Called each loop iteration
 	bool Update(float dt);
 
+	void OnCollision(PhysBody* c1, PhysBody* c2);
 	// Called before all Updates
 	bool PostUpdate();
 	// Called before quitting
@@ -49,7 +50,7 @@ public:
 	Bridge* bridge = nullptr;
 	Player* player = nullptr;
 	bool load = false;
-
+	bool end = true;
 };
 
 #endif // __SCENE_H__

@@ -114,6 +114,7 @@ project "Capyverse"
 
         ["Source/Modules/Gameplay/Scenes"] = {"Source/Intro.h", "Source/Intro.cpp",
                                               "Source/MainMenu.h", "Source/MainMenu.cpp",
+                                              "Source/End.h", "Source/End.cpp",
                                               "Source/Scene.h", "Source/Scene.cpp"},
         
         ["Source/Modules/Gameplay/Scenes/Battle"] = {"Source/BattleManager.h", "Source/BattleManager.cpp",

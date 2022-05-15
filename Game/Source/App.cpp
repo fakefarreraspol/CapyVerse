@@ -35,6 +35,7 @@
 #include "EOBScene.h"
 #include "QuestManager.h"
 #include "Map.h"
+#include "End.h"
 
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
@@ -65,6 +66,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	battleScene5 = new BattleScene5(false);
 	battleScene6 = new BattleScene6(false);
 	battleScene7 = new BattleScene7(false);
+	end = new End(false);
 	eobScene = new EOBScene(false);
 	pauseMenu = new Pause(false);
 	
@@ -90,6 +92,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(battleScene6);
 	AddModule(battleScene7);
 	AddModule(battleManager);
+	AddModule(end);
 	AddModule(eobScene);
 	AddModule(entMan);
 	AddModule(pauseMenu);

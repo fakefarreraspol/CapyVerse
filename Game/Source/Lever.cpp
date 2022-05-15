@@ -49,8 +49,10 @@ bool Lever::Start()
 
 bool Lever::CleanUp()
 {
-	app->colManager->world->DestroyBody(trigger->body);
-	app->colManager->world->DestroyBody(collider->body);
+	if(trigger)
+		app->colManager->world->DestroyBody(trigger->body);
+	if(collider)
+		app->colManager->world->DestroyBody(collider->body);
 	app->tex->UnLoad(texture);
 	app->guiManager->DestroyGuiControl(text);
 

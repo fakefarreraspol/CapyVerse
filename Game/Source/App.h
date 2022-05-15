@@ -38,6 +38,7 @@ class BattleScene4;
 class BattleScene5;
 class BattleScene6;
 class BattleScene7;
+class End;
 class EOBScene;
 class Map;
 class Transitions;
@@ -136,6 +137,7 @@ public:
 	BattleScene5* battleScene5 = nullptr;
 	BattleScene6* battleScene6 = nullptr;
 	BattleScene7* battleScene7 = nullptr;
+	End* end = nullptr;
 	EOBScene* eobScene = nullptr;
 
 	bool fpsCap = false;

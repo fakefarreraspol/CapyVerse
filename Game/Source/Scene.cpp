@@ -89,6 +89,8 @@ bool Scene::Start()
 		levers.Add((Lever*)app->entMan->CreateEntity(EntityType::LEVER, 0, { 2016, 350 }, ""));
 		levers.Add((Lever*)app->entMan->CreateEntity(EntityType::LEVER, 0, { 2388, 1451 }, ""));
 		levers.Add((Lever*)app->entMan->CreateEntity(EntityType::LEVER, 0, { 1649, 1251 }, ""));
+		PhysBody* end= app->colManager->CreateRectangleSensor(2600, 870, 32, 128, bodyType::STATIC);
+		end->listener = this;
 	}
 	for (int i = 0; i < levers.Count(); i++)
 	{
@@ -163,6 +165,16 @@ bool Scene::Update(float dt)
 	return true;
 }
 
+void Scene::OnCollision(PhysBody* c1, PhysBody* c2)
+{
+	if (c2->eListener->type == EntityType::PLAYER && end)
+	{
+		app->fadeToBlack->MFadeToBlack(this, (Module*)app->end, 1);
+		end = false;
+	}
+
+}
+
 // Called each loop iteration
 bool Scene::PostUpdate()
 {
@@ -191,6 +203,8 @@ bool Scene::CleanUp()
 	{
 		levers.At(i)->data->Disable();
 	}
+	player->Disable();
+	bridge->Disable();
 	//app->mapManager->Unload();
 	//app->colManager->Disable();
 
