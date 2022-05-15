@@ -11,6 +11,7 @@
 #include "Scene.h"
 #include "Audio.h"
 #include "EOBScene.h"
+#include "QuestManager.h"
 
 BattleScene3::BattleScene3(bool startEnabled) : Module(startEnabled)
 {
@@ -24,15 +25,15 @@ bool BattleScene3::Awake(pugi::xml_node&)
 {
 
 
-    enemy = (Enemy*)app->entMan->CreateEntity(EntityType::ENEMY, 12, { 400, 300 }, "Enemy");
+    enemy = (Enemy*)app->entMan->CreateEntity(EntityType::ENEMY, 12, { 400, 300 }, "Erin");
 
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::TANK, 11, { 928, 305 }, "Chinabara"));
-    enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::SUPP, 11, { 750, 443 }, "Rainbowbara"));
+    enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::SUPP, 11, { 750, 443 }, "Pinkbara"));
     enemy->AddCapybaraToBatle(app->entMan->CreateEntity(CapybaraType::DPS, 11, { 1115, 444 }, "Punkibara"));
     for (int i = 0; i < enemy->GetBattleTeam().Count(); i++)
     {
         enemy->GetBattleTeam().At(i)->data->enemy = true;
-        enemy->GetBattleTeam().At(i)->data->SetLevel(15);
+        enemy->GetBattleTeam().At(i)->data->SetLevel(1);
     }
     app->scene->NPCs.Add(enemy);
     enemy->Disable();
@@ -87,82 +88,84 @@ bool BattleScene3::Update(float dt)
     //enemy Turn
     if (app->battleManager->GetTurn() == Turn::ENEMY)
     {
-        //supp
-        if (enemy->GetBattleTeam().At(1) != nullptr)
-        {
-            if (enemy->GetBattleTeam().At(1)->data->GetHealth() <= enemy->GetBattleTeam().At(1)->data->GetMaxHealth() - 7)
-            {
-                //enemy->GetBattleTeam().At(1)->data->UseAbility(enemy->GetBattleTeam().At(1)->data);
-                if (enemy->GetBattleTeam().At(1)->data->UseAbility(enemy->GetBattleTeam().At(1)->data) != false) enemy->GetBattleTeam().At(1)->data->SetAttack(false);
-            }
-            if (enemy->GetBattleTeam().At(1)->data->CanAttack())
-            {
 
-                if (app->battleManager->GetPlayer()->GetBattleTeam().At(randomNum)->data != nullptr)
-                {
-                    enemy->GetBattleTeam().At(1)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(randomNum)->data);
-                }
-                else if (enemy->GetBattleTeam().At(1)->data->GetHealth() < enemy->GetBattleTeam().At(1)->data->GetMaxHealth() / 7) enemy->GetBattleTeam().At(1)->data->Heal(2);
-
-
-
-            }
-            else enemy->GetBattleTeam().At(1)->data->RestoreMana(2);
-        }
-        
         //tank
         if (enemy->GetBattleTeam().At(0) != nullptr)
         {
-            if (enemy->GetBattleTeam().At(0)->data->GetHealth() < enemy->GetBattleTeam().At(0)->data->GetMaxHealth() - 6)
+            for (int i = 0; i < 3; i++)
             {
-                //enemy->GetBattleTeam().At(0)->data->UseAbility(enemy->GetBattleTeam().At(0)->data);
-                if (enemy->GetBattleTeam().At(0)->data->UseAbility(enemy->GetBattleTeam().At(0)->data) != false) enemy->GetBattleTeam().At(0)->data->SetAttack(false);
-            }
-            if (enemy->GetBattleTeam().At(0)->data->CanAttack())
-            {
-                if (app->battleManager->GetPlayer()->GetBattleTeam().At(randomNum)->data != nullptr)
-                {
-                    enemy->GetBattleTeam().At(0)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(randomNum)->data);
-                }
-                else
-                {
-                    if (enemy->GetBattleTeam().At(0)->data->GetHealth() < enemy->GetBattleTeam().At(0)->data->GetMaxHealth() / 7) enemy->GetBattleTeam().At(0)->data->Heal(3);
-                }
-            }
-            else enemy->GetBattleTeam().At(0)->data->RestoreMana(3);
-        }
-        
 
-        //dmg
+                if (app->battleManager->GetPlayer()->GetBattleTeam().At(i) != nullptr)
+                {
+                    if (enemy->GetBattleTeam().At(0)->data->UseAbility(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data) == false)
+                    {
+                        if (app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data->GetHealth() > 0)
+                        {
+                            enemy->GetBattleTeam().At(0)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data);
+                            break;
+                        }
+                    }
+
+
+                }
+            }
+        }
+        //supp
+        if (enemy->GetBattleTeam().At(1) != nullptr)
+        {
+            if (enemy->GetBattleTeam().At(1)->data->UseAbility(enemy->GetBattleTeam().At(1)->data) == false)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    if (app->battleManager->GetPlayer()->GetBattleTeam().At(i) != nullptr)
+                    {
+                        if (app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data->GetHealth() > 0)
+                        {
+                            enemy->GetBattleTeam().At(1)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data);
+                            break;
+                        }
+
+                    }
+                }
+            }
+        }
+        //damage
         if (enemy->GetBattleTeam().At(2) != nullptr)
         {
-            if (enemy->GetBattleTeam().At(2)->data->GetHealth() < enemy->GetBattleTeam().At(2)->data->GetMaxHealth() - 8)
+            if (enemy->GetBattleTeam().At(2)->data->UseAbility(enemy->GetBattleTeam().At(2)->data) == false)
             {
-                //enemy->GetBattleTeam().At(2)->data->UseAbility(enemy->GetBattleTeam().At(2)->data);
-                if (enemy->GetBattleTeam().At(2)->data->UseAbility(enemy->GetBattleTeam().At(2)->data) == true) enemy->GetBattleTeam().At(2)->data->SetAttack(false);
-            }
-            if (enemy->GetBattleTeam().At(2)->data->CanAttack())
-            {
-
-                if (app->battleManager->GetPlayer()->GetBattleTeam().At(randomNum)->data != nullptr)
+                for (int i = 0; i < 3; i++)
                 {
-                    enemy->GetBattleTeam().At(2)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(randomNum)->data);
+                    if (app->battleManager->GetPlayer()->GetBattleTeam().At(i) != nullptr)
+                    {
+                        if (app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data->GetHealth() > 0)
+                        {
+                            enemy->GetBattleTeam().At(2)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data);
+                            break;
+                        }
+
+                    }
                 }
-                else if (enemy->GetBattleTeam().At(2)->data->GetHealth() < enemy->GetBattleTeam().At(2)->data->GetMaxHealth() / 7) enemy->GetBattleTeam().At(2)->data->Heal(2);
-
-
-
             }
-            else enemy->GetBattleTeam().At(2)->data->RestoreMana(2);
         }
-       
+
+        /*for (int i = 0; i < 3; i++)
+        {
+            if (app->battleManager->GetPlayer()->GetBattleTeam().At(i) != nullptr)
+            {
+                enemy->GetBattleTeam().At(2)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data);
+                enemy->GetBattleTeam().At(1)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data);
+                enemy->GetBattleTeam().At(0)->data->Attack(app->battleManager->GetPlayer()->GetBattleTeam().At(i)->data);
+                break;
+            }
+        }*/
 
         app->battleManager->EndTurn();
     }
 
-    if (enemy->GetBattleTeam().Count() == 0 || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+    if (enemy->GetBattleTeam().Count() == 0 || (app->GetDebug() && app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN))
     {
-        app->fadeToBlack->MFadeToBlack(this, (Module*)app->eobScene, 120);
+        app->fadeToBlack->MFadeToBlack(this, (Module*)app->eobScene, 2);
     }
     app->render->DrawTexture(background, 0, 0);
     return ret;
@@ -176,7 +179,6 @@ bool BattleScene3::CleanUp()
     enemy->SetCombat(false);
     enemy->Disable();
     app->eobScene->SetXP(150);
-    app->entMan->DestroyEntity(enemy);
     
     return ret;
 }

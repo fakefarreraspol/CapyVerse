@@ -29,6 +29,7 @@
 #include "BattleScene2.h"
 #include "BattleScene3.h"
 #include "EOBScene.h"
+#include "QuestManager.h"
 #include "Map.h"
 
 // Constructor
@@ -43,9 +44,10 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	transitions = new Transitions(true);
 	mapManager = new Map(true);
 	entMan = new EntityManager(true);
+	questManager = new QuestManager(false);
 	fonts = new Fonts(true);
 	guiManager = new GuiManager(true);
-	dialogManager = new DialogManager(true);
+	dialogManager = new DialogManager(false);
 	colManager = new Physics(true);
 	fadeToBlack = new FadeToBlack(true);
 	intro = new Intro(true);
@@ -69,6 +71,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(intro);
 	AddModule(mainMenu);
+	AddModule(questManager);
 	AddModule(dialogManager);
 	AddModule(scene);
 	AddModule(battleScene1);
@@ -291,6 +294,8 @@ bool App::PreUpdate()
 		}
 		if (item->data->IsEnabled())
 			ret = item->data->PreUpdate();
+		if (!ret)
+			LOG("Module %s, has exited the app, during the preupdate", item->data->name.GetString());
 	}
 
 	return ret;
@@ -314,6 +319,8 @@ bool App::DoUpdate()
 		}
 		if (item->data->IsEnabled())
 			ret = item->data->Update(dt);
+		if (!ret)
+			LOG("Module %s, has exited the app, during the update", item->data->name.GetString());
 	}
 	return ret;
 }
@@ -335,6 +342,8 @@ bool App::PostUpdate()
 		}
 		if (item->data->IsEnabled())
 			ret = item->data->PostUpdate();
+		if (!ret)
+			LOG("Module %s, has exited the app, during the post update", item->data->name.GetString());
 	}
 
 	return ret;
@@ -433,6 +442,7 @@ bool App::LoadGame()
 	while (item != NULL && ret == true)
 	{
 		ret = item->data->LoadState(gameStateFile.child("game_state").child(item->data->name.GetString()));
+		printf("Module %s has returned false and quit the loading\n", item->data->name.GetString());
 		item = item->next;
 	}
 

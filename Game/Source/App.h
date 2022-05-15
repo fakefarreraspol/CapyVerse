@@ -37,6 +37,7 @@ class BattleScene3;
 class EOBScene;
 class Map;
 class Transitions;
+class QuestManager;
 
 class App
 {
@@ -120,7 +121,7 @@ public:
 	DialogManager* dialogManager = nullptr;
 	Physics* colManager = nullptr;
 	Task* taskManager = nullptr;
-
+	QuestManager* questManager = nullptr;
 	Pause* pauseMenu = nullptr;
 	FadeToBlack* fadeToBlack = nullptr;
 	BattleManager* battleManager = nullptr;

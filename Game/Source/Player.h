@@ -21,6 +21,7 @@ public:
 	bool canMove = true;
 	//Base functions
 	bool Update(float dt);
+	void Debug();
 	void UpdateCamera();
 	bool Draw(Render* render);
 	bool Start();
@@ -46,7 +47,7 @@ public:
 
 	void SetCombat(bool value);
 	void OnCollision(PhysBody* c1, PhysBody* c2);
-	bool isWalking = false;
+	bool isWalkingLeft = false;
 	bool CleanUp();
 	
 	/*SDL_Rect playerWalkRight[4];*/
@@ -69,6 +70,8 @@ private:
 	bool load = true;
 
 	float32 velocity = 2.0f;
+
+	bool initDebug = false;
 };
 
 

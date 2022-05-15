@@ -22,9 +22,9 @@ public:
 	bool OnGuiMouseClickEvent(GuiControl* control);
 	bool CleanUp();
 	GuiControl* characterName;
+	Dialog* activeDialog = nullptr;
 private:
 
-	Dialog* activeDialog = nullptr;
 
 	uint option;
 	SDL_Rect bounds, cBounds, nBounds, tBounds, bBounds;

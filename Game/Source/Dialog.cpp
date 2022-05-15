@@ -1,8 +1,15 @@
 #include "Dialog.h"
+#include "App.h"
+#include "QuestManager.h"
 
 Dialog::Dialog() : finished(false), activeNode(NULL)
 {
 
+}
+
+Dialog::Dialog(uint32_t questID)
+{
+	this->questID = questID;
 }
 
 Dialog::~Dialog()

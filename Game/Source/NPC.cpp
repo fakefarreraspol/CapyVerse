@@ -5,6 +5,7 @@
 #include "Input.h"
 #include "DialogManager.h"
 #include "Textures.h"
+#include "QuestManager.h"
 
 #include "Physics.h"
 
@@ -13,6 +14,7 @@
 NPC::NPC(iPoint position, uint32 id, const char* name) : Entity(EntityType::NPC, id, name, position)
 {
 	dialog = nullptr;
+	NPCname.Create(name);
 }
 
 NPC::~NPC()
@@ -68,7 +70,8 @@ void NPC::OnCollision(PhysBody* c1, PhysBody* c2)
 		if (c2->eListener->type == EntityType::PLAYER && !dialog->Finished())
 		{
 			app->dialogManager->SetActiveDialog(dialog);
-			app->dialogManager->characterName->SetText(this->name.GetString());
+			app->dialogManager->characterName->SetText(NPCname.GetString());
+			
 		}
 	}
 }
@@ -80,9 +83,10 @@ bool NPC::CleanUp()
 
 bool NPC::LoadState(pugi::xml_node& node)
 {
-	position.x = node.child("position").attribute("x").as_int();
+	/*position.x = node.child("position").attribute("x").as_int();
 	position.y = node.child("position").attribute("y").as_int();
-
+	collider->body->SetTransform({ PIXEL_TO_METERS(position.x), PIXEL_TO_METERS(position.y) }, 0.0f);
+	trigger->body->SetTransform({ PIXEL_TO_METERS(position.x), PIXEL_TO_METERS(position.y) }, 0.0f);*/
 	active = node.attribute("active").as_bool();
 	renderable = node.attribute("renderable").as_bool();
 
@@ -90,9 +94,9 @@ bool NPC::LoadState(pugi::xml_node& node)
 }
 bool NPC::SaveState(pugi::xml_node& node)
 {
-	pugi::xml_node position = node.append_child("position");
+	/*pugi::xml_node position = node.append_child("position");
 	position.append_attribute("x").set_value(this->position.x);
-	position.append_attribute("y").set_value(this->position.y);
+	position.append_attribute("y").set_value(this->position.y);*/
 
 	node.append_attribute("id").set_value(id);
 	node.append_attribute("active").set_value(active);

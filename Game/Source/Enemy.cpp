@@ -77,11 +77,11 @@ void Enemy::OnCollision(PhysBody* c1, PhysBody* c2)
 		{
 			triggered = true;
 
-			if (this->id == 10)
+			if (strcmp( this->NPCname.GetString(), "Evie"))
 				app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene1, 2);
-			if (this->id == 11)
+			if (strcmp(this->NPCname.GetString(), "Morgan"))
 				app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene2, 2);
-			if (this->id == 12)
+			if (strcmp(this->NPCname.GetString(), "Erin"))
 				app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene3, 2);
 
 		

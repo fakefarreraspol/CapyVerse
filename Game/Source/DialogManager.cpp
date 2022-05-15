@@ -9,6 +9,7 @@
 #include "GuiText.h"
 #include "Input.h"
 #include "Textures.h"
+#include "QuestManager.h"
 #include "Player.h"
 
 DialogManager::DialogManager(bool startEnabled):Module(startEnabled)
@@ -83,12 +84,13 @@ bool DialogManager::Start()
 
 bool DialogManager::Update(float dt)
 {
-	
-
 	if (activeDialog != nullptr)
 	{
 		if (activeDialog->Finished() == true)
+		{
+			app->questManager->ActiveQuest(activeDialog->questID);
 			activeDialog = nullptr;
+		}
 		else
 		{
 			if (activeDialog->GetActiveNode()->nodes.Count() > 1)
@@ -174,13 +176,8 @@ bool DialogManager::PostUpdate()
 			}
 
 		}
-		
 
 	}
-
-	
-
-	
 	//button->Draw(app->render);
 	
 	return true;

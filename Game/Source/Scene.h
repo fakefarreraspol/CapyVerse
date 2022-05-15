@@ -44,6 +44,7 @@ public:
 public:
 	List<NPC*> NPCs;
 	Player* player = nullptr;
+	bool load = false;
 
 };
 
