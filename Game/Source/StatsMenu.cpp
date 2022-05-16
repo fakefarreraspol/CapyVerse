@@ -191,6 +191,9 @@ bool StatsMenu::Update(float dt)
 				LoadItems(&itemsBtns, subBounds, 10);
 				currentControls = &itemsBtns;
 				currentControl = itemsBtns.start;
+
+				entityDescription->state = GuiControlState::DISABLED;
+				entityNum->state = GuiControlState::DISABLED;
 			}
 			if (currentControls == &capyBtns)
 			{
@@ -206,7 +209,8 @@ bool StatsMenu::Update(float dt)
 				currentControls = &menuBtns;
 				currentControl = currentControls->start;
 
-				
+				entityDescription->state = GuiControlState::DISABLED;
+				entityNum->state = GuiControlState::DISABLED;
 			}
 		}
 	}
@@ -385,7 +389,7 @@ bool StatsMenu::Update(float dt)
 				}
 				bounds = { (detailsBounds.x + 10) - cBounds.x, detailsBounds.y - cBounds.y + 10, 128,128 };
 				app->render->DrawRectangle(bounds, 255, 255, 255, 255, true, true);
-				entityDescription->state = GuiControlState::NORMAL;
+				//entityDescription->state = GuiControlState::NORMAL;
 			}
 		
 		
@@ -515,6 +519,8 @@ bool StatsMenu::OnGuiMouseClickEvent(GuiControl* control)
 			currentControls = &itemsBtns;
 			currentControl = itemsBtns.start;
 
+			entityDescription->state = GuiControlState::DISABLED;
+			entityNum->state = GuiControlState::DISABLED;
 		}
 	}
 	
