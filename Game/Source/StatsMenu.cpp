@@ -294,8 +294,9 @@ bool StatsMenu::Update(float dt)
 			bounds = { detailsBounds.x + 10, detailsBounds.y - cBounds.y + 10, 128,128 };
 			app->render->DrawRectangle(bounds, 255, 255, 255, 255, true, true);
 			entityDescription->state = GuiControlState::NORMAL;
+			entityNum->state = GuiControlState::NORMAL;
+
 		}
-		
 		
 	}
 
