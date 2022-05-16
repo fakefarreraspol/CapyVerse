@@ -42,7 +42,8 @@ public:
 	bool PostUpdate();
 
 	bool CleanUp();
-	bool LoadCapys(List<GuiControl*>* menu, SDL_Rect bounds);
+	bool LoadCapys(List<GuiControl*>* menu, SDL_Rect bounds, int idStart);
+	bool LoadItems(List<GuiControl*>* menu, SDL_Rect bounds, int idStart);
 
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
@@ -66,7 +67,7 @@ private:
 	GuiControl* useBtn;
 	GuiControl* equipBtn;*/
 
-	List<GuiControl*> currentControls;
+	List<GuiControl*> *currentControls;
 
 	List<GuiControl*> stats;
 	List<GuiControl*> statsValue;
@@ -95,6 +96,7 @@ private:
 	Menus activeMenu;
 	Capybara* currentCapy = nullptr;
 	Item* currentItem = nullptr;
+	bool waitNextUpdate = false;
 };
 
 

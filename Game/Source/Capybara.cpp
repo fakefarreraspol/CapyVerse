@@ -477,7 +477,7 @@ bool Capybara::UseItem(Item* item)
 	if (item->category == ItemCategory::CONSUMABLE)
 	{
 		Item* n = (Item*)app->entMan->CloneItem(item);
-		n->Use(this);
+		
 		consumables.Add(n);
 		app->entMan->inventory->DelItem(item);
 		ret = true;
@@ -510,19 +510,17 @@ bool Capybara::EquipItem(Item* item)
 		ret = false;
 	}
 
-	if (ret)
-		app->entMan->inventory->DelItem(item);
 	return ret;
 }
 bool Capybara::UnequipItem(ItemCategory category)
 {
-
+	
 	if (category == ItemCategory::ARMOR)
 	{
 		if (armorItem)
 		{
 			SetStatsFromItem(armorItem->stats, false);
-			app->entMan->inventory->AddItem(armorItem);
+			app->entMan->inventory->AddItem(armorItem,1);
 			armorItem = nullptr;
 		}
 	}
@@ -531,7 +529,7 @@ bool Capybara::UnequipItem(ItemCategory category)
 		if (weaponItem)
 		{
 			SetStatsFromItem(weaponItem->stats, false);
-			app->entMan->inventory->AddItem(weaponItem);
+			app->entMan->inventory->AddItem(weaponItem,1);
 			weaponItem = nullptr;
 		}
 	}
@@ -540,7 +538,7 @@ bool Capybara::UnequipItem(ItemCategory category)
 		if (necklaceItem)
 		{
 			SetStatsFromItem(necklaceItem->stats, false);
-			app->entMan->inventory->AddItem(necklaceItem);
+			app->entMan->inventory->AddItem(necklaceItem,1);
 			necklaceItem = nullptr;
 		}
 	}

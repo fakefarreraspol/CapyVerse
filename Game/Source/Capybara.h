@@ -117,7 +117,8 @@ protected:
 	void InitStats();
 
 public:
-	
+	List<Item*> consumables;
+
 
 protected:
 	//Capybara stats
@@ -166,7 +167,6 @@ protected:
 	Item* necklaceItem = nullptr;
 	Item* weaponItem = nullptr;
 	
-	List<Item*> consumables;
 };
 
 #endif // __CAPYBARA_H__
