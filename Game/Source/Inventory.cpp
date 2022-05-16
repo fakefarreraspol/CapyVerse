@@ -82,3 +82,28 @@ bool Inventory::CleanUp()
 	slots.Clear();
 	return true;
 }
+
+bool Inventory::UseItem(Item* item, Capybara* capy)
+{
+	bool ret = true;
+
+	Item* n = (Item*)app->entMan->CloneItem(item);
+	capy->consumables.Add(n);
+	n->Use(capy);
+	
+	DelItem(item);
+	DeleteEmpty();
+
+	return ret;
+}
+
+bool Inventory::EquipItem(Item* item, Capybara* capy)
+{
+	Item* n = (Item*)app->entMan->CloneItem(item);
+	capy->EquipItem(n);
+
+	DelItem(item);
+	DeleteEmpty();
+
+	return true;
+}

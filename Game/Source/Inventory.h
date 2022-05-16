@@ -50,6 +50,9 @@ public:
 	void DelItem(Item* item, int n=1);
 	bool CleanUp();
 
+	bool UseItem(Item* item, Capybara* capy);
+	bool EquipItem(Item* item, Capybara* capy);
+
 	
 };
 
