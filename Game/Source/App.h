@@ -26,6 +26,7 @@ class EntityManager;
 class BattleManager;
 class GuiManager;
 class DialogManager;
+class StatsMenu;
 class Physics;
 class Task;
 class FadeToBlack;
@@ -122,6 +123,7 @@ public:
 	EntityManager* entMan = nullptr;
 	Fonts* fonts = nullptr;
 	GuiManager* guiManager = nullptr;
+	StatsMenu* statsMenu = nullptr;
 	Map* mapManager = nullptr;
 	DialogManager* dialogManager = nullptr;
 	Physics* colManager = nullptr;

@@ -8,8 +8,8 @@
 #include "Textures.h"
 #include "Render.h"
 #include "Audio.h"
-
-
+#include "Inventory.h"
+#include "EntityManager.h"
 
 Capybara::Capybara(CapybaraType capyType, uint32 id, iPoint position, const char* name) : Entity(EntityType::CAPYBARA, id, name, position), capybaraType(capyType)
 {
@@ -26,6 +26,7 @@ Capybara::Capybara(CapybaraType capyType, uint32 id, iPoint position, const char
 
 Capybara::~Capybara()
 {
+	
 }
 
 bool Capybara::Start()
@@ -228,6 +229,8 @@ void Capybara::SetStatus(CapybaraStatus status)
 	case CapybaraStatus::CLEVER:	statusCounter = 1;	break;
 	}
 }
+
+
 
 void Capybara::SetAttack(bool isAbleToAttack)
 {
@@ -437,4 +440,107 @@ void Capybara::InitStats()
 	UpdateStats();
 	health = maxHealth;
 	mana = maxMana;
+}
+
+void Capybara::SetStatsFromItem(ItemStats itemStats, bool sum)
+{
+	if (sum)
+	{
+		health += itemStats.hp;
+		maxHealth += itemStats.hp;
+
+		mana += itemStats.mp;
+		maxMana += itemStats.mp;
+
+		damage += itemStats.strenght;
+		capybaraStats.speed += itemStats.speed;
+		armor += itemStats.armor;
+		
+	}
+	else
+	{
+		health -= itemStats.hp;
+		maxHealth -= itemStats.hp;
+
+		mana -= itemStats.mp;
+		maxMana -= itemStats.mp;
+
+		damage -= itemStats.strenght;
+		capybaraStats.speed -= itemStats.speed;
+		armor -= itemStats.armor;
+	}
+}
+
+bool Capybara::UseItem(Item* item)
+{
+	bool ret = false;
+	if (item->category == ItemCategory::CONSUMABLE)
+	{
+		Item* n = (Item*)app->entMan->CloneItem(item);
+		
+		consumables.Add(n);
+		app->entMan->inventory->DelItem(item);
+		ret = true;
+	}
+	return ret;
+}
+bool Capybara::EquipItem(Item* item)
+{
+	bool ret = true;
+
+	UnequipItem(item->category);
+
+	if (item->category == ItemCategory::ARMOR)
+	{
+		armorItem = (Item*)app->entMan->CloneItem(item);
+		SetStatsFromItem(armorItem->stats, true);
+	}
+	else if (item->category == ItemCategory::WEAPON)
+	{
+		weaponItem = (Item*)app->entMan->CloneItem(item);
+		SetStatsFromItem(weaponItem->stats, true);
+	}
+	else if (item->category == ItemCategory::NECKLACE)
+	{
+		necklaceItem = (Item*)app->entMan->CloneItem(item);
+		SetStatsFromItem(necklaceItem->stats, true);
+	}
+	else
+	{
+		ret = false;
+	}
+
+	return ret;
+}
+bool Capybara::UnequipItem(ItemCategory category)
+{
+	
+	if (category == ItemCategory::ARMOR)
+	{
+		if (armorItem)
+		{
+			SetStatsFromItem(armorItem->stats, false);
+			app->entMan->inventory->AddItem(armorItem,1);
+			armorItem = nullptr;
+		}
+	}
+	if (category == ItemCategory::WEAPON)
+	{
+		if (weaponItem)
+		{
+			SetStatsFromItem(weaponItem->stats, false);
+			app->entMan->inventory->AddItem(weaponItem,1);
+			weaponItem = nullptr;
+		}
+	}
+	if (category == ItemCategory::NECKLACE)
+	{
+		if (necklaceItem)
+		{
+			SetStatsFromItem(necklaceItem->stats, false);
+			app->entMan->inventory->AddItem(necklaceItem,1);
+			necklaceItem = nullptr;
+		}
+	}
+	return true;
 }

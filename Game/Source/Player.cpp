@@ -9,7 +9,8 @@
 #include "Textures.h"
 #include "Map.h"
 #include "FadeToBlack.h"
-
+#include "Inventory.h"
+#include "StatsMenu.h"
  
 
 
@@ -82,6 +83,7 @@ bool Player::Update(float dt)
 	bool ret = true;
 	if(app->GetDebug())
 		printf("x:%i y:%i\n", position.x, position.y);
+
 
 	UpdateCamera();
 	if (load)
@@ -169,6 +171,18 @@ bool Player::Draw(Render* render)
 	return ret;
 }
 
+//bool Player::Start()
+//{
+//	collider = app->colManager->CreateRectangle(position.x, position.y, 32, 32, bodyType::DYNAMIC);
+//	collider->listener = (Module*)app->entMan;
+//	collider->eListener = this;
+//	collider->body->SetFixedRotation(true);
+//
+//
+//	
+//	
+//	return true;
+//}
 
 void Player::AddCapybara(Capybara* capybara)
 {
@@ -259,6 +273,15 @@ void Player::UpdateInput(float dt)
 		{
 			app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene3, 2);
 		}
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
+	{
+		if (!app->statsMenu->IsEnabled())
+			app->statsMenu->Enable();
+		else
+			app->statsMenu->ActivateMenu();
+		
 	}
 	
 }

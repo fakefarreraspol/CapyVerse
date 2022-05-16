@@ -11,6 +11,8 @@ GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text, SDL_Color col
 {
 	this->bounds = bounds;
 	this->text = text;
+	this->textID = textID;
+	this->color = color;
 
 	if (textID == 0)
 		textID = app->fonts->globalFont;
@@ -113,5 +115,15 @@ bool GuiButton::Draw(Render* render)
 	if(state != GuiControlState::DISABLED)
 		render->DrawTexture(textTex, cBounds.x, cBounds.y);
 
+	return true;
+}
+
+bool GuiButton::SetText(const char* text)
+{
+	SDL_Rect b = bounds;
+	app->tex->UnLoad(textTex);
+	this->text.Create(text);
+	textTex = app->fonts->LoadRenderedText(bounds, textID, text, color);
+	bounds = b;
 	return true;
 }

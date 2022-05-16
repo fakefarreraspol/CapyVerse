@@ -7,7 +7,7 @@
 #include "Capybara.h"
 #include "Physics.h"
 #include "Animation.h"
-
+#include "Inventory.h"
 
 class Player : public Entity
 {
@@ -51,7 +51,8 @@ public:
 	bool CleanUp();
 	
 	/*SDL_Rect playerWalkRight[4];*/
-	
+
+
 private:
 	uint16_t money = 0;
 
@@ -70,6 +71,7 @@ private:
 	bool load = true;
 
 	float32 velocity = 2.0f;
+
 
 	bool initDebug = false;
 };

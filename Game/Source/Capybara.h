@@ -4,6 +4,10 @@
 #include "Entity.h"
 
 #include "Animation.h"
+#include "Item.h"
+#include "Items.h"
+
+#include "List.h"
 
 struct CapybaraStats
 {
@@ -14,6 +18,7 @@ struct CapybaraStats
 	int armor = 1;
 	int intelligence = 1;
 };
+
 
 enum class CapybaraTarget 
 {
@@ -76,11 +81,13 @@ public:
 	void Damage(int value);
 	void Heal(int value);
 	void RestoreMana(int value);
+	void SetStatsFromItem(ItemStats itemStats, bool sum);
 	virtual bool UseAbility(Capybara* target);
 	void Attack(Capybara* target);
 	void SetStatus(CapybaraStatus status);
 	void SetAttack(bool isAbleToAttac); //Sets the capy canAttack to true
 	bool CanAttack();
+	bool IsOnCombat() { return isCombat; }
 
 	void UpdateStatus();
 
@@ -94,6 +101,10 @@ public:
 	void SetCombat(bool value);
 	bool GetCombat();
 	bool CleanUp();
+	
+	bool UseItem(Item* item);
+	bool EquipItem(Item* item);
+	bool UnequipItem(ItemCategory category);
 
 	bool enemy = false;
 	Animation anim;
@@ -104,6 +115,11 @@ protected:
 	void UpdateStats();
 	//Initialize all the stats and update them
 	void InitStats();
+
+public:
+	List<Item*> consumables;
+
+
 protected:
 	//Capybara stats
 	CapybaraStats capybaraStats;
@@ -147,6 +163,10 @@ protected:
 	int healSFX;
 	int hitSFX;
 
+	Item* armorItem = nullptr;
+	Item* necklaceItem = nullptr;
+	Item* weaponItem = nullptr;
+	
 };
 
 #endif // __CAPYBARA_H__
