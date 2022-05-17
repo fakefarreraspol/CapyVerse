@@ -10,7 +10,7 @@
 
 Enemy::Enemy(iPoint position, uint32 id, const char* name) : NPC(position, id, name)
 {
-	normalEnemy.PushBack({ 17, 132, 32, 64 });
+	//normalEnemy.PushBack({ 17, 132, 32, 64 });
 	boss.PushBack({ 152, 135, 28, 63 });
 
 	if (isBoss)

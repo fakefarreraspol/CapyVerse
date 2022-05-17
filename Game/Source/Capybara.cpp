@@ -16,12 +16,15 @@ Capybara::Capybara(CapybaraType capyType, uint32 id, iPoint position, const char
 	level = 1;
 	capyName.Create(name);
 
+
 	//Change this values in order to balance the game progression
 	xpNext = 50;
 	healthXLvl = 10;
 	manaXLvl = 7;
 	damageXLvl = 4;
 	armorXLvl = 3;
+
+	this->Disable();
 	
 }
 
