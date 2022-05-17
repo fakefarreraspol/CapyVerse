@@ -15,6 +15,10 @@ NPC::NPC(iPoint position, uint32 id, const char* name) : Entity(EntityType::NPC,
 {
 	dialog = nullptr;
 	NPCname.Create(name);
+	idle.PushBack({ 83, 134, 32, 66 });
+	currentAnim->SetAnim(idle);
+	w = 32;
+	h = 66;
 }
 
 NPC::~NPC()
@@ -31,18 +35,12 @@ bool NPC::Start()
 	trigger = app->colManager->CreateRectangleSensor(position.x, position.y, 128, 128, bodyType::STATIC);
 	trigger->listener = (Module*)app->entMan;
 	trigger->eListener = this;
-
-	texture = app->tex->Load("Assets/Textures/Sprites/characters.png");
+ 
 	return true;
 }
 
 bool NPC::Update(float dt)
 {
-	/*if (load)
-	{
-		texture = app->tex->Load("Assets/Textures/Sprites/characters.png");
-		load = false;
-	}*/
 	
 	if (dialog->Finished() && triggerCounter >= 0)
 	{
@@ -53,14 +51,6 @@ bool NPC::Update(float dt)
 			dialog->finished = false;
 		}
 	}
-
-	return true;
-}
-
-bool NPC::Draw(Render* render)
-{
-	SDL_Rect rect = { 83, 134, 32, 66 };
-	render->DrawTexture(texture, position.x - 16, position.y - 32, &rect);
 
 	return true;
 }
@@ -83,7 +73,7 @@ bool NPC::CleanUp()
 		app->colManager->world->DestroyBody(collider->body);
 	if(trigger)
 		app->colManager->world->DestroyBody(trigger->body);
-	app->tex->UnLoad(texture);
+
 	return true;
 }
 

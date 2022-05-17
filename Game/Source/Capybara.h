@@ -60,7 +60,6 @@ public:
 	bool Start();
 	//Base functions
 	bool Update(float dt);
-	bool Draw(Render* render);
 	void SetLevel(int level);
 	//Getters
 	int& GetHealth();
@@ -107,9 +106,7 @@ public:
 	bool UnequipItem(ItemCategory category);
 
 	bool enemy = false;
-	Animation anim;
 	SString capyName;
-	Animation side;
 protected:
 	//Update the stats by the lvl
 	void UpdateStats();
@@ -156,7 +153,6 @@ protected:
 	int statusCounter = 0;									//To remove status and apply them
 	CapybaraTarget capybaraTarget = CapybaraTarget::NONE;	//The type of target of the ability
 
-	Animation* currentAnim;
 	bool load = true;
 	int attackSFX;
 	int abilitySFX;

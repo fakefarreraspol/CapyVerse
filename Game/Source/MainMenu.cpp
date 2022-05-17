@@ -110,12 +110,9 @@ bool MainMenu::Start()
 	exitText->state = GuiControlState::DISABLED;
 
 	titleSFX = app->audio->LoadFx("Assets/Audio/Fx/title.wav");
-	arrow = app->tex->Load("Assets/Menus/arrow.png");
 	background = app->tex->Load("Assets/Menus/portada.png");
 	title = app->tex->Load("Assets/Menus/title.png");
 	menus = app->tex->Load("Assets/Menus/menus.png");
-	currentControls = menuBtns;
-	currentControl = currentControls.start;
 	app->audio->ChangeMusic(1);
 
 	time.Start();
@@ -141,8 +138,6 @@ bool MainMenu::Update(float dt)
 	}
 	app->render->DrawTexture(title, 0, currentPositionY, NULL, true);
 	
-	
-	app->render->DrawTexture(arrow, currentControl->data->bounds.x - 30, currentControl->data->bounds.y - 3, NULL, true);
 	vsyncChkbx->checked = app->render->vsync;
 	fullscreenChkbx->checked = app->win->fullscreen;
 
@@ -196,7 +191,7 @@ void MainMenu::DrawMenu()
 
 void MainMenu::UpdateInput()
 {
-	GamePad& pad = app->input->pads[0];
+	/*GamePad& pad = app->input->pads[0];
 	if (yesBtn->state == GuiControlState::DISABLED)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || pad.down)
@@ -259,7 +254,7 @@ void MainMenu::UpdateInput()
 			}
 		}
 	}
-	currentControl->data->state = GuiControlState::FOCUSED;
+	currentControl->data->state = GuiControlState::FOCUSED;*/
 }
 
 // Called each loop iteration
@@ -301,8 +296,6 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control)
 		{
 			playBtns.At(i)->data->state = GuiControlState::NORMAL;
 		}
-		currentControls = playBtns;
-		currentControl = currentControls.start;
 	}
 	if (control->id == 2)
 	{
@@ -312,8 +305,6 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control)
 		{
 			optionsBtns.At(i)->data->state = GuiControlState::NORMAL;
 		}
-		currentControls = optionsBtns;
-		currentControl = currentControls.start;
 	}
 	if (control->id == 3)
 	{
@@ -343,8 +334,6 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control)
 			exitBtns.At(i)->data->state = GuiControlState::NORMAL;
 		}
 		exitText->state = GuiControlState::NORMAL;
-		currentControls = exitBtns;
-		currentControl = currentControls.start;
 	}
 	if (control->id == 5)
 	{
@@ -366,8 +355,6 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control)
 			playBtns.At(i)->data->state = GuiControlState::DISABLED;
 		}
 		returnPlBtn->state = GuiControlState::DISABLED;
-		currentControls = menuBtns;
-		currentControl = currentControls.start;
 	}
 	if (control->id == 8)
 	{
@@ -403,8 +390,6 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control)
 			optionsBtns.At(i)->data->state = GuiControlState::DISABLED;
 		}
 		returnOPBtn->state = GuiControlState::DISABLED;
-		currentControl = menuBtns.At(1);
-		currentControls = menuBtns;
 	}
 	if (control->id == 14)
 	{
@@ -415,8 +400,6 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control)
 			exitBtns.At(i)->data->state = GuiControlState::DISABLED;
 		}
 		exitText->state = GuiControlState::DISABLED;
-		currentControls = menuBtns;
-		currentControl = menuBtns.At(3);
 	}
 	if (control->id == 15)
 	{

@@ -54,12 +54,15 @@ Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType
 	walkDown.PushBack({ 66 * 15, 66, 66 , 66 });
 	walkDown.speed = 0.1f;
 	walkDown.loop = true;
-	currentAnim = &idle;
+	currentAnim->SetAnim(idle);
 
 	collider = app->colManager->CreateRectangle(position.x, position.y, 32, 32, bodyType::DYNAMIC);
 	collider->listener = (Module*)app->entMan;
 	collider->eListener = this;
 	collider->body->SetFixedRotation(true);
+
+	w = 66;
+	h = 66;
 }
 
 Player::~Player()
@@ -74,7 +77,6 @@ bool Player::Start()
 		collider->eListener = this;
 		collider->body->SetFixedRotation(true);
 	}
-	//texture = app->tex->Load("Assets/Textures/Sprites/characters.png");
 	return true;
 }
 
@@ -86,11 +88,6 @@ bool Player::Update(float dt)
 
 
 	UpdateCamera();
-	if (load)
-	{
-		texture  = app->tex->Load("Assets/Textures/Sprites/characters.png");
-		load = false;
-	}
 
 	if (canMove)
 		UpdateInput(dt);
@@ -102,7 +99,7 @@ bool Player::Update(float dt)
 		Debug();
 		initDebug = false;
 	}
-
+	currentAnim->Update();
 	return ret;
 }
 
@@ -153,37 +150,6 @@ void Player::UpdateCamera()
 	}
 }
 
-bool Player::Draw(Render* render)
-{
-	bool ret = true;
-	if (!isBattle)
-	{
-		if(app->GetDebug())
-			render->DrawRectangle({ position.x - 32, position.y - 32,  64 , 64 }, 255, 255, 0);
-		
-		SDL_RendererFlip flip = isWalkingLeft ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
-	
-		app->render->DrawTexture(texture, position.x - 32, position.y - 32, &currentAnim->GetCurrentFrame(), false, 1.0f, flip);
-
-		
-	}
-	currentAnim->Update();
-	return ret;
-}
-
-//bool Player::Start()
-//{
-//	collider = app->colManager->CreateRectangle(position.x, position.y, 32, 32, bodyType::DYNAMIC);
-//	collider->listener = (Module*)app->entMan;
-//	collider->eListener = this;
-//	collider->body->SetFixedRotation(true);
-//
-//
-//	
-//	
-//	return true;
-//}
-
 void Player::AddCapybara(Capybara* capybara)
 {
 	team.Add(capybara);
@@ -196,8 +162,8 @@ void Player::AddCapybaraToBatle(Capybara* capybara)
 //TODO: Update the player input and move the player
 void Player::UpdateInput(float dt)
 {
-	GamePad& pad = app->input->pads[0];
-	lastPos = position;
+
+	
 
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 		initDebug = true;
@@ -208,41 +174,41 @@ void Player::UpdateInput(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		isWalkingLeft = true;
+		faceLeft = true;
 		collider->body->SetLinearVelocity({ velocity, 0.0f });
-		if (currentAnim != &walkLeft)
+		if (currentAnim->ref != &walkLeft)
 		{
 			walkLeft.Reset();
-			currentAnim = &walkLeft;
+			currentAnim->SetAnim(walkLeft);
 		}
 	}
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		isWalkingLeft = false;
+		faceLeft = false;
 		collider->body->SetLinearVelocity({ -velocity, 0.0f });
-		if (currentAnim != &walkRight)
+		if (currentAnim->ref != &walkRight)
 		{
 			walkRight.Reset();
-			currentAnim = &walkRight;
+			currentAnim->SetAnim(walkRight);
 		}
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		collider->body->SetLinearVelocity({ 0.0f, -velocity });
-		if (currentAnim != &walkUp)
+		if (currentAnim->ref != &walkUp)
 		{
 			walkUp.Reset();
-			currentAnim = &walkUp;
+			currentAnim->SetAnim(walkUp);
 		}
 	}
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
 		collider->body->SetLinearVelocity({ 0.0f, velocity });
-		if (currentAnim != &walkDown)
+		if (currentAnim->ref != &walkDown)
 		{
 			walkDown.Reset();
-			currentAnim = &walkDown;
+			currentAnim->SetAnim(walkDown);
 		}
 	}
 
@@ -252,10 +218,10 @@ void Player::UpdateInput(float dt)
 		&& app->input->GetKey(SDL_SCANCODE_D) == KeyState::KEY_IDLE)
 	{
 		collider->body->SetLinearVelocity({ 0.0f,0.0f });
-		if (currentAnim != &idle) 
+		if (currentAnim->ref != &idle) 
 		{
 			idle.Reset();
-			currentAnim = &idle;
+			currentAnim->SetAnim(idle);
 		}
 	}
 
@@ -283,7 +249,6 @@ void Player::UpdateInput(float dt)
 			app->statsMenu->ActivateMenu();
 		
 	}
-	
 }
 
 List<Capybara*>& Player::GetBattleTeam()
@@ -342,9 +307,5 @@ void Player::OnCollision(PhysBody* c1, PhysBody* c2)
 
 bool Player::CleanUp()
 {
-	app->tex->UnLoad(texture);
-	//app->colManager->world->DestroyBody(collider->body);
-	load = true;
-
 	return true;
 }

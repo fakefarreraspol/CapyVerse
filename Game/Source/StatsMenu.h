@@ -63,12 +63,6 @@ private:
 	List<GuiControl*> selectorBtns;
 
 
-	/*List<GuiControl*> actionsBtns;
-	GuiControl* useBtn;
-	GuiControl* equipBtn;*/
-
-	List<GuiControl*> *currentControls;
-
 	List<GuiControl*> stats;
 	List<GuiControl*> statsValue;
 
@@ -79,8 +73,6 @@ private:
 	SDL_Rect optionsBounds;
 	SDL_Rect detailsBounds;
 
-	ListItem<GuiControl*>* currentControl;
-	SDL_Texture* arrow = nullptr;
 	SDL_Texture* menus = nullptr;
 	SDL_Texture* title = nullptr;
 	SDL_Texture* entityImg = nullptr;		// 128*128

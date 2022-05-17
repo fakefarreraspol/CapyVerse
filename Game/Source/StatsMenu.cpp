@@ -94,10 +94,6 @@ bool StatsMenu::Start()
 
 	for (int i = 0; i < 6; i++)
 		stats.At(i)->data->state = GuiControlState::DISABLED;
-
-
-	arrow = app->tex->Load("Assets/Menus/arrow.png");
-
 	
 	ActivateMenu();
 
@@ -113,303 +109,6 @@ bool StatsMenu::PreUpdate()
 // Called each loop iteration
 bool StatsMenu::Update(float dt)
 {
-	waitNextUpdate = false;
-	iPoint cBounds = { app->render->camera.x, app->render->camera.y };
-	SDL_Rect bounds;
-
-	GamePad& pad = app->input->pads[0];
-	if (currentControls->Count() > 1)
-	{
-		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || pad.down)
-		{
-			if (currentControl->next == nullptr)
-			{
-				currentControl->data->state = GuiControlState::NORMAL;
-				currentControl = currentControls->start;
-			}
-			else
-			{
-				currentControl->data->state = GuiControlState::NORMAL;
-				currentControl = currentControl->next;
-			}
-		}
-
-		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || pad.up)
-		{
-			if (currentControl->prev == nullptr)
-			{
-				currentControl->data->state = GuiControlState::NORMAL;
-				currentControl = currentControls->end;
-			}
-			else
-			{
-				currentControl->data->state = GuiControlState::NORMAL;
-				currentControl = currentControl->prev;
-			}
-		}
-	}
-	
-
-	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || pad.left)
-	{
-		if (currentControls!= &menuBtns)
-		{
-			if (currentControls == &itemsBtns)
-			{
-				ListItem<GuiControl*>* p = currentControls->start;
-				while (p)
-				{
-					GuiControl* del = p->data;
-					p = p->next;
-					app->guiManager->DestroyGuiControl(del);
-				}
-				entityDescription->state = GuiControlState::DISABLED;
-				entityNum->state = GuiControlState::DISABLED;
-				itemsBtns.Clear();
-				currentControls = &menuBtns;
-				currentControl = currentControls->start;
-
-				for (int i = 0; i < 6; i++)
-				{
-					stats.At(i)->data->state = GuiControlState::DISABLED;
-					statsValue.At(i)->data->state = GuiControlState::DISABLED;
-				}
-			}
-			if (currentControls == &selectorBtns)
-			{
-				// close selector menu
-				ListItem<GuiControl*>* p = currentControls->start;
-				while (p)
-				{
-					GuiControl* del = p->data;
-					p = p->next;
-					app->guiManager->DestroyGuiControl(del);
-				}
-				selectorBtns.Clear();
-				
-
-				LoadItems(&itemsBtns, subBounds, 10);
-				currentControls = &itemsBtns;
-				currentControl = itemsBtns.start;
-
-				entityDescription->state = GuiControlState::DISABLED;
-				entityNum->state = GuiControlState::DISABLED;
-			}
-			if (currentControls == &capyBtns)
-			{
-				ListItem<GuiControl*>* p = currentControls->start;
-				while (p)
-				{
-					GuiControl* del = p->data;
-					p = p->next;
-					app->guiManager->DestroyGuiControl(del);
-				}
-				
-				capyBtns.Clear();
-				currentControls = &menuBtns;
-				currentControl = currentControls->start;
-
-				entityDescription->state = GuiControlState::DISABLED;
-				entityNum->state = GuiControlState::DISABLED;
-			}
-		}
-	}
-
-	// stats menu
-
-	bounds = { menuBounds.x - cBounds.x,menuBounds.y - cBounds.y,menuBounds.w,menuBounds.h };
-	app->render->DrawRectangle(bounds, 0, 0, 0, 255, true, true);
-	for (int i = 0; i < menuBtns.Count(); i++)
-		menuBtns.At(i)->data->Draw(app->render);
-
-	// inventory
-
-	if (currentControls == &itemsBtns)
-	{
-		if (!currentControl)
-			currentControl = currentControls->start;
-		app->render->DrawTexture(arrow, menuBtns.At(0)->data->bounds.x - 30, menuBtns.At(0)->data->bounds.y - 3, NULL, true);
-
-		bounds = { subBounds.x - cBounds.x,subBounds.y - cBounds.y,subBounds.w,subBounds.h };
-		app->render->DrawRectangle(bounds, 0, 0, 0, 255, true, true);
-		bounds = { optionsBounds.x - cBounds.x,optionsBounds.y - cBounds.y,optionsBounds.w,optionsBounds.h };
-		//app->render->DrawRectangle(bounds, 0, 0, 0, 255, true, true);
-
-		Inventory* inventory = app->entMan->inventory;
-
-		if (inventory->slots.Count() == 0)
-		{
-			if (itemsBtns.start != nullptr)
-				itemsBtns.start->data->state = GuiControlState::NORMAL;
-			entityDescription->state = GuiControlState::DISABLED;
-		}
-
-		// loading button info
-		else for (int i = 0; i < itemsBtns.Count(); i++)
-		{
-			if (!currentControl)
-				currentControl = itemsBtns.start;
-			int at = i;
-			itemsBtns.At(i)->data->SetText(inventory->slots.At(at)->data->item->capyName.GetString());
-			if (at == currentControl->data->id - 10)
-			{
-				currentItem = inventory->slots.At(at)->data->item;
-				SString num("x %i", inventory->slots.At(at)->data->cuantity);
-				entityNum->SetText(num.GetString());
-				entityDescription->SetText(currentItem->description.GetString());
-
-				if (currentItem->category==ItemCategory::ARMOR|| currentItem->category == ItemCategory::NECKLACE|| currentItem->category == ItemCategory::WEAPON)
-				{
-					for (int i = 0; i < 6; i++)
-					{
-						stats.At(i)->data->state = GuiControlState::NORMAL;
-						statsValue.At(i)->data->state = GuiControlState::NORMAL;
-					}
-						
-
-					SString hp("%i", currentItem->stats.hp);
-					SString mp("%i", currentItem->stats.mp);
-					SString str("%i", currentItem->stats.strenght);
-					SString spd("%i", currentItem->stats.speed);
-					SString arm("%i", currentItem->stats.armor);
-					SString inte("%i", currentItem->stats.intelligence);
-
-					statsValue.At(0)->data->SetText(hp.GetString());
-					statsValue.At(1)->data->SetText(mp.GetString());
-					statsValue.At(2)->data->SetText(str.GetString());
-					statsValue.At(3)->data->SetText(spd.GetString());
-					statsValue.At(4)->data->SetText(arm.GetString());
-					statsValue.At(5)->data->SetText(inte.GetString());
-				}
-				else
-				{
-					for (int i = 0; i < 6; i++)
-					{
-						stats.At(i)->data->state = GuiControlState::DISABLED;
-						statsValue.At(i)->data->state = GuiControlState::DISABLED;
-					}
-				}
-				
-			}
-			bounds = { detailsBounds.x + 10, detailsBounds.y - cBounds.y + 10, 128,128 };
-			app->render->DrawRectangle(bounds, 255, 255, 255, 255, true, true);
-			entityDescription->state = GuiControlState::NORMAL;
-			entityNum->state = GuiControlState::NORMAL;
-
-		}
-		
-	}
-
-	if (currentControls == &selectorBtns)
-	{
-		if (!currentControl)
-			currentControl = selectorBtns.start;
-		app->render->DrawTexture(arrow, menuBtns.At(mainMenuOption)->data->bounds.x - 30, menuBtns.At(mainMenuOption)->data->bounds.y - 3, NULL, true);
-
-		app->render->DrawTexture(arrow, menuBtns.At(0)->data->bounds.x - 30, menuBtns.At(0)->data->bounds.y - 3, NULL, true);
-
-		bounds = { subBounds.x - cBounds.x,subBounds.y - cBounds.y,subBounds.w,subBounds.h };
-		app->render->DrawRectangle(bounds, 0, 0, 0, 255, true, true);
-		bounds = { detailsBounds.x - cBounds.x, detailsBounds.y-cBounds.y, detailsBounds.w, detailsBounds.h };
-		app->render->DrawRectangle(bounds, 0, 0, 0, 255, true, true);
-		bounds = { optionsBounds.x - cBounds.x,optionsBounds.y - cBounds.y,optionsBounds.w,optionsBounds.h };
-		app->render->DrawRectangle(bounds, 0, 0, 0, 255, true, true);
-
-		if (selectorBtns.Count() <= 1)
-		{
-			if (selectorBtns.start != nullptr)
-				selectorBtns.start->data->state = GuiControlState::NORMAL;
-			if (!currentControl)
-				currentControl = selectorBtns.start;
-		}
-
-		// loading button info
-		else
-			for (int i = 0; i < selectorBtns.Count(); i++)
-		{
-			int at = i;
-			selectorBtns.At(i)->data->SetText(app->scene->player->GetBattleTeam().At(at)->data->capyName.GetString());
-
-			if (at == currentControl->data->id - 50)
-			{
-				currentCapy = app->scene->player->GetBattleTeam().At(at)->data;
-				
-				
-
-			}
-			bounds = { detailsBounds.x + 10-cBounds.x, detailsBounds.y - cBounds.y + 10, 128,128 };
-			app->render->DrawRectangle(bounds, 255, 255, 255, 255, true, true);
-			entityDescription->state = GuiControlState::NORMAL;
-		}
-	}
-
-	/*if (activeMenu == Menus::ITEMS_ACTIONS)
-	{
-		app->render->DrawTexture(arrow, menuBtns.At(mainMenuOption)->data->bounds.x - 30, menuBtns.At(mainMenuOption)->data->bounds.y - 3, NULL, true);
-		
-	}*/
-
-	
-
-	// capybaras
-
-	if (currentControls == &capyBtns)
-	{
-
-		entityDescription->state = GuiControlState::DISABLED;
-		entityNum->state = GuiControlState::DISABLED;
-
-		app->render->DrawTexture(arrow, menuBtns.At(1)->data->bounds.x - 30, menuBtns.At(1)->data->bounds.y - 3, NULL, true);
-
-		bounds = { subBounds.x - cBounds.x,subBounds.y - cBounds.y,subBounds.w,subBounds.h };
-		app->render->DrawRectangle(bounds, 0, 0, 0, 255, true, true);
-		bounds = { optionsBounds.x - cBounds.x,optionsBounds.y - cBounds.y,optionsBounds.w,optionsBounds.h };
-		app->render->DrawRectangle(bounds, 0, 0, 0, 255, true, true);
-
-		if (capyBtns.Count() <= 1)
-		{
-			if (capyBtns.start != nullptr)
-				capyBtns.start->data->state = GuiControlState::NORMAL;
-			if (!currentControl)
-				currentControl = capyBtns.start;
-		}
-
-		// loading button info
-		else
-			for (int i = 0; i < capyBtns.Count(); i++)
-			{
-				int at = i;
-				capyBtns.At(i)->data->SetText(app->scene->player->GetBattleTeam().At(at)->data->capyName.GetString());
-
-				if (at == currentControl->data->id - 50)
-				{
-					currentCapy = app->scene->player->GetBattleTeam().At(at)->data;
-
-
-
-				}
-				bounds = { (detailsBounds.x + 10) - cBounds.x, detailsBounds.y - cBounds.y + 10, 128,128 };
-				app->render->DrawRectangle(bounds, 255, 255, 255, 255, true, true);
-				//entityDescription->state = GuiControlState::NORMAL;
-			}
-		
-		
-	}
-
-	if(currentControl)
-		app->render->DrawTexture(arrow, currentControl->data->bounds.x - 30, currentControl->data->bounds.y - 3, NULL, true);
-
-	// stats menu
-
-
-
-
-
-	if (currentControl)
-		currentControl->data->state = GuiControlState::FOCUSED;
-
-
-		
 
 	return true;
 }
@@ -417,18 +116,12 @@ bool StatsMenu::Update(float dt)
 // Called before all Updates
 bool StatsMenu::PostUpdate()
 {
-	if (!active)
-	{
-		currentControl->data->state = GuiControlState::DISABLED;
-		currentControl = nullptr;
-	}
 	return true;
 }
 
 // Called before quitting
 bool StatsMenu::CleanUp()
 {
-	app->tex->UnLoad(arrow);
 	menuBtns.Clear();
 	itemsBtns.Clear();
 	capyBtns.Clear();
@@ -455,8 +148,7 @@ bool StatsMenu::OnGuiMouseClickEvent(GuiControl* control)
 			LoadItems(&itemsBtns, bounds, 10);
 
 			entityNum->state = GuiControlState::NORMAL;
-			currentControls = &itemsBtns;
-			currentControl = currentControls->start;
+			
 			/*for (int i = 0; i < currentControls.Count(); i++)
 				currentControls.At(i)->data->state = GuiControlState::NORMAL;*/
 		}
@@ -470,17 +162,12 @@ bool StatsMenu::OnGuiMouseClickEvent(GuiControl* control)
 			SDL_Rect bounds = subBounds;
 			bounds.w -= detailsBounds.w;
 			LoadCapys(&capyBtns, bounds, 30);
-
-			currentControls = &capyBtns;
-			currentControl = currentControls->start;
 		}
 
 		if (control->id == 4)
 		{
 			mainMenuOption = 3;
 			active = false;
-			for (int i = 0; i < menuBtns.Count(); i++)
-				currentControls->At(i)->data->state = GuiControlState::DISABLED;
 		}
 
 		if (control->id >= 10 && control->id <= 29) // items inventory
@@ -499,10 +186,6 @@ bool StatsMenu::OnGuiMouseClickEvent(GuiControl* control)
 					|| itemHolder->item->category != ItemCategory::NONE)
 				{
 					LoadCapys(&selectorBtns, optionsBounds, 50);
-					currentControls = &selectorBtns;
-					currentControl = selectorBtns.start;
-					if (currentControl)
-						currentControl->data->state = GuiControlState::FOCUSED;
 				}
 			}
 		}
@@ -517,8 +200,6 @@ bool StatsMenu::OnGuiMouseClickEvent(GuiControl* control)
 				app->entMan->inventory->EquipItem(currentItem, currentCapy);
 
 			LoadItems(&itemsBtns, subBounds, 10);
-			currentControls = &itemsBtns;
-			currentControl = itemsBtns.start;
 
 			entityDescription->state = GuiControlState::DISABLED;
 			entityNum->state = GuiControlState::DISABLED;
@@ -531,11 +212,7 @@ bool StatsMenu::OnGuiMouseClickEvent(GuiControl* control)
 bool StatsMenu::ActivateMenu()
 {
 	active = true;
-	currentControls = &menuBtns;
-	currentControl = currentControls->start;
 
-	for (int i = 0; i < currentControls->Count(); i++)
-		currentControls->At(i)->data->state = GuiControlState::NORMAL;
 
 	return true;
 }

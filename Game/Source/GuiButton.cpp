@@ -18,6 +18,7 @@ GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text, SDL_Color col
 		textID = app->fonts->globalFont;
 	sfx = app->audio->LoadFx("Assets/Audio/FX/notification2.wav");
 	texture = app->tex->Load("Assets/Menus/Buttons.png");
+	arrow = app->tex->Load("Assets/Menus/arrow.png");
 	textTex = app->fonts->LoadRenderedText(bounds, textID, text, color);
 
 	canClick = true;
@@ -26,50 +27,38 @@ GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text, SDL_Color col
 
 GuiButton::~GuiButton()
 {
-	RELEASE(textTex);
-	RELEASE(texture);
+	app->tex->UnLoad(arrow);
+	app->tex->UnLoad(texture);
+	app->tex->UnLoad(textTex);
 }
 
 bool GuiButton::Update(float dt)
 {
 	bool ret = true;
-	GamePad& pad = app->input->pads[0];
-	if (state != GuiControlState::DISABLED)
+	if (state != GuiControlState::DISABLED && state != GuiControlState::NONE)
 	{
-		
-		//// L14: TODO 3: Update the state of the GUiButton according to the mouse position
-		//int mouseX, mouseY;
-		//app->input->GetMousePosition(mouseX, mouseY);
+		// L14: TODO 3: Update the state of the GUiButton according to the mouse position
+		int mouseX, mouseY;
+		app->input->GetMousePosition(mouseX, mouseY);
 
-		//if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) &&
-		//	(mouseY > bounds.y) && (mouseY < (bounds.y + bounds.h)))
-		//{
-		//	state = GuiControlState::FOCUSED;
-
-		//	if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
-		//	{
-		//		state = GuiControlState::PRESSED;
-		//	}
-
-		//	// If mouse button pressed -> Generate event!
-		//	if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP)
-		//	{
-		//		NotifyObserver();
-		//	}
-		//}
-		//else
-		//	state = GuiControlState::NORMAL;
-		
-		//if (pad.a) LOG("TUS MUERTOS MARICON");
-		if (state == GuiControlState::FOCUSED)
+		if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) &&
+			(mouseY > bounds.y) && (mouseY < (bounds.y + bounds.h)))
 		{
-			if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN || pad.a)
+			state = GuiControlState::FOCUSED;
+			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_DOWN)
 			{
 				state = GuiControlState::PRESSED;
-				app->audio->PlayFx(sfx);
-				ret = NotifyObserver();
-				state= GuiControlState::NORMAL;
 			}
+
+			// If mouse button pressed -> Generate event!
+			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP)
+			{
+				ret = NotifyObserver();
+			}
+		}
+		else if (state != GuiControlState::NONE)
+		{
+			state = GuiControlState::NORMAL;
 		}
 	}
 
@@ -89,7 +78,11 @@ bool GuiButton::Draw(Render* render)
 	switch (state)
 	{
 	case GuiControlState::NORMAL:		render->DrawTexture(texture, cBounds.x, cBounds.y, &normal);			break;
-	case GuiControlState::FOCUSED:		render->DrawTexture(texture, cBounds.x, cBounds.y, &focussed);			break;
+	case GuiControlState::FOCUSED:
+	{
+		render->DrawTexture(texture, cBounds.x, cBounds.y, &focussed);
+		render->DrawTexture(arrow, cBounds.x - 20, cBounds.y);
+	}break;
 	case GuiControlState::PRESSED:		render->DrawTexture(texture, cBounds.x, cBounds.y, &pressed);			break;
 	case GuiControlState::SELECTED:		render->DrawTexture(texture, cBounds.x, cBounds.y, &selected);			break;
 

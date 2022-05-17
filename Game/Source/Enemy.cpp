@@ -10,7 +10,17 @@
 
 Enemy::Enemy(iPoint position, uint32 id, const char* name) : NPC(position, id, name)
 {
+	normalEnemy.PushBack({ 17, 132, 32, 64 });
+	boss.PushBack({ 152, 135, 28, 63 });
 
+	if (isBoss)
+		currentAnim->SetAnim(boss);
+	else
+		currentAnim->SetAnim(normalEnemy);
+
+
+	w = 32;
+	h = 64;
 }
 
 Enemy::~Enemy()
@@ -27,7 +37,6 @@ bool Enemy::Start()
 	trigger->listener = (Module*)app->entMan;
 	trigger->eListener = this;
 
-	texture = app->tex->Load("Assets/Textures/Sprites/characters.png");
 	return true;
 }
 
@@ -36,20 +45,6 @@ bool Enemy::Update(float dt)
 	bool ret = true;
 	return ret;
 }
-
-bool Enemy::Draw(Render* render)
-{
-	bool ret = true;
-	if (!isCombat)
-	{
-		SDL_Rect rect = { 17, 132, 32, 64 };
-		if(isBoss)
-			rect = { 152, 135, 28, 63 };
-		render->DrawTexture(texture, position.x - 16, position.y - 32, &rect);
-	}
-	return ret;
-}
-
 void Enemy::SetCombat(bool value)
 {
 	for (int i = 0; i < battleTeam.Count(); i++)
@@ -115,6 +110,5 @@ bool Enemy::CleanUp()
 	
 	if(trigger)
 		app->colManager->world->DestroyBody(trigger->body);
-	app->tex->UnLoad(texture);
 	return true;
 }

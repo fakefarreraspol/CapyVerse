@@ -25,6 +25,7 @@
 #include "Pause.h"
 #include "Item.h"
 #include "Items.h"
+#include "Animation.h"
 #include "Inventory.h"
 
 EntityManager::EntityManager(bool startEnabled) : Module(startEnabled)
@@ -63,6 +64,8 @@ bool EntityManager::CleanUp()
 
 	delete inventory;
 
+	app->tex->UnLoad(texture);
+	app->tex->UnLoad(capyTex);
 	entities.Clear();
 
 	return ret;
@@ -183,21 +186,26 @@ void EntityManager::AddEntity(Entity* entity)
 
 bool EntityManager::Start()
 {
-	// inventory test
-	Item* uwu01 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::HP_POTION);
-	Item* uwu02 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::MP_POTION);
-	Item* uwu03 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::REVIVE);
-	Item* uwu04 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::FREERUNERS_ARMOR);
-	Item* uwu05 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::BOW_SPELLDRINKER);
-	Item* uwu06 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::ARMOR_VULNERABILITY);
+	//// inventory test
+	//Item* uwu01 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::HP_POTION);
+	//Item* uwu02 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::MP_POTION);
+	//Item* uwu03 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::REVIVE);
+	//Item* uwu04 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::FREERUNERS_ARMOR);
+	//Item* uwu05 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::BOW_SPELLDRINKER);
+	//Item* uwu06 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::ARMOR_VULNERABILITY);
 
 
-	inventory->AddItem(uwu01, 1);
-	inventory->AddItem(uwu02, 2);
-	inventory->AddItem(uwu03, 3);
-	inventory->AddItem(uwu04, 3);
-	inventory->AddItem(uwu05, 3);
-	inventory->AddItem(uwu06, 3);
+	//inventory->AddItem(uwu01, 1);
+	//inventory->AddItem(uwu02, 2);
+	//inventory->AddItem(uwu03, 3);
+	//inventory->AddItem(uwu04, 3);
+	//inventory->AddItem(uwu05, 3);
+	//inventory->AddItem(uwu06, 3);
+
+
+	texture = app->tex->Load("Assets/Textures/Sprites/characters.png");
+	capyTex = app->tex->Load("Assets/Textures/Sprites/capybaras.png");
+	props = app->tex->Load("Assets/Textures/Sprites/props.png");
 
 	return true;
 }
@@ -287,9 +295,27 @@ bool EntityManager::Draw() {
 	for (item = entities.start; item != NULL && ret == true; item = item->next)
 	{
 		pEntity = item->data;
+		uint32_t w = pEntity->w;
+		uint32_t h = pEntity->h;
 
 		if (pEntity->active == false) continue;
-		ret = item->data->Draw(app->render);
+		SDL_RendererFlip flip = pEntity->faceLeft ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
+
+		if (pEntity->type == EntityType::CAPYBARA)
+		{
+			ret = app->render->DrawTexture(capyTex, pEntity->GetPosition().x - w / 2, pEntity->GetPosition().y - h / 2,
+				&pEntity->currentAnim->GetCurrentFrame(), pEntity->faceLeft);
+		}
+		else if (pEntity->type == EntityType::BRIDGE || pEntity->type == EntityType::LEVER)
+		{
+			ret = app->render->DrawTexture(props, pEntity->GetPosition().x - w / 2, pEntity->GetPosition().y - h / 2,
+				&pEntity->currentAnim->GetCurrentFrame(), pEntity->faceLeft);
+		}
+		else
+		{
+			ret = app->render->DrawTexture(texture, pEntity->GetPosition().x - w / 2, pEntity->GetPosition().y - h / 2,
+				&pEntity->currentAnim->GetCurrentFrame(), pEntity->faceLeft);
+		}
 		
 	}
 

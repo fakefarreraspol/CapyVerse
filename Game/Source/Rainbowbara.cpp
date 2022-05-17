@@ -9,9 +9,9 @@ Rainbowbara::Rainbowbara(uint32 id, iPoint position) : Capybara(CapybaraType::SU
 	this->capybaraStats.intelligence	= 6;
 	this->capybaraTarget = CapybaraTarget::ALLIES;
 	InitStats();
-	anim.PushBack({ 64, 136, 60, 56 });
-	anim.PushBack({ 0, 136, 60, 56 });
-	currentAnim = &anim;
+
+	idle.PushBack({ 64, 136, 60, 56 });
+	currentAnim->SetAnim(idle);
 }
 
 Rainbowbara::~Rainbowbara()

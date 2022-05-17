@@ -10,9 +10,8 @@ Emobara::Emobara(uint32 id, iPoint position) : Capybara(CapybaraType::DPS, id, p
 
 	this->capybaraTarget = CapybaraTarget::HIMSELF;
 	InitStats();
-	anim.PushBack({ 64, 456, 60, 56 });
-	anim.PushBack({ 0, 456, 60, 56 });
-	currentAnim = &anim;
+	idle.PushBack({ 64, 456, 60, 56 });
+	currentAnim->SetAnim(idle);
 }
 
 Emobara::~Emobara()

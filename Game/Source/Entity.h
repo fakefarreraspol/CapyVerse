@@ -5,6 +5,8 @@
 #include "SString.h"
 #include "Input.h"
 #include "Render.h"
+#include "Animation.h"
+#include <memory>
 
 struct Collider;
 
@@ -46,10 +48,10 @@ public:
 		return true;
 	}
 
-	virtual bool Draw(Render* render)
+	/*virtual bool Draw(Render* render)
 	{
 		return true;
-	}
+	}*/
 
 	virtual bool CleanUp()
 	{
@@ -94,11 +96,15 @@ public:
 	EntityType type;
 	bool active = true;
 	uint32 id;            
+	std::shared_ptr<Animation> currentAnim = std::make_shared<Animation>();
+	Animation idle;
+	bool faceLeft = false;
 
 	iPoint position;
 	iPoint speed;
 	bool renderable = false;
-	SDL_Texture* texture = nullptr;
+
+	uint32_t w = 0, h = 0;
 };
 
 #endif // __ENTITY_H__

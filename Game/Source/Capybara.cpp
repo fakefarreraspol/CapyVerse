@@ -15,6 +15,7 @@ Capybara::Capybara(CapybaraType capyType, uint32 id, iPoint position, const char
 {
 	level = 1;
 	capyName.Create(name);
+
 	//Change this values in order to balance the game progression
 	xpNext = 50;
 	healthXLvl = 10;
@@ -40,11 +41,10 @@ bool Capybara::Update(float dt)
 	bool ret = true;
 	if (load)
 	{
-		texture = app->tex->Load("Assets/Textures/Sprites/capybaras.png");
-		attackSFX = app->audio->LoadFx("Assets/Audio/Fx/capybara-attack4.wav");
+		/*attackSFX = app->audio->LoadFx("Assets/Audio/Fx/capybara-attack4.wav");
 		abilitySFX = app->audio->LoadFx("Assets/Audio/Fx/capybara-attack2.wav");
 		healSFX = app->audio->LoadFx("Assets/Audio/Fx/capybara-spell1.wav");
-		hitSFX = app->audio->LoadFx("Assets/Audio/Fx/capybara-chirp.wav");
+		hitSFX = app->audio->LoadFx("Assets/Audio/Fx/capybara-chirp.wav");*/
 		load = false;
 	}
 	if (xp >= xpNext)
@@ -55,26 +55,6 @@ bool Capybara::Update(float dt)
 	if (this->health <= 0)
 	{
 		isCombat = false;
-	}
-
-	return ret;
-}
-
-bool Capybara::Draw(Render* render)
-{
-	bool ret = true;
-	if (isCombat)
-	{
-		if (app->GetDebug())
-			render->DrawRectangle({ position.x, position.y,  64 , 64 }, 255, 0, 0);
-		if (!enemy)
-		{
-			render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
-		}
-		else
-		{
-			render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame(), false, 1.0f, SDL_FLIP_HORIZONTAL);
-		}
 	}
 
 	return ret;
@@ -423,7 +403,6 @@ bool Capybara::GetCombat()
 
 bool Capybara::CleanUp()
 {
-	app->tex->UnLoad(texture);
 	return true;
 }
 

@@ -22,24 +22,38 @@ GuiCheckBox::~GuiCheckBox()
 
 bool GuiCheckBox::Update(float dt)
 {
-	GamePad& pad = app->input->pads[0];
+	bool ret = true;
 	if (state != GuiControlState::DISABLED)
 	{
-		if (state == GuiControlState::FOCUSED)
+		// L14: TODO 3: Update the state of the GUiButton according to the mouse position
+		int mouseX, mouseY;
+		app->input->GetMousePosition(mouseX, mouseY);
+		if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) &&
+			(mouseY > bounds.y) && (mouseY < (bounds.y + bounds.h)))
 		{
-			if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN || pad.a)
+			state = GuiControlState::FOCUSED;
+			
+
+			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_DOWN)
+			{
+				state = GuiControlState::PRESSED;
+			}
+
+			// If mouse button pressed -> Generate event!
+			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP)
 			{
 				checked = !checked;
-				NotifyObserver();
+				ret = NotifyObserver();
 			}
 		}
-		if (checked == true)
-			state = GuiControlState::PRESSED;
-		if (checked == false)
+		else
+		{
 			state = GuiControlState::NORMAL;
+		}
+
 	}
 
-	return true;
+	return ret;
 }
 
 bool GuiCheckBox::Draw(Render* render)
@@ -52,6 +66,17 @@ bool GuiCheckBox::Draw(Render* render)
 		uint w, h;
 		app->tex->GetSize(textTex,w, h);
 		SDL_Rect Bounds{ cBounds.x + w + 50, cBounds.y, bounds.w, bounds.h};
+		SDL_Rect uncheck{ 0, 0, 25, 25 };
+		SDL_Rect check{ 0, 25, 25, 25 };
+		switch (state)
+		{
+		case GuiControlState::DISABLED:		break;
+		case GuiControlState::NORMAL:		render->DrawTexture(texture, Bounds.x, Bounds.y,&uncheck);		break;
+		case GuiControlState::PRESSED:		render->DrawTexture(texture, Bounds.x, Bounds.y, &check);	break;
+		default:
+			break;
+		}
+		app->render->DrawTexture(textTex, cBounds.x, cBounds.y);
 		if (app->GetDebug())
 		{
 			switch (state)
@@ -67,17 +92,6 @@ bool GuiCheckBox::Draw(Render* render)
 			}
 
 		}
-		SDL_Rect uncheck{ 0, 0, 25, 25 };
-		SDL_Rect check{ 0, 25, 25, 25 };
-		switch (state)
-		{
-		case GuiControlState::DISABLED:		break;
-		case GuiControlState::NORMAL:		render->DrawTexture(texture, Bounds.x, Bounds.y,&uncheck);		break;
-		case GuiControlState::PRESSED:		render->DrawTexture(texture, Bounds.x, Bounds.y, &check);	break;
-		default:
-			break;
-		}
-		app->render->DrawTexture(textTex, cBounds.x, cBounds.y);
 	}
 	return true;
 }
