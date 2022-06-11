@@ -70,7 +70,9 @@ public:
 	float updateMsCycle = 0.0f;
 	bool doLogic = false;
 
-	SDL_Texture* capyTex;
+	SDL_Texture* capyTex = nullptr;
+	SDL_Texture* texture = nullptr;
+	SDL_Texture* props = nullptr;
 	Inventory* inventory;
 };
 

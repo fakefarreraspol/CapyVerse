@@ -15,7 +15,6 @@ public:
 	//Base functions
 	bool Start();
 	bool Update(float dt);
-	bool Draw(Render* render);
 
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&);

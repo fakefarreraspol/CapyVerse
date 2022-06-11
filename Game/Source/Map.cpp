@@ -411,8 +411,8 @@ bool Map::Load(const char* filename)
 			layer = layer->next;
 		}
 	}
-	LoadProps();
 	LoadColliders();
+	printf("Colliders loaded %i\n", cols.Count());
 	mapLoaded = ret;
 
 	return ret;
@@ -426,6 +426,9 @@ bool Map::Unload()
 	{
 		app->colManager->world->DestroyBody(cols.At(i)->data->body);
 	}
+	mapData.layers.Clear();
+	mapData.tilesets.Clear();
+	printf("Number of colliders: %i\n", app->colManager->world->GetBodyCount());
 	cols.Clear();
 	return ret;
 }

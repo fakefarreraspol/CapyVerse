@@ -56,7 +56,6 @@ private:
 	List<GuiControl*> optionsBtns;
 	List<GuiControl*> exitBtns;
 
-	List<GuiControl*> currentControls;
 
 	GuiButton* playBtn;
 	GuiButton* newGameBtn;
@@ -78,8 +77,6 @@ private:
 	GuiButton* yesBtn;
 	GuiButton* noBtn;
 	GuiText* exitText;
-	
-	ListItem<GuiControl*>* currentControl;
 	
 	List<GuiText*> credits;
 

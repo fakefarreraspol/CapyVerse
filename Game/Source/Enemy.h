@@ -17,7 +17,6 @@ public:
 	bool Start();
 	//Base functions
 	bool Update(float dt);
-	bool Draw(Render* render);
 
 	void SetCombat(bool value);
 
@@ -30,6 +29,8 @@ public:
 	bool CleanUp();
 	bool isBoss = false;
 private:
+	Animation normalEnemy;
+	Animation boss;
 	List<Capybara*> battleTeam;
 	bool isCombat = false;
 	bool load = true;

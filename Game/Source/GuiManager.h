@@ -35,7 +35,9 @@ public:
 	float updateMsCycle = 0.0f;
 	bool doLogic = false;
 
-	SDL_Texture* texture;
+	SDL_Texture* buttons = nullptr;
+	SDL_Texture* checkbox = nullptr;
+
 private:
 	GuiControl* activeControl = nullptr;
 };

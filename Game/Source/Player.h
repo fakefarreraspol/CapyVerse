@@ -23,7 +23,7 @@ public:
 	bool Update(float dt);
 	void Debug();
 	void UpdateCamera();
-	bool Draw(Render* render);
+
 	bool Start();
 	//Adds a capybara to the player team 
 	void AddCapybara(Capybara* capybara);
@@ -47,10 +47,7 @@ public:
 
 	void SetCombat(bool value);
 	void OnCollision(PhysBody* c1, PhysBody* c2);
-	bool isWalkingLeft = false;
 	bool CleanUp();
-	
-	/*SDL_Rect playerWalkRight[4];*/
 
 
 private:
@@ -59,7 +56,6 @@ private:
 	bool isBattle = false;
 	bool isStuck = false;
 
-	Animation* currentAnim = nullptr;
 	Animation idle;
 	Animation walkRight;
 	Animation walkLeft;
