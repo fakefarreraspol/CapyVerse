@@ -12,7 +12,7 @@ Pinkbara::Pinkbara(uint32 id, iPoint position) : Capybara(CapybaraType::SUPP, id
 	InitStats();
 
 	idle.PushBack({ 64, 264, 60, 56 });
-	currentAnim->SetAnim(idle);
+	currentAnim = &(idle);
 }
 
 Pinkbara::~Pinkbara()

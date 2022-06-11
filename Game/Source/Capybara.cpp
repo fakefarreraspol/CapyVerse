@@ -24,6 +24,9 @@ Capybara::Capybara(CapybaraType capyType, uint32 id, iPoint position, const char
 	damageXLvl = 4;
 	armorXLvl = 3;
 
+	this->w = 64;
+	this->h = 64;
+
 	this->Disable();
 	
 }

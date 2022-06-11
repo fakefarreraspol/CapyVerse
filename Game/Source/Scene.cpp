@@ -207,8 +207,8 @@ bool Scene::CleanUp()
 	}
 	player->Disable();
 	bridge->Disable();
-	//app->mapManager->Unload();
-	//app->colManager->Disable();
+	app->mapManager->Unload();
+
 
 	LOG("Succesfully unloaded scene");
 	return true;

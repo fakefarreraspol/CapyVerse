@@ -112,7 +112,7 @@ bool EOBScene::Update(float dt)
 		XP--;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+	if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
 		
 		app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene, 2);

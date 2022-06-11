@@ -8,35 +8,23 @@ class Animation
 {
 public:
 	float speed = 1.0f;
-	SDL_Rect frames[MAX_FRAMES] = { 0 };
-	Animation* ref = nullptr;
+	SDL_Rect frames[MAX_FRAMES];
 	bool loop = true;
 	// Allows the animation to keep going back and forth
 	bool pingpong = false;
 
 private:
-	int currentFrame = 0;
+	float currentFrame = 0.0f;
 	int totalFrames = 0;
 	int loopCount = 0;
 	int pingpongDirection = 1;
 	bool mustFlip = false;
 
 public:
-	Animation(){}
-	~Animation(){}
 
 	void PushBack(const SDL_Rect& rect)
 	{
 		frames[totalFrames++] = rect;
-	}
-
-	void SetAnim(Animation newAnim)
-	{
-		for (int i = 0; i < MAX_FRAMES; i++)
-		{
-			frames[i] = newAnim.frames[i];
-		}
-		ref = &newAnim;
 	}
 
 	void Reset()
@@ -54,7 +42,7 @@ public:
 		currentFrame += speed;
 		if (currentFrame >= totalFrames)
 		{
-			currentFrame = (loop || pingpong) ? 0.0f : (float)(totalFrames - 1);
+			currentFrame = (loop || pingpong) ? 0.0f : totalFrames - 1;
 			++loopCount;
 
 			if (pingpong)

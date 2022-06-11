@@ -11,7 +11,7 @@ Punkibara::Punkibara(uint32 id, iPoint position) : Capybara(CapybaraType::DPS, i
 	InitStats();
 	
 	idle.PushBack({ 64, 192, 60, 62 });
-	currentAnim->SetAnim(idle);
+	currentAnim = &(idle);
 }
 
 Punkibara::~Punkibara()

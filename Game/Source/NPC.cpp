@@ -16,7 +16,7 @@ NPC::NPC(iPoint position, uint32 id, const char* name) : Entity(EntityType::NPC,
 	dialog = nullptr;
 	NPCname.Create(name);
 	idle.PushBack({ 83, 134, 32, 66 });
-	currentAnim->SetAnim(idle);
+	currentAnim = &idle;
 	w = 32;
 	h = 66;
 }

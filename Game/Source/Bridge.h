@@ -13,7 +13,7 @@ class Bridge : public Entity
 public:
 	Bridge(iPoint position, uint32_t id) : Entity(EntityType::BRIDGE, id, "Door", position)
 	{
-		currentAnim->SetAnim(first);
+		currentAnim = &(first);
 		first.PushBack({ 0, 0, 236, 146 });
 		second.PushBack({ 236, 10, 242, 132 });
 		third.PushBack({ 476, 26, 244, 105 });
@@ -35,11 +35,11 @@ public:
 		counter--;
 
 		if (counter == 2)
-			currentAnim->SetAnim(first);
+			currentAnim = &(first);
 		if (counter == 1)
-			currentAnim->SetAnim(second);
+			currentAnim = &(second);
 		if (counter == 0)
-			currentAnim->SetAnim(third);
+			currentAnim = &(third);
 		if (counter <= 0)
 		{
 			app->colManager->world->DestroyBody(collider->body);

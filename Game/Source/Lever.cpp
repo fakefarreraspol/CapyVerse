@@ -21,7 +21,7 @@ Lever::Lever(iPoint position, uint32_t id, uint32_t questID) : Entity(EntityType
 	w = 32;
 	h = 32;
 
-	currentAnim->SetAnim(closed);
+	currentAnim = &(closed);
 }
 
 Lever::~Lever()
@@ -78,7 +78,7 @@ void Lever::OnCollision(PhysBody* c1, PhysBody* c2)
 			if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
 			{
 				activated = true;
-				currentAnim->SetAnim(open);
+				currentAnim = &(open);
 				app->questManager->UpdateQuest(questID);
 				if(listener)
 					listener->Update();
