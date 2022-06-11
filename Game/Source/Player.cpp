@@ -40,7 +40,7 @@ Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType
 	walkUp.PushBack({ 66*4, 66, 66 , 66 });
 	walkUp.PushBack({ 66*5, 66, 66 , 66 });
 	walkUp.PushBack({ 66*6, 66, 66 , 66 });
-	walkUp.PushBack({ 66*7, 66, 66 , 66 });
+	
 	walkUp.loop = true;
 	walkUp.speed = 0.1f;
 	
@@ -51,7 +51,7 @@ Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType
 	walkDown.PushBack({ 66 * 12, 66, 66 , 66 });
 	walkDown.PushBack({ 66 * 13, 66, 66 , 66 });
 	walkDown.PushBack({ 66 * 14, 66, 66 , 66});
-	walkDown.PushBack({ 66 * 15, 66, 66 , 66 });
+	
 	walkDown.speed = 0.1f;
 	walkDown.loop = true;
 	currentAnim->SetAnim(idle);
