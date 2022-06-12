@@ -62,7 +62,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	statsMenu = new StatsMenu(false);
 	mainMenu = new MainMenu(false);
 	scene = new Scene(false);
-	shop = new Shop(true);
+	shop = new Shop(false);
 	particles = new Particles(true);
 	battleManager = new BattleManager(false);
 	battleScene1 = new BattleScene1(false);

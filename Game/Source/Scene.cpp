@@ -30,6 +30,7 @@
 #include "NPC.h"
 #include "Lever.h"
 #include "Bridge.h"
+#include "Shop.h"
 
 Scene::Scene(bool startEnabled) : Module(startEnabled)
 {
@@ -76,12 +77,16 @@ bool Scene::Awake(pugi::xml_node& node)
 	DialogNode* sec2 = NPCs.At(2)->data->dialog->AddOption(fst2, "Gotta catch 'em all!!!!!!", "");
 	NPCs.At(2)->data->dialog->AddFirstNode(fst2);
 
+	NPCs.At(3)->data->dialog = new Dialog();
+	DialogNode* fst3 = new DialogNode("Hey, take a look at what can I offer to you!");
+	NPCs.At(3)->data->dialog->AddFirstNode(fst3);
 	return ret;
 }
 
 // Called before the first frame
 bool Scene::Start()
 {
+	app->shop->Enable();
 	app->questManager->Enable();
 	if (!bridge)
 	{

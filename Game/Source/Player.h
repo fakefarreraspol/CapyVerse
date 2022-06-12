@@ -50,8 +50,8 @@ public:
 	bool CleanUp();
 
 
+	int money = 0;
 private:
-	uint16_t money = 0;
 
 	bool isBattle = false;
 	bool isStuck = false;

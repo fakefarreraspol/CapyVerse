@@ -7,6 +7,7 @@
 #include "FadeToBlack.h"
 #include "Textures.h"
 #include "QuestManager.h"
+#include "Shop.h"
 
 Trader::Trader(iPoint position, uint32 id, const char* name) : NPC(position, id, name)
 {
@@ -35,6 +36,17 @@ bool Trader::Update(float dt)
 	bool ret = true;
 
 	return ret;
+}
+
+void Trader::OnCollision(PhysBody* c1, PhysBody* c2)
+{
+	if (c2->eListener)
+	{
+		if (c2->eListener->type == EntityType::PLAYER)
+		{
+			app->shop->Show();
+		}
+	}
 }
 
 bool Trader::CleanUp()
