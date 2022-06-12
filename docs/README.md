@@ -3,7 +3,6 @@
 
 <p align="center">
   <img src="https://github.com/CapybaraStudios/CapyVerse/blob/main/docs/Welcome/gamePortrait.jpeg"> 
-  <img src=""> 
 </p>
 
 A new NFT game appears in a very saturated market. You, an anti-NFTs hacker, want this blockchain on fire. Your mission is to defeat 2 mods and the admin. Your only weapon: cute capybaras. Build a team of up to 3 capybaras in order to defeat anything standing between your objective of taking down the blockchain.
@@ -11,7 +10,7 @@ A new NFT game appears in a very saturated market. You, an anti-NFTs hacker, wan
 Will you destroy this Capyverse?
 
 ## Features
-- Combat system
+ - Combat system
  - Dialog system
  - 3 locations to visit - forest - town - field 
  - Quest system
