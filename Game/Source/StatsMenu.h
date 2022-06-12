@@ -46,6 +46,7 @@ public:
 
 	bool CleanUp();
 	bool LoadCapys(List<GuiControl*>* menu, SDL_Rect bounds, int idStart);
+	bool LoadTeam(List<GuiControl*>* menu, SDL_Rect bounds, int idStart);
 	bool LoadItems(List<GuiControl*>* menu, SDL_Rect bounds, int idStart);
 
 	bool OnGuiMouseClickEvent(GuiControl* control);
@@ -82,6 +83,7 @@ private:
 	List<GuiControl*> stats;
 	List<GuiControl*> statsValue;
 	List<GuiControl*> equipment;
+	List<GuiControl*> teamElements;
 	GuiControl* entityDescription;
 	GuiControl* entityNum;
 
@@ -96,8 +98,12 @@ private:
 	SDL_Texture* menus = nullptr;
 	SDL_Texture* title = nullptr;
 	SDL_Texture* entityImg = nullptr;		// 128*128
-
+	SDL_Texture* capyinfo = nullptr;
+	SDL_Texture* arrow = nullptr;
 	
+
+	SDL_Texture* textHP = nullptr;
+	SDL_Texture* textMP = nullptr;
 	
 	int mainMenuOption;
 	int subMenuOption;

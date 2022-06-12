@@ -159,6 +159,16 @@ void Player::AddCapybaraToBatle(Capybara* capybara)
 {
 	battleTeam.Add(capybara);
 }
+
+void Player::ChangeCapybaras(Capybara* fromTeam, Capybara* fromBattle)
+{
+	int atTeam = team.Find(fromTeam);
+	int atBattle= battleTeam.Find(fromBattle);
+
+	team.At(atTeam)->data = fromBattle;
+	battleTeam.At(atBattle)->data = fromTeam;
+}
+
 //TODO: Update the player input and move the player
 void Player::UpdateInput(float dt)
 {
