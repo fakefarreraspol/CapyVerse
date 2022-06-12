@@ -225,6 +225,23 @@ bool StatsMenu::CleanUp()
 	ClearMenu(&subMenu);
 	ClearMenu(&actionsMenu);
 	ClearMenu(&optionsMenu);
+	ClearMenu(&stats);
+	ClearMenu(&statsValue);
+	ClearMenu(&equipment);
+
+
+	app->guiManager->DestroyGuiControl(entityDescription);
+	app->guiManager->DestroyGuiControl(entityNum);
+
+	app->tex->UnLoad(menus);
+	app->tex->UnLoad(title);
+	app->tex->UnLoad(entityImg);
+	app->tex->UnLoad(capyinfo);
+	app->tex->UnLoad(arrow);
+	app->tex->UnLoad(textHP);
+	app->tex->UnLoad(textMP);
+
+
 	return true;
 }
 
@@ -249,7 +266,6 @@ bool StatsMenu::OnGuiMouseClickEvent(GuiControl* control)
 			ClearMenu(&actionsMenu);
 			ClearMenu(&optionsMenu);
 			ClearMenu(&equipment);
-			ClearMenu(&teamElements);
 
 			entityDescription->state = GuiControlState::DISABLED;
 			entityNum->state = GuiControlState::DISABLED;
@@ -263,7 +279,6 @@ bool StatsMenu::OnGuiMouseClickEvent(GuiControl* control)
 			if (control == mainMenu.At(0)->data)		// items
 			{
 				lastMain = 0;
-				activeMenu = Menus::CAPY_INVENTORY;
 				SDL_Rect bounds = subBounds;
 				LoadItems(&subMenu, bounds, 2);
 			}
@@ -271,7 +286,6 @@ bool StatsMenu::OnGuiMouseClickEvent(GuiControl* control)
 			if (control == mainMenu.At(1)->data)	// capybaras + capy equipment and details
 			{
 				lastMain = 1;
-				activeMenu = CAPY_INVENTORY;
 				mainMenuOption = 1;
 				control->state = GuiControlState::NORMAL;
 
@@ -308,7 +322,6 @@ bool StatsMenu::OnGuiMouseClickEvent(GuiControl* control)
 			if (control == mainMenu.At(3)->data)	// return
 			{
 				lastMain = 3;
-				activeMenu = MENU;
 
 				HideMenus();
 
@@ -842,7 +855,6 @@ bool StatsMenu::LoadItems(List<GuiControl*>* menu, SDL_Rect bounds, int id)
 				c->state = GuiControlState::NORMAL;
 			}
 		}*/
-		updateDetails = true;
 	}
 
 

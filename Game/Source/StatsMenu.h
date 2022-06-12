@@ -14,21 +14,6 @@
 class Capybara;
 class Item;
 
-enum Menus
-{
-	MENU,
-	ITEMS_INVENTORY,
-	ITEMS_ACTIONS,
-	ITEMS_OPTION_SELECTION,
-
-	CAPY_INVENTORY,
-	CAPY_ACTIONS,
-	CAPY_OPTION_SEELCTION,
-
-	TEAM,
-	BATTLE_TEAM
-};
-
 class StatsMenu : public Module
 {
 public:
@@ -62,7 +47,6 @@ private:
 
 	List<GuiControl*>* currentMenu;
 
-	//List<GuiControl*> mainMenu;			// 1
 	List<GuiControl*> subMenu;			// 2
 	List<GuiControl*> actionsMenu;		// 3
 	List<GuiControl*> optionsMenu;		// 4
@@ -71,23 +55,14 @@ private:
 	int lastActions;
 	int lastOptions;
 
-
-	List<GuiControl*> itemsBtns;
-	List<GuiControl*> capyBtns;
-	List<GuiControl*> teamBtns;
-
-	List<GuiControl*> selectorBtns;
-
 	// details buttons
 
 	List<GuiControl*> stats;
 	List<GuiControl*> statsValue;
 	List<GuiControl*> equipment;
-	List<GuiControl*> teamElements;
+
 	GuiControl* entityDescription;
 	GuiControl* entityNum;
-
-
 
 	SDL_Rect menuBounds = {75,290-20,188,230};
 	SDL_Rect subBounds;
@@ -110,14 +85,10 @@ private:
 	int actionOption;
 	int selectorOption;
 		
-	Menus activeMenu; 
 	Capybara* currentCapy = nullptr;
 	Item* currentItem = nullptr;
 
 	bool waitNextUpdate = false;
-	bool updateCapys = false;
-	bool updateItems = false;
-	bool updateDetails = false;
 };
 
 
