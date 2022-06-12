@@ -187,20 +187,20 @@ void EntityManager::AddEntity(Entity* entity)
 bool EntityManager::Start()
 {
 	//// inventory test
-	//Item* uwu01 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::HP_POTION);
-	//Item* uwu02 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::MP_POTION);
-	//Item* uwu03 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::REVIVE);
-	//Item* uwu04 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::FREERUNERS_ARMOR);
-	//Item* uwu05 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::BOW_SPELLDRINKER);
-	//Item* uwu06 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::ARMOR_VULNERABILITY);
+	Item* uwu01 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::HP_POTION);
+	Item* uwu02 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::MP_POTION);
+	Item* uwu03 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::REVIVE);
+	Item* uwu04 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::FREERUNERS_ARMOR);
+	Item* uwu05 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::BOW_SPELLDRINKER);
+	Item* uwu06 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::ARMOR_VULNERABILITY);
 
 
-	//inventory->AddItem(uwu01, 1);
-	//inventory->AddItem(uwu02, 2);
-	//inventory->AddItem(uwu03, 3);
-	//inventory->AddItem(uwu04, 3);
-	//inventory->AddItem(uwu05, 3);
-	//inventory->AddItem(uwu06, 3);
+	inventory->AddItem(uwu01, 1);
+	inventory->AddItem(uwu02, 2);
+	inventory->AddItem(uwu03, 3);
+	inventory->AddItem(uwu04, 3);
+	inventory->AddItem(uwu05, 3);
+	inventory->AddItem(uwu06, 3);
 
 
 	texture = app->tex->Load("Assets/Textures/Sprites/characters.png");
