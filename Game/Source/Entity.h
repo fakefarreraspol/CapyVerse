@@ -32,6 +32,8 @@ public:
 	{
 		this->idName.Create("%s_%i", name, id);
 		this->name.Create("%s", name);
+		currentAnim = new Animation();
+		currentAnim->PushBack({ 0, 0, 64, 64 });
 	}
 	
 	iPoint& GetPosition() 

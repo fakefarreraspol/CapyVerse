@@ -318,7 +318,7 @@ bool StatsMenu::LoadItems(List<GuiControl*>* menu, SDL_Rect bounds, int id)
 		currentItem = inventory->slots.At(i)->data->item;
 		SDL_Rect bounds = initialBounds;
 		bounds.y += i * (offset + bounds.h);
-		GuiControl* c = app->guiManager->CreateGuiControl(GuiControlType::BUTTON, id, currentItem->capyName.GetString(), bounds, this, { 255, 255, 255 });
+		GuiControl* c = app->guiManager->CreateGuiControl(GuiControlType::BUTTON, id, currentItem->name.GetString(), bounds, this, { 255, 255, 255 });
 		c->state = GuiControlState::NORMAL;
 		menu->Add(c);
 
