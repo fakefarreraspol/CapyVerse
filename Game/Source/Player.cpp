@@ -245,9 +245,13 @@ void Player::UpdateInput(float dt)
 		{
 			app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene2, 2);
 		}
-		if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 		{
 			app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene3, 2);
+		}
+		if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
+		{
+			this->money += 99999;
 		}
 	}
 

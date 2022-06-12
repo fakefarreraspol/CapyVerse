@@ -14,6 +14,7 @@ public:
 	HpPotion(uint32 id, iPoint bounds, const char* name) :Item(id, bounds, name, ItemType::HP_POTION){
 		description.Create("30/100 of maxHP");
 		category = ItemCategory::CONSUMABLE;
+		this->price = 10;
 	}
 	~HpPotion() {}
 	void Use(Capybara* capy);
@@ -25,6 +26,7 @@ public:
 	MpPotion(uint32 id, iPoint bounds, const char* name) : Item(id, bounds, name, ItemType::MP_POTION) {
 		description.Create("+30/100 HP of maxMP");
 		category = ItemCategory::CONSUMABLE;
+		this->price = 10;
 	}
 
 	~MpPotion() {}
@@ -39,6 +41,7 @@ public:
 	Revive(uint32 id, iPoint bounds, const char* name) : Item(id, bounds, name, ItemType::REVIVE) {
 		description.Create("Revive a capybara");
 		category = ItemCategory::CONSUMABLE;
+		this->price = 10;
 	}
 	~Revive() {}
 
@@ -51,6 +54,7 @@ public:
 	Antidote(uint32 id, iPoint bounds, const char* name) : Item(id, bounds, name, ItemType::ANTIDOTE) {
 		description.Create("Remove negative stats");
 		category = ItemCategory::CONSUMABLE;
+		this->price = 10;
 	}
 	~Antidote() {}
 
@@ -63,6 +67,7 @@ public:
 	ElixirPotion(uint32 id, iPoint bounds, const char* name) : Item(id, bounds, name, ItemType::ELIXIR_POTION) {
 		description.Create("+30% HP and MP of maximum capacity");
 		category = ItemCategory::CONSUMABLE;
+		this->price = 10;
 	}
 
 	~ElixirPotion() {}
@@ -77,6 +82,7 @@ public:
 		description.Create("Increases strengt during combat");
 		category = ItemCategory::CONSUMABLE;
 		stats = { 0,0,2,0,0,0 };
+		this->price = 10;
 	}
 	~Spinach() {}
 
@@ -90,6 +96,7 @@ public:
 		description.Create("Increases intelligence during combat");
 		category = ItemCategory::CONSUMABLE;
 		stats = { 0,0,0,0,0,2 };
+		this->price = 10;
 	}
 	~Orange() {}
 
@@ -103,6 +110,7 @@ public:
 		description.Create("Increases speed during combat");
 		category = ItemCategory::CONSUMABLE;
 		stats = { 0,0,0,2,0,0 };
+		this->price = 10;
 	}
 	~Spid() {} 
 
@@ -122,6 +130,7 @@ public:
 		category = ItemCategory::ARMOR;
 		stats = { 0 };
 		stats.speed = 3;
+		this->price = 10;
 	}
 	~FreeRunersArmor();
 };
@@ -135,6 +144,7 @@ public:
 		category = ItemCategory::WEAPON;
 		stats = { 0 };
 		stats.strenght = 2;
+		this->price = 10;
 	}
 	~BowSpellDrinker();
 
@@ -148,6 +158,7 @@ public:
 		description.Create("Heavy armor");
 		category = ItemCategory::ARMOR;
 		stats = { -1,0,3,0,0,0 };
+		this->price = 10;
 	}
 	~ArmorVulnerability();
 
@@ -162,6 +173,7 @@ public:
 		description.Create("An ideal necklace for SUPP");
 		category = ItemCategory::NECKLACE;
 		stats = { 0,1,0,0,0,2 };
+		this->price = 10;
 	}
 	~ScholarNecklace();
 
@@ -175,6 +187,7 @@ public:
 		description.Create("Powerful but heavy sword");
 		category = ItemCategory::WEAPON;
 		stats = { 0,0,3,-1,0,0 };
+		this->price = 10;
 	}
 	~HeavySword();
 
@@ -188,6 +201,7 @@ public:
 		description.Create("Light armor");
 		category = ItemCategory::ARMOR;
 		stats = { 1,0,0,0,1,0 };
+		this->price = 10;
 	}
 	~BambuArmor();
 
@@ -201,6 +215,7 @@ public:
 		description.Create("This armor is extremely protective");
 		category = ItemCategory::ARMOR;
 		stats = { 2,0,0,0,3,0 };
+		this->price = 10;
 	}
 	~MysteryArmor();
 
@@ -214,6 +229,7 @@ public:
 		description.Create("Gives the user vitality");
 		category = ItemCategory::NECKLACE;
 		stats = { 1,0,0,0,1,0 };
+		this->price = 10;
 	}
 	~HealthNecklace();
 
@@ -227,6 +243,7 @@ public:
 		description.Create("An ideal necklace for SUPP");
 		category = ItemCategory::NECKLACE;
 		stats = { 0,0,2,0,0,0 };
+		this->price = 10;
 	}
 	~PowerNecklace();
 
@@ -240,6 +257,7 @@ public:
 		description.Create("An ideal necklace for SUPP");
 		category = ItemCategory::NECKLACE;
 		stats = { 0,0,0,2,0,0 };
+		this->price = 10;
 	}
 	~LightNecklace();
 

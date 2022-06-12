@@ -17,7 +17,7 @@ public:
 	bool Start();
 	//Base functions
 	bool Update(float dt);
-
+	void OnCollision(PhysBody* c1, PhysBody* c2);
 	bool CleanUp();
 private:
 

@@ -48,15 +48,16 @@ public:
 
 private:
 	Inventory* shopInventory;
-	Inventory* playerInventory;
 
 	GuiButton* buyBtn = nullptr;
 	GuiButton* sellBtn = nullptr;
-
+	GuiButton* returnBtn = nullptr;
 	List<GuiButton*> itemsBtns;
 
+	GuiText* playerMoneyTxt;
+	int playerMoney;
 
-
+	bool buy = true;
 };
 #endif // __Shop_H__
 
