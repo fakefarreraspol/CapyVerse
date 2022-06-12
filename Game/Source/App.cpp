@@ -19,6 +19,7 @@
 #include "GuiManager.h"
 #include "DialogManager.h"
 #include "Pause.h"
+#include "Particles.h"
 
 #include "Physics.h"
 #include "TaskQueue.h"
@@ -60,6 +61,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	statsMenu = new StatsMenu(false);
 	mainMenu = new MainMenu(false);
 	scene = new Scene(false);
+	particles = new Particles(true);
 	battleManager = new BattleManager(false);
 	battleScene1 = new BattleScene1(false);
 	battleScene2 = new BattleScene2(false);
@@ -97,6 +99,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(end);
 	AddModule(eobScene);
 	AddModule(entMan);
+	AddModule(particles);
 	AddModule(statsMenu);
 	AddModule(pauseMenu);
 	AddModule(colManager);
