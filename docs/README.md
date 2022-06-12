@@ -4,14 +4,14 @@ A new NFT game appears in a very saturated market. You, an anti-NFTs hacker, wan
 
 Will you destroy this Capyverse?
 
-##Features
+## Features
 - Combat system
  - Dialog system
  - 3 locations to visit - forest - town - field 
  - Quest system
  - Boss battle
 
-##Controls
+## Controls
 ### Keyboard
  - WASD - Move
  - E - Interact
@@ -25,11 +25,11 @@ Will you destroy this Capyverse?
  - DPad - Menu navigation
 
 
-##Trailer!!
+## Trailer!!
 
-##Screenshots
+## Screenshots
 
-##Team
+## Team
 - Iván Jose Caballero 
    - Team Leader, Game Artist, Music Artist
    - Github Account: <a href="https://github.com/ivjocab">ivjocab</a>
@@ -49,5 +49,5 @@ Will you destroy this Capyverse?
    - Game Artist, Q&A, UI
    - Github Account: <a href="https://github.com/Marta-24">Marta-24</a>
 
-#Licence
+## Licence
 This project is licensed under an unmodified MIT license, which is an OSI-certified license that allows static linking with closed source software. Check [LICENSE](LICENSE) for further details.
