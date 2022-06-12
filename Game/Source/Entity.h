@@ -20,7 +20,8 @@ enum class EntityType
 	ENEMY,
 	NPC,
 	LEVER,
-	BRIDGE
+	BRIDGE,
+	TRADER
 };
 
 class Entity
@@ -29,7 +30,8 @@ public:
 	Entity() {}
 	Entity(EntityType type, uint32 id, const char* name, iPoint position) : type(type), active(true), id(id), position(position)
 	{
-		this->capyName.Create("%s_%i", name, id);
+		this->idName.Create("%s_%i", name, id);
+		this->name.Create("%s", name);
 	}
 	
 	iPoint& GetPosition() 
@@ -92,7 +94,8 @@ public:
 
 public:
 
-	SString capyName;
+	SString idName;
+	SString name;
 	EntityType type;
 	bool active = true;
 	uint32 id;            

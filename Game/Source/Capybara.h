@@ -106,7 +106,7 @@ public:
 	bool UnequipItem(ItemCategory category);
 
 	bool enemy = false;
-	SString capyName;
+	SString idName;
 protected:
 	//Update the stats by the lvl
 	void UpdateStats();

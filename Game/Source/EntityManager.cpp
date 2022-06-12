@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "NPC.h"
 #include "Enemy.h"
+#include "Trader.h"
 
 #include "Chinabara.h"
 #include "Punkibara.h"
@@ -97,6 +98,9 @@ Entity* EntityManager::CreateEntity(EntityType type, uint32 id, iPoint position,
 		break;
 	case EntityType::BRIDGE:
 		entity = new Bridge(position, id);
+		break;
+	case EntityType::TRADER:
+		entity = new Trader(position, id, name);
 		break;
 	default:
 	{
@@ -242,7 +246,7 @@ bool EntityManager::LoadState(pugi::xml_node& data)
 	{
 		int entityId = entityNode.attribute("id").as_int();
 		ret = entities.At(entityId)->data->LoadState(entityNode);
-		printf("Succesfully loaded entity %s\n", entities.At(entityId)->data->capyName.GetString());
+		printf("Succesfully loaded entity %s\n", entities.At(entityId)->data->idName.GetString());
 	}
 
 	return ret;
@@ -256,10 +260,10 @@ bool EntityManager::SaveState(pugi::xml_node& data) const
 
 	while (item != NULL)
 	{
-		data.append_child(item->data->capyName.GetString());
+		data.append_child(item->data->idName.GetString());
 		// = item->data->SaveState(data.child(item->data->name.GetString()));
 
-		ret = item->data->SaveState(data.child(item->data->capyName.GetString()));
+		ret = item->data->SaveState(data.child(item->data->idName.GetString()));
 		item = item->next;
 	}
 	return ret;
@@ -317,7 +321,7 @@ void EntityManager::OnCollision(PhysBody* c1, PhysBody* c2)
 
 Entity* EntityManager::CloneItem(Item* item)
 {
-	Entity* ret = CreateEntity(item->id, item->position, item->capyName.GetString(), item->type);
+	Entity* ret = CreateEntity(item->id, item->position, item->idName.GetString(), item->type);
 
 	return ret;
 }

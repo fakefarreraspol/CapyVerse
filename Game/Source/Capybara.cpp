@@ -14,7 +14,7 @@
 Capybara::Capybara(CapybaraType capyType, uint32 id, iPoint position, const char* name) : Entity(EntityType::CAPYBARA, id, name, position), capybaraType(capyType)
 {
 	level = 1;
-	capyName.Create(name);
+	idName.Create(name);
 
 
 	//Change this values in order to balance the game progression
@@ -188,7 +188,7 @@ void Capybara::Attack(Capybara* target)
 	target->Damage(finalDamage);
 	app->audio->PlayFx(attackSFX);
 	canAttack = false;
-	printf("%s id: %i DMG: %i to %s id: %i\n", this->capyName.GetString(), this->id, finalDamage, target->capyName.GetString(), target->id);
+	printf("%s id: %i DMG: %i to %s id: %i\n", this->idName.GetString(), this->id, finalDamage, target->idName.GetString(), target->id);
 }
 
 void Capybara::SetStatus(CapybaraStatus status)
@@ -334,7 +334,7 @@ void Capybara::LevelUp()
 
 	//Debug log
 	LOG("");
-	LOG("%s stats LVL: %i", capyName.GetString(), level);
+	LOG("%s stats LVL: %i", idName.GetString(), level);
 	LOG("HP: %i MXHP: %i HPLVL: %i", health, maxHealth, capybaraStats.hp);
 	LOG("MP: %i MXMP: %i MPLVL: %i", mana, maxMana, capybaraStats.mp);
 	LOG("DMG: %i STRLVL: %i", damage, capybaraStats.strenght);

@@ -107,12 +107,14 @@ project "Capyverse"
 
         ["Source/Modules/Gameplay/Entities/Characters"] = {"Source/Player.h", "Source/Player.cpp",
                                                     "Source/NPC.h", "Source/NPC.cpp",
-                                                    "Source/Enemy.h", "Source/Enemy.cpp"},
+                                                    "Source/Enemy.h", "Source/Enemy.cpp",
+                                                    "Source/Trader.h", "Source/Trader.cpp"},
 
         ["Source/Modules/Gameplay/Entities/Items"] = {"Source/Item.h",
                                                       "Source/Items.h", "Source/Items.cpp",
                                                       "Source/Inventory.h", "Source/Inventory.cpp",
                                                       "Source/ItemHolder.h"},
+        ["Source/Modules/Gameplay/Entities/Shop"] = {"Source/Shop.h", "Source/Shop.cpp"},
 
         ["Source/Modules/Gameplay/Entities/Props"] = {"Source/Lever.h", "Source/Lever.cpp",
                                                      "Source/Bridge.h"},

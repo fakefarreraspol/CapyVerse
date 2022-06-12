@@ -49,6 +49,7 @@ bool Scene::Awake(pugi::xml_node& node)
 	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 512,1266 }, "Sara"));
 	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 1969,878 }, "Joe"));
 	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 1200,700 }, "George"));
+	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::TRADER, 10, { 1100,700 }, "Sara"));
 
 
 	for (int i = 0; i < NPCs.Count(); i++)
@@ -117,10 +118,6 @@ bool Scene::Start()
 	player->SetCombat(false);
 	app->battleManager->SetPlayer(player);
 
-	for (int i = 0; i < NPCs.Count(); i++)
-	{
-		NPCs.At(i)->data->Enable();
-	}
 	for (int i = 0; i < levers.Count(); i++)
 	{
 		levers.At(i)->data->Enable();
@@ -143,6 +140,11 @@ bool Scene::Start()
 	if (app->questManager->IsCompleated(2))
 	{
 		app->questManager->ActiveQuest(6);
+	}
+
+	for (int i = 0; i < NPCs.Count(); i++)
+	{
+		NPCs.At(i)->data->Enable();
 	}
 
 	return true;

@@ -179,7 +179,7 @@ bool BattleManager::Update(float dt)
 
 void BattleManager::UpdateCurrentName()
 {
-	currentName->SetText(currentCapybara->data->capyName.GetString());
+	currentName->SetText(currentCapybara->data->idName.GetString());
 }
 
 void BattleManager::Draw()
@@ -269,7 +269,7 @@ void BattleManager::CreateAttackMenu()
 	{
 		for (int i = 0; i < enemies.Count(); i++)
 		{
-			attackBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, i + 4, enemies.At(i)->data->capyName.GetString(), { 350, i * 50 + 550, 112, 20 }, this));
+			attackBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, i + 4, enemies.At(i)->data->idName.GetString(), { 350, i * 50 + 550, 112, 20 }, this));
 
 			SString enemyHealth("%i/%i HP", enemies.At(i)->data->GetHealth(), enemies.At(i)->data->GetMaxHealth());
 			attackBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::BAR, i + 4, "EnemyBar", { 350, i * 50 + 575, 112, 9 }, this));
@@ -300,7 +300,7 @@ void BattleManager::CreateAbilityMenu()
 			{
 				if ((playerTeam.At(i)->data->GetHealth() > 0) && (playerTeam.At(i)!=nullptr))
 				{
-					abilityBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, i + 7, playerTeam.At(i)->data->capyName.GetString(), { 350, i * 50 + 550, 112, 20 }, this));
+					abilityBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, i + 7, playerTeam.At(i)->data->idName.GetString(), { 350, i * 50 + 550, 112, 20 }, this));
 
 					SString allyHealth("%i/%i HP", playerTeam.At(i)->data->GetHealth(), playerTeam.At(i)->data->GetMaxHealth());
 					abilityBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::BAR, i + 7, "AllyBar", { 350, i * 50 + 570, 112, 9 }, this));
@@ -326,7 +326,7 @@ void BattleManager::CreateAbilityMenu()
 			{
 				if (enemies.At(i)->data->GetHealth() > 0)
 				{
-					abilityBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, i + 7, enemies.At(i)->data->capyName.GetString(), { 350, i * 50 + 550, 112, 20 }, this));
+					abilityBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, i + 7, enemies.At(i)->data->idName.GetString(), { 350, i * 50 + 550, 112, 20 }, this));
 
 					SString allyHealth("%i/%i HP", enemies.At(i)->data->GetHealth(), enemies.At(i)->data->GetMaxHealth());
 					abilityBars.Add((GuiBar*)app->guiManager->CreateGuiControl(GuiControlType::BAR, i + 7, "AllyBar", { 350, i * 50 + 575, 112, 9 }, this));
@@ -347,7 +347,7 @@ void BattleManager::CreateAbilityMenu()
 
 	case CapybaraTarget::HIMSELF:
 	{
-		abilityBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 10, currentCapybara->data->capyName.GetString(), { 360, 50 + 550, 112, 20 }, this));
+		abilityBtns.Add((GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 10, currentCapybara->data->idName.GetString(), { 360, 50 + 550, 112, 20 }, this));
 		currentButton = abilityBtns.start;
 		currentButtons = abilityBtns;
 	}break;
@@ -509,12 +509,12 @@ void BattleManager::EndTurn()
 
 void BattleManager::CreateTexts()
 {
-	currentName = (GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 10, currentCapybara->data->capyName.GetString(), { 115, 545, 155, 20 }, this, { 255, 255, 255, 1 });
+	currentName = (GuiText*)app->guiManager->CreateGuiControl(GuiControlType::TEXT, 10, currentCapybara->data->idName.GetString(), { 115, 545, 155, 20 }, this, { 255, 255, 255, 1 });
 
 	for (int i = 0; i < playerTeam.Count(); i++)
 	{
 		//Creating the character name text
-		app->guiManager->CreateGuiControl(GuiControlType::TEXT, 20 + i, playerTeam.At(i)->data->capyName.GetString(), {i * 450 + 15, 40, 155, 20}, this, {255, 255, 255, 1});
+		app->guiManager->CreateGuiControl(GuiControlType::TEXT, 20 + i, playerTeam.At(i)->data->idName.GetString(), {i * 450 + 15, 40, 155, 20}, this, {255, 255, 255, 1});
 
 		//Creating the character LVL text
 		SString lvl("LVL: %i", playerTeam.At(i)->data->GetLVL());
