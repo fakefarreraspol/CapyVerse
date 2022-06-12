@@ -20,10 +20,13 @@ enum Menus
 	ITEMS_INVENTORY,
 	ITEMS_ACTIONS,
 	ITEMS_OPTION_SELECTION,
+
 	CAPY_INVENTORY,
 	CAPY_ACTIONS,
 	CAPY_OPTION_SEELCTION,
-	TEAM
+
+	TEAM,
+	BATTLE_TEAM
 };
 
 class StatsMenu : public Module
@@ -48,13 +51,25 @@ public:
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
 	bool ActivateMenu();
-
-
+	bool HideMenus();
+	bool ClearMenu(List<GuiControl*> *menu);
 
 public:
-	List<GuiControl*> menuBtns;
+	List<GuiControl*> mainMenu;
 
 private:
+
+	List<GuiControl*>* currentMenu;
+
+	//List<GuiControl*> mainMenu;			// 1
+	List<GuiControl*> subMenu;			// 2
+	List<GuiControl*> actionsMenu;		// 3
+	List<GuiControl*> optionsMenu;		// 4
+	int lastMain;
+	int lastSub;
+	int lastActions;
+	int lastOptions;
+
 
 	List<GuiControl*> itemsBtns;
 	List<GuiControl*> capyBtns;
@@ -62,13 +77,11 @@ private:
 
 	List<GuiControl*> selectorBtns;
 
-
 	List<GuiControl*> stats;
 	List<GuiControl*> statsValue;
 
-	int selectorOffset;
 
-	SDL_Rect menuBounds = {75,290,188,230};
+	SDL_Rect menuBounds = {75,290-20,188,230};
 	SDL_Rect subBounds;
 	SDL_Rect optionsBounds;
 	SDL_Rect detailsBounds;
@@ -84,11 +97,15 @@ private:
 	int subMenuOption;
 	int actionOption;
 	int selectorOption;
-
-	Menus activeMenu;
+		
+	Menus activeMenu; 
 	Capybara* currentCapy = nullptr;
 	Item* currentItem = nullptr;
+
 	bool waitNextUpdate = false;
+	bool updateCapys = false;
+	bool updateItems = false;
+	bool updateDetails = false;
 };
 
 
