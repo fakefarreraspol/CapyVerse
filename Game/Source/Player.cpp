@@ -174,22 +174,22 @@ void Player::UpdateInput(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		faceLeft = true;
-		collider->body->SetLinearVelocity({ velocity, 0.0f });
-		if (currentAnim != &walkLeft)
-		{
-			walkLeft.Reset();
-			currentAnim = &(walkLeft);
-		}
-	}
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-	{
 		faceLeft = false;
-		collider->body->SetLinearVelocity({ -velocity, 0.0f });
+		collider->body->SetLinearVelocity({ velocity, 0.0f });
 		if (currentAnim != &walkRight)
 		{
 			walkRight.Reset();
 			currentAnim = &walkRight;
+		}
+	}
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	{
+		faceLeft = true;
+		collider->body->SetLinearVelocity({ -velocity, 0.0f });
+		if (currentAnim != &walkLeft)
+		{
+			walkLeft.Reset();
+			currentAnim = &(walkLeft);
 		}
 	}
 
@@ -241,7 +241,7 @@ void Player::UpdateInput(float dt)
 		}
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
 	{
 		if (!app->statsMenu->IsEnabled())
 			app->statsMenu->Enable();
