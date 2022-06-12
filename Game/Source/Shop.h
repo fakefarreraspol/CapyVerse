@@ -34,6 +34,10 @@ public:
 	// Called each loop iteration
 	bool Update(float dt);
 
+	void Show();
+
+	void UnShow();
+
 	// Called before all Updates
 	bool PostUpdate();
 
@@ -44,7 +48,12 @@ public:
 
 private:
 	Inventory* shopInventory;
+	Inventory* playerInventory;
 
+	GuiButton* buyBtn = nullptr;
+	GuiButton* sellBtn = nullptr;
+
+	List<GuiButton*> itemsBtns;
 
 
 

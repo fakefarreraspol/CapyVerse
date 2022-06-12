@@ -19,6 +19,7 @@
 #include "GuiManager.h"
 #include "DialogManager.h"
 #include "Pause.h"
+#include "Shop.h"
 #include "Particles.h"
 
 #include "Physics.h"
@@ -61,6 +62,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	statsMenu = new StatsMenu(false);
 	mainMenu = new MainMenu(false);
 	scene = new Scene(false);
+	shop = new Shop(true);
 	particles = new Particles(true);
 	battleManager = new BattleManager(false);
 	battleScene1 = new BattleScene1(false);
@@ -103,6 +105,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(statsMenu);
 	AddModule(pauseMenu);
 	AddModule(colManager);
+	AddModule(shop);
 	AddModule(guiManager);
 	AddModule(transitions);
 	AddModule(fadeToBlack);

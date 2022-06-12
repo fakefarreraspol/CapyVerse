@@ -28,6 +28,7 @@ class GuiManager;
 class DialogManager;
 class StatsMenu;
 class Physics;
+class Shop;
 class Task;
 class Particles;
 class FadeToBlack;
@@ -126,6 +127,7 @@ public:
 	GuiManager* guiManager = nullptr;
 	StatsMenu* statsMenu = nullptr;
 	Map* mapManager = nullptr;
+	Shop* shop = nullptr;
 	DialogManager* dialogManager = nullptr;
 	Physics* colManager = nullptr;
 	Task* taskManager = nullptr;
