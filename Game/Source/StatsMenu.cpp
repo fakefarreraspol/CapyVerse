@@ -95,13 +95,17 @@ bool StatsMenu::Start()
 	stats.Add(stats06);
 
 
+	actionsBounds = { stats01->bounds.x + 200, stats01->bounds.y,detailsBounds.w,detailsBounds.h };
+	actionsBounds.w -= actionsBounds.x - detailsBounds.x+10;
+	actionsBounds.h -= actionsBounds.y - detailsBounds.y;
+
 	bounds = { detailsBounds.x+50, detailsBounds.y + 200, 40,20 };
 	for (int i = 0; i < 6; i++)
 	{
-		bounds.y += 30 * i;
 		GuiControl* c = app->guiManager->CreateGuiControl(GuiControlType::TEXT, 1+i, "  ", bounds, this, { 255,255,255,255 }, 0, false);
 		c->state = GuiControlState::DISABLED;
 		statsValue.Add(c);
+		bounds.y += 30;
 	}
 
 	for (int i = 0; i < 6; i++)
@@ -173,7 +177,13 @@ bool StatsMenu::OnGuiMouseClickEvent(GuiControl* control)
 			ClearMenu(&subMenu);
 			ClearMenu(&actionsMenu);
 			ClearMenu(&optionsMenu);
+			ClearMenu(&equipment);
 
+			for (int i = 0; i < 6; i++)
+			{
+				stats.At(i)->data->state = GuiControlState::DISABLED;
+				statsValue.At(i)->data->state = GuiControlState::DISABLED;
+			}
 
 			if (control == mainMenu.At(0)->data)		// items
 			{
@@ -217,18 +227,103 @@ bool StatsMenu::OnGuiMouseClickEvent(GuiControl* control)
 		{
 			ClearMenu(&actionsMenu);
 			ClearMenu(&optionsMenu);
+			ClearMenu(&equipment);
 
 			int at = subMenu.Find(control);
+			lastSub = at;
 
 			if (lastMain == 0)		// items
 			{
-				// load items details
+				ItemHolder* slot = app->entMan->inventory->slots.At(at)->data;
+				currentItem = slot->item;
+
+				for (int i = 0; i < 6; i++)
+				{
+					stats.At(i)->data->state = GuiControlState::NORMAL;
+					statsValue.At(i)->data->state = GuiControlState::NORMAL;
+				}
+				
+				SString num0("%i", currentItem->stats.hp);
+				statsValue.At(0)->data->SetText(num0.GetString());
+				SString num1("%i", currentItem->stats.mp);
+				statsValue.At(1)->data->SetText(num1.GetString());
+				SString num2("%i", currentItem->stats.strenght);
+				statsValue.At(2)->data->SetText(num2.GetString());
+				SString num3("%i", currentItem->stats.speed);
+				statsValue.At(3)->data->SetText(num3.GetString());
+				SString num4("%i", currentItem->stats.armor);
+				statsValue.At(4)->data->SetText(num4.GetString());
+				SString num5("%i", currentItem->stats.intelligence);
+				statsValue.At(5)->data->SetText(num5.GetString());
+
+				entityDescription->state = GuiControlState::NORMAL;
+				entityNum->state = GuiControlState::NORMAL;
+
+				SString num("x %i", slot->cuantity);
+				entityNum->SetText(num.GetString());
+				entityDescription->SetText(slot->item->description.GetString());
+
 				// show details and actions menu
+				//SDL_Rect bounds = stats.start->data->bounds;
+
+				if (currentItem->category != ItemCategory::OBJECT)
+				{
+					SDL_Rect bounds = actionsBounds;
+					bounds.h = 20;
+					GuiButton* action1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "USE / EQUP", bounds, this, { 255, 255, 255 });
+					bounds.y += 30;
+					GuiButton* action2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "THROW", bounds, this, { 255, 255, 255 });
+
+					action1->state = GuiControlState::NORMAL;
+					action2->state = GuiControlState::NORMAL;
+
+					actionsMenu.Add(action1);
+					actionsMenu.Add(action2);
+				}
 			}
 
 			if (lastMain == 1)		// capybaras
 			{
-				// load capy stats and equipment
+				List<Capybara*>* team = &app->scene->player->GetBattleTeam();
+				currentCapy = team->At(at)->data;
+
+
+				// stats description
+				for (int i = 0; i < 6; i++)
+				{
+					stats.At(i)->data->state = GuiControlState::NORMAL;
+					statsValue.At(i)->data->state = GuiControlState::NORMAL;
+				}
+				SString num0("%i", currentCapy->GetStats().hp);
+				statsValue.At(0)->data->SetText(num0.GetString());
+				SString num1("%i", currentCapy->GetStats().mp);
+				statsValue.At(1)->data->SetText(num1.GetString());
+				SString num2("%i", currentCapy->GetStats().strenght);
+				statsValue.At(2)->data->SetText(num2.GetString());
+				SString num3("%i", currentCapy->GetStats().speed);
+				statsValue.At(3)->data->SetText(num3.GetString());
+				SString num4("%i", currentCapy->GetStats().armor);
+				statsValue.At(4)->data->SetText(num4.GetString());
+				SString num5("%i", currentCapy->GetStats().intelligence);
+				statsValue.At(5)->data->SetText(num5.GetString());
+
+				// description and level
+				entityDescription->state = GuiControlState::NORMAL;
+				entityNum->state = GuiControlState::NORMAL;
+				SString num("LVL %i", currentCapy->GetLVL());
+				entityNum->SetText(num.GetString());
+				entityDescription->SetText("...");
+
+				//GuiControl* armor= GuiText::
+
+				SDL_Rect bounds = actionsBounds;
+				bounds.h = 20;
+				GuiButton* action1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "EQUIP", bounds, this, { 255, 255, 255 });
+				bounds.y += 30;
+
+				action1->state = GuiControlState::NORMAL;
+
+				actionsMenu.Add(action1);
 			}
 
 			if (lastMain == 2)		// battle team
@@ -287,7 +382,7 @@ bool StatsMenu::LoadCapys(List<GuiControl*> *menu, SDL_Rect bounds, int id)
 		SDL_Rect bounds = initialBounds;
 		bounds.y += i * (offset + bounds.h);
 
-		GuiButton* c = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, id, "CAPYBARA", bounds, this, { 255, 255, 255 });
+		GuiButton* c = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, id, team->At(i)->data->name.GetString(), bounds, this, {255, 255, 255});
 		menu->Add(c);
 	}
 

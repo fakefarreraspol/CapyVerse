@@ -77,21 +77,27 @@ private:
 
 	List<GuiControl*> selectorBtns;
 
+	// details buttons
+
 	List<GuiControl*> stats;
 	List<GuiControl*> statsValue;
+	List<GuiControl*> equipment;
+	GuiControl* entityDescription;
+	GuiControl* entityNum;
+
 
 
 	SDL_Rect menuBounds = {75,290-20,188,230};
 	SDL_Rect subBounds;
 	SDL_Rect optionsBounds;
 	SDL_Rect detailsBounds;
+	SDL_Rect actionsBounds;
 
 	SDL_Texture* menus = nullptr;
 	SDL_Texture* title = nullptr;
 	SDL_Texture* entityImg = nullptr;		// 128*128
 
-	GuiControl* entityDescription;
-	GuiControl* entityNum;
+	
 	
 	int mainMenuOption;
 	int subMenuOption;
