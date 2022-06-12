@@ -298,23 +298,25 @@ bool EntityManager::Draw() {
 		uint32_t w = pEntity->w;
 		uint32_t h = pEntity->h;
 
-		if (pEntity->active == false) continue;
-		SDL_RendererFlip flip = pEntity->faceLeft ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
-
-		if (pEntity->type == EntityType::CAPYBARA)
+		
+		SDL_RendererFlip flip = pEntity->faceLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+		if (pEntity->active != false)
 		{
-			ret = app->render->DrawTexture(capyTex, pEntity->GetPosition().x - w / 2, pEntity->GetPosition().y - h / 2,
-				&pEntity->currentAnim->GetCurrentFrame(), pEntity->faceLeft);
-		}
-		else if (pEntity->type == EntityType::BRIDGE || pEntity->type == EntityType::LEVER)
-		{
-			ret = app->render->DrawTexture(props, pEntity->GetPosition().x - w / 2, pEntity->GetPosition().y - h / 2,
-				&pEntity->currentAnim->GetCurrentFrame(), pEntity->faceLeft);
-		}
-		else
-		{
-			ret = app->render->DrawTexture(texture, pEntity->GetPosition().x - w / 2, pEntity->GetPosition().y - h / 2,
-				&pEntity->currentAnim->GetCurrentFrame(), pEntity->faceLeft);
+			if (pEntity->type == EntityType::CAPYBARA)
+			{
+				ret = app->render->DrawTexture(capyTex, pEntity->GetPosition().x - w / 2, pEntity->GetPosition().y - h / 2,
+					&pEntity->currentAnim->GetCurrentFrame(), false, 1.0, flip);
+			}
+			else if (pEntity->type == EntityType::BRIDGE || pEntity->type == EntityType::LEVER)
+			{
+				ret = app->render->DrawTexture(props, pEntity->GetPosition().x - w / 2, pEntity->GetPosition().y - h / 2,
+					&pEntity->currentAnim->GetCurrentFrame(), false, 1.0, flip);
+			}
+			else
+			{
+				ret = app->render->DrawTexture(texture, pEntity->GetPosition().x - w / 2, pEntity->GetPosition().y - h / 2,
+					&pEntity->currentAnim->GetCurrentFrame(), false, 1.0, flip);
+			}
 		}
 		
 	}

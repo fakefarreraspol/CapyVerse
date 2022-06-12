@@ -186,13 +186,11 @@ void BattleManager::Draw()
 {
 	//app->guiManager->Draw();
 
-	uint posX = currentCapybara->data->GetPosition().x + 32;
-	uint posY = currentCapybara->data->GetPosition().y - 32;
+	uint posX = currentCapybara->data->GetPosition().x;
+	uint posY = currentCapybara->data->GetPosition().y - 64;
 	app->render->DrawTexture(selectedArrow, posX, posY);
 
-	uint btnX = currentButton->data->bounds.x - 30;
-	uint btnY = currentButton->data->bounds.y;
-	app->render->DrawTexture(arrow, btnX, btnY);
+
 	SDL_Rect info{ 0, 255, 270, 122 };
 	SDL_Rect options{ 270, 255, 185, 155 };
 	SDL_Rect enemy{ 821, 257, 234, 177 };

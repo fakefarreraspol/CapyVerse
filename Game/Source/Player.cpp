@@ -296,6 +296,10 @@ void Player::SetCombat(bool value)
 	for (int i = 0; i < battleTeam.Count(); i++)
 	{
 		battleTeam.At(i)->data->SetCombat(value);
+		if(value)
+			battleTeam.At(i)->data->Enable();
+		else
+			battleTeam.At(i)->data->Disable();
 	}
 	this->isBattle = value;
 }
