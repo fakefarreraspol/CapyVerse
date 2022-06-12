@@ -29,6 +29,7 @@ class DialogManager;
 class StatsMenu;
 class Physics;
 class Task;
+class Particles;
 class FadeToBlack;
 class Fonts;
 class Pause;
@@ -130,6 +131,7 @@ public:
 	Task* taskManager = nullptr;
 	QuestManager* questManager = nullptr;
 	Pause* pauseMenu = nullptr;
+	Particles* particles = nullptr;
 	FadeToBlack* fadeToBlack = nullptr;
 	BattleManager* battleManager = nullptr;
 	BattleScene1* battleScene1 = nullptr;

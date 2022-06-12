@@ -10,17 +10,11 @@
 
 Enemy::Enemy(iPoint position, uint32 id, const char* name) : NPC(position, id, name)
 {
-	//normalEnemy.PushBack({ 17, 132, 32, 64 });
+	normalEnemy.PushBack({ 17, 132, 32, 64 });
 	boss.PushBack({ 152, 135, 28, 63 });
 
-	if (isBoss)
-		currentAnim->SetAnim(boss);
-	else
-		currentAnim->SetAnim(normalEnemy);
-
-
-	w = 32;
-	h = 64;
+	
+	currentAnim = &normalEnemy;
 }
 
 Enemy::~Enemy()
@@ -43,6 +37,11 @@ bool Enemy::Start()
 bool Enemy::Update(float dt)
 {
 	bool ret = true;
+	
+	if (isBoss && (currentAnim != &boss))
+	{
+		currentAnim = &boss;
+	}
 	return ret;
 }
 void Enemy::SetCombat(bool value)
@@ -50,6 +49,13 @@ void Enemy::SetCombat(bool value)
 	for (int i = 0; i < battleTeam.Count(); i++)
 	{
 		battleTeam.At(i)->data->SetCombat(value);
+		battleTeam.At(i)->data->faceLeft = true;
+
+
+		if (value)
+			battleTeam.At(i)->data->Enable();
+		else
+			battleTeam.At(i)->data->Disable();
 	}
 	this->isCombat = value;
 }

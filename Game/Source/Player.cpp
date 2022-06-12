@@ -19,7 +19,7 @@ Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType
 	idle.PushBack({ 0,0,66,66 });
 	
 	walkRight.PushBack( { 66, 0, 66 , 66 });
-	walkRight.PushBack( { 66 * 2, 0, 66 , 66 });
+	walkRight.PushBack( { 132, 0, 66 , 66 });
 	walkRight.PushBack( { 66 * 3, 0, 66 , 66 });
 	walkRight.PushBack( { 66 * 4, 0, 66 , 66 });
 
@@ -40,7 +40,7 @@ Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType
 	walkUp.PushBack({ 66*4, 66, 66 , 66 });
 	walkUp.PushBack({ 66*5, 66, 66 , 66 });
 	walkUp.PushBack({ 66*6, 66, 66 , 66 });
-	walkUp.PushBack({ 66*7, 66, 66 , 66 });
+	
 	walkUp.loop = true;
 	walkUp.speed = 0.1f;
 	
@@ -51,10 +51,10 @@ Player::Player(iPoint position, uint32 id, const char* name) : Entity(EntityType
 	walkDown.PushBack({ 66 * 12, 66, 66 , 66 });
 	walkDown.PushBack({ 66 * 13, 66, 66 , 66 });
 	walkDown.PushBack({ 66 * 14, 66, 66 , 66});
-	walkDown.PushBack({ 66 * 15, 66, 66 , 66 });
+	
 	walkDown.speed = 0.1f;
 	walkDown.loop = true;
-	currentAnim->SetAnim(idle);
+	currentAnim = &(idle);
 
 	collider = app->colManager->CreateRectangle(position.x, position.y, 32, 32, bodyType::DYNAMIC);
 	collider->listener = (Module*)app->entMan;
@@ -124,10 +124,10 @@ void Player::Debug()
 
 void Player::UpdateCamera()
 {
-		uint w, h;
-		app->win->GetWindowSize(w, h);
-		app->render->camera.x = w / 2 - position.x;
-		app->render->camera.y = h / 2 - position.y;
+		uint width, height;
+		app->win->GetWindowSize(width, height);
+		app->render->camera.x = width / 2 - position.x;
+		app->render->camera.y = height / 2 - position.y;
 	if (!app->GetDebug())
 	{
 		//Setting the camera borders	
@@ -137,16 +137,16 @@ void Player::UpdateCamera()
 		uint32_t minY = app->mapManager->minY;
 
 		if (position.x <= minX)
-			app->render->camera.x = w / 2 - minX;
+			app->render->camera.x = width / 2 - minX;
 
 		if (position.y >= maxY)
-			app->render->camera.y = h / 2 - maxY;
+			app->render->camera.y = height / 2 - maxY;
 
 		if (position.x >= maxX)
-			app->render->camera.x = w / 2 - maxX;
+			app->render->camera.x = width / 2 - maxX;
 
 		if (position.y <= minY)
-			app->render->camera.y = h / 2 - minY;
+			app->render->camera.y = height / 2 - minY;
 	}
 }
 
@@ -174,41 +174,41 @@ void Player::UpdateInput(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		faceLeft = true;
+		faceLeft = false;
 		collider->body->SetLinearVelocity({ velocity, 0.0f });
-		if (currentAnim->ref != &walkLeft)
+		if (currentAnim != &walkRight)
 		{
-			walkLeft.Reset();
-			currentAnim->SetAnim(walkLeft);
+			walkRight.Reset();
+			currentAnim = &walkRight;
 		}
 	}
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		faceLeft = false;
+		faceLeft = true;
 		collider->body->SetLinearVelocity({ -velocity, 0.0f });
-		if (currentAnim->ref != &walkRight)
+		if (currentAnim != &walkLeft)
 		{
-			walkRight.Reset();
-			currentAnim->SetAnim(walkRight);
+			walkLeft.Reset();
+			currentAnim = &(walkLeft);
 		}
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		collider->body->SetLinearVelocity({ 0.0f, -velocity });
-		if (currentAnim->ref != &walkUp)
+		if (currentAnim != &walkUp)
 		{
 			walkUp.Reset();
-			currentAnim->SetAnim(walkUp);
+			currentAnim = &(walkUp);
 		}
 	}
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
 		collider->body->SetLinearVelocity({ 0.0f, velocity });
-		if (currentAnim->ref != &walkDown)
+		if (currentAnim != &walkDown)
 		{
 			walkDown.Reset();
-			currentAnim->SetAnim(walkDown);
+			currentAnim = &(walkDown);
 		}
 	}
 
@@ -218,10 +218,10 @@ void Player::UpdateInput(float dt)
 		&& app->input->GetKey(SDL_SCANCODE_D) == KeyState::KEY_IDLE)
 	{
 		collider->body->SetLinearVelocity({ 0.0f,0.0f });
-		if (currentAnim->ref != &idle) 
+		if (currentAnim != &idle) 
 		{
 			idle.Reset();
-			currentAnim->SetAnim(idle);
+			currentAnim = &(idle);
 		}
 	}
 
@@ -241,7 +241,7 @@ void Player::UpdateInput(float dt)
 		}
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
 	{
 		if (!app->statsMenu->IsEnabled())
 			app->statsMenu->Enable();
@@ -296,6 +296,10 @@ void Player::SetCombat(bool value)
 	for (int i = 0; i < battleTeam.Count(); i++)
 	{
 		battleTeam.At(i)->data->SetCombat(value);
+		if(value)
+			battleTeam.At(i)->data->Enable();
+		else
+			battleTeam.At(i)->data->Disable();
 	}
 	this->isBattle = value;
 }

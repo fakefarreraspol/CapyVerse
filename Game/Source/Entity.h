@@ -96,7 +96,7 @@ public:
 	EntityType type;
 	bool active = true;
 	uint32 id;            
-	std::shared_ptr<Animation> currentAnim = std::make_shared<Animation>();
+	Animation* currentAnim = nullptr;
 	Animation idle;
 	bool faceLeft = false;
 

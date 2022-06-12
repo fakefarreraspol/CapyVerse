@@ -18,6 +18,6 @@
     <description>???</description>
   </quest>
   <quest title ="Open the bridge" id="6" progress = "0"  maxObjective ="3" objective ="3">
-    <description>Push the levers 0/3</description>
+    <description>Push the levers</description>
   </quest>
 </quests_list>

@@ -11,7 +11,7 @@ Rainbowbara::Rainbowbara(uint32 id, iPoint position) : Capybara(CapybaraType::SU
 	InitStats();
 
 	idle.PushBack({ 64, 136, 60, 56 });
-	currentAnim->SetAnim(idle);
+	currentAnim = &(idle);
 }
 
 Rainbowbara::~Rainbowbara()

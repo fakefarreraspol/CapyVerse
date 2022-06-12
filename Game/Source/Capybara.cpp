@@ -24,6 +24,9 @@ Capybara::Capybara(CapybaraType capyType, uint32 id, iPoint position, const char
 	damageXLvl = 4;
 	armorXLvl = 3;
 
+	this->w = 64;
+	this->h = 64;
+
 	this->Disable();
 	
 }
@@ -42,14 +45,7 @@ bool Capybara::Start()
 bool Capybara::Update(float dt)
 {
 	bool ret = true;
-	if (load)
-	{
-		/*attackSFX = app->audio->LoadFx("Assets/Audio/Fx/capybara-attack4.wav");
-		abilitySFX = app->audio->LoadFx("Assets/Audio/Fx/capybara-attack2.wav");
-		healSFX = app->audio->LoadFx("Assets/Audio/Fx/capybara-spell1.wav");
-		hitSFX = app->audio->LoadFx("Assets/Audio/Fx/capybara-chirp.wav");*/
-		load = false;
-	}
+
 	if (xp >= xpNext)
 		LevelUp();
 
