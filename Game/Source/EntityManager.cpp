@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "NPC.h"
 #include "Enemy.h"
+#include "Trader.h"
 
 #include "Chinabara.h"
 #include "Punkibara.h"
@@ -97,6 +98,9 @@ Entity* EntityManager::CreateEntity(EntityType type, uint32 id, iPoint position,
 		break;
 	case EntityType::BRIDGE:
 		entity = new Bridge(position, id);
+		break;
+	case EntityType::TRADER:
+		entity = new Trader(position, id, name);
 		break;
 	default:
 	{
@@ -232,21 +236,20 @@ void EntityManager::AddEntity(Entity* entity)
 bool EntityManager::Start()
 {
 	//// inventory test
-	//Item* uwu01 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::HP_POTION);
-	//Item* uwu02 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::MP_POTION);
-	//Item* uwu03 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::REVIVE);
-	//Item* uwu04 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::FREERUNERS_ARMOR);
-	//Item* uwu05 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::BOW_SPELLDRINKER);
-	//Item* uwu06 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::ARMOR_VULNERABILITY);
+	Item* uwu01 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::HP_POTION);
+	Item* uwu02 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::MP_POTION);
+	Item* uwu03 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::REVIVE);
+	Item* uwu04 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::FREERUNERS_ARMOR);
+	Item* uwu05 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::BOW_SPELLDRINKER);
+	Item* uwu06 = app->entMan->CreateEntity(1, { 0,0 }, " ", ItemType::ARMOR_VULNERABILITY);
 
 
-	//inventory->AddItem(uwu01, 1);
-	//inventory->AddItem(uwu02, 2);
-	//inventory->AddItem(uwu03, 3);
-	//inventory->AddItem(uwu04, 3);
-	//inventory->AddItem(uwu05, 3);
-	//inventory->AddItem(uwu06, 3);
-
+	inventory->AddItem(uwu01, 1);
+	inventory->AddItem(uwu02, 2);
+	inventory->AddItem(uwu03, 3);
+	inventory->AddItem(uwu04, 3);
+	inventory->AddItem(uwu05, 3);
+	inventory->AddItem(uwu06, 3);
 
 	texture = app->tex->Load("Assets/Textures/Sprites/characters.png");
 	capyTex = app->tex->Load("Assets/Textures/Sprites/capybaras.png");
@@ -299,7 +302,19 @@ bool EntityManager::UpdateAll(float dt, bool doLogic)
 bool EntityManager::LoadState(pugi::xml_node& data)
 {
 	inventory->LoadState(data.child("inventory"));
-
+//
+//<<<<<<< HEAD
+//	return true;
+//=======
+//	for (pugi::xml_node entityNode = data.first_child(); entityNode && ret; entityNode = entityNode.next_sibling())
+//	{
+//		int entityId = entityNode.attribute("id").as_int();
+//		ret = entities.At(entityId)->data->LoadState(entityNode);
+//		printf("Succesfully loaded entity %s\n", entities.At(entityId)->data->idName.GetString());
+//	}
+//
+//	return ret;
+//>>>>>>> development
 	return true;
 }
 
@@ -308,7 +323,6 @@ bool EntityManager::SaveState(pugi::xml_node& data) const
 	bool ret = true;
 
 	//ListItem<Entity*>* item = entities.start;
-
 	//while (item != NULL)
 	//{
 	//	data.append_child(item->data->capyName.GetString());
@@ -323,6 +337,16 @@ bool EntityManager::SaveState(pugi::xml_node& data) const
 	inventory->SaveState(inventoryData);
 	
 
+//=======
+//	while (item != NULL)
+//	{
+//		data.append_child(item->data->idName.GetString());
+//		// = item->data->SaveState(data.child(item->data->name.GetString()));
+//
+//		ret = item->data->SaveState(data.child(item->data->idName.GetString()));
+//		item = item->next;
+//	}
+//>>>>>>> development
 	return ret;
 }
 
@@ -338,23 +362,25 @@ bool EntityManager::Draw() {
 		uint32_t w = pEntity->w;
 		uint32_t h = pEntity->h;
 
-		if (pEntity->active == false) continue;
-		SDL_RendererFlip flip = pEntity->faceLeft ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
-
-		if (pEntity->type == EntityType::CAPYBARA)
+		
+		SDL_RendererFlip flip = pEntity->faceLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+		if (pEntity->active != false)
 		{
-			ret = app->render->DrawTexture(capyTex, pEntity->GetPosition().x - w / 2, pEntity->GetPosition().y - h / 2,
-				&pEntity->currentAnim->GetCurrentFrame(), pEntity->faceLeft);
-		}
-		else if (pEntity->type == EntityType::BRIDGE || pEntity->type == EntityType::LEVER)
-		{
-			ret = app->render->DrawTexture(props, pEntity->GetPosition().x - w / 2, pEntity->GetPosition().y - h / 2,
-				&pEntity->currentAnim->GetCurrentFrame(), pEntity->faceLeft);
-		}
-		else
-		{
-			ret = app->render->DrawTexture(texture, pEntity->GetPosition().x - w / 2, pEntity->GetPosition().y - h / 2,
-				&pEntity->currentAnim->GetCurrentFrame(), pEntity->faceLeft);
+			if (pEntity->type == EntityType::CAPYBARA)
+			{
+				ret = app->render->DrawTexture(capyTex, pEntity->GetPosition().x - w / 2, pEntity->GetPosition().y - h / 2,
+					&pEntity->currentAnim->GetCurrentFrame(), false, 1.0, flip);
+			}
+			else if (pEntity->type == EntityType::BRIDGE || pEntity->type == EntityType::LEVER)
+			{
+				ret = app->render->DrawTexture(props, pEntity->GetPosition().x - w / 2, pEntity->GetPosition().y - h / 2,
+					&pEntity->currentAnim->GetCurrentFrame(), false, 1.0, flip);
+			}
+			else
+			{
+				ret = app->render->DrawTexture(texture, pEntity->GetPosition().x - w / 2, pEntity->GetPosition().y - h / 2,
+					&pEntity->currentAnim->GetCurrentFrame(), false, 1.0, flip);
+			}
 		}
 		
 	}
@@ -376,7 +402,10 @@ void EntityManager::OnCollision(PhysBody* c1, PhysBody* c2)
 
 Entity* EntityManager::CloneItem(Item* item)
 {
+
 	Entity* ret = CreateEntity(item->id, item->position, item->capyName.GetString(), item->itemType);
+
+	/*Entity* ret = CreateEntity(item->id, item->position, item->idName.GetString(), item->type);*/
 
 	return ret;
 }

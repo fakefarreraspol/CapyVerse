@@ -85,7 +85,8 @@ project "Capyverse"
                             "Source/StatsMenu.h", "Source/StatsMenu.cpp",
                             "Source/Fonts.h","Source/Fonts.cpp",
                             "Source/Physics.h", "Source/Physics.cpp",
-                            "Source/Transitions.h", "Source/Transitions.cpp"},
+                            "Source/Transitions.h", "Source/Transitions.cpp",
+                            "Source/Particles.h", "Source/Particles.cpp"},
 
         ["Source/Modules/Gameplay/Dialog"] = { "Source/Dialog.h","Source/Dialog.cpp",
                                         "Source/DialogManager.h","Source/DialogManager.cpp",
@@ -106,12 +107,14 @@ project "Capyverse"
 
         ["Source/Modules/Gameplay/Entities/Characters"] = {"Source/Player.h", "Source/Player.cpp",
                                                     "Source/NPC.h", "Source/NPC.cpp",
-                                                    "Source/Enemy.h", "Source/Enemy.cpp"},
+                                                    "Source/Enemy.h", "Source/Enemy.cpp",
+                                                    "Source/Trader.h", "Source/Trader.cpp"},
 
         ["Source/Modules/Gameplay/Entities/Items"] = {"Source/Item.h",
                                                       "Source/Items.h", "Source/Items.cpp",
                                                       "Source/Inventory.h", "Source/Inventory.cpp",
                                                       "Source/ItemHolder.h"},
+        ["Source/Modules/Gameplay/Entities/Shop"] = {"Source/Shop.h", "Source/Shop.cpp"},
 
         ["Source/Modules/Gameplay/Entities/Props"] = {"Source/Lever.h", "Source/Lever.cpp",
                                                      "Source/Bridge.h"},
@@ -144,7 +147,8 @@ project "Capyverse"
                             "Source/PerfTimer.h", "Source/PerfTimer.cpp",
                             "Source/List.h",
                             "Source/Collider.h", "Source/Collider.cpp",
-                            "Source/Queue.h", "Source/easings.h"},
+                            "Source/Queue.h", "Source/easings.h",
+                            "Source/Particle.h", "Source/Particle.cpp"},
 
         ["Source/UI"] = {"Source/GuiManager.h", "Source/GuiManager.cpp",
                         "Source/GuiBar.h", "Source/GuiBar.cpp",

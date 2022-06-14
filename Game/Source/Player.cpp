@@ -159,6 +159,16 @@ void Player::AddCapybaraToBatle(Capybara* capybara)
 {
 	battleTeam.Add(capybara);
 }
+
+void Player::ChangeCapybaras(Capybara* fromTeam, Capybara* fromBattle)
+{
+	int atTeam = team.Find(fromTeam);
+	int atBattle= battleTeam.Find(fromBattle);
+
+	team.At(atTeam)->data = fromBattle;
+	battleTeam.At(atBattle)->data = fromTeam;
+}
+
 //TODO: Update the player input and move the player
 void Player::UpdateInput(float dt)
 {
@@ -174,22 +184,22 @@ void Player::UpdateInput(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		faceLeft = true;
-		collider->body->SetLinearVelocity({ velocity, 0.0f });
-		if (currentAnim != &walkLeft)
-		{
-			walkLeft.Reset();
-			currentAnim = &(walkLeft);
-		}
-	}
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-	{
 		faceLeft = false;
-		collider->body->SetLinearVelocity({ -velocity, 0.0f });
+		collider->body->SetLinearVelocity({ velocity, 0.0f });
 		if (currentAnim != &walkRight)
 		{
 			walkRight.Reset();
 			currentAnim = &walkRight;
+		}
+	}
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	{
+		faceLeft = true;
+		collider->body->SetLinearVelocity({ -velocity, 0.0f });
+		if (currentAnim != &walkLeft)
+		{
+			walkLeft.Reset();
+			currentAnim = &(walkLeft);
 		}
 	}
 
@@ -235,13 +245,17 @@ void Player::UpdateInput(float dt)
 		{
 			app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene2, 2);
 		}
-		if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 		{
 			app->fadeToBlack->MFadeToBlack((Module*)app->scene, (Module*)app->battleScene3, 2);
 		}
+		if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
+		{
+			this->money += 99999;
+		}
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
 	{
 		if (!app->statsMenu->IsEnabled())
 			app->statsMenu->Enable();
@@ -343,6 +357,10 @@ void Player::SetCombat(bool value)
 	for (int i = 0; i < battleTeam.Count(); i++)
 	{
 		battleTeam.At(i)->data->SetCombat(value);
+		if(value)
+			battleTeam.At(i)->data->Enable();
+		else
+			battleTeam.At(i)->data->Disable();
 	}
 	this->isBattle = value;
 }

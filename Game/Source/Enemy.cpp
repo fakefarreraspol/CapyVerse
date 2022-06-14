@@ -51,6 +51,13 @@ void Enemy::SetCombat(bool value)
 	for (int i = 0; i < battleTeam.Count(); i++)
 	{
 		battleTeam.At(i)->data->SetCombat(value);
+		battleTeam.At(i)->data->faceLeft = true;
+
+
+		if (value)
+			battleTeam.At(i)->data->Enable();
+		else
+			battleTeam.At(i)->data->Disable();
 	}
 	this->isCombat = value;
 }

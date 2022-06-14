@@ -106,7 +106,7 @@ public:
 	bool UnequipItem(ItemCategory category);
 
 	bool enemy = false;
-	SString capyName;
+	SString idName;
 protected:
 	//Update the stats by the lvl
 	void UpdateStats();
@@ -115,7 +115,9 @@ protected:
 
 public:
 	List<Item*> consumables;
-
+	Item* armorItem = nullptr;
+	Item* necklaceItem = nullptr;
+	Item* weaponItem = nullptr;
 
 protected:
 	//Capybara stats
@@ -158,10 +160,6 @@ protected:
 	int abilitySFX;
 	int healSFX;
 	int hitSFX;
-
-	Item* armorItem = nullptr;
-	Item* necklaceItem = nullptr;
-	Item* weaponItem = nullptr;
 	
 };
 

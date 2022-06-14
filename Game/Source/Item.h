@@ -71,6 +71,8 @@ public:
 
 public:
 	ItemType itemType = ItemType::NONE;
+	int price = 0;
+	ItemType type = ItemType::NONE;
 	bool beingUsed = false;   
 	SString description;
 	ItemStats stats;
