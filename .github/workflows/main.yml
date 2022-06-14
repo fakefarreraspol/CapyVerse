@@ -1,0 +1,75 @@
+
+   
+name: CI
+
+on: 
+  push:
+  pull_request:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    env:
+      RELEASE_NAME: CapybaraStudios-IntoTheCapyverse-v1.0
+      GNUTARGET: default
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@main
+    
+    - name: Setup Release Version
+      run: |
+        echo "RELEASE_NAME=TDM-Into_The_Capyverse-v0.8_${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+      shell: bash
+      
+    - name: Setup Solution with premake
+      run: |
+         Vendors\premake5.exe vs2022
+
+    - name: Setup Environment
+      run: | 
+        dir
+        mkdir Build
+        cd Build
+        mkdir ${{ env.RELEASE_NAME }}
+        cd ../../Capyverse
+        dir
+        
+    # Setup MSBuild.exe path if required
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.0.2
+
+    - name: Build Solution (MSVC16)
+      run: |
+        msbuild.exe Capyverse.sln  /property:Configuration=Release
+        copy /Y Build\Release\Capyverse.exe Build\${{ env.RELEASE_NAME }}\Capyverse.exe
+      shell: cmd
+      
+    - name: Generate Artifacts
+      run: |
+        robocopy .\Output .\Build\${{ env.RELEASE_NAME }}\Output /S
+        robocopy .\Build\${{ env.RELEASE_NAME }} .\Build\${{ env.RELEASE_NAME }}\Output Capyverse.exe /MOVE
+        copy /Y .\README.md .\Build\${{ env.RELEASE_NAME }}\README.md
+        copy /Y .\LICENSE .\Build\${{ env.RELEASE_NAME }}\LICENSE
+        cd Build
+        7z a ./${{ env.RELEASE_NAME }}.zip ./${{ env.RELEASE_NAME }}
+        dir
+      shell: cmd
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ env.RELEASE_NAME }}.zip
+        path: ./Build/${{ env.RELEASE_NAME }}.zip
+        
+    - name: Upload Artifact to Release
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./Build/${{ env.RELEASE_NAME }}.zip
+          asset_name: ${{ env.RELEASE_NAME }}.zip
+          asset_content_type: application/zip

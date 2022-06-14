@@ -39,8 +39,6 @@ private:
 
 	bool activated = false;
 	bool questTrigger = false;
-
-	GuiText* text = nullptr;
 };
 
 #endif // !__LEVER_H__

@@ -45,17 +45,12 @@ bool Pause::Start()
 	exitBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "EXIT GAME", { 585, 460, 125, 20 }, this, { 255, 255, 255 });
 	menuBtns.Add(exitBtn);
 
-	
 
 	for (int i = 0; i < menuBtns.Count(); i++)
 	{
 		menuBtns.At(i)->data->state = GuiControlState::DISABLED;
 	}
 
-	
-
-
-	
 	volumeBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 8, "VOLUME", { 325, 285, 125, 20 }, this, { 255, 255, 255 });
 
 	musicSldr = (GuiSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 9, "MUSIC", { 500, 280, 220, 20 }, this);
@@ -91,10 +86,7 @@ bool Pause::Start()
 	yesBtn->state = GuiControlState::DISABLED;
 	noBtn->state = GuiControlState::DISABLED;
 	exitText->state = GuiControlState::DISABLED;
-
-	arrow = app->tex->Load("Assets/Menus/arrow.png");
-	currentControls = menuBtns;
-	currentControl = currentControls.start;
+	
 
 	return true;
 }
@@ -117,72 +109,8 @@ bool Pause::Update(float dt)
 
 		app->audio->volFX = soundSlrd->value;
 		app->audio->volMusic = musicSldr->value;
-		GamePad& pad = app->input->pads[0];
-		if (yesBtn->state == GuiControlState::DISABLED)
-		{
-			if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || pad.down)
-			{
-
-				if (currentControl->next == nullptr)
-				{
-					currentControl->data->state = GuiControlState::NORMAL;
-					currentControl = currentControls.start;
-				}
-				else
-				{
-					currentControl->data->state = GuiControlState::NORMAL;
-					currentControl = currentControl->next;
-				}
-			}
-
-			if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || pad.up)
-			{
-				if (currentControl->prev == nullptr)
-				{
-					currentControl->data->state = GuiControlState::NORMAL;
-					currentControl = currentControls.end;
-				}
-				else
-				{
-					currentControl->data->state = GuiControlState::NORMAL;
-					currentControl = currentControl->prev;
-				}
-			}
-		}
-		else
-		{
-			if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || pad.down)
-			{
-
-				if (currentControl->next == nullptr)
-				{
-					currentControl->data->state = GuiControlState::NORMAL;
-					currentControl = currentControls.start;
-				}
-				else
-				{
-					currentControl->data->state = GuiControlState::NORMAL;
-					currentControl = currentControl->next;
-				}
-			}
-
-			if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || pad.up)
-			{
-				if (currentControl->prev == nullptr)
-				{
-					currentControl->data->state = GuiControlState::NORMAL;
-					currentControl = currentControls.end;
-				}
-				else
-				{
-					currentControl->data->state = GuiControlState::NORMAL;
-					currentControl = currentControl->prev;
-				}
-			}
-		}
-		currentControl->data->state = GuiControlState::FOCUSED;
+		
 		app->render->DrawRectangle({ 540, 210, 195, 300 }, 170, 170, 170, 120, true, false);
-		app->render->DrawTexture(arrow, currentControl->data->bounds.x - 30, currentControl->data->bounds.y - 3, NULL, true);
 	}
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || pad.start)
 	{
@@ -192,7 +120,6 @@ bool Pause::Update(float dt)
 			
 			menuBtns.At(i)->data->state = GuiControlState::NORMAL;
 			pauseText->state = GuiControlState::NORMAL;
-			currentControl = currentControls.start;
 		}
 		app->audio->volFX = 10;
 		app->audio->volMusic = 10;
@@ -256,9 +183,6 @@ bool Pause::OnGuiMouseClickEvent(GuiControl* control)
 		{
 			menuBtns.At(i)->data->state = GuiControlState::DISABLED;
 		}
-		pauseText->state = GuiControlState::DISABLED;
-		currentControls = optionsBtns;
-		currentControl = currentControls.start;
 	}
 	if (control->id == 3)
 	{
@@ -273,8 +197,6 @@ bool Pause::OnGuiMouseClickEvent(GuiControl* control)
 			exitBtns.At(i)->data->state = GuiControlState::NORMAL;
 		}
 		exitText->state = GuiControlState::NORMAL;
-		currentControls = exitBtns;
-		currentControl = currentControls.start;
 	}
 	if (control->id == 8)
 	{
@@ -308,8 +230,6 @@ bool Pause::OnGuiMouseClickEvent(GuiControl* control)
 		{
 			optionsBtns.At(i)->data->state = GuiControlState::DISABLED;
 		}
-		currentControl = menuBtns.At(1);
-		currentControls = menuBtns;
 	}
 	if (control->id == 14)
 	{
@@ -319,8 +239,6 @@ bool Pause::OnGuiMouseClickEvent(GuiControl* control)
 			exitBtns.At(i)->data->state = GuiControlState::DISABLED;
 		}
 		exitText->state = GuiControlState::DISABLED;
-		currentControls = menuBtns;
-		currentControl = menuBtns.At(3);
 	}
 	if (control->id == 15)
 	{

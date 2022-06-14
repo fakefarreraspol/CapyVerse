@@ -9,9 +9,9 @@ Punkibara::Punkibara(uint32 id, iPoint position) : Capybara(CapybaraType::DPS, i
 	this->capybaraStats.intelligence	= 2;
 	this->capybaraTarget = CapybaraTarget::HIMSELF;
 	InitStats();
-	anim.PushBack({ 64, 192, 60, 62 });
-	anim.PushBack({ 0, 192, 60, 62 });
-	currentAnim = &anim;
+	
+	idle.PushBack({ 64, 192, 60, 62 });
+	currentAnim = &(idle);
 }
 
 Punkibara::~Punkibara()

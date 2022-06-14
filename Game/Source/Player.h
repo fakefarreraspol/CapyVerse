@@ -23,12 +23,14 @@ public:
 	bool Update(float dt);
 	void Debug();
 	void UpdateCamera();
-	bool Draw(Render* render);
+
 	bool Start();
 	//Adds a capybara to the player team 
 	void AddCapybara(Capybara* capybara);
 	//Adds a capybara to the player battle team
 	void AddCapybaraToBatle(Capybara* capybara);
+	void ChangeCapybaras(Capybara* fromTeam, Capybara* fromBattleTeam);
+
 
 	//TODO: Update the player input and move the player
 	void UpdateInput(float dt);
@@ -47,19 +49,15 @@ public:
 
 	void SetCombat(bool value);
 	void OnCollision(PhysBody* c1, PhysBody* c2);
-	bool isWalkingLeft = false;
 	bool CleanUp();
-	
-	/*SDL_Rect playerWalkRight[4];*/
 
 
+	int money = 0;
 private:
-	uint16_t money = 0;
 
 	bool isBattle = false;
 	bool isStuck = false;
 
-	Animation* currentAnim = nullptr;
 	Animation idle;
 	Animation walkRight;
 	Animation walkLeft;

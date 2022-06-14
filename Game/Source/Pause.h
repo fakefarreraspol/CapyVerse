@@ -49,7 +49,6 @@ private:
 	List<GuiControl*> optionsBtns;
 	List<GuiControl*> exitBtns;
 
-	List<GuiControl*> currentControls;
 
 	GuiButton* optionsBtn = nullptr;
 	GuiButton* volumeBtn = nullptr;
@@ -64,8 +63,6 @@ private:
 	GuiButton* yesBtn = nullptr;
 	GuiButton* noBtn = nullptr;
 	GuiText* exitText = nullptr;
-
-	ListItem<GuiControl*>* currentControl;
 
 	GuiText* pauseText = nullptr;
 

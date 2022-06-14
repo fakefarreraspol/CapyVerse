@@ -10,9 +10,9 @@ Pinkbara::Pinkbara(uint32 id, iPoint position) : Capybara(CapybaraType::SUPP, id
 
 	this->capybaraTarget = CapybaraTarget::ALLIES;
 	InitStats();
-	anim.PushBack({ 64, 264, 60, 56 });
-	anim.PushBack({ 0, 264, 60, 56 });
-	currentAnim = &anim;
+
+	idle.PushBack({ 64, 264, 60, 56 });
+	currentAnim = &(idle);
 }
 
 Pinkbara::~Pinkbara()

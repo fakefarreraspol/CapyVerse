@@ -5,6 +5,8 @@
 #include "SString.h"
 #include "Input.h"
 #include "Render.h"
+#include "Animation.h"
+#include <memory>
 
 struct Collider;
 
@@ -18,7 +20,8 @@ enum class EntityType
 	ENEMY,
 	NPC,
 	LEVER,
-	BRIDGE
+	BRIDGE,
+	TRADER
 };
 
 class Entity
@@ -27,7 +30,10 @@ public:
 	Entity() {}
 	Entity(EntityType type, uint32 id, const char* name, iPoint position) : type(type), active(true), id(id), position(position)
 	{
-		this->capyName.Create("%s_%i", name, id);
+		this->idName.Create("%s_%i", name, id);
+		this->name.Create("%s", name);
+		currentAnim = new Animation();
+		currentAnim->PushBack({ 0, 0, 0, 0 });
 	}
 	
 	iPoint& GetPosition() 
@@ -46,10 +52,10 @@ public:
 		return true;
 	}
 
-	virtual bool Draw(Render* render)
+	/*virtual bool Draw(Render* render)
 	{
 		return true;
-	}
+	}*/
 
 	virtual bool CleanUp()
 	{
@@ -90,15 +96,20 @@ public:
 
 public:
 
-	SString capyName;
+	SString idName;
+	SString name;
 	EntityType type;
 	bool active = true;
 	uint32 id;            
+	Animation* currentAnim = nullptr;
+	Animation idle;
+	bool faceLeft = false;
 
 	iPoint position;
 	iPoint speed;
 	bool renderable = false;
-	SDL_Texture* texture = nullptr;
+
+	uint32_t w = 0, h = 0;
 };
 
 #endif // __ENTITY_H__

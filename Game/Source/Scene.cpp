@@ -30,6 +30,7 @@
 #include "NPC.h"
 #include "Lever.h"
 #include "Bridge.h"
+#include "Shop.h"
 
 Scene::Scene(bool startEnabled) : Module(startEnabled)
 {
@@ -49,6 +50,7 @@ bool Scene::Awake(pugi::xml_node& node)
 	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 512,1266 }, "Sara"));
 	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 1969,878 }, "Joe"));
 	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::NPC, 10, { 1200,700 }, "George"));
+	NPCs.Add((NPC*)app->entMan->CreateEntity(EntityType::TRADER, 10, { 1100,700 }, "Sara"));
 
 
 	for (int i = 0; i < NPCs.Count(); i++)
@@ -75,12 +77,16 @@ bool Scene::Awake(pugi::xml_node& node)
 	DialogNode* sec2 = NPCs.At(2)->data->dialog->AddOption(fst2, "Gotta catch 'em all!!!!!!", "");
 	NPCs.At(2)->data->dialog->AddFirstNode(fst2);
 
+	NPCs.At(3)->data->dialog = new Dialog();
+	DialogNode* fst3 = new DialogNode("Hey, take a look at what can I offer to you!");
+	NPCs.At(3)->data->dialog->AddFirstNode(fst3);
 	return ret;
 }
 
 // Called before the first frame
 bool Scene::Start()
 {
+	app->shop->Enable();
 	app->questManager->Enable();
 	if (!bridge)
 	{
@@ -92,10 +98,12 @@ bool Scene::Start()
 		PhysBody* end= app->colManager->CreateRectangleSensor(2600, 870, 32, 128, bodyType::STATIC);
 		end->listener = this;
 	}
+	bridge->Enable();
 	for (int i = 0; i < levers.Count(); i++)
 	{
 		levers.At(i)->data->SetQuest(6);
 		levers.At(i)->data->SetListener(bridge);
+		levers.At(i)->data->Enable();
 	}
 	
 	if (!player)
@@ -115,10 +123,6 @@ bool Scene::Start()
 	player->SetCombat(false);
 	app->battleManager->SetPlayer(player);
 
-	for (int i = 0; i < NPCs.Count(); i++)
-	{
-		NPCs.At(i)->data->Enable();
-	}
 	for (int i = 0; i < levers.Count(); i++)
 	{
 		levers.At(i)->data->Enable();
@@ -141,6 +145,11 @@ bool Scene::Start()
 	if (app->questManager->IsCompleated(2))
 	{
 		app->questManager->ActiveQuest(6);
+	}
+
+	for (int i = 0; i < NPCs.Count(); i++)
+	{
+		NPCs.At(i)->data->Enable();
 	}
 
 	return true;
@@ -205,8 +214,8 @@ bool Scene::CleanUp()
 	}
 	player->Disable();
 	bridge->Disable();
-	//app->mapManager->Unload();
-	//app->colManager->Disable();
+	app->mapManager->Unload();
+
 
 	LOG("Succesfully unloaded scene");
 	return true;

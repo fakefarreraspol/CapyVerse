@@ -21,9 +21,10 @@ public:
 
 
 	bool useCamera = false;
+	int font;
+
 private:
 	bool blink = false;
-	int font;
 	int counter = 0;
 };
 

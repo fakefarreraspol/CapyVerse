@@ -14,13 +14,20 @@
 Capybara::Capybara(CapybaraType capyType, uint32 id, iPoint position, const char* name) : Entity(EntityType::CAPYBARA, id, name, position), capybaraType(capyType)
 {
 	level = 1;
-	capyName.Create(name);
+	idName.Create(name);
+
+
 	//Change this values in order to balance the game progression
 	xpNext = 50;
 	healthXLvl = 10;
 	manaXLvl = 7;
 	damageXLvl = 4;
 	armorXLvl = 3;
+
+	this->w = 64;
+	this->h = 64;
+
+	this->Disable();
 	
 }
 
@@ -38,15 +45,7 @@ bool Capybara::Start()
 bool Capybara::Update(float dt)
 {
 	bool ret = true;
-	if (load)
-	{
-		texture = app->tex->Load("Assets/Textures/Sprites/capybaras.png");
-		attackSFX = app->audio->LoadFx("Assets/Audio/Fx/capybara-attack4.wav");
-		abilitySFX = app->audio->LoadFx("Assets/Audio/Fx/capybara-attack2.wav");
-		healSFX = app->audio->LoadFx("Assets/Audio/Fx/capybara-spell1.wav");
-		hitSFX = app->audio->LoadFx("Assets/Audio/Fx/capybara-chirp.wav");
-		load = false;
-	}
+
 	if (xp >= xpNext)
 		LevelUp();
 
@@ -55,26 +54,6 @@ bool Capybara::Update(float dt)
 	if (this->health <= 0)
 	{
 		isCombat = false;
-	}
-
-	return ret;
-}
-
-bool Capybara::Draw(Render* render)
-{
-	bool ret = true;
-	if (isCombat)
-	{
-		if (app->GetDebug())
-			render->DrawRectangle({ position.x, position.y,  64 , 64 }, 255, 0, 0);
-		if (!enemy)
-		{
-			render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
-		}
-		else
-		{
-			render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame(), false, 1.0f, SDL_FLIP_HORIZONTAL);
-		}
 	}
 
 	return ret;
@@ -209,7 +188,7 @@ void Capybara::Attack(Capybara* target)
 	target->Damage(finalDamage);
 	app->audio->PlayFx(attackSFX);
 	canAttack = false;
-	printf("%s id: %i DMG: %i to %s id: %i\n", this->capyName.GetString(), this->id, finalDamage, target->capyName.GetString(), target->id);
+	printf("%s id: %i DMG: %i to %s id: %i\n", this->idName.GetString(), this->id, finalDamage, target->idName.GetString(), target->id);
 }
 
 void Capybara::SetStatus(CapybaraStatus status)
@@ -355,7 +334,7 @@ void Capybara::LevelUp()
 
 	//Debug log
 	LOG("");
-	LOG("%s stats LVL: %i", capyName.GetString(), level);
+	LOG("%s stats LVL: %i", idName.GetString(), level);
 	LOG("HP: %i MXHP: %i HPLVL: %i", health, maxHealth, capybaraStats.hp);
 	LOG("MP: %i MXMP: %i MPLVL: %i", mana, maxMana, capybaraStats.mp);
 	LOG("DMG: %i STRLVL: %i", damage, capybaraStats.strenght);
@@ -423,7 +402,6 @@ bool Capybara::GetCombat()
 
 bool Capybara::CleanUp()
 {
-	app->tex->UnLoad(texture);
 	return true;
 }
 
