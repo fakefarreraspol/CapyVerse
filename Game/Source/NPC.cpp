@@ -83,12 +83,16 @@ bool NPC::LoadState(pugi::xml_node& node)
 	position.y = node.child("position").attribute("y").as_int();
 	collider->body->SetTransform({ PIXEL_TO_METERS(position.x), PIXEL_TO_METERS(position.y) }, 0.0f);
 	trigger->body->SetTransform({ PIXEL_TO_METERS(position.x), PIXEL_TO_METERS(position.y) }, 0.0f);*/
+	node.append_attribute("id").set_value(id);
 	active = node.attribute("active").as_bool();
 	renderable = node.attribute("renderable").as_bool();
+	type = (EntityType)node.attribute("type").as_int();
+
+	Enable();
 
 	return true;
 }
-bool NPC::SaveState(pugi::xml_node& node)
+bool NPC::SaveState(pugi::xml_node& node) const
 {
 	/*pugi::xml_node position = node.append_child("position");
 	position.append_attribute("x").set_value(this->position.x);
@@ -97,6 +101,7 @@ bool NPC::SaveState(pugi::xml_node& node)
 	node.append_attribute("id").set_value(id);
 	node.append_attribute("active").set_value(active);
 	node.append_attribute("renderable").set_value(renderable);
+	node.append_attribute("type").set_value((int)type);
 
 	return true;
 }

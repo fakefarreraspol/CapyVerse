@@ -10,6 +10,7 @@
 #include "Audio.h"
 #include "Inventory.h"
 #include "EntityManager.h"
+#include "Item.h"
 
 Capybara::Capybara(CapybaraType capyType, uint32 id, iPoint position, const char* name) : Entity(EntityType::CAPYBARA, id, name, position), capybaraType(capyType)
 {
@@ -33,7 +34,7 @@ Capybara::Capybara(CapybaraType capyType, uint32 id, iPoint position, const char
 
 Capybara::~Capybara()
 {
-	
+	CleanUp();
 }
 
 bool Capybara::Start()
@@ -359,30 +360,54 @@ void Capybara::AddXp(int value)
 	return;
 }
 
-bool Capybara::LoadState(pugi::xml_node& node)
+// only called from entity manager
+bool Capybara::LoadState(pugi::xml_node& node) 
 {
-	position.x = node.child("position").attribute("x").as_int();
-	position.y = node.child("position").attribute("y").as_int();
-
-	level = node.attribute("level").as_int();
 	health = node.attribute("health").as_int();
 	xp = node.attribute("xp").as_int();
 	mana = node.attribute("mana").as_int();
-	capybaraType = (CapybaraType)node.attribute("type").as_int();
 	capybaraTarget = (CapybaraTarget)node.attribute("target").as_int();
 	active = node.attribute("active").as_bool();
 	renderable = node.attribute("renderable").as_bool();
 
-	// must update other stats depending on level
 
-	return false;
+	if (armorItem)
+		app->entMan->DestroyEntity(armorItem);
+	if (weaponItem)
+		app->entMan->DestroyEntity(weaponItem);
+	if (necklaceItem)
+		app->entMan->DestroyEntity(necklaceItem);
+
+	armorItem = nullptr;
+	weaponItem = nullptr;
+	necklaceItem = nullptr;
+
+	for (pugi::xml_node equipment = node.first_child(); equipment; equipment = equipment.next_sibling())
+	{
+		Item* item = app->entMan->CreateEntity(id, { 0,0 }, "", (ItemType)equipment.attribute("type").as_int());
+		
+		if (item->category == ItemCategory::ARMOR)
+			armorItem = item;
+		if (item->category == ItemCategory::WEAPON)
+			weaponItem = item;
+		if (item->category == ItemCategory::NECKLACE)
+			necklaceItem = item;
+	}
+
+	int newLevel = node.attribute("level").as_int();
+	while (level < newLevel)
+		LevelUp();
+
+	return true;
 }
 
-bool Capybara::SaveState(pugi::xml_node& node)
+bool Capybara::SaveState(pugi::xml_node& node) const
 {
-	pugi::xml_node position = node.append_child("position");
-	position.append_attribute("x").set_value(this->position.x);
-	position.append_attribute("y").set_value(this->position.y);
+	node.append_attribute("position_x").set_value(this->position.x);
+	node.append_attribute("position_y").set_value(this->position.y);
+
+	node.append_attribute("capybara_type").set_value((int)capybaraType);
+	node.append_attribute("name").set_value(capyName.GetString());
 
 	node.append_attribute("id").set_value(id);
 	node.append_attribute("level").set_value(level);
@@ -393,6 +418,17 @@ bool Capybara::SaveState(pugi::xml_node& node)
 	node.append_attribute("target").set_value((int)capybaraTarget);
 	node.append_attribute("active").set_value(active);
 	node.append_attribute("renderable").set_value(renderable);
+
+	if (armorItem)
+		node.append_child("equipment").append_attribute("type").set_value((int)armorItem->itemType);
+
+	if (weaponItem)
+		node.append_child("equipment").append_attribute("type").set_value((int)weaponItem->itemType);
+
+	if (necklaceItem)
+		node.append_child("equipment").append_attribute("type").set_value((int)necklaceItem->itemType);
+
+
 
 	return false;
 }
@@ -409,6 +445,15 @@ bool Capybara::GetCombat()
 
 bool Capybara::CleanUp()
 {
+	for (int i = 0; i < consumables.Count(); i++)
+		app->entMan->DestroyEntity(consumables.At(i)->data);
+	consumables.Clear();
+
+	if (armorItem) app->entMan->DestroyEntity(armorItem);
+	if (weaponItem) app->entMan->DestroyEntity(weaponItem);
+	if (necklaceItem) app->entMan->DestroyEntity(necklaceItem);
+
+
 	return true;
 }
 

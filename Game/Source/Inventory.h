@@ -53,7 +53,8 @@ public:
 	bool UseItem(Item* item, Capybara* capy);
 	bool EquipItem(Item* item, Capybara* capy);
 
-	
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&) const;
 };
 
 #endif // !__INVENTORY_H__

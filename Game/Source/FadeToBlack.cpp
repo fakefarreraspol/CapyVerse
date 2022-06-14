@@ -51,7 +51,12 @@ bool FadeToBlack::Update(float dt)
 			// L10: DONE 1: Enable / Disable the modules received when FadeToBlack() gets called
 			moduleToDisable->Disable();
 			moduleToEnable->Enable();
-
+			if (loadRequest)
+			{
+				moduleToEnable->Start();
+				app->LoadGameRequest();
+				loadRequest = false;
+			}
 			currentStep = FadeStep::FROM_BLACK;
 		}
 	}
@@ -90,6 +95,7 @@ bool FadeToBlack::MFadeToBlack(Module* moduleToDisable, Module* moduleToEnable, 
 	// If we are already in a fade process, ignore this call
 	if (currentStep == FadeStep::NONE)
 	{
+		this->loadRequest = loadRequest;
 		currentStep = FadeStep::TO_BLACK;
 		frameCount = 0;
 		maxFadeFrames = frames;

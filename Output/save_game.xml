@@ -1,74 +1,112 @@
 <?xml version="1.0"?>
 <game_state>
-	<window />
-	<input />
-	<textures />
-	<map />
-	<quest_manager />
-	<fonts />
-	<audio />
-	<intro />
-	<main_menu />
-	<DialogManager />
-	<scene />
-	<battle_scene1 />
-	<battle_scene1 />
-	<battle_scene1 />
-	<BattleManager />
-	<eob_scene />
+	<window enabled="true" />
+	<input enabled="true" />
+	<textures enabled="true" />
+	<map enabled="true" />
+	<fonts enabled="true" />
+	<audio enabled="true" />
+	<intro enabled="false" />
+	<main_menu enabled="false" />
+	<quest_manager>
+		<quest id="0" progress="2" />
+		<quest id="1" progress="0" />
+		<quest id="2" progress="0" />
+		<quest id="3" progress="0" />
+		<quest id="4" progress="0" />
+		<quest id="5" progress="0" />
+		<quest id="6" progress="0" />
+	</quest_manager>
+	<DialogManager enabled="true" />
+	<scene>
+		<NPCs />
+		<Sara_0 id="0" active="true" renderable="false" type="5" />
+		<Joe_1 id="1" active="true" renderable="false" type="5" />
+		<George_2 id="2" active="true" renderable="false" type="5" />
+		<Evie_3 id="3" active="true" renderable="false" type="4" triggered="false">
+			<capybaras>
+				<Retrobara position_x="928" position_y="443" capybara_type="0" name="Retrobara" id="4" level="1" health="70" xp="0" mana="14" type="0" target="2" active="false" renderable="false" />
+				<Simpbara position_x="750" position_y="443" capybara_type="2" name="Simpbara" id="5" level="1" health="20" xp="0" mana="35" type="2" target="1" active="false" renderable="false" />
+				<Egirlbara position_x="1115" position_y="444" capybara_type="1" name="Egirlbara" id="6" level="1" health="30" xp="0" mana="7" type="1" target="0" active="false" renderable="false" />
+			</capybaras>
+		</Evie_3>
+		<Morgan_7 id="7" active="true" renderable="false" type="4" triggered="false">
+			<capybaras>
+				<Chadbara position_x="928" position_y="443" capybara_type="0" name="Chadbara" id="8" level="1" health="90" xp="0" mana="7" type="0" target="2" active="false" renderable="false" />
+				<Rainbowbara position_x="750" position_y="443" capybara_type="2" name="Rainbowbara" id="9" level="1" health="30" xp="0" mana="35" type="2" target="1" active="false" renderable="false" />
+				<Emobara position_x="1115" position_y="444" capybara_type="1" name="Emobara" id="10" level="1" health="10" xp="0" mana="7" type="1" target="0" active="false" renderable="false" />
+			</capybaras>
+		</Morgan_7>
+		<Erin_11 id="11" active="true" renderable="false" type="4" triggered="false">
+			<capybaras>
+				<Chinabara position_x="928" position_y="443" capybara_type="0" name="Chinabara" id="12" level="1" health="60" xp="0" mana="21" type="0" target="2" active="false" renderable="false" />
+				<Pinkbara position_x="750" position_y="443" capybara_type="2" name="Pinkbara" id="13" level="1" health="30" xp="0" mana="42" type="2" target="1" active="false" renderable="false" />
+				<Punkibara position_x="1115" position_y="444" capybara_type="1" name="Punkibara" id="14" level="1" health="30" xp="0" mana="14" type="1" target="0" active="false" renderable="false" />
+			</capybaras>
+		</Erin_11>
+		<Mills_15 id="15" active="true" renderable="false" type="4" triggered="false">
+			<capybaras>
+				<Retrobara position_x="928" position_y="443" capybara_type="0" name="Retrobara" id="16" level="1" health="70" xp="0" mana="14" type="0" target="2" active="false" renderable="false" />
+				<Simpbara position_x="750" position_y="443" capybara_type="2" name="Simpbara" id="17" level="1" health="20" xp="0" mana="35" type="2" target="1" active="false" renderable="false" />
+				<Egirlbara position_x="1115" position_y="444" capybara_type="1" name="Egirlbara" id="18" level="1" health="30" xp="0" mana="7" type="1" target="0" active="false" renderable="false" />
+			</capybaras>
+		</Mills_15>
+		<George_19 id="19" active="true" renderable="false" type="4" triggered="false">
+			<capybaras>
+				<Chadbara position_x="928" position_y="443" capybara_type="0" name="Chadbara" id="20" level="1" health="90" xp="0" mana="7" type="0" target="2" active="false" renderable="false" />
+				<Rainbowbara position_x="750" position_y="443" capybara_type="2" name="Rainbowbara" id="21" level="1" health="30" xp="0" mana="35" type="2" target="1" active="false" renderable="false" />
+				<Emobara position_x="1115" position_y="444" capybara_type="1" name="Emobara" id="22" level="1" health="10" xp="0" mana="7" type="1" target="0" active="false" renderable="false" />
+			</capybaras>
+		</George_19>
+		<Darcy_23 id="23" active="true" renderable="false" type="4" triggered="false">
+			<capybaras>
+				<Chinabara position_x="928" position_y="443" capybara_type="0" name="Chinabara" id="24" level="1" health="60" xp="0" mana="21" type="0" target="2" active="false" renderable="false" />
+				<Pinkbara position_x="750" position_y="443" capybara_type="2" name="Pinkbara" id="25" level="1" health="30" xp="0" mana="42" type="2" target="1" active="false" renderable="false" />
+				<Punkibara position_x="1115" position_y="444" capybara_type="1" name="Punkibara" id="26" level="1" health="30" xp="0" mana="14" type="1" target="0" active="false" renderable="false" />
+			</capybaras>
+		</Darcy_23>
+		<Hugh_27 id="27" active="true" renderable="false" type="4" triggered="false">
+			<capybaras>
+				<Chadbara position_x="928" position_y="443" capybara_type="0" name="Chadbara" id="28" level="6" health="170" xp="0" mana="35" type="0" target="2" active="false" renderable="false" />
+				<Rainbowbara position_x="750" position_y="443" capybara_type="2" name="Rainbowbara" id="29" level="6" health="70" xp="0" mana="91" type="2" target="1" active="false" renderable="false" />
+				<Emobara position_x="1115" position_y="444" capybara_type="1" name="Emobara" id="30" level="6" health="50" xp="0" mana="35" type="1" target="0" active="false" renderable="false" />
+			</capybaras>
+		</Hugh_27>
+		<LEVERS />
+		<lever id="32" activated="false" />
+		<lever id="33" activated="false" />
+		<lever id="34" activated="false" />
+		<bridge counter="2" />
+		<player id="35" isBattle="false" money="0" active="true" renderable="false">
+			<position x="774" y="1440" />
+			<battleTeam>
+				<capybara position_x="291" position_y="443" capybara_type="0" name="Chinabara" id="36" level="1" health="60" xp="0" mana="21" type="0" target="2" active="false" renderable="false" />
+				<capybara position_x="101" position_y="443" capybara_type="1" name="Punkibara" id="37" level="1" health="30" xp="0" mana="14" type="1" target="0" active="false" renderable="false" />
+				<capybara position_x="464" position_y="443" capybara_type="2" name="Rainbowbara" id="38" level="1" health="30" xp="0" mana="35" type="2" target="1" active="false" renderable="false" />
+			</battleTeam>
+			<team />
+		</player>
+	</scene>
+	<battle_scene1 enabled="false" />
+	<battle_scene2 enabled="false" />
+	<battle_scene3 enabled="false" />
+	<battle_scene4 enabled="false" />
+	<battle_scene5 enabled="false" />
+	<battle_scene6 enabled="false" />
+	<battle_scene7 enabled="false" />
+	<BattleManager enabled="false" />
+	<end enabled="false" />
+	<eob_scene enabled="false" />
 	<entity_manager>
-		<Sara_0 id="0" active="true" renderable="false" />
-		<Joe_1 id="1" active="true" renderable="false" />
-		<George_2 id="2" active="true" renderable="false" />
-		<Evie_3 id="3" active="true" renderable="false" />
-		<Retrobara_4 id="4" level="3" health="90" xp="0" mana="21" type="0" target="2" active="true" renderable="false">
-			<position x="928" y="305" />
-		</Retrobara_4>
-		<Simpbara_5 id="5" level="3" health="30" xp="0" mana="49" type="2" target="1" active="true" renderable="false">
-			<position x="750" y="443" />
-		</Simpbara_5>
-		<Egirlbara_6 id="6" level="3" health="40" xp="0" mana="14" type="1" target="0" active="true" renderable="false">
-			<position x="1115" y="444" />
-		</Egirlbara_6>
-		<Morgan_7 id="7" active="true" renderable="false" />
-		<Chadbara_8 id="8" level="6" health="170" xp="0" mana="35" type="0" target="2" active="true" renderable="false">
-			<position x="928" y="305" />
-		</Chadbara_8>
-		<Rainbowbara_9 id="9" level="6" health="70" xp="0" mana="91" type="2" target="1" active="true" renderable="false">
-			<position x="750" y="443" />
-		</Rainbowbara_9>
-		<Emobara_10 id="10" level="6" health="50" xp="0" mana="35" type="1" target="0" active="true" renderable="false">
-			<position x="1115" y="444" />
-		</Emobara_10>
-		<Erin_11 id="11" active="true" renderable="false" />
-		<Chinabara_12 id="12" level="8" health="180" xp="0" mana="63" type="0" target="2" active="true" renderable="false">
-			<position x="928" y="305" />
-		</Chinabara_12>
-		<Pinkbara_13 id="13" level="8" health="90" xp="0" mana="126" type="2" target="1" active="true" renderable="false">
-			<position x="750" y="443" />
-		</Pinkbara_13>
-		<Punkibara_14 id="14" level="8" health="90" xp="0" mana="56" type="1" target="0" active="true" renderable="false">
-			<position x="1115" y="444" />
-		</Punkibara_14>
-		<Player_15 id="15" isBattle="false" money="0" active="true" renderable="false">
-			<position x="650" y="1440" />
-		</Player_15>
-		<Chinabara_16 id="16" level="1" health="60" xp="0" mana="21" type="0" target="2" active="true" renderable="false">
-			<position x="291" y="297" />
-		</Chinabara_16>
-		<Punkibara_17 id="17" level="1" health="30" xp="0" mana="14" type="1" target="0" active="true" renderable="false">
-			<position x="101" y="435" />
-		</Punkibara_17>
-		<Rainbowbara_18 id="18" level="1" health="30" xp="0" mana="35" type="2" target="1" active="true" renderable="false">
-			<position x="464" y="443" />
-		</Rainbowbara_18>
+		<inventory />
 	</entity_manager>
-	<pause />
-	<physics />
-	<guiManager />
-	<battle_transitions />
-	<fadetoblack />
+	<stats_menu enabled="false" />
+	<pause enabled="true" />
+	<physics enabled="true" />
+	<guiManager enabled="true" />
+	<battle_transitions enabled="true" />
+	<fadetoblack enabled="true" />
 	<renderer>
-		<camera x="-10" y="-1064" />
+		<camera x="-134" y="-1064" />
 	</renderer>
 </game_state>

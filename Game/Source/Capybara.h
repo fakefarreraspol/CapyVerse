@@ -95,7 +95,7 @@ public:
 	void AddXp(int value);
 
 	bool LoadState(pugi::xml_node&);
-	bool SaveState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&) const;
 
 	void SetCombat(bool value);
 	bool GetCombat();

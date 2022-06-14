@@ -28,6 +28,7 @@
 #include "Defs.h"
 #include "Log.h"
 #include "NPC.h"
+#include "Enemy.h"
 #include "Lever.h"
 #include "Bridge.h"
 
@@ -211,5 +212,103 @@ bool Scene::CleanUp()
 
 
 	LOG("Succesfully unloaded scene");
+	return true;
+}
+
+
+bool Scene::LoadState(pugi::xml_node& data)
+{
+
+	ListItem<NPC*>* currNpc = NPCs.start;
+	while (currNpc != NULL)
+	{
+		pugi::xml_node npcData = data.child("NPCs").child(currNpc->data->capyName.GetString());
+
+		if ((EntityType)currNpc->data->type == EntityType::ENEMY)
+		{
+			Enemy* enemy = (Enemy*)currNpc->data;
+			enemy->LoadState(npcData);
+		}
+		else currNpc->data->LoadState(npcData);
+
+		currNpc = currNpc->next;
+	}
+	
+	ListItem<Lever*>* lever = levers.start;
+	pugi::xml_node leverData = data.child("LEVERS").first_child();
+	while (lever && leverData)
+	{
+		if (leverData.attribute("activated").as_bool() == true)
+		{
+			lever->data->activated = true;
+			lever->data->currentAnim = &(lever->data->open);
+		}
+		else
+		{
+			lever->data->activated = false;
+			lever->data->currentAnim = &(lever->data->closed);
+		}
+
+		lever = lever->next;
+		leverData = leverData.next_sibling();
+	}
+
+	bridge->Start();
+	bridge->counter = data.child("bridge").attribute("counter").as_int();
+	
+	
+
+	player->LoadState(data.child("player"));
+
+
+
+	return true;
+}
+bool Scene::SaveState(pugi::xml_node& data) const
+{
+	// NPCS
+	pugi::xml_node npcs = data.append_child("NPCs");
+	ListItem<NPC*>* npc = NPCs.start;
+	while (npc!=NULL)
+	{
+		pugi::xml_node npcData = npcs.append_child(npc->data->capyName.GetString());
+		if (npc->data->type==EntityType::NPC)
+			npc->data->SaveState(npcData);
+		else
+		{
+			Enemy* enemy = (Enemy*)npc->data;
+			enemy->SaveState(npcData);
+		}
+
+		npc = npc->next;
+	}
+
+	// LEVERS
+	pugi::xml_node leversData = data.append_child("LEVERS");
+	ListItem<Lever*>* lever = levers.start;
+	while (lever!=NULL)
+	{
+		pugi::xml_node leverData = data.append_child("lever");
+		leverData.append_attribute("id").set_value(lever->data->id);
+		leverData.append_attribute("activated").set_value(lever->data->activated);
+
+		lever = lever->next;
+	}
+
+	// BRIDGE
+	if (bridge!=nullptr)
+	{
+		bool activated = false;
+		pugi::xml_node bridgeData = data.append_child("bridge");
+		bridgeData.append_attribute("counter").set_value(bridge->counter);
+	}
+
+	// PLAYER
+	if (player)
+	{
+		pugi::xml_node playerData = data.append_child("player");
+		player->SaveState(playerData);
+	}
+
 	return true;
 }

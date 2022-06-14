@@ -263,6 +263,7 @@ List<Capybara*>& Player::GetTeam()
 
 bool Player::LoadState(pugi::xml_node& node)
 {
+	// player
 	position.x = node.child("position").attribute("x").as_float();
 	position.y = node.child("position").attribute("y").as_float();
 
@@ -273,11 +274,36 @@ bool Player::LoadState(pugi::xml_node& node)
 	active = node.attribute("active").as_bool();
 	renderable = node.attribute("renderable").as_bool();
 
+	// load capybaras
+	for (int i = 0; i < team.Count(); i++)
+		app->entMan->DestroyEntity(team.At(i)->data);
+	team.Clear();
+
+	for (pugi::xml_node capyNode = node.child("team").first_child(); capyNode; capyNode = capyNode.next_sibling())
+	{
+		Capybara* capy = app->entMan->CreateCapybara(capyNode);
+		battleTeam.Add(capy);
+		printf("Succesfully loaded team from player %s\n", capy->capyName.GetString());
+	}
+
+	// load battle team
+	for (int i = 0; i < battleTeam.Count(); i++)
+		app->entMan->DestroyEntity(battleTeam.At(i)->data);
+	battleTeam.Clear();
+
+	for (pugi::xml_node capyNode = node.child("battleTeam").first_child(); capyNode; capyNode = capyNode.next_sibling())
+	{
+		Capybara* capy = app->entMan->CreateCapybara(capyNode);
+		battleTeam.Add(capy);
+		printf("Succesfully loaded battle team from player %s\n", capy->capyName.GetString());
+	}
+
 	return false;
 }
 
 bool Player::SaveState(pugi::xml_node& node)
 {
+	//player
 	pugi::xml_node position = node.append_child("position");
 	position.append_attribute("x").set_value(this->position.x);
 	position.append_attribute("y").set_value(this->position.y);
@@ -287,6 +313,27 @@ bool Player::SaveState(pugi::xml_node& node)
 
 	node.append_attribute("active").set_value(active);
 	node.append_attribute("renderable").set_value(renderable);
+
+	// CAPYBARAS
+	pugi::xml_node battleTeamData = node.append_child("battleTeam");
+	ListItem<Capybara*>* capy = nullptr;
+	
+	capy = battleTeam.start;
+	while (capy != NULL)
+	{
+		pugi::xml_node capybaraData = battleTeamData.append_child("capybara");
+		capy->data->SaveState(capybaraData);
+		capy = capy->next;
+	}
+
+	pugi::xml_node teamData = node.append_child("team");
+	capy = team.start;
+	while (capy != NULL)
+	{
+		pugi::xml_node capybaraData = teamData.append_child("capybara");
+		capy->data->SaveState(capybaraData);
+		capy = capy->next;
+	}
 
 	return true;
 }

@@ -58,12 +58,17 @@ public:
 	{
 		return true;
 	}
-	virtual bool LoadState(pugi::xml_node&)
+	virtual bool LoadState(pugi::xml_node& data)
 	{
+		if (data.attribute("enabled").as_bool())
+			Enable();
+		else
+			Disable();
 		return true;
 	}
-	virtual bool SaveState(pugi::xml_node&) const
+	virtual bool SaveState(pugi::xml_node& data) const
 	{
+		data.append_attribute("enabled").set_value(isEnabled);
 		return true;
 	}
 	virtual void OnCollision(PhysBody* c1, PhysBody* c2)

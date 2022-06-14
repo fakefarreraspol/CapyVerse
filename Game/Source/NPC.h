@@ -17,7 +17,7 @@ public:
 	bool Update(float dt);
 
 	bool LoadState(pugi::xml_node&);
-	bool SaveState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&) const;
 
 	void OnCollision(PhysBody* c1, PhysBody* c2);
 

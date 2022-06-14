@@ -26,6 +26,9 @@ public:
 
 	void OnCollision(PhysBody* c1, PhysBody* c2);
 
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&) const;
+
 	bool CleanUp();
 	bool isBoss = false;
 private:

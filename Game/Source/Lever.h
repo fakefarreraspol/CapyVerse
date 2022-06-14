@@ -26,6 +26,12 @@ public:
 
 	bool Draw(Render* render);
 
+
+public:
+	bool activated = false;
+	Animation* anim;
+	Animation open;
+	Animation closed;
 private:
 	PhysBody* trigger = nullptr;
 	PhysBody* collider = nullptr;
@@ -33,11 +39,8 @@ private:
 
 	uint32_t questID;
 
-	Animation* anim;
-	Animation open;
-	Animation closed;
+	
 
-	bool activated = false;
 	bool questTrigger = false;
 };
 

@@ -450,17 +450,18 @@ bool App::LoadGame()
 	if (result == NULL)
 	{
 		LOG("Could not load map xml file config.xml. pugi error: %s", result.description());
-		ret = false;
+		//ret = false;
 	}
 
 
 	ListItem<Module*>* item;
 	item = modules.start;
 
-	while (item != NULL && ret == true)
+	while (item != NULL)
 	{
 		ret = item->data->LoadState(gameStateFile.child("game_state").child(item->data->name.GetString()));
-		printf("Module %s has returned false and quit the loading\n", item->data->name.GetString());
+		if (ret) printf("Module %s has loaded\n", item->data->name.GetString());
+		else printf("Module %s has returned false and quit the loading\n", item->data->name.GetString());
 		item = item->next;
 	}
 

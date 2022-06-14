@@ -344,6 +344,7 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control)
 	{
 		//CONTINUE
 		app->fadeToBlack->MFadeToBlack(this, (Module*)app->scene);
+		app->fadeToBlack->loadRequest = true;
 		app->scene->load = true;
 	}
 	if (control->id == 7)

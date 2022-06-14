@@ -44,6 +44,9 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&) const;
+
 public:
 	List<NPC*> NPCs;
 	List<Lever*> levers;

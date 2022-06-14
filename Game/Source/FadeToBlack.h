@@ -54,6 +54,9 @@ private:
 	Module* moduleToDisable = nullptr;
 
 	Uint32 h = 0, w = 0;
+public:
+	bool loadRequest = false;
+
 };
 
 #endif //__MODULEFADETOBLACK_H__

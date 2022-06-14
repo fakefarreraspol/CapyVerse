@@ -54,7 +54,7 @@ class Item : public Entity
 {
 public:
 	
-	Item(uint32 id, iPoint bounds, const char* name, ItemType type) : Entity(EntityType::ITEM, id, name, bounds), type(type)
+	Item(uint32 id, iPoint bounds, const char* name, ItemType type) : Entity(EntityType::ITEM, id, name, bounds), itemType(type)
 	{
 	}
 	~Item() {}
@@ -70,7 +70,7 @@ public:
 	virtual void Disable() {}
 
 public:
-	ItemType type = ItemType::NONE;
+	ItemType itemType = ItemType::NONE;
 	bool beingUsed = false;   
 	SString description;
 	ItemStats stats;

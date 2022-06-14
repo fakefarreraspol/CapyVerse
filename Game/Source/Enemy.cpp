@@ -6,13 +6,13 @@
 #include "Physics.h"
 #include "FadeToBlack.h"
 #include "Textures.h"
+#include "EntityManager.h"
 #include "QuestManager.h"
 
 Enemy::Enemy(iPoint position, uint32 id, const char* name) : NPC(position, id, name)
 {
 	normalEnemy.PushBack({ 17, 132, 32, 64 });
 	boss.PushBack({ 152, 135, 28, 63 });
-
 	
 	currentAnim = &normalEnemy;
 }
@@ -23,6 +23,8 @@ Enemy::~Enemy()
 
 bool Enemy::Start()
 {
+	type = EntityType::ENEMY;
+
 	collider = app->colManager->CreateRectangle(position.x, position.y, 32, 32, bodyType::STATIC);
 	collider->listener = (Module*)app->entMan;
 	collider->eListener = this;
@@ -109,5 +111,53 @@ bool Enemy::CleanUp()
 	
 	if(trigger)
 		app->colManager->world->DestroyBody(trigger->body);
+	return true;
+}
+
+
+bool Enemy::LoadState(pugi::xml_node& node)
+{
+	bool ret = true;
+	NPC::LoadState(node);
+
+	triggered = node.attribute("triggered").as_bool();
+
+	ListItem<Capybara*>* c = battleTeam.start;
+	while (c != NULL)
+	{
+		Capybara* del = c->data;
+		c = c->next;
+		app->entMan->DestroyEntity(del);
+	}
+	battleTeam.Clear();
+
+	for (pugi::xml_node capyNode = node.child("capybaras").first_child(); capyNode && ret; capyNode = capyNode.next_sibling())
+	{
+		Capybara* capy=app->entMan->CreateCapybara(capyNode);
+		battleTeam.Add(capy);
+		printf("Succesfully loaded capybara %s\n", capy->capyName.GetString());
+	}
+
+
+
+	return true;
+}
+bool Enemy::SaveState(pugi::xml_node& node) const
+{
+	NPC::SaveState(node);
+
+	node.append_attribute("triggered").set_value(triggered);
+
+	pugi::xml_node capybarasNode = node.append_child("capybaras");
+	ListItem<Capybara*>* c = battleTeam.start;
+	while (c != NULL)
+	{
+		pugi::xml_node capyNode = capybarasNode.append_child(c->data->capyName.GetString());
+		c->data->SaveState(capyNode);
+
+		c = c->next;
+	}
+	
+
 	return true;
 }

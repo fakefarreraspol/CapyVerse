@@ -205,30 +205,38 @@ bool QuestManager::Load(const char* path)
 
 bool QuestManager::LoadState(pugi::xml_node&data)
 {
+
 	pugi::xml_node currentQuest = data.child("quests_list").first_child();
 	ListItem<Quest*>* quest = questList.start;
 
 	while (currentQuest != NULL)
 	{
-		Quest* quest = new Quest();
+		int currentId = currentQuest.attribute("id").as_int();
 
-		//laod properties
-		quest->id = currentQuest.attribute("id").as_int();
-		quest->progress = (QuestProgress)currentQuest.attribute("progress").as_int();
-		quest->nextQuest = currentQuest.attribute("nextQuest").as_int();
-		quest->reward = currentQuest.attribute("reward").as_bool();
-		quest->title = currentQuest.attribute("title").as_string();
-		quest->description = currentQuest.child("description").child_value();
-
-		questList.Add(quest);
+		while (quest != NULL)
+		{
+			if (quest->data->id == currentId)
+			{
+				quest->data->progress = (QuestProgress)currentQuest.attribute("progression").as_int();
+				break;
+			}
+			quest = quest->next;
+		}
 
 		currentQuest = currentQuest.next_sibling();
 	}
 	return true;
 }
 
-bool QuestManager::SaveState(pugi::xml_node&) const
+bool QuestManager::SaveState(pugi::xml_node& data) const
 {
+
+	for (int i = 0; i < questList.Count(); i++)
+	{
+		pugi::xml_node quest = data.append_child("quest");
+		quest.append_attribute("id").set_value(questList.At(i)->data->id);
+		quest.append_attribute("progress").set_value((int)questList.At(i)->data->progress);
+	}
 
 	return true;
 }

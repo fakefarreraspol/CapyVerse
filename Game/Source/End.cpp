@@ -8,6 +8,7 @@
 
 End::End(bool startEnabled) : Module(startEnabled)
 {
+	name.Create("end");
 }
 
 End::~End()

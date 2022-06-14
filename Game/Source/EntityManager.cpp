@@ -169,13 +169,58 @@ Capybara* EntityManager::CreateEntity(CapybaraType capybaraType, uint32 id, iPoi
 	return entity;
 }
 
+Capybara* EntityManager::CreateCapybara(pugi::xml_node& node)
+{
+	Capybara* entity = nullptr;
+
+	int id = entities.Count();
+	iPoint position = { node.attribute("position_x").as_int(),node.attribute("position_y").as_int() };
+
+	SString name = node.attribute("name").as_string();
+
+	if (name == "Chinabara")
+		entity = new Chinabara(id, position);
+	if (name == "Punkibara")
+		entity = new Punkibara(id, position);
+	if (name == "Rainbowbara")
+		entity = new Rainbowbara(id, position);
+	if (name == "Retrobara")
+		entity = new Retrobara(id, position);
+	if (name == "Emobara")
+		entity = new Emobara(id, position);
+	if (name == "Egirlbara")
+		entity = new Egirlbara(id, position);
+	if (name == "Pinkbara")
+		entity = new Pinkbara(id, position);
+	if (name == "Simpbara")
+		entity = new Simpbara(id, position);
+	if (name == "Chadbara")
+		entity = new Chadbara(id, position);
+
+
+	if (entity != nullptr)
+	{
+		AddEntity(entity);
+		entity->Start();
+		entity->LoadState(node);
+	}
+
+
+	return entity;
+}
+
 void EntityManager::DestroyEntity(Entity* entity)
 {
 	ListItem<Entity*>* item;
 
 	for (item = entities.start; item != NULL; item = item->next)
 	{
-		if (item->data == entity) entities.Del(item);
+		if (item->data == entity)
+		{
+			entities.Del(item);
+			break;
+		}
+			
 	}
 }
 
@@ -253,34 +298,29 @@ bool EntityManager::UpdateAll(float dt, bool doLogic)
 
 bool EntityManager::LoadState(pugi::xml_node& data)
 {
-	bool ret = true;
+	inventory->LoadState(data.child("inventory"));
 
-	for (pugi::xml_node entityNode = data.first_child(); entityNode && ret; entityNode = entityNode.next_sibling())
-	{
-		int entityId = entityNode.attribute("id").as_int();
-		ret = entities.At(entityId)->data->LoadState(entityNode);
-		printf("Succesfully loaded entity %s\n", entities.At(entityId)->data->capyName.GetString());
-	}
-
-	return ret;
+	return true;
 }
 
 bool EntityManager::SaveState(pugi::xml_node& data) const
 {
 	bool ret = true;
 
-	ListItem<Entity*>* item = entities.start;
+	//ListItem<Entity*>* item = entities.start;
 
-	while (item != NULL)
-	{
-		data.append_child(item->data->capyName.GetString());
-		// = item->data->SaveState(data.child(item->data->name.GetString()));
+	//while (item != NULL)
+	//{
+	//	data.append_child(item->data->capyName.GetString());
+	//	// = item->data->SaveState(data.child(item->data->name.GetString()));
 
-		ret = item->data->SaveState(data.child(item->data->capyName.GetString()));
-		item = item->next;
-	}
+	//	ret = item->data->SaveState(data.child(item->data->capyName.GetString()));
+	//	item = item->next;
+	//}
 
+	pugi::xml_node inventoryData = data.append_child("inventory");
 
+	inventory->SaveState(inventoryData);
 	
 
 	return ret;
@@ -336,7 +376,7 @@ void EntityManager::OnCollision(PhysBody* c1, PhysBody* c2)
 
 Entity* EntityManager::CloneItem(Item* item)
 {
-	Entity* ret = CreateEntity(item->id, item->position, item->capyName.GetString(), item->type);
+	Entity* ret = CreateEntity(item->id, item->position, item->capyName.GetString(), item->itemType);
 
 	return ret;
 }

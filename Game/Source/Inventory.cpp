@@ -44,7 +44,7 @@ void Inventory::AddItem(Item* item, int n)
 
 	while (i)
 	{
-		if (i->data->item->type == item->type)
+		if (i->data->item->itemType == item->itemType)
 		{
 			i->data->cuantity++;
 			break;
@@ -65,7 +65,7 @@ void Inventory::DelItem(Item* item, int n)
 	ListItem<ItemHolder*>* i = slots.start;
 	while (i)
 	{
-		if (i->data->item->type == item->type)
+		if (i->data->item->itemType == item->itemType)
 			i->data->cuantity -= n;
 		i = i->next;
 	}
@@ -104,6 +104,43 @@ bool Inventory::EquipItem(Item* item, Capybara* capy)
 
 	DelItem(item);
 	DeleteEmpty();
+
+	return true;
+}
+
+bool Inventory::LoadState(pugi::xml_node& data)
+{
+	bool ret = true;
+
+	CleanUp();
+
+	for (pugi::xml_node slotNode = data.first_child(); slotNode && ret; slotNode = slotNode.next_sibling())
+	{
+		uint32 id = 1;
+		int num = slotNode.attribute("quantity").as_int();
+		ItemType type = (ItemType)slotNode.attribute("type").as_int();
+
+		Item* item = app->entMan->CreateEntity(id, { 0,0 }, "", type);
+
+		AddItem(item, num);
+		printf("Succesfully loaded item %s\n", item->capyName.GetString());
+	}
+	
+
+	return true;
+}
+bool Inventory::SaveState(pugi::xml_node& data) const
+{
+	ListItem<ItemHolder*> *slot = slots.start;
+
+	while (slot != NULL)
+	{
+		pugi::xml_node itemData = data.append_child("item");
+		itemData.append_attribute("type").set_value(slot->data->item->itemType);
+		itemData.append_attribute("quantity").set_value(slot->data->cuantity);
+
+		slot = slot->next;
+	}
 
 	return true;
 }

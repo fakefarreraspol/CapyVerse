@@ -42,6 +42,7 @@ public:
 	Entity* CreateEntity(EntityType entityType, uint32 id, iPoint position, const char* name);
 	Item* CreateEntity(uint32 id, iPoint bounds, const char* name, ItemType type);
 	Capybara* CreateEntity(CapybaraType capybaraType, uint32 id, iPoint position, const char* name);
+	Capybara* CreateCapybara(pugi::xml_node&);
 
 	Entity* CloneItem(Item* item);
 
