@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"><?define Capyverse_TargetDir=$(var.Capyverse.TargetDir)?>
+	<Product Id="*" Name="Capyverse" Language="1033" Version="1.0.0.0" Manufacturer="CapybaraStudios" UpgradeCode="1a8d299a-2896-4cd4-9fb6-ceac5f6aa476">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate />
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <UIRef Id="WixUI_InstallDir" />
+    <!-- Todo 5 -->
+    <WixVariable Id="WixUILicenseRtf" Value="assets\LICENSE.rtf" />
+
+    <!-- Todo 4 -->
+    <Icon Id="icon.ico" SourceFile="assets\MyIcon.ico" />
+    <Property Id="ARPPRODUCTICON" Value="icon.ico" />
+    
+		<Feature Id="ProductFeature" Title="GameInstaller" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+
+      <!-- Todo 2 -->
+      <ComponentRef Id="StartMenuShortcut" />
+      <!-- Todo 3 -->
+      <ComponentRef Id="DesktopShortcut" />
+     
+		</Feature>
+	</Product>
+
+  <Fragment>
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="StartMenuShortcut" Guid="ea2fc581-b635-4278-a8f1-1a81320d803a">
+        <Shortcut Id="ApplicationStartMenuShortcut"
+               Name="Capyverse"
+               Description="My UPC Game Description"
+               Target="[#Capyverse.exe]"
+               WorkingDirectory="INSTALLFOLDER"
+               Icon = "icon.ico"/>
+        <!-- Todo 4 -->
+        <RemoveFolder Id="RemoveProgramsFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\MyCompany\MyApplicationName" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+
+    <!-- Todo 3 -->
+    <DirectoryRef Id="DesktopFolder">
+      <Component Id="DesktopShortcut" Guid="c0f4eeec-8988-4c58-8a0a-2ebac04e2a2a">
+        <Shortcut Id="ApplicationDesktopShortcut"
+               Name="Capyverse"
+               Description="My UPC Game Description"
+               Target="[#Capyverse.exe]"
+               WorkingDirectory="INSTALLFOLDER"
+               Icon = "icon.ico"/>
+        <!-- Todo 4 -->
+        <RemoveFolder Id="RemoveDesktopFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\MyCompany\MyApplicationName" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+
+  </Fragment>
+
+  <Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="GameInstaller" />
+			</Directory>
+
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="CapyverseInstaller"/>
+      </Directory>
+
+      <Directory Id="DesktopFolder" Name="Into the Capyverse" />
+      
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+			<!-- <Component Id="ProductComponent"> -->
+				<!-- TODO: Insert files, registry keys, and other resources here. -->
+			<!-- </Component> -->
+			<Component Id="Capyverse.exe" Guid="261cf8ac-7410-4aca-b992-e55e2378644f">
+			  <File Id="Capyverse.exe" Name="Capyverse.exe" Source="$(var.Capyverse_TargetDir)Capyverse.exe" />
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>

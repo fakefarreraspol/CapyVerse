@@ -29,6 +29,8 @@ public:
 	void AddCapybara(Capybara* capybara);
 	//Adds a capybara to the player battle team
 	void AddCapybaraToBatle(Capybara* capybara);
+	void ChangeCapybaras(Capybara* fromTeam, Capybara* fromBattleTeam);
+
 
 	//TODO: Update the player input and move the player
 	void UpdateInput(float dt);
@@ -50,8 +52,8 @@ public:
 	bool CleanUp();
 
 
+	int money = 0;
 private:
-	uint16_t money = 0;
 
 	bool isBattle = false;
 	bool isStuck = false;

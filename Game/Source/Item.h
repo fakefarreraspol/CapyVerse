@@ -70,6 +70,7 @@ public:
 	virtual void Disable() {}
 
 public:
+	int price = 0;
 	ItemType type = ItemType::NONE;
 	bool beingUsed = false;   
 	SString description;
