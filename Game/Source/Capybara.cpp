@@ -139,6 +139,8 @@ void Capybara::Damage(int value)
 	if (health - value > 0)
 	{
 		health -= value;
+		app->audio->PlayFx(hitSFX);
+		damaged = true;
 		return;
 	}
 	app->audio->PlayFx(hitSFX);
