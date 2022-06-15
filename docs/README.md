@@ -19,10 +19,11 @@ Will you destroy this Capyverse?
 ## Controls
 ### Keyboard
  - WASD - Move
- - E - Interact
+ - Mouse Left Click - Interact
  - RETURN - Next Scene
  - Esc - Pause
- - Arrows - Menu navigation
+ - Arrows/Mouse - Menu navigation
+ - F10 - GodMode
  ### GamePad
  - LSD - Move
  - A - Interact
