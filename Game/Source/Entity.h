@@ -108,7 +108,7 @@ public:
 	iPoint position;
 	iPoint speed;
 	bool renderable = false;
-
+	bool damaged = false;
 	uint32_t w = 0, h = 0;
 };
 

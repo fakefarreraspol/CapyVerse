@@ -290,21 +290,31 @@ bool EntityManager::Draw() {
 	bool ret = true;
 	ListItem<Entity*>* item;
 	Entity* pEntity = NULL;
+	ticks = SDL_GetTicks();
 
 	for (item = entities.start; item != NULL && ret == true; item = item->next)
 	{
 		pEntity = item->data;
 		uint32_t w = pEntity->w;
 		uint32_t h = pEntity->h;
-
-		
+				
 		SDL_RendererFlip flip = pEntity->faceLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
 		if (pEntity->active != false)
 		{
+		
 			if (pEntity->type == EntityType::CAPYBARA)
 			{
-				ret = app->render->DrawTexture(capyTex, pEntity->GetPosition().x - w / 2, pEntity->GetPosition().y - h / 2,
-					&pEntity->currentAnim->GetCurrentFrame(), false, 1.0, flip);
+				if (pEntity->damaged == true)
+				{
+					ret = app->render->DrawTexture(capyTex, pEntity->GetPosition().x - (w / 2) + 30, pEntity->GetPosition().y - h / 2,
+						&pEntity->currentAnim->GetCurrentFrame(), false, 1.0, flip);
+				}
+				else
+				{
+					ret = app->render->DrawTexture(capyTex, pEntity->GetPosition().x - w / 2, pEntity->GetPosition().y - h / 2,
+						&pEntity->currentAnim->GetCurrentFrame(), false, 1.0, flip);
+				}
+				
 			}
 			else if (pEntity->type == EntityType::BRIDGE || pEntity->type == EntityType::LEVER)
 			{
@@ -318,8 +328,22 @@ bool EntityManager::Draw() {
 			}
 		}
 		
-	}
+		
+		if( ticks >= lastTicks + 2000)
+		{
+			if ((pEntity->active != false) && (pEntity->type == EntityType::CAPYBARA))
+			{
+				if (pEntity->damaged == true) pEntity->damaged = false;
+				
+			}
+			
+		}
+		
 
+	}
+	if (ticks >= lastTicks + 2000) lastTicks = ticks;
+	//printf("\nlastTicks: %i", lastTicks);
+	//printf("\nTicks: %i", ticks);
 	return ret;
 }
 
