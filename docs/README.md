@@ -39,7 +39,14 @@ Will you destroy this Capyverse?
 
 ## Screenshots
 <p align="center">
-  <img src="[https://github.com/CapybaraStudios/CapyVerse/blob/main/docs/Welcome/gamePortrait.png](https://github.com/CapybaraStudios/CapyVerse/blob/main/docs/Screenshots/screenshot01.png)">
+  <img src="https://github.com/CapybaraStudios/CapyVerse/blob/main/docs/Screenshots/screenshot01.png">
+</p>
+
+<p align="center">
+  <img src="https://github.com/CapybaraStudios/CapyVerse/blob/main/docs/Screenshots/screenshot02.png">
+</p>
+<p align="center">
+  <img src="https://github.com/CapybaraStudios/CapyVerse/blob/main/docs/Screenshots/screenshot03.png">
 </p>
 
 ## Team
