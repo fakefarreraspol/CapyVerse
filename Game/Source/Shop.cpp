@@ -7,6 +7,7 @@
 
 Shop::Shop(bool startEnabled) : Module(startEnabled)
 {
+	name.Create("shop");
 }
 
 Shop::~Shop()
@@ -176,5 +177,19 @@ bool Shop::OnGuiMouseClickEvent(GuiControl* control)
 	{
 		UnShow();
 	}
+	return true;
+}
+
+
+bool Shop::LoadState(pugi::xml_node& data)
+{
+	shopInventory->LoadState(data.child("shop_inventory"));
+	return true;
+}
+bool Shop::SaveState(pugi::xml_node& data) const
+{
+	data.append_child("shop_inventory");
+	shopInventory->SaveState(data.child("shop_inventory"));
+
 	return true;
 }

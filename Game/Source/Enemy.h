@@ -14,7 +14,7 @@ class Enemy : public NPC
 public:
 	Enemy(iPoint position, uint32 id, const char* name);
 	~Enemy();
-	bool Start();
+	bool Start(); 
 	//Base functions
 	bool Update(float dt);
 
