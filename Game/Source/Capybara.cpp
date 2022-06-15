@@ -400,7 +400,7 @@ bool Capybara::SaveState(pugi::xml_node& node) const
 	node.append_attribute("position_y").set_value(this->position.y);
 
 	node.append_attribute("capybara_type").set_value((int)capybaraType);
-	node.append_attribute("name").set_value(capyName.GetString());
+	node.append_attribute("name").set_value(name.GetString());
 
 	node.append_attribute("id").set_value(id);
 	node.append_attribute("level").set_value(level);

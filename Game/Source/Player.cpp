@@ -297,7 +297,7 @@ bool Player::LoadState(pugi::xml_node& node)
 	{
 		Capybara* capy = app->entMan->CreateCapybara(capyNode);
 		battleTeam.Add(capy);
-		printf("Succesfully loaded team from player %s\n", capy->capyName.GetString());
+		printf("Succesfully loaded team from player %s\n", capy->name.GetString());
 	}
 
 	// load battle team
@@ -309,7 +309,7 @@ bool Player::LoadState(pugi::xml_node& node)
 	{
 		Capybara* capy = app->entMan->CreateCapybara(capyNode);
 		battleTeam.Add(capy);
-		printf("Succesfully loaded battle team from player %s\n", capy->capyName.GetString());
+		printf("Succesfully loaded battle team from player %s\n", capy->name.GetString());
 	}
 
 	return false;

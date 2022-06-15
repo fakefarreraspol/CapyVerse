@@ -229,7 +229,7 @@ bool Scene::LoadState(pugi::xml_node& data)
 	ListItem<NPC*>* currNpc = NPCs.start;
 	while (currNpc != NULL)
 	{
-		pugi::xml_node npcData = data.child("NPCs").child(currNpc->data->capyName.GetString());
+		pugi::xml_node npcData = data.child("NPCs").child(currNpc->data->name.GetString());
 
 		if ((EntityType)currNpc->data->type == EntityType::ENEMY)
 		{
@@ -278,7 +278,7 @@ bool Scene::SaveState(pugi::xml_node& data) const
 	ListItem<NPC*>* npc = NPCs.start;
 	while (npc!=NULL)
 	{
-		pugi::xml_node npcData = npcs.append_child(npc->data->capyName.GetString());
+		pugi::xml_node npcData = npcs.append_child(npc->data->name.GetString());
 		if (npc->data->type==EntityType::NPC)
 			npc->data->SaveState(npcData);
 		else

@@ -123,7 +123,7 @@ bool Inventory::LoadState(pugi::xml_node& data)
 		Item* item = app->entMan->CreateEntity(id, { 0,0 }, "", type);
 
 		AddItem(item, num);
-		printf("Succesfully loaded item %s\n", item->capyName.GetString());
+		printf("Succesfully loaded item %s\n", item->name.GetString());
 	}
 	
 

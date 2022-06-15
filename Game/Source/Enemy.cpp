@@ -142,7 +142,7 @@ bool Enemy::LoadState(pugi::xml_node& node)
 	{
 		Capybara* capy=app->entMan->CreateCapybara(capyNode);
 		battleTeam.Add(capy);
-		printf("Succesfully loaded capybara %s\n", capy->capyName.GetString());
+		printf("Succesfully loaded capybara %s\n", capy->name.GetString());
 	}
 
 
@@ -159,7 +159,7 @@ bool Enemy::SaveState(pugi::xml_node& node) const
 	ListItem<Capybara*>* c = battleTeam.start;
 	while (c != NULL)
 	{
-		pugi::xml_node capyNode = capybarasNode.append_child(c->data->capyName.GetString());
+		pugi::xml_node capyNode = capybarasNode.append_child(c->data->name.GetString());
 		c->data->SaveState(capyNode);
 
 		c = c->next;

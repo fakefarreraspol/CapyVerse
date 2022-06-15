@@ -120,7 +120,7 @@ bool StatsMenu::Start()
 	textMP = app->fonts->LoadRenderedText(rec, 1, "MP", { 255,255,255,255 });
 	arrow = app->tex->Load("Assets/Menus/arrow.png");
 
-	ActivateMenu();
+	//ActivateMenu();
 
 	return true;
 }
