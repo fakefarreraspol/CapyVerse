@@ -38,6 +38,9 @@ Will you destroy this Capyverse?
  </p>
 
 ## Screenshots
+<p align="center">
+  <img src="[https://github.com/CapybaraStudios/CapyVerse/blob/main/docs/Welcome/gamePortrait.png](https://github.com/CapybaraStudios/CapyVerse/blob/main/docs/Screenshots/screenshot01.png)">
+</p>
 
 ## Team
 - Iván Jose Caballero 
