@@ -128,7 +128,6 @@ Item* EntityManager::CreateEntity(uint32 id, iPoint bounds, const char* name, It
 	case ItemType::ORANGE:			item = (Item*) new Orange(id, bounds, "ORANGE");				break;
 	case ItemType::SPID:			item = (Item*) new Orange(id, bounds, "SPID");					break;
 
-
 	case ItemType::FREERUNERS_ARMOR:			item = (Item*) new FreeRunersArmor(id, bounds, "FREE RUNER'S ARMOR");			break;
 	case ItemType::BOW_SPELLDRINKER:			item = (Item*) new BowSpellDrinker(id, bounds, "BOW SPELLDRINKER");				break;
 	case ItemType::ARMOR_VULNERABILITY:			item = (Item*) new ArmorVulnerability(id, bounds, "ARMOR OF VULNERABILITY");	break;

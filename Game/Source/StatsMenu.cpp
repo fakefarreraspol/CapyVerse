@@ -59,11 +59,12 @@ bool StatsMenu::Start()
 	entityNum->state = GuiControlState::DISABLED;
 
 	entityDescription->state = GuiControlState::DISABLED;
-		
+	
+	int separation = 45;
 	GuiButton* items = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "ITEMS", { 108, 300, 125, 20 }, this, { 255, 255, 255 });
-	GuiButton* capybaras = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "CAPYBARAS", { 108, 360, 125, 20 }, this, { 255, 255, 255 });
-	GuiButton* team = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "TEAM", { 108, 420, 125, 20 }, this, { 255, 255, 255 });
-	GuiButton* returnBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "RETURN", { 108, 480, 125, 20 }, this, { 255, 255, 255 });
+	GuiButton* capybaras = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "CAPYBARAS", { 108, 300+separation, 125, 20 }, this, { 255, 255, 255 });
+	GuiButton* team = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "TEAM", { 108, 300+2*separation, 125, 20 }, this, { 255, 255, 255 });
+	GuiButton* returnBtn = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "RETURN", { 108, 300+3 * separation, 125, 20 }, this, { 255, 255, 255 });
 
 	mainMenu.Add(items);
 	mainMenu.Add(capybaras);
@@ -142,9 +143,9 @@ bool StatsMenu::Update(float dt)
 
 	// print main menu rec
 	bounds = { menuBounds.x - cBounds.x,menuBounds.y - cBounds.y,menuBounds.w, menuBounds.y };
-	app->render->DrawRectangle(bounds, 0, 0, 0, 255, true, true);
+	//app->render->DrawRectangle(bounds, 0, 0, 0, 255, true, true);
 	bounds = { 0,0,190,228 };
-	app->render->DrawTexture(menus, bounds.x, bounds.y, &bounds);
+	app->render->DrawTexture(menus, menuBounds.x, menuBounds.y, &bounds, true);
 
 
 	if (currentMenu == &subMenu || currentMenu == &actionsMenu|| currentMenu==&optionsMenu)
@@ -211,6 +212,9 @@ bool StatsMenu::Update(float dt)
 			{
 				bounds = { optionsBounds.x - cBounds.x + 10, optionsBounds.y - cBounds.y,optionsBounds.w + 5, optionsBounds.h };
 				app->render->DrawRectangle(bounds, 0, 0, 0, 255, true, true);
+				bounds = { 0,0,190,228 };
+				app->render->DrawTexture(menus, optionsBounds.x+5, optionsBounds.y-10, &bounds, true);
+
 				app->render->DrawTexture(arrow, actionsMenu.At(lastActions)->data->bounds.x - 30, actionsMenu.At(lastActions)->data->bounds.y - 3, NULL, true);
 			}
 		}
