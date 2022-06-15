@@ -74,6 +74,9 @@ public:
 	SDL_Texture* texture = nullptr;
 	SDL_Texture* props = nullptr;
 	Inventory* inventory;
+
+	int ticks = 0;
+	int lastTicks = 0;
 };
 
 #endif // __ENTITY_MANAGER__

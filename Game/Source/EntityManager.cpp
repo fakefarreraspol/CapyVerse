@@ -290,6 +290,7 @@ bool EntityManager::Draw() {
 	bool ret = true;
 	ListItem<Entity*>* item;
 	Entity* pEntity = NULL;
+	ticks = SDL_GetTicks();
 
 	for (item = entities.start; item != NULL && ret == true; item = item->next)
 	{
@@ -327,8 +328,22 @@ bool EntityManager::Draw() {
 			}
 		}
 		
-	}
+		
+		if( ticks >= lastTicks + 2000)
+		{
+			if ((pEntity->active != false) && (pEntity->type == EntityType::CAPYBARA))
+			{
+				if (pEntity->damaged == true) pEntity->damaged = false;
+				
+			}
+			
+		}
+		
 
+	}
+	if (ticks >= lastTicks + 2000) lastTicks = ticks;
+	//printf("\nlastTicks: %i", lastTicks);
+	//printf("\nTicks: %i", ticks);
 	return ret;
 }
 
