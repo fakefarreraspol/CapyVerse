@@ -31,9 +31,11 @@ Will you destroy this Capyverse?
 
 
 ## Trailer!!
-<iframe width="420" height="315" src="https://www.youtube.com/embed/dMSLt-I5pPY">
-</iframe>
 
+<p align="center">
+  <iframe width="840" height="630" src="https://www.youtube.com/embed/dMSLt-I5pPY">
+  </iframe>
+ </p>
 
 ## Screenshots
 
