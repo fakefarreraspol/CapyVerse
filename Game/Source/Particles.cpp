@@ -36,7 +36,7 @@ Particles::Particles(bool isEnabled) : Module(isEnabled)
 	buff.anim.PushBack({ 256, 0, 128, 128 });
 	buff.anim.PushBack({ 384, 0, 128, 128 });
 	buff.anim.loop = false;
-	buff.anim.speed = 0.05f;
+	buff.anim.speed = 0.1f;
 
 	//Damage Particle
 	damage.anim.PushBack({ 0, 128, 128, 128 });
@@ -44,7 +44,7 @@ Particles::Particles(bool isEnabled) : Module(isEnabled)
 	damage.anim.PushBack({ 256, 128, 128, 128 });
 	damage.anim.PushBack({ 384, 128, 128, 128 });
 	damage.anim.loop = false;
-	damage.anim.speed = 0.05f;
+	damage.anim.speed = 0.1f;
 
 	//Healing Particle
 	healing.anim.PushBack({ 0, 256, 128, 128 });
@@ -52,7 +52,7 @@ Particles::Particles(bool isEnabled) : Module(isEnabled)
 	healing.anim.PushBack({ 256, 256, 128, 128 });
 	healing.anim.PushBack({ 384, 256, 128, 128 });
 	healing.anim.loop = false;
-	healing.anim.speed = 0.05f;
+	healing.anim.speed = 0.1f;
 
 }
 
