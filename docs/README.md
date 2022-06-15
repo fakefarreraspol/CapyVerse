@@ -52,6 +52,15 @@ Will you destroy this Capyverse?
   <img src="https://github.com/CapybaraStudios/CapyVerse/blob/main/docs/Screenshots/screenshot03.png?raw=true">
 </p>
 
+## Capybaras
+The main characteristic of our game are capybaras! You can get them by defeating enemies in the game. Each one has different abilities and styles!
+<p align="center">
+  <img src="https://github.com/CapybaraStudios/CapyVerse/blob/main/docs/Screenshots/capybaras.png?raw=true">
+</p>
+It's also possible to use items to increase capybara stats!
+<p align="center">
+  <img src="https://github.com/CapybaraStudios/CapyVerse/blob/main/docs/Screenshots/items.png?raw=true">
+</p>
 ## Team
 - Iván Jose Caballero 
    - Team Leader, Game Artist, Music Artist
