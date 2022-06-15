@@ -24,14 +24,16 @@ Will you destroy this Capyverse?
  - Esc - Pause
  - Arrows/Mouse - Menu navigation
  - F10 - GodMode
- ### GamePad
+
+
+### GamePad
  - LSD - Move
  - A - Interact
  - Start - Pause
  - DPad - Menu navigation
 
 
-## Trailer!!
+## Trailer
 
 <p align="center">
   <iframe width="840" height="630" src="https://www.youtube.com/embed/dMSLt-I5pPY" allowfullscreen>
