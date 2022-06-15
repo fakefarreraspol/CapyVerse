@@ -56,6 +56,8 @@ public:
 	bool LoadState(pugi::xml_node& data);
 	bool SaveState(pugi::xml_node& data) const;
 
+	bool PrintItem(Item* item, int x, int y);
+
 public:
 
 	List<Entity*> entities;
@@ -72,6 +74,7 @@ public:
 	bool doLogic = false;
 
 	SDL_Texture* capyTex = nullptr;
+	SDL_Texture* itemsTex = nullptr;
 	SDL_Texture* texture = nullptr;
 	SDL_Texture* props = nullptr;
 	Inventory* inventory;

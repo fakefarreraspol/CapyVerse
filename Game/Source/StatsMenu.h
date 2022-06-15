@@ -76,6 +76,7 @@ private:
 	SDL_Texture* capyinfo = nullptr;
 	SDL_Texture* arrow = nullptr;
 	
+	SDL_Rect sectionToPrint;
 
 	SDL_Texture* textHP = nullptr;
 	SDL_Texture* textMP = nullptr;

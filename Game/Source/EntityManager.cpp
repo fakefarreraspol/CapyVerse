@@ -119,19 +119,33 @@ Item* EntityManager::CreateEntity(uint32 id, iPoint bounds, const char* name, It
 	Item* item = nullptr;
 	switch (type)
 	{
-	case ItemType::HP_POTION:		item = (Item*) new HpPotion(id, bounds, "HP POTION");		break;
-	case ItemType::MP_POTION:		item = (Item*) new MpPotion(id, bounds, "MP POTION");		break;
-	case ItemType::REVIVE:			item = (Item*) new Revive(id, bounds, "REVIVE");			break;
+	case ItemType::HP_POTION:		item = (Item*) new HpPotion(id, bounds, "HP POTION");			break;
+	case ItemType::MP_POTION:		item = (Item*) new MpPotion(id, bounds, "MP POTION");			break;
+	case ItemType::REVIVE:			item = (Item*) new Revive(id, bounds, "REVIVE");				break;
+	case ItemType::ANTIDOTE:		item = (Item*) new Antidote(id, bounds, "ANTIDOTE");			break;
+	case ItemType::ELIXIR_POTION:	item = (Item*) new ElixirPotion(id, bounds, "ELIXIR POTION");	break;
+	case ItemType::SPINACH:			item = (Item*) new Spinach(id, bounds, "SPINACH");				break;
+	case ItemType::ORANGE:			item = (Item*) new Orange(id, bounds, "ORANGE");				break;
+	case ItemType::SPID:			item = (Item*) new Orange(id, bounds, "SPID");					break;
 
 
 	case ItemType::FREERUNERS_ARMOR:			item = (Item*) new FreeRunersArmor(id, bounds, "FREE RUNER'S ARMOR");			break;
-	case ItemType::BOW_SPELLDRINKER:			item = (Item*) new BowSpellDrinker(id, bounds, "BOW SPELLDRINKER");			break;
-	case ItemType::ARMOR_VULNERABILITY:			item = (Item*) new ArmorVulnerability(id, bounds, "ARMOR OF VULNERABILITY");			break;
+	case ItemType::BOW_SPELLDRINKER:			item = (Item*) new BowSpellDrinker(id, bounds, "BOW SPELLDRINKER");				break;
+	case ItemType::ARMOR_VULNERABILITY:			item = (Item*) new ArmorVulnerability(id, bounds, "ARMOR OF VULNERABILITY");	break;
+	case ItemType::SCHOLAR_NECKLACE:			item = (Item*) new ScholarNecklace(id, bounds, "SCHOLAR NECKLACE");				break;
+	case ItemType::HEAVY_SWORD:					item = (Item*) new HeavySword(id, bounds, "HEAVY SWORD");						break;
+	case ItemType::BAMBU_ARMOR:					item = (Item*) new BambuArmor(id, bounds, "BAMBU ARMOR");						break;
+	case ItemType::MYSTERY_ARMOR:				item = (Item*) new MysteryArmor(id, bounds, "MYSTERY ARMOR");					break;
+	case ItemType::HEALTH_NECKLACE:				item = (Item*) new HealthNecklace(id, bounds, "HEALTH NECKLACE");				break;
+	case ItemType::POWER_NECKLACE:				item = (Item*) new PowerNecklace(id, bounds, "POWER NECKLACE");					break;
+	case ItemType::LIGHT_NECKLACE:				item = (Item*) new ArmorVulnerability(id, bounds, "LIGHT NECKLACE");			break;
 	}
+
+
 
 	if (item!=nullptr)
 	{
-		AddEntity(item);
+		AddEntity(item);	
 		item->Start();
 	}
 		
@@ -253,6 +267,7 @@ bool EntityManager::Start()
 
 	texture = app->tex->Load("Assets/Textures/Sprites/characters.png");
 	capyTex = app->tex->Load("Assets/Textures/Sprites/capybaras.png");
+	itemsTex = app->tex->Load("Assets/Textures/Sprites/items.png");
 	props = app->tex->Load("Assets/Textures/Sprites/props.png");
 
 	return true;
@@ -408,4 +423,56 @@ Entity* EntityManager::CloneItem(Item* item)
 	/*Entity* ret = CreateEntity(item->id, item->position, item->idName.GetString(), item->type);*/
 
 	return ret;
+}
+
+
+bool EntityManager::PrintItem(Item* item, int x, int y)
+{
+	iPoint pos;
+	int dim = 64;
+	switch (item->itemType)
+	{
+	case HP_POTION:			pos = { 0,0 };
+				  break;
+	case MP_POTION:			pos = { 0,1 };
+				  break;
+	case REVIVE:			pos = { 0,5 };
+			   break;
+	case ANTIDOTE:			pos = { 0,6 };
+				 break;
+	case ELIXIR_POTION:		pos = { 0,7 };
+					  break;
+	case SPINACH:			pos = { 0,8 };
+				break;
+	case ORANGE:			pos = { 1,7 };
+			   break;
+	case SPID:				pos = { 1,9 };
+			 break;
+	case FREERUNERS_ARMOR:	pos = { 1,0 };
+						 break;
+	case BOW_SPELLDRINKER:	pos = { 1,1 };
+						 break;
+	case ARMOR_VULNERABILITY:	pos = { 1,2 };
+							break;
+	case SCHOLAR_NECKLACE:	pos = { 0,2 };
+						 break;
+	case HEAVY_SWORD:		pos = { 1,4 };
+					break;
+	case BAMBU_ARMOR:		pos = { 1,5 };
+					break;
+	case MYSTERY_ARMOR:		pos = { 1,6 };
+					  break;
+	case HEALTH_NECKLACE:	pos = { 1,7 };
+						break;
+	case POWER_NECKLACE:	pos = { 0,3 };
+					   break;
+	case LIGHT_NECKLACE:	pos = { 0,4 };
+					   break;
+	default:
+		break;
+	}
+
+	SDL_Rect rec = { pos.y * dim, pos.x * dim , dim, dim };
+
+	return app->render->DrawTexture(itemsTex, x, y, &rec,true);
 }

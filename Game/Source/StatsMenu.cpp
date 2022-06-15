@@ -119,6 +119,7 @@ bool StatsMenu::Start()
 	textHP = app->fonts->LoadRenderedText(rec, 1, "HP", { 255,255,255,255 });
 	textMP = app->fonts->LoadRenderedText(rec, 1, "MP", { 255,255,255,255 });
 	arrow = app->tex->Load("Assets/Menus/arrow.png");
+	menus = app->tex->Load("Assets/Menus/menus.png");
 
 	//ActivateMenu();
 
@@ -142,6 +143,8 @@ bool StatsMenu::Update(float dt)
 	// print main menu rec
 	bounds = { menuBounds.x - cBounds.x,menuBounds.y - cBounds.y,menuBounds.w, menuBounds.y };
 	app->render->DrawRectangle(bounds, 0, 0, 0, 255, true, true);
+	bounds = { 0,0,190,228 };
+	app->render->DrawTexture(menus, bounds.x, bounds.y, &bounds);
 
 
 	if (currentMenu == &subMenu || currentMenu == &actionsMenu|| currentMenu==&optionsMenu)
@@ -169,7 +172,6 @@ bool StatsMenu::Update(float dt)
 				List<Capybara*>* team = &app->scene->player->GetBattleTeam();
 				if (team->At(i))
 				{
-					
 
 					app->render->DrawRectangle(rec1, 255, 255, 255, 50, true, true);
 					app->render->DrawRectangle(rec2, 255, 255, 255, 50, true, true);
@@ -194,6 +196,16 @@ bool StatsMenu::Update(float dt)
 		if (currentMenu == &actionsMenu || currentMenu == &optionsMenu)
 		{
 			app->render->DrawTexture(arrow, subMenu.At(lastSub)->data->bounds.x - 30, subMenu.At(lastSub)->data->bounds.y - 3, NULL, true);
+			
+			if (lastMain == 0)	// items
+			{
+				app->entMan->PrintItem(currentItem, detailsBounds.x, detailsBounds.y);
+			}
+			if (lastMain == 1|| lastMain == 2)	// capys
+			{
+				SDL_Rect bounds = currentCapy->currentAnim->GetCurrentFrame();
+				app->render->DrawTexture(app->entMan->capyTex, detailsBounds.x, detailsBounds.y, &bounds, true);
+			}
 
 			if (currentMenu == &optionsMenu)
 			{
@@ -404,6 +416,10 @@ bool StatsMenu::OnGuiMouseClickEvent(GuiControl* control)
 						stats.At(i)->data->state = GuiControlState::NORMAL;
 						statsValue.At(i)->data->state = GuiControlState::NORMAL;
 					}
+					
+					/*entityImg = app->entMan->capyTex;
+					entityAnim = &currentCapy->idle;*/
+
 					SString num0("%i", currentCapy->GetStats().hp);
 					statsValue.At(0)->data->SetText(num0.GetString());
 					SString num1("%i", currentCapy->GetStats().mp);
