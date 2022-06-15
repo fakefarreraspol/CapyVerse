@@ -12,6 +12,7 @@
 #include "GuiText.h"
 #include "GuiBar.h"
 #include "Textures.h"
+#include "Particles.h"
 
 #include "Enemy.h"
 #include "Capybara.h"

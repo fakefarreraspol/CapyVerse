@@ -29,6 +29,31 @@ Particles::Particles(bool isEnabled) : Module(isEnabled)
 	laser.lifetime = 800;
 	laser.anim.loop = true;
 	laser.anim.speed = 0.001f;
+
+	//Buff Particle
+	buff.anim.PushBack({ 0, 0, 128, 128 });
+	buff.anim.PushBack({ 128, 0, 128, 128 });
+	buff.anim.PushBack({ 256, 0, 128, 128 });
+	buff.anim.PushBack({ 384, 0, 128, 128 });
+	buff.anim.loop = false;
+	buff.anim.speed = 0.05f;
+
+	//Damage Particle
+	damage.anim.PushBack({ 0, 128, 128, 128 });
+	damage.anim.PushBack({ 128, 128, 128, 128 });
+	damage.anim.PushBack({ 256, 128, 128, 128 });
+	damage.anim.PushBack({ 384, 128, 128, 128 });
+	damage.anim.loop = false;
+	damage.anim.speed = 0.05f;
+
+	//Healing Particle
+	healing.anim.PushBack({ 0, 256, 128, 128 });
+	healing.anim.PushBack({ 128, 256, 128, 128 });
+	healing.anim.PushBack({ 256, 256, 128, 128 });
+	healing.anim.PushBack({ 384, 256, 128, 128 });
+	healing.anim.loop = false;
+	healing.anim.speed = 0.05f;
+
 }
 
 Particles::~Particles()
@@ -39,7 +64,7 @@ Particles::~Particles()
 bool Particles::Start()
 {
 	LOG("Loading particles");
-	texture = app->tex->Load("Assets/Textures/particles.png");
+	texture = app->tex->Load("Assets/Textures/Sprites/Particles.png");
 
 	return true;
 }
@@ -85,25 +110,42 @@ bool Particles::Update(float dt)
 bool Particles::PostUpdate()
 {
 	// TODO 3: Create a loop (for) to iterate all the particle array to draw them if any particle is active 
-
-	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
+	if (flip == 0)
 	{
-		Particle* particle = particles[i];
-
-		if (particle != nullptr && particle->isAlive)
+		for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 		{
-			app->render->DrawTexture(texture, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame()));
+			Particle* particle = particles[i];
+
+			if (particle != nullptr && particle->isAlive)
+			{
+				app->render->DrawTexture(texture, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame()));
+			}
+		}
+	}
+	else
+	{
+		for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
+		{
+			Particle* particle = particles[i];
+
+			if (particle != nullptr && particle->isAlive)
+			{
+				app->render->DrawTexture(texture, particle->position.x, particle->position.y, 
+					  &(particle->anim.GetCurrentFrame()), false, 1.0f, SDL_FLIP_HORIZONTAL);
+			}
 		}
 	}
 
 	return true;
 }
 
-void Particles::AddParticle(const Particle& particle, int x, int y, uint delay)
+void Particles::AddParticle(const Particle& particle, int x, int y, bool isFlip, uint delay)
 {
 	Particle* p = new Particle(particle);
 
 	// TODO 1: Create the necesary variables for the Particles
+
+	flip = isFlip;
 
 	p->position.x = x;
 	p->position.y = y;

@@ -8,6 +8,7 @@
 #include "Textures.h"
 #include "Render.h"
 #include "Audio.h"
+#include "Particles.h"
 #include "Inventory.h"
 #include "EntityManager.h"
 
@@ -142,8 +143,13 @@ void Capybara::Damage(int value)
 		return;
 	}
 	app->audio->PlayFx(hitSFX);
+	if (position.x < 640)
+	{
+		app->particles->AddParticle(app->particles->damage, position.x - 32, position.y - 32, 0, 0);
+	}
+	else app->particles->AddParticle(app->particles->damage, position.x - 32, position.y - 32, 1, 0);
 	health = 0;
-
+	
 	return;
 }
 
@@ -157,6 +163,13 @@ void Capybara::Heal(int value)
 
 	health = maxHealth;
 	app->audio->PlayFx(healSFX);
+
+	if (position.x < 640)
+	{
+		app->particles->AddParticle(app->particles->healing, position.x - 32, position.y - 32, 0, 0);
+	}
+	else app->particles->AddParticle(app->particles->healing, position.x - 32, position.y - 32, 1, 0);
+
 	return;
 }
 void Capybara::RestoreMana(int value)
@@ -260,14 +273,29 @@ void Capybara::UpdateStatus()
 		case CapybaraStatus::DEFENSIVE:
 		{
 			capybaraStats.armor -= 5;
+			if (position.x < 640)
+			{
+				app->particles->AddParticle(app->particles->buff, position.x - 32, position.y - 32, 0, 0);
+			}
+			else app->particles->AddParticle(app->particles->buff, position.x - 32, position.y - 32, 1, 0);
 		}break;
 		case CapybaraStatus::RAGE:
 		{
 			capybaraStats.strenght -= 5;
+			if (position.x < 640)
+			{
+				app->particles->AddParticle(app->particles->buff, position.x - 32, position.y - 32, 0, 0);
+			}
+			else app->particles->AddParticle(app->particles->buff, position.x - 32, position.y - 32, 1, 0);
 		}break;
 		case CapybaraStatus::CLEVER:
 		{
 			capybaraStats.intelligence -= 5;
+			if (position.x < 640)
+			{
+				app->particles->AddParticle(app->particles->buff, position.x - 32, position.y - 32, 0, 0);
+			}
+			else app->particles->AddParticle(app->particles->buff, position.x - 32, position.y - 32, 1, 0);
 		}break;
 		}
 		this->SetStatus(CapybaraStatus::NONE);
